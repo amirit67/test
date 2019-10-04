@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/dp60"
+        android:layout_weight="0.75"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/wlc4" />
+
+    <ir.payebash.Moudle.CustomTextViewBold
+        android:id="@+id/customTextViewBold2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView4"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp40"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:text="خاطرات نو، تجربیات نو، زندگی نو\nدر\nپایه باش"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/sp18" />
+
+    <ir.payebash.Moudle.CustomTextViewBold
+        android:id="@+id/btn_support"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_gradient"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="click"
+        android:padding="@dimen/dp8"
+        android:text="پیشنهادات و انتقادات"
+        android:textColor="@drawable/press_button_text_red"
+        android:textSize="@dimen/sp14" />
+
+</LinearLayout>

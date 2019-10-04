@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGray"
+    android:gravity="right"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="60dp"
+        android:fillViewport="true"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:background="#ededed" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:layout_above="@+id/txt_name"
+                android:layout_alignEnd="@+id/txt_name"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/txt_name">
+
+                <ir.payebash.Moudle.CircleImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:transitionName="trans" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/img_profile"
+                    android:layout_toStartOf="@+id/img_profile"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:background="@android:color/transparent"
+                        android:gravity="right|bottom"
+                        android:paddingRight="16dp"
+                        android:paddingTop="5dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/sp16" />
+
+                    <TextView
+                        android:id="@+id/txt_pic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:background="@android:color/transparent"
+                        android:gravity="right|bottom"
+                        android:paddingRight="16dp"
+                        android:paddingTop="5dp"
+                        android:text="تغییر عکس پروفایل"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/sp15" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:background="#ededed" />
+
+            <TextView
+                android:id="@+id/txt_profile"
+                style="@style/ProfileItem"
+                android:text="پروفایل" />
+
+            <TextView
+                android:id="@+id/txt_notification"
+                style="@style/ProfileItem"
+                android:text="تنظیمات نوتیفیکیشن" />
+
+            <TextView
+                android:id="@+id/txt_favorite"
+                style="@style/ProfileItem"
+                android:text="نشان شده ها" />
+
+            <TextView
+                android:id="@+id/txt_history"
+                style="@style/ProfileItem"
+                android:text="بازدیدهای اخیر" />
+
+            <TextView
+                android:id="@+id/txt_advantage"
+                style="@style/ProfileItem"
+                android:text="مزیت های پایه" />
+
+            <TextView
+                android:id="@+id/txt_rulls"
+                style="@style/ProfileItem"
+                android:text="قوانین" />
+
+            <TextView
+                android:id="@+id/txt_support"
+                style="@style/ProfileItem"
+                android:text="پشتیبانی" />
+
+            <TextView
+                android:id="@+id/txt_share"
+                style="@style/ProfileItem"
+                android:text="معرفی به دوستان" />
+
+            <TextView
+                android:id="@+id/txt_exit"
+                style="@style/ProfileItem"
+                android:text="خروج"/>
+
+            <View
+                style="@style/ProfileItem"
+                android:layout_height="@dimen/dp100"
+                android:background="@color/colorGray"/>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

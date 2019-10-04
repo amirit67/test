@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ededed"
+    android:layoutDirection="ltr"
+    tools:context=".Activities.EditProfileActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_top"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/img_back"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_marginRight="8dp"
+            android:background="@android:color/transparent"
+            card_view:srcCompat="@drawable/ic_back" />
+
+        <ir.payebash.Moudle.CustomTextViewBold
+            android:id="@+id/toolbar_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="8dp"
+            android:text="تکمیل پروفایل"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp13" />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/toolbar_top"
+        android:background="#dbdbdb" />
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/cpv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp160"
+        wheel:matProg_barColor="#000"
+        wheel:matProg_barWidth="1dp"
+        wheel:matProg_fillRadius="true"
+        wheel:matProg_progressIndeterminate="true"
+        wheel:matProg_spinSpeed="0.75" />
+
+    <ScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/relativeLayout"
+        android:layout_below="@+id/toolbar_top"
+        android:layout_marginBottom="@dimen/dp16"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/ll_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/edit_profile_txt"
+                android:text="درباره من : " />
+
+            <EditText
+                android:id="@+id/et_about"
+                style="@style/edit_profile_txt"
+                android:layout_below="@+id/toolbar_top"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/style_txt_input"
+                android:gravity="top|right"
+                android:hint="یه توضیح کوتاه در مورد خودتون بنویسید ..."
+                android:lines="5"
+                android:maxLength="490"
+                android:tag="AboutMe" />
+
+            <TextView
+                style="@style/edit_profile_txt"
+                android:text="علاقه مندی های من :" />
+
+            <EditText
+                android:id="@+id/et_favorites"
+                style="@style/edit_profile_txt"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/txt_name"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/style_txt_input"
+                android:gravity="top|right"
+                android:hint="مثال :#پیاده روی #ورزش #هنر"
+                android:lines="3"
+                android:maxLength="150"
+                android:tag="Favorites" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/compatSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_margin="@dimen/dp8"
+                android:background="@android:color/white"
+                android:gravity="right|center_vertical"
+                android:layoutDirection="rtl"
+                android:padding="@dimen/dp8"
+                android:tag="IsShowMobile"
+                android:text="شماره موبایل نمایش داده شود؟"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                style="@style/edit_profile_txt"
+                android:text="آی دی پیام رسان سروش :" />
+
+            <EditText
+                android:id="@+id/et_soroosh"
+                style="@style/edit_profile_txt"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/style_txt_input"
+                android:hint="مثال : amir_akbari"
+                android:inputType="text"
+                android:tag="Soroosh" />
+
+            <TextView
+                style="@style/edit_profile_txt"
+                android:text="آی دی پیام رسان تلگرام :" />
+
+            <EditText
+                android:id="@+id/et_telegram"
+                style="@style/edit_profile_txt"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/style_txt_input"
+                android:hint="مثال : amir_akbari"
+                android:inputType="text"
+                android:tag="Telegram" />
+
+            <TextView
+                style="@style/edit_profile_txt"
+                android:text="آی دی اینستاگرام :" />
+
+            <EditText
+                android:id="@+id/et_insta"
+                style="@style/edit_profile_txt"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/style_txt_input"
+                android:hint="مثال : amir_akbari"
+                android:inputType="text"
+                android:tag="Instagram" />
+
+            <TextView
+                style="@style/edit_profile_txt"
+                android:text="جیمیل :" />
+
+            <EditText
+                android:id="@+id/et_gmail"
+                style="@style/edit_profile_txt"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/style_txt_input"
+                android:ems="10"
+                android:hint="مثال : amirakbari@gmail.com"
+                android:inputType="textEmailAddress"
+                android:tag="Gmail" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true">
+
+        <ProgressBar
+            android:id="@+id/pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/btn_profile_update"
+            android:layout_centerHorizontal="true"
+            android:translationZ="2dp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_profile_update"
+            style="@style/RegButton"
+            android:layout_margin="@dimen/dp6"
+            android:text="ارسال"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

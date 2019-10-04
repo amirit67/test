@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    tools:context=".Activities.PostRegisterActivity">
+
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar_top"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white">
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawablePadding="@dimen/dp6"
+            android:drawableRight="@drawable/checked"
+            android:gravity="center"
+            android:padding="@dimen/dp4"
+            android:paddingLeft="@dimen/dp4"
+            android:paddingRight="@dimen/dp4"
+            android:text="ارسال"
+            android:textColor="@drawable/press_button_text_green"
+            android:textSize="@dimen/sp14" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/img_back"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="@android:color/transparent"
+            card_view:srcCompat="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="درج رویداد"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp15" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ededed" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ededed"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_subject_post"
+                    style="@style/RegButton"
+                    android:layout_margin="8dp"
+                    android:tag=""
+                    android:text="موضوع رویداد را انتخاب کنید" />
+
+                <Button
+                    android:id="@+id/btn_location_post"
+                    style="@style/RegButton"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:tag=""
+                    android:text="محل رویداد را انتخاب کنید" />
+
+                <Button
+                    android:id="@+id/btn_location_map"
+                    style="@style/RegButton"
+                    android:layout_margin="8dp"
+                    android:tag=""
+                    android:text="در صورت لزوم محل رویداد را مشخص کنید" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/compatSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_margin="@dimen/dp8"
+                    android:background="@android:color/white"
+                    android:gravity="right|center_vertical"
+                    android:layoutDirection="rtl"
+                    android:padding="@dimen/dp8"
+                    android:text="فقط بانوان"
+                    android:textColor="@android:color/black" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/compatSwitchImmediate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_margin="@dimen/dp8"
+                    android:background="@android:color/white"
+                    android:gravity="right|center_vertical"
+                    android:layoutDirection="rtl"
+                    android:padding="@dimen/dp8"
+                    android:text="فوری"
+                    android:textColor="@android:color/black" />
+
+                <androidx.cardview.widget.CardView style="@style/postRegisterCard">
+
+                    <RelativeLayout
+                        style="@style/txtInputPostRegister"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout style="@style/txtInputPostRegister">
+
+                            <EditText
+                                android:id="@+id/et_title"
+                                style="@style/register"
+                                android:hint="عنوان رویداد"
+                                android:inputType="text"
+                                android:maxLength="40" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView style="@style/postRegisterCard">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout style="@style/txtInputPostRegister">
+
+                            <EditText
+                                android:id="@+id/et_tag"
+                                style="@style/register"
+                                android:hint="هشتگ"
+                                android:inputType="text"
+                                android:maxLength="40" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView style="@style/postRegisterCard">
+
+                    <RelativeLayout
+                        style="@style/txtInputPostRegister"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout style="@style/txtInputPostRegister">
+
+                            <EditText
+                                android:id="@+id/et_time_start"
+                                style="@style/register"
+                                android:hint="زمان شروع رویداد"
+                                android:inputType="text"
+                                android:maxLength="25" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+
+                    <ImageButton
+                        android:id="@+id/btn_calender"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@mipmap/calendar" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView style="@style/postRegisterCard">
+
+                    <RelativeLayout
+                        style="@style/txtInputPostRegister"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout style="@style/txtInputPostRegister">
+
+                            <EditText
+                                android:id="@+id/et_time_finish"
+                                style="@style/register"
+                                android:hint="زمان پایان رویداد"
+                                android:inputType="text"
+                                android:maxLength="25" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+
+                    <ImageButton
+                        android:id="@+id/btn_calender2"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@mipmap/calendar" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView style="@style/postRegisterCard">
+
+                    <RelativeLayout
+                        style="@style/txtInputPostRegister"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout style="@style/txtInputPostRegister">
+
+                            <EditText
+                                android:id="@+id/et_cost"
+                                style="@style/register"
+                                android:hint="هزینه"
+                                android:inputType="text"
+                                android:maxLength="25" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView style="@style/postRegisterCard">
+
+                    <RelativeLayout
+                        style="@style/txtInputPostRegister"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout style="@style/txtInputPostRegister">
+
+                            <EditText
+                                android:id="@+id/et_count"
+                                style="@style/register"
+                                android:hint="تعداد هم پایه"
+                                android:inputType="text"
+                                android:maxLength="25" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView style="@style/postRegisterCard">
+
+                    <RelativeLayout
+                        style="@style/txtInputPostRegister"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout style="@style/txtInputPostRegister">
+
+                            <EditText
+                                android:id="@+id/et_deadline"
+                                style="@style/register"
+                                android:clickable="true"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:hint="مهلت پیوستن"
+                                android:inputType="text"
+                                android:padding="5dp"
+                                android:paddingBottom="2dp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cd_link"
+                    style="@style/postRegisterCard"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        style="@style/txtInputPostRegister"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout style="@style/txtInputPostRegister">
+
+                            <EditText
+                                android:id="@+id/et_link"
+                                style="@style/register"
+                                android:hint="وب سایت"
+                                android:inputType="text"
+                                android:maxLength="49" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cd_phone"
+                    style="@style/postRegisterCard"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        style="@style/txtInputPostRegister"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout style="@style/txtInputPostRegister">
+
+                            <EditText
+                                android:id="@+id/et_phone"
+                                style="@style/register"
+                                android:hint="شماره تماس"
+                                android:inputType="phone"
+                                android:maxLength="20" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView style="@style/postRegisterCard">
+
+                    <RelativeLayout
+                        style="@style/txtInputPostRegister"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout style="@style/txtInputPostRegister">
+
+                            <EditText
+                                android:id="@+id/et_description"
+                                style="@style/register"
+                                android:hint="توضیحات بیشتر"
+                                android:inputType="textMultiLine"
+                                android:maxLength="950" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/pick_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/toolbar_top"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/press_button_background"
+                    android:onClick="onClick"
+                    android:padding="8dp"
+                    android:text="اضافه کردن عکس"
+                    android:textColor="@drawable/press_button_text_red"
+                    android:textSize="@dimen/sp14" />
+
+                <ir.payebash.Moudle.ExpandableHeightGridView
+                    android:id="@+id/gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/pick_images"
+                    android:layout_alignLeft="@+id/pick_images"
+                    android:layout_alignStart="@+id/pick_images"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:columnWidth="75dp"
+                    android:horizontalSpacing="5dp"
+                    android:numColumns="auto_fit"
+                    android:padding="0dp"
+                    android:verticalSpacing="5dp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+    </RelativeLayout>
+
+</LinearLayout>

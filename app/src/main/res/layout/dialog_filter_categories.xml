@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_filter"
+    android:layout_width="300dp"
+    android:layout_height="400dp"
+    android:layout_gravity="center"
+    android:layout_margin="5dp"
+    android:background="@drawable/dialog_background"
+    android:fitsSystemWindows="true"
+    android:gravity="center"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    android:transitionName="transition">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="right"
+        android:background="@android:color/black"
+        android:gravity="right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:paddingRight="16dp"
+            android:text="انتخاب دسته بندی"
+            android:textColor="@android:color/white" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/layoutFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="horizontal" />
+</LinearLayout>

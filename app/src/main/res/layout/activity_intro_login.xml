@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ir.payebash.Activities.IntroLoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.jaredrummler.android.widget.AnimatedSvgView
+            android:id="@+id/animated_svg_view"
+            android:layout_width="@dimen/dp140"
+            android:layout_height="@dimen/dp140"
+            android:layout_gravity="center"
+            app:animatedSvgFillColors="@array/google_glyph_colors"
+            app:animatedSvgFillStart="2000"
+            app:animatedSvgFillTime="1500"
+            app:animatedSvgGlyphStrings="@array/google_glyph_strings"
+            app:animatedSvgImageSizeX="600"
+            app:animatedSvgImageSizeY="600"
+            app:animatedSvgTraceTime="3000"
+            app:animatedSvgTraceTimePerGlyph="3000" />
+
+        <com.jaredrummler.android.widget.AnimatedSvgView
+            android:id="@+id/font_svg_view"
+            android:layout_width="@dimen/dp140"
+            android:layout_height="@dimen/dp140"
+            android:layout_gravity="center"
+            app:animatedSvgFillColors="@array/google_glyph_colors"
+            app:animatedSvgFillStart="1200"
+            app:animatedSvgFillTime="1000"
+            app:animatedSvgGlyphStrings="@array/font_glyph_strings"
+            app:animatedSvgImageSizeX="600"
+            app:animatedSvgImageSizeY="600"
+            app:animatedSvgTraceTime="2000"
+            app:animatedSvgTraceTimePerGlyph="2000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/button"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/toaststyle"
+            android:text="عضویت"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/press_button_stroke"
+            android:text="ورود"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_guest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dp16"
+        android:text="ورود به صورت مهمان"
+        android:textColor="#000"
+        android:textSize="@dimen/sp14" />
+
+    <TextView
+        android:id="@+id/txt_ruls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center_horizontal|bottom"
+        android:autoLink="web"
+        android:clickable="true"
+        android:gravity="center"
+        android:linksClickable="true"
+        android:onClick="clickRules"
+        android:textColor="#88000000"
+        android:textSize="11sp"
+        android:fontFamily="@font/iransansbold"/>
+</LinearLayout>

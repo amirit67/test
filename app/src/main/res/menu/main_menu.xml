@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--<item-->
+    <!--android:id="@+id/action_profile"-->
+    <!--android:name="@string/title_profile"-->
+    <!--android:icon="@drawable/ic_tag_faces_black_24dp"-->
+    <!--android:title="@string/title_profile" />-->
+    <item
+        android:id="@+id/action_profile"
+        android:name="@string/title_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/title_profile"/>
+
+    <item
+        android:id="@+id/action_event"
+        android:name="@string/title_event"
+        android:icon="@drawable/ic_event"
+        android:title="@string/title_event"/>
+
+    <item
+        android:title=""
+        android:checkable="false"
+        android:enabled="false"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_notify"
+        android:name="@string/title_notify"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/title_notify"/>
+
+    <item
+        android:id="@+id/action_home"
+        android:name="@string/title_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/title_home"/>
+
+
+</menu>

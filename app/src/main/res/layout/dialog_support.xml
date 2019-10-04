@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_background"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:text="تماس با ما"
+        android:textSize="@dimen/sp15" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
+
+                <EditText
+                    android:id="@+id/txt_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|right"
+                    android:hint="متن ارسالی"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:maxLines="4"
+                    android:textSize="@dimen/sp14" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/btn_rejct"
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:text="انصراف"
+                        android:textSize="@dimen/sp14" />
+
+                    <Button
+                        android:id="@+id/btn_send"
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:text="ارسال"
+                        android:textSize="@dimen/sp14" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

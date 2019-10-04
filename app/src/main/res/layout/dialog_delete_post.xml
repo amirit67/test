@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right"
+    android:background="@drawable/dialog_background"
+    android:gravity="right"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="حذف رویداد"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/sp14" />
+
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/text"
+        android:gravity="right"
+        android:padding="8dp">
+
+        <ir.payebash.Moudle.CustomRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:button="@null"
+            android:drawablePadding="@dimen/dp6"
+            android:drawableRight="@drawable/selector_radio"
+            android:gravity="right|center_vertical"
+            android:tag="1"
+            android:text="موفقیت امیز بود."
+            android:textSize="@dimen/sp13" />
+
+        <ir.payebash.Moudle.CustomRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:button="@null"
+            android:drawablePadding="@dimen/dp6"
+            android:drawableRight="@drawable/selector_radio"
+            android:gravity="right|center_vertical"
+            android:tag="2"
+            android:text="از طریق دیگری کار راه افتاد."
+            android:textSize="@dimen/sp13" />
+
+        <ir.payebash.Moudle.CustomRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:button="@null"
+            android:drawablePadding="@dimen/dp6"
+            android:drawableRight="@drawable/selector_radio"
+            android:gravity="right|center_vertical"
+            android:tag="3"
+            android:text="از خیرش گذشتم."
+            android:textSize="@dimen/sp13" />
+
+        <ir.payebash.Moudle.CustomRadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:button="@null"
+            android:drawablePadding="@dimen/dp6"
+            android:drawableRight="@drawable/selector_radio"
+            android:gravity="right|center_vertical"
+            android:tag="4"
+            android:text="رویدادمو لغو کن و به پایه ها اطلاع بده."
+            android:textSize="@dimen/sp13"
+            android:visibility="gone" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_reject"
+            style="@style/dialog_blue_button"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/radioGroup"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="4dp"
+            android:layout_toLeftOf="@+id/txt_delete"
+            android:layout_toStartOf="@+id/txt_delete"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="بی خیال"
+            android:textColor="#fff"
+            android:textSize="13sp" />
+
+        <ir.payebash.Moudle.CustomTextViewBold
+            android:id="@+id/txt_delete"
+            style="@style/dialog_blue_button"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/radioGroup"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="حذف رویداد"
+            android:textColor="#fff"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</LinearLayout>

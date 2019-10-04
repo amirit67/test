@@ -1,0 +1,133 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog_background"
+    android:fitsSystemWindows="true"
+    android:gravity="center"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="right"
+        android:background="@android:color/white"
+        android:gravity="right">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorGray"
+            android:gravity="center"
+            android:padding="@dimen/dp8"
+            android:text="بارگذاری عکس پروفایل"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp18" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar2"
+        android:background="@android:color/darker_gray"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/layoutFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/view"
+        android:gravity="top"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:text="عکس نمونه پروفایل"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp16" />
+
+        <ir.payebash.Moudle.CircleImageView
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/img_profile" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="16dp"
+            android:drawableRight="@mipmap/mwavatar"
+            android:padding="8dp"
+            android:text="یک نفر داخل عکس باشد"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="16dp"
+            android:drawableRight="@mipmap/fadeuser"
+            android:padding="8dp"
+            android:text="عکس روشن و واضح باشد"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="16dp"
+            android:drawableRight="@mipmap/glasses"
+            android:padding="8dp"
+            android:text="بدون عینک آفتابی باشد"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp12" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/white"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <ir.payebash.Moudle.CustomRadioButton
+                android:id="@+id/rb1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:buttonTint="@color/colorAccent"
+                android:text="دوربین" />
+
+            <ir.payebash.Moudle.CustomRadioButton
+                android:id="@+id/rb2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:buttonTint="@color/colorAccent"
+                android:text="انتخاب از گالری" />
+        </RadioGroup>
+
+    </LinearLayout>
+</LinearLayout>

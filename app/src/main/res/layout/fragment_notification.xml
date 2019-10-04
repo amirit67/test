@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e8f1cc"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp8"
+        android:background="@drawable/press_button"
+        android:gravity="center"
+        android:tag="0"
+        android:text="شهر خود را انتخاب کنید"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/card_search"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:orientation="vertical">
+
+            <ir.payebash.Moudle.CustomTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.35"
+                android:background="#e8f1cc"
+                android:gravity="right"
+                android:paddingRight="1dp"
+                android:text="اینجا میتونین بگین\nاز کدوم شهرها،\nکدوم رویداد هارو،\nبهتون اطلاع بدیم."
+                android:textColor="#113541"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="0.6"
+                android:gravity="bottom"
+                android:scaleType="centerCrop"
+                card_view:srcCompat="@drawable/ic_no" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.65"
+            android:background="#e8f1cc"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:scrollbars="none" />
+
+    </LinearLayout>
+
+</LinearLayout>

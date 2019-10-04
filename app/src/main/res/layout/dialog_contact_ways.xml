@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog_background"
+    android:gravity="center"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:background="@color/colorPrimary"
+        android:gravity="right">
+
+        <ir.payebash.Moudle.CustomTextViewBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingRight="16dp"
+            android:text="راه های ارتباطی"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp14" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/ll_contact_ways"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right|center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <TextView
+            android:id="@+id/txt_phone"
+            style="@style/ProfileItem"
+            android:drawableRight="@mipmap/smartphone"
+            android:text="موبایل"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_telegram"
+            style="@style/ProfileItem"
+            android:drawableRight="@mipmap/telegram"
+            android:text="تلگرام"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_instagram"
+            style="@style/ProfileItem"
+            android:drawableRight="@mipmap/instagram"
+            android:text="اینستاگرام"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_soroosh"
+            style="@style/ProfileItem"
+            android:drawableRight="@mipmap/soroosh"
+            android:text="سروش"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_gmail"
+            style="@style/ProfileItem"
+            android:drawableRight="@mipmap/gmail"
+            android:text="جیمیل"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+</LinearLayout>

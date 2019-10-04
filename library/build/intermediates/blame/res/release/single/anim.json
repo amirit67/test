@@ -1,0 +1,74 @@
+[
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\error_x_in.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\src\\main\\res\\anim\\error_x_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\success_mask_layout.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\src\\main\\res\\anim\\success_mask_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\abc_slide_in_bottom.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\9ff2776d45876a15346b23c92f51e565\\res\\anim\\abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\modal_out.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\src\\main\\res\\anim\\modal_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\9ff2776d45876a15346b23c92f51e565\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\error_frame_in.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\src\\main\\res\\anim\\error_frame_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\success_bow_roate.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\src\\main\\res\\anim\\success_bow_roate.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\modal_in.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\src\\main\\res\\anim\\modal_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\abc_fade_in.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\9ff2776d45876a15346b23c92f51e565\\res\\anim\\abc_fade_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\abc_popup_exit.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\9ff2776d45876a15346b23c92f51e565\\res\\anim\\abc_popup_exit.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\abc_popup_enter.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\9ff2776d45876a15346b23c92f51e565\\res\\anim\\abc_popup_enter.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\abc_slide_out_top.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\9ff2776d45876a15346b23c92f51e565\\res\\anim\\abc_slide_out_top.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\abc_slide_out_bottom.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\9ff2776d45876a15346b23c92f51e565\\res\\anim\\abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\abc_slide_in_top.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\9ff2776d45876a15346b23c92f51e565\\res\\anim\\abc_slide_in_top.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\abc_tooltip_enter.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\9ff2776d45876a15346b23c92f51e565\\res\\anim\\abc_tooltip_enter.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\9ff2776d45876a15346b23c92f51e565\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\abc_fade_out.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\9ff2776d45876a15346b23c92f51e565\\res\\anim\\abc_fade_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\AmirKhodabandeh\\AndroidStudioProjects\\Payebash\\library\\build\\intermediates\\res\\merged\\release\\anim\\abc_tooltip_exit.xml",
+        "source": "C:\\Users\\AmirKhodabandeh\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0.aar\\9ff2776d45876a15346b23c92f51e565\\res\\anim\\abc_tooltip_exit.xml"
+    }
+]

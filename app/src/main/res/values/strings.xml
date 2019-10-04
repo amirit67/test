@@ -1,0 +1,951 @@
+<resources>
+    <string name="app_name">پایه باش</string>
+    <string name="app_name_en">PayeBash</string>
+    <string name="myAds">myAds</string>
+    <string name="login">ارسال کد فعال سازی</string>
+    <string name="Mobile">موبایل</string>
+    <string name="Code">کد فعالسازی</string>
+    <string name="Name">نام</string>
+    <string name="Name2">Name</string>
+    <string name="FamilyName">نام خانوادگی</string>
+    <string name="Family">Family</string>
+    <string name="Email">Email</string>
+    <string name="Age">سن</string>
+    <string name="Age2">Age</string>
+    <string name="City">نام شهر</string>
+    <string name="go">تایید</string>
+    <string name="register">عضویت</string>
+    <string name="user_age">سن کاربری : %1$s روز</string>
+    <string name="trusted_vote">تعداد رای اعتماد : %1$s رای</string>
+    <string name="age">سن : %1$s سال</string>
+    <string name="aboutme">درباره :\n %1$s</string>
+    <string name="location">محل سکونت : %1$s</string>
+    <string name="host">میزبان : %1$s فعالیت</string>
+    <string name="takePart">شرکت در : %1$s فعالیت</string>
+    <string name="join">یک نفر به برنامه %1$s ملحق شد</string>
+    <string name="comment">یک نفر در مورد برنامه ی %1$s نظر داد</string>
+    <string name="cancel">برنامه "%1$s" لغو گردید</string>
+    <string name="searchHint">جستجو در «%1$s»«%2$s»</string>
+    <string name="no_connection_title_string">دسترسی به اینترنت یافت نشد !</string>
+    <string name="no_connection_desc_string">لطفا دسترسی خود را با اینترنت بررسی نمایید</string>
+    <string name="no_connection_retry_string">تلاش مجدد</string>
+    <string name="notifSign">پایه های جدید در پایه باش</string>
+    <string name="baseUrl">baseUrl</string>
+
+    <string name="topics">/topics/</string>
+
+    <string name="Message">Message</string>
+    <string name="Subject">Subject</string>
+    <string name="UserId">UserId</string>
+    <string name="ComplainantId">ComplainantId</string>
+
+    <string name="AboutMe">AboutMe</string>
+    <string name="Favorites">Favorites</string>
+    <string name="Telegram">Telegram</string>
+    <string name="Instagram">Instagram</string>
+    <string name="Soroosh">Soroosh</string>
+    <string name="Gmail">Gmail</string>
+    <string name="IsShowMobile">IsShowMobile</string>
+
+    <string name="addedFeild">addedFeild</string>
+    <string name="Link">Link</string>
+    <string name="PhoneNumber">PhoneNumber</string>
+    <string name="mobile">Mobile</string>
+    <string name="Token">Token</string>
+    <string name="SmsCode">SmsCode</string>
+
+    <string name="PostId">PostId</string>
+    <string name="Title">Title</string>
+    <string name="CreateDate">CreateDate</string>
+    <string name="city">City</string>
+    <string name="Latitude">Latitude</string>
+    <string name="Status">Status</string>
+
+    <string name="GivenName">GivenName</string>
+    <string name="familyName">FamilyName</string>
+    <string name="FullName">FullName</string>
+    <string name="ProfileImage">ProfileImage</string>
+    <string name="ServicesIds">ServicesIds</string>
+    <string name="IsWoman">IsWoman</string>
+    <string name="IsImmediate">IsImmediate</string>
+    <string name="Longitude">Longitude</string>
+    <string name="Deadline">Deadline</string>
+    <string name="CityDate">CityDate</string>
+    <string name="Tag">Tag</string>
+    <string name="IsCommercial">IsCommercial</string>
+    <string name="Cost">Cost</string>
+    <string name="Images">Images</string>
+    <string name="Aboutme">Aboutme</string>
+    <string name="Type">Type</string>
+    <string name="IsAuthenticate">IsAuthenticate</string>
+
+    <string name="Comment">Comment</string>
+    <string name="UserName">UserName</string>
+
+    <string name="StartDate">StartDate</string>
+    <string name="finishDate">finishDate</string>
+    <string name="NumberFollowers">NumberFollowers</string>
+    <string name="Description">Description</string>
+
+    <string name="SubjectCode">SubjectCode</string>
+    <string name="CityCode">CityCode</string>
+
+    <string name="VoteReciverUserId">VoteReciverUserId</string>
+    <string name="VoterUserId">VoterUserId</string>
+
+    <string name="FbToken">FbToken</string>
+
+    <string name="Mrchnt">94dcb616-9b48-11e6-b831-000c295eb8fc</string>
+    <string name="CategoryId">CategoryId</string>
+    <string name="TypeOfPay">TypeOfPay</string>
+    <string name="Category">Category</string>
+    <string name="Amount">Amount</string>
+    <string name="refID">refID</string>
+    <string name="payNote">پرداخت جهت %1$s رویداد در اپلیکیشن پایه باش</string>
+
+    <string name="retry">مجدد تلاش کنید /مشکل در ارسال اطلاعات</string>
+
+    <string name="release1">منتشر</string>
+    <string name="release2">انتشار</string>
+    <string name="pay">پرداخت</string>
+
+    <string name="sure">مطمئن هستید؟</string>
+
+    <string name="next">بعدی</string>
+    <string name="skip">قبلی</string>
+    <string name="start">ورود</string>
+    <string name="image">http://paye.ariaapps.ir/Images/payebash/</string>
+    <string name="url">http://paye.ariaapps.ir/</string>
+    <string name="url2">paye.ariaapps.ir</string>
+    <string name="Notifurl">https://fcm.googleapis.com</string>
+    <string name="Notifurl2">https://iid.googleapis.com</string>
+    <string name="oauth">https://www.googleapis.com/</string>
+    <string name="Authorization">key=</string>
+    <string name="auth">Authorization</string>
+
+
+    <string name="CI">642093830131-iepq9us690euo5e1l1fhagn8n89fmf63.apps.googleusercontent.com</string>
+    <string name="c">AAAAlX_GT_M:APA91bF7_NvhO3BLFLZ9NWDQ25_atG-ySR98Bh95ZHaM4GJuwYYFp1HK-wTze1U3-An</string>
+    <string name="a">v0jTB5czup6MBcC4EYgpNNPX2sTIaTSbgGTKaIQ7zX27ZDMNo3e</string>
+    <string name="b">Cgc8LKrP0nFybU12ko2Otf</string>
+    <string name="contenttype">content-type</string>
+    <string name="applicationjson">application/json</string>
+
+    <string name="Feepayable">Feepayable</string>
+    <string name="VersionName">VersionName</string>
+    <string name="DownloadUrl">DownloadUrl</string>
+
+    <string name="Skip">Skip</string>
+
+    <string-array name="google_glyph_strings">
+
+        <item>M212.487,269.478l-97.944-97.434
+            c-9.876-9.672-13.337-18.021-13.337-29.831c0-22.297,18.021-40.318,40.216-40.318c11.912,0,22.39,5.498,30.331,13.337
+            l169.305,167.99V141.703L236.913,37.244C153.834-44.919,0,17.187,0,142.213c0,33.904,11.303,67.807,33.397,89.9l109.908,109.245l0,0
+            L212.487,269.478z M212.487,269.478l127.775,126.858l127.876-126.858l70.556,70.556L339.956,537.448l-70.454-70.658L143.254,341.358</item>
+
+        <item>M326.517,269.478l98.045-97.434c9.774-9.672,13.337-18.021,13.337-29.831c0-22.297-18.021-40.318-40.318-40.318
+            c-11.81,0-21.89,5.498-29.831,13.337l-26.98,26.777l-71.472-71.37l33.191-33.394c83.079-82.163,236.714-20.057,236.714,104.969
+            c0,33.904-11.403,67.807-33.496,89.9L395.749,341.358l0,0L326.517,269.478z M269.502,212.87l-70.76,70.352l-0.407-141.112l0,0
+            c23.519,23.315,47.139,46.63,70.556,70.047C269.095,212.361,269.298,212.667,269.502,212.87L269.502,212.87z M326.517,269.478
+            L198.742,396.336L70.866,269.478L0.412,340.034l198.331,197.109l70.76-70.352l126.247-125.433</item>
+    </string-array>
+
+    <string-array name="line_glyph_strings">
+        <item>M269,1.5h270</item>
+        <item>M0,1.5h269</item>
+    </string-array>
+
+    <string-array name="font_glyph_strings">
+        <item>M539,39v70.242c0,2.546-0.858,5.732-1.979,8.379c-2.342,5.193-6.561,8.379-12.365,8.379H484.84h-11.813H460
+            V0h25v104h28V39H539z M383.353,103.668c0.102-3.564,0.647-7.461,0.647-11.025V22h-45.492c-10.794,0-20.314,2.684-27.951,10.322
+            C303.021,39.959,299,48.143,299,59.039V104 M323,58.428c0-4.073,1.797-7.867,4.75-10.718c3.055-2.953,6.583-4.71,10.758-4.71h21.487
+            L360,82.256v21.079V83h-37V58.428z M438,39v70.242c0,2.546-1.071,5.732-2.191,8.379c-2.342,5.193-6.773,8.379-12.578,8.379H384v-22
+            h29V39H438z M360,126h24V28h-24V126z M473.333,150.447l12.322,12.322l12.22-12.322l12.322,12.322l12.22-12.322l-12.22-12.322
+            l-12.322-12.322l-12.22,12.322L473.333,150.447z M418.344,158.258L418.446,140h-22.098h-0.102h-22.199l0,0l-0.102,19h22.199
+            L418.344,158.258z M198,126h10.57h11.711h39.918c5.703,0,9.15-3.186,11.594-8.379c1.12-2.648,1.207-5.833,1.207-8.379V39h-22v65h-31
+            V0h-22V126z M247.266,137.653l-12.933-12.933l-12.831,12.933l12.831,12.933L247.266,137.653z M72,39v4.051l0,0V81.34l0,0v24.541
+            c0,4.073-2.335,8.212-5.39,11.165C63.555,120,59.183,122,55.008,122h-7.332l0,0h-8.147c-4.175,0-6.816-2-9.871-4.954
+            C26.604,114.093,26,109.954,26,105.881V83H0v22.066c0,10.794,3.879,19.925,11.618,27.664C19.255,140.368,28.633,144,39.529,144
+            h8.147h7.332c10.794,0,20.163-3.312,27.8-10.949c4.073-4.073,7.026-8.098,8.961-12.986c3.055,3.564,7.23,5.935,12.525,5.935h17.821
+            c5.193,0,9.063-2.037,11.405-6.212c3.055,4.175,7.434,6.212,13.442,6.212H179v-22.665l0,0V39h-24v61h-18V39h-26v61H94V41.422V39
+            H70.792H72z M99.305,26.147l12.322,12.322l12.322-12.322l12.322,12.322l12.22-12.322l-12.22-12.322L123.948,1.504l-12.322,12.322
+            L99.305,26.147z</item>
+    </string-array>
+
+    <string-array name="Citys">
+        <item>اردبیل - اردبیل</item>
+        <item>اردبیل - اندبیل</item>
+        <item>اردبیل - آبی‌ بیگلو</item>
+        <item>اردبیل - بیله‌ سوار</item>
+        <item>اردبیل - پارس‌آباد</item>
+        <item>اردبیل - جعفرآباد</item>
+        <item>اردبیل - جنگل فندقلو</item>
+        <item>اردبیل - خلخال</item>
+        <item>اردبیل - عنبران</item>
+        <item>اردبیل - گرمی</item>
+        <item>اردبیل - گیوی</item>
+        <item>اردبیل - مشگین‌شهر</item>
+        <item>اردبیل - نمین</item>
+        <item>اردبیل - نیر</item>
+        <item>اردبیل - هیر</item>
+        <item>اردبیل - سرعین</item>
+        <item>اصفهان - ابریشم</item>
+        <item>اصفهان - ابوزیدآباد</item>
+        <item>اصفهان - اردستان</item>
+        <item>اصفهان - اژیه</item>
+        <item>اصفهان - اصفهان</item>
+        <item>اصفهان - کاشان</item>
+        <item>اصفهان - بادرود</item>
+        <item>اصفهان - برف‌انبار</item>
+        <item>اصفهان - بهارستان</item>
+        <item>اصفهان - تودشک</item>
+        <item>اصفهان - تیران</item>
+        <item>اصفهان - جوشقان و کامو</item>
+        <item>اصفهان - چمگردان</item>
+        <item>اصفهان - خالدآباد</item>
+        <item>اصفهان - خمینی‌شهر</item>
+        <item>اصفهان - خوانسار</item>
+        <item>اصفهان - خور</item>
+        <item>اصفهان - خوراسگان</item>
+        <item>اصفهان - خورزوق</item>
+        <item>اصفهان - داران</item>
+        <item>اصفهان - دهق</item>
+        <item>اصفهان - دیزیچه</item>
+        <item>اصفهان - زاغل</item>
+        <item>اصفهان - زرین‌شهر</item>
+        <item>اصفهان - زیباشهر</item>
+        <item>اصفهان - شاهین‌شهر</item>
+        <item>اصفهان - شهرضا</item>
+        <item>اصفهان - طالخونچه</item>
+        <item>اصفهان - فریدون‌شهر</item>
+        <item>اصفهان - کمشجه</item>
+        <item>اصفهان - کوهپایه</item>
+        <item>اصفهان - کهریزسنگ</item>
+        <item>اصفهان - گلپایگان</item>
+        <item>اصفهان - گل‌دشت</item>
+        <item>اصفهان - گل‌شهر</item>
+        <item>اصفهان - گوگد</item>
+        <item>اصفهان - مبارکه</item>
+        <item>اصفهان - محمد آباد</item>
+        <item>اصفهان - میمه</item>
+        <item>اصفهان - نجف‌آباد</item>
+        <item>اصفهان - نطنز</item>
+        <item>اصفهان - نوش‌آباد</item>
+        <item>اصفهان - نیاسر</item>
+        <item>اصفهان - نیک‌آباد</item>
+        <item>اصفهان - ورنامخواست</item>
+        <item>البرز - اشتهارد</item>
+        <item>البرز - آسارا</item>
+        <item>البرز - چهارباغ</item>
+        <item>البرز - ساوجبلاغ</item>
+        <item>البرز - طالقان</item>
+        <item>البرز - کرج</item>
+        <item>البرز - فردیس</item>
+        <item>البرز - کوهسار</item>
+        <item>البرز - گرمدره</item>
+        <item>البرز - ماهدشت</item>
+        <item>البرز - محمدشهر</item>
+        <item>البرز - مشکین‌دشت</item>
+        <item>البرز - نظرآباد</item>
+        <item>البرز - هشتگرد</item>
+        <item>ایلام - ایلام</item>
+        <item>ایلام - آسمان آباد</item>
+        <item>ایلام - پهله</item>
+        <item>ایلام - دهلران</item>
+        <item>ایلام - موسیان</item>
+        <item>ایلام - مهران</item>
+        <item>ایلام - میمه</item>
+        <item>آذربایجان شرقی - اسکو</item>
+        <item>آذربایجان شرقی - اهر</item>
+        <item>آذربایجان شرقی - ایلخچی</item>
+        <item>آذربایجان شرقی - آبش‌احمد</item>
+        <item>آذربایجان شرقی - آچاچی</item>
+        <item>آذربایجان شرقی - آذرشهر</item>
+        <item>آذربایجان شرقی - آقکند</item>
+        <item>آذربایجان شرقی - باروق</item>
+        <item>آذربایجان شرقی - باسمنج</item>
+        <item>آذربایجان شرقی - بخشایش</item>
+        <item>آذربایجان شرقی - بستان‌آباد</item>
+        <item>آذربایجان شرقی - بناب</item>
+        <item>آذربایجان شرقی - تبریز</item>
+        <item>آذربایجان شرقی - تسوج</item>
+        <item>آذربایجان شرقی - تیکمه‌داش</item>
+        <item>آذربایجان شرقی - جلفا</item>
+        <item>آذربایجان شرقی - چاراویماق</item>
+        <item>آذربایجان شرقی - خامنه</item>
+        <item>آذربایجان شرقی - خراجو</item>
+        <item>آذربایجان شرقی - خسروشهر</item>
+        <item>آذربایجان شرقی - خواجه</item>
+        <item>آذربایجان شرقی - دوزدوزان</item>
+        <item>آذربایجان شرقی - ذوالبین</item>
+        <item>آذربایجان شرقی - زرنق</item>
+        <item>آذربایجان شرقی - زرنق</item>
+        <item>آذربایجان شرقی - زنوز</item>
+        <item>آذربایجان شرقی - سراب</item>
+        <item>آذربایجان شرقی - سردرود</item>
+        <item>آذربایجان شرقی - سهند</item>
+        <item>آذربایجان شرقی - سیس</item>
+        <item>آذربایجان شرقی - شبستر</item>
+        <item>آذربایجان شرقی - شربیان</item>
+        <item>آذربایجان شرقی - شرفخانه</item>
+        <item>آذربایجان شرقی - شندآباد</item>
+        <item>آذربایجان شرقی - صوفیان</item>
+        <item>آذربایجان شرقی - عجب‌شیر</item>
+        <item>آذربایجان شرقی - قره‌آغاج</item>
+        <item>آذربایجان شرقی - کُشکسرای</item>
+        <item>آذربایجان شرقی - کلیبر</item>
+        <item>آذربایجان شرقی - کوزه‌کنان</item>
+        <item>آذربایجان شرقی - گوگان</item>
+        <item>آذربایجان شرقی - لیلان</item>
+        <item>آذربایجان شرقی - مراغه</item>
+        <item>آذربایجان شرقی - مرند</item>
+        <item>آذربایجان شرقی - ملکان</item>
+        <item>آذربایجان شرقی - ممقان</item>
+        <item>آذربایجان شرقی - مهربان</item>
+        <item>آذربایجان شرقی - میانه</item>
+        <item>آذربایجان شرقی - وایقان</item>
+        <item>آذربایجان شرقی - ورزقان</item>
+        <item>آذربایجان شرقی - هادیشهر</item>
+        <item>آذربایجان شرقی - هریس</item>
+        <item>آذربایجان شرقی - هشترود</item>
+        <item>آذربایجان شرقی - هوراند</item>
+        <item>آذربایجان شرقی - یامچی</item>
+        <item>آذربایجان غربی - ارومیه</item>
+        <item>آذربایجان غربی - اشنویه</item>
+        <item>آذربایجان غربی - ایواوغلی</item>
+        <item>آذربایجان غربی - آواجیق</item>
+        <item>آذربایجان غربی - باروق</item>
+        <item>آذربایجان غربی - بازرگان</item>
+        <item>آذربایجان غربی - بوکان</item>
+        <item>آذربایجان غربی - پلدشت</item>
+        <item>آذربایجان غربی - تکاب</item>
+        <item>آذربایجان غربی - چایپاره</item>
+        <item>آذربایجان غربی - خوی</item>
+        <item>آذربایجان غربی - سردشت</item>
+        <item>آذربایجان غربی - سرو</item>
+        <item>آذربایجان غربی - سلماس</item>
+        <item>آذربایجان غربی - سیلوانه</item>
+        <item>آذربایجان غربی - سیمینه</item>
+        <item>آذربایجان غربی - سیه‌چشمه</item>
+        <item>آذربایجان غربی - شاهین‌دژ</item>
+        <item>آذربایجان غربی - شوط</item>
+        <item>آذربایجان غربی - فیرورق</item>
+        <item>آذربایجان غربی - قره ضیاءالدین</item>
+        <item>آذربایجان غربی - کشاورز</item>
+        <item>آذربایجان غربی - گردکشانه</item>
+        <item>آذربایجان غربی - ماکو</item>
+        <item>آذربایجان غربی - محمدیار</item>
+        <item>آذربایجان غربی - محمودآباد</item>
+        <item>آذربایجان غربی - مهاباد</item>
+        <item>آذربایجان غربی - میاندوآب</item>
+        <item>آذربایجان غربی - میرآباد</item>
+        <item>آذربایجان غربی - نالوس</item>
+        <item>آذربایجان غربی - نقده</item>
+        <item>آذربایجان غربی - نوشین‌شهر</item>
+        <item>بوشهر - امام حسن</item>
+        <item>بوشهر - اهرم</item>
+        <item>بوشهر - آب‌پخش</item>
+        <item>بوشهر - آبدان</item>
+        <item>بوشهر - برازجان</item>
+        <item>بوشهر - بردخون</item>
+        <item>بوشهر - بردستان</item>
+        <item>بوشهر - بوشهر</item>
+        <item>بوشهر - بندر دیر</item>
+        <item>بوشهر - بندر دیلم</item>
+        <item>بوشهر - بندر ریگ</item>
+        <item>بوشهر - بندر کنگان</item>
+        <item>بوشهر - بندر گناوه</item>
+        <item>بوشهر - بنک</item>
+        <item>بوشهر - تنگ ارم</item>
+        <item>بوشهر - جم</item>
+        <item>بوشهر - چغادک</item>
+        <item>بوشهر - خارک</item>
+        <item>بوشهر - خورموج</item>
+        <item>بوشهر - دالکی</item>
+        <item>بوشهر - دلوار</item>
+        <item>بوشهر - ریز</item>
+        <item>بوشهر - سعدآباد</item>
+        <item>بوشهر - شبانکاره</item>
+        <item>بوشهر - شنبه</item>
+        <item>بوشهر - طاهری</item>
+        <item>بوشهر - عسلویه</item>
+        <item>بوشهر - کاکی</item>
+        <item>بوشهر - کلمه</item>
+        <item>بوشهر - نخل تقی</item>
+        <item>بوشهر - وحدتیه</item>
+        <item>تهران - ارجمند</item>
+        <item>تهران - اسلام‌ شهر</item>
+        <item>تهران - اندیشه</item>
+        <item>تهران - آبعلی</item>
+        <item>تهران - باغستان</item>
+        <item>تهران - باقرشهر</item>
+        <item>تهران - پاکدشت</item>
+        <item>تهران - پردیس</item>
+        <item>تهران - پیشوا</item>
+        <item>تهران - تهران</item>
+        <item>تهران - رباط‌کریم</item>
+        <item>تهران - رودهن</item>
+        <item>تهران - ری</item>
+        <item>تهران - زردبند</item>
+        <item>تهران - شاهدشهر</item>
+        <item>تهران - شریف‌آباد</item>
+        <item>تهران - شمیرانات</item>
+        <item>تهران - شهریار</item>
+        <item>تهران - صالح‌آباد</item>
+        <item>تهران - صباشهر</item>
+        <item>تهران - فردوسیه</item>
+        <item>تهران - فشم</item>
+        <item>تهران - فیروزکوه</item>
+        <item>تهران - قدس</item>
+        <item>تهران - قرچک</item>
+        <item>تهران - کیلان</item>
+        <item>تهران - گلستان</item>
+        <item>تهران - لواسان</item>
+        <item>تهران - ملارد</item>
+        <item>تهران - نسیم‌شهر</item>
+        <item>تهران - نصیرشهر</item>
+        <item>تهران - وحیدیه</item>
+        <item>تهران - ورامین</item>
+        <item>چهار محال و بختیاری - اردل</item>
+        <item>چهار محال و بختیاری - آلونی</item>
+        <item>چهار محال و بختیاری - بروجن</item>
+        <item>چهار محال و بختیاری - بلداجی</item>
+        <item>چهار محال و بختیاری - جونقان</item>
+        <item>چهار محال و بختیاری - چلگرد</item>
+        <item>چهار محال و بختیاری - سامان</item>
+        <item>چهار محال و بختیاری - سفیددشت</item>
+        <item>چهار محال و بختیاری - سودجان</item>
+        <item>چهار محال و بختیاری - سورشجان</item>
+        <item>چهار محال و بختیاری - شلمزار</item>
+        <item>چهار محال و بختیاری - شهرکرد</item>
+        <item>چهار محال و بختیاری - فارسان</item>
+        <item>چهار محال و بختیاری - فرادنبه</item>
+        <item>چهار محال و بختیاری - فرخ‌شهر</item>
+        <item>چهار محال و بختیاری - گندمان</item>
+        <item>چهار محال و بختیاری - گهرو</item>
+        <item>چهار محال و بختیاری - لردگان</item>
+        <item>چهار محال و بختیاری - ناغان</item>
+        <item>چهار محال و بختیاری - نافچ</item>
+        <item>چهار محال و بختیاری - هفشجان</item>
+        <item>خراسان جنوبی - اسفدن</item>
+        <item>خراسان جنوبی - اسلامیه</item>
+        <item>خراسان جنوبی - آیَسک</item>
+        <item>خراسان جنوبی - بشرویه</item>
+        <item>خراسان جنوبی - بیرجند</item>
+        <item>خراسان جنوبی - خضری دشت بیاض</item>
+        <item>خراسان جنوبی - درمیان</item>
+        <item>خراسان جنوبی - سرایان</item>
+        <item>خراسان جنوبی - سربیشه</item>
+        <item>خراسان جنوبی - شوسف</item>
+        <item>خراسان جنوبی - طارق</item>
+        <item>خراسان جنوبی - فردوس</item>
+        <item>خراسان جنوبی - قائن</item>
+        <item>خراسان جنوبی - قائنات</item>
+        <item>خراسان جنوبی - نهبندان</item>
+        <item>خراسان رضوی - انابد</item>
+        <item>خراسان رضوی - باجگیران</item>
+        <item>خراسان رضوی - باخرز</item>
+        <item>خراسان رضوی - بایگ</item>
+        <item>خراسان رضوی - بجستان</item>
+        <item>خراسان رضوی - بردسکن</item>
+        <item>خراسان رضوی - بیدخت</item>
+        <item>خراسان رضوی - تایباد</item>
+        <item>خراسان رضوی - تربت جام</item>
+        <item>خراسان رضوی - تربت حیدریه</item>
+        <item>خراسان رضوی - چاپشلو</item>
+        <item>خراسان رضوی - چکنه</item>
+        <item>خراسان رضوی - چناران</item>
+        <item>خراسان رضوی - خرو</item>
+        <item>خراسان رضوی - خلیل‌آباد</item>
+        <item>خراسان رضوی - داورزن</item>
+        <item>خراسان رضوی - دررود</item>
+        <item>خراسان رضوی - دولت‌آباد</item>
+        <item>خراسان رضوی - رودآب</item>
+        <item>خراسان رضوی - سبزوار</item>
+        <item>خراسان رضوی - سرخس</item>
+        <item>خراسان رضوی - سلامی</item>
+        <item>خراسان رضوی - شادمهر</item>
+        <item>خراسان رضوی - شاندیز</item>
+        <item>خراسان رضوی - طرقبه</item>
+        <item>خراسان رضوی - عشق آباد</item>
+        <item>خراسان رضوی - فرهادگرد</item>
+        <item>خراسان رضوی - فریمان</item>
+        <item>خراسان رضوی - فیروزه</item>
+        <item>خراسان رضوی - فیض‌آباد</item>
+        <item>خراسان رضوی - قاسم‌آباد</item>
+        <item>خراسان رضوی - قدمگاه</item>
+        <item>خراسان رضوی - قوچان</item>
+        <item>خراسان رضوی - کاخک</item>
+        <item>خراسان رضوی - کاریز</item>
+        <item>خراسان رضوی - کاشمر</item>
+        <item>خراسان رضوی - کلات</item>
+        <item>خراسان رضوی - گناباد</item>
+        <item>خراسان رضوی - مشهد مقدس</item>
+        <item>خراسان رضوی - نصرآباد</item>
+        <item>خراسان رضوی - نوخندان</item>
+        <item>خراسان رضوی - نیشابور</item>
+        <item>خراسان رضوی - نیل‌شهر</item>
+        <item>خراسان رضوی - همت آباد</item>
+        <item>خراسان شمالی - اسفراین</item>
+        <item>خراسان شمالی - آشخانه</item>
+        <item>خراسان شمالی - بجنورد</item>
+        <item>خراسان شمالی - پیش‌قلعه</item>
+        <item>خراسان شمالی - حصار گرم‌خان</item>
+        <item>خراسان شمالی - درق</item>
+        <item>خراسان شمالی - راز</item>
+        <item>خراسان شمالی - سنخواست</item>
+        <item>خراسان شمالی - شیروان</item>
+        <item>خراسان شمالی - صفی‌آباد</item>
+        <item>خراسان شمالی - لوجلی</item>
+        <item>خوزستان - اروندکنار</item>
+        <item>خوزستان - امیدیه</item>
+        <item>خوزستان - اندیمشک</item>
+        <item>خوزستان - اهواز</item>
+        <item>خوزستان - ایذه</item>
+        <item>خوزستان - آبادان</item>
+        <item>خوزستان - بهبهان</item>
+        <item>خوزستان - خرمشهر</item>
+        <item>خوزستان - دزفول</item>
+        <item>خوزستان - دشت آزادگان</item>
+        <item>خوزستان - رامهرمز</item>
+        <item>خوزستان - سوسنگرد</item>
+        <item>خوزستان - شادگان</item>
+        <item>خوزستان - شوش</item>
+        <item>خوزستان - شوشتر</item>
+        <item>خوزستان - صیدون</item>
+        <item>خوزستان - گتوند</item>
+        <item>خوزستان - لالی</item>
+        <item>خوزستان - ماهشهر</item>
+        <item>خوزستان - مسجد سلیمان</item>
+        <item>خوزستان - میانرود</item>
+        <item>خوزستان - مینوشهر</item>
+        <item>خوزستان - هفتگل</item>
+        <item>خوزستان - هندیجان</item>
+        <item>زنجان - ارمغان‌خانه</item>
+        <item>زنجان - آب‌بر</item>
+        <item>زنجان - خرمدره</item>
+        <item>زنجان - زنجان</item>
+        <item>زنجان - سجاس</item>
+        <item>زنجان - سهرورد</item>
+        <item>زنجان - قیدار</item>
+        <item>زنجان - خدابنده</item>
+        <item>زنجان - ابهر</item>
+        <item>زنجان - سلطانیه</item>
+        <item>زنجان - گرماب</item>
+        <item>زنجان - ماه‌نشان</item>
+        <item>زنجان - چوزق</item>
+        <item>زنجان - حلب</item>
+        <item>زنجان - زرین اباد</item>
+        <item>سمنان - ایوانکی</item>
+        <item>سمنان - آرادان</item>
+        <item>سمنان - بسطام</item>
+        <item>سمنان - دامغان</item>
+        <item>سمنان - درجزین</item>
+        <item>سمنان - سرخه</item>
+        <item>سمنان - سمنان</item>
+        <item>سمنان - شاهرود</item>
+        <item>سمنان - شهمیرزاد</item>
+        <item>سمنان - کلاته خیج</item>
+        <item>سمنان - گرمسار</item>
+        <item>سمنان - مجن</item>
+        <item>سمنان - مهدی‌شهر</item>
+        <item>سمنان - میامی</item>
+        <item>سمنان - دیباج</item>
+        <item>سمنان - بیارجمند</item>
+        <item>سمنان - امیریه</item>
+        <item>سمنان - رودیان</item>
+        <item>سیستان و بلوچستان - ادیمی</item>
+        <item>سیستان و بلوچستان - اسپکه</item>
+        <item>سیستان و بلوچستان - ایرانشهر</item>
+        <item>سیستان و بلوچستان - بزمان</item>
+        <item>سیستان و بلوچستان - بمپور</item>
+        <item>سیستان و بلوچستان - بنت</item>
+        <item>سیستان و بلوچستان - بنجار</item>
+        <item>سیستان و بلوچستان - پیشین</item>
+        <item>سیستان و بلوچستان - جالق</item>
+        <item>سیستان و بلوچستان - چابهار</item>
+        <item>سیستان و بلوچستان - خاش</item>
+        <item>سیستان و بلوچستان - دوست‌محمد</item>
+        <item>سیستان و بلوچستان - راسک</item>
+        <item>سیستان و بلوچستان - زابل</item>
+        <item>سیستان و بلوچستان - زاهدان</item>
+        <item>سیستان و بلوچستان - زهک</item>
+        <item>سیستان و بلوچستان - سراوان</item>
+        <item>سیستان و بلوچستان - سرباز</item>
+        <item>سیستان و بلوچستان - سوران</item>
+        <item>سیستان و بلوچستان - فنوج</item>
+        <item>سیستان و بلوچستان - قصرقند</item>
+        <item>سیستان و بلوچستان - کنارک</item>
+        <item>سیستان و بلوچستان - گلمورتی</item>
+        <item>سیستان و بلوچستان - محمدآباد</item>
+        <item>سیستان و بلوچستان - میرجاوه</item>
+        <item>سیستان و بلوچستان - نصرت‌آباد</item>
+        <item>سیستان و بلوچستان - نگور</item>
+        <item>سیستان و بلوچستان - نوک‌آباد</item>
+        <item>سیستان و بلوچستان - نیک‌شهر</item>
+        <item>فارس - اَهِل</item>
+        <item>فارس - اِوَز</item>
+        <item>فارس - اردکان</item>
+        <item>فارس - ارسنجان</item>
+        <item>فارس - استهبان</item>
+        <item>فارس - اشکنان</item>
+        <item>فارس - اقلید</item>
+        <item>فارس - ایزدخواست</item>
+        <item>فارس - آباده</item>
+        <item>فارس - باب انار</item>
+        <item>فارس - بالاده</item>
+        <item>فارس - بنارویه</item>
+        <item>فارس - بهمن</item>
+        <item>فارس - بیرم</item>
+        <item>فارس - جنت‌شهر</item>
+        <item>فارس - جهرم</item>
+        <item>فارس - خاوران</item>
+        <item>فارس - خرامه</item>
+        <item>فارس - خشت</item>
+        <item>فارس - خنج</item>
+        <item>فارس - خور</item>
+        <item>فارس - خومه‌زار</item>
+        <item>فارس - رستم</item>
+        <item>فارس - سلطان شهر</item>
+        <item>فارس - سورمق</item>
+        <item>فارس - سوریان</item>
+        <item>فارس - ششده</item>
+        <item>فارس - شهر خنج</item>
+        <item>فارس - شیراز</item>
+        <item>فارس - صغاد</item>
+        <item>فارس - صفاشهر</item>
+        <item>فارس - علامرودشت</item>
+        <item>فارس - فسا</item>
+        <item>فارس - فیروزآباد</item>
+        <item>فارس - قائمیه</item>
+        <item>فارس - قطب‌آباد</item>
+        <item>فارس - قیر</item>
+        <item>فارس - کَوار</item>
+        <item>فارس - کازرون</item>
+        <item>فارس - کامفیروز</item>
+        <item>فارس - کنارتخته</item>
+        <item>فارس - گراش</item>
+        <item>فارس - گله‌دار</item>
+        <item>فارس - لار</item>
+        <item>فارس - لامرد</item>
+        <item>فارس - مُهر</item>
+        <item>فارس - مرودشت</item>
+        <item>فارس - میمند</item>
+        <item>فارس - نودان</item>
+        <item>فارس - نورآباد ممسنی</item>
+        <item>فارس - نی‌ریز</item>
+        <item>فارس - وراوی</item>
+        <item>قزوین - اوج</item>
+        <item>قزوین - خرمدشت</item>
+        <item>قزوین - دانسفهان</item>
+        <item>قزوین - ابگرم</item>
+        <item>قزوین - ابیک</item>
+        <item>قزوین - ارداق</item>
+        <item>قزوین - اسفرورین</item>
+        <item>قزوین - الوند</item>
+        <item>قزوین - بوئین‌زهرا</item>
+        <item>قزوین - تاکستان</item>
+        <item>قزوین - خاکعلی</item>
+        <item>قزوین - شال</item>
+        <item>قزوین - قزوین</item>
+        <item>قزوین - کوهین</item>
+        <item>قزوین - محمودآباد نمونه</item>
+        <item>قزوین - نرجه</item>
+        <item>قم - دستجرد</item>
+        <item>قم - قم</item>
+        <item>قم - قنوات</item>
+        <item>قم - جعفریه</item>
+        <item>قم - کهک</item>
+        <item>قم - سلفچگان</item>
+        <item>کردستان - سرو اباد</item>
+        <item>کردستان - دیواندره</item>
+        <item>کردستان - کامیاران</item>
+        <item>کردستان - بانه</item>
+        <item>کردستان - بیجار</item>
+        <item>کردستان - چناره</item>
+        <item>کردستان - دهگلان</item>
+        <item>کردستان - زرینه</item>
+        <item>کردستان - سریش آباد</item>
+        <item>کردستان - سقز</item>
+        <item>کردستان - سنندج</item>
+        <item>کردستان - شویشه</item>
+        <item>کردستان - قروه</item>
+        <item>کردستان - مریوان</item>
+        <item>کرمان - انار</item>
+        <item>کرمان - قلعه گنج</item>
+        <item>کرمان - عنبر اباد</item>
+        <item>کرمان - کهنوج</item>
+        <item>کرمان - شهربابک</item>
+        <item>کرمان - زرند</item>
+        <item>کرمان - اختیارآباد</item>
+        <item>کرمان - امین‌شهر</item>
+        <item>کرمان - اندوهجرد</item>
+        <item>کرمان - باغین</item>
+        <item>کرمان - بافت</item>
+        <item>کرمان - بردسیر</item>
+        <item>کرمان - بروات</item>
+        <item>کرمان - بزنجان</item>
+        <item>کرمان - بم</item>
+        <item>کرمان - بهرمان</item>
+        <item>کرمان - پاریز</item>
+        <item>کرمان - جبالبارز</item>
+        <item>کرمان - جوپار</item>
+        <item>کرمان - جیرفت</item>
+        <item>کرمان - چترود</item>
+        <item>کرمان - دهج</item>
+        <item>کرمان - رابر</item>
+        <item>کرمان - راور</item>
+        <item>کرمان - راین</item>
+        <item>کرمان - رفسنجان</item>
+        <item>کرمان - ریحان‌شهر</item>
+        <item>کرمان - زنگی‌آباد</item>
+        <item>کرمان - زیدآباد</item>
+        <item>کرمان - سیرجان</item>
+        <item>کرمان - شهداد</item>
+        <item>کرمان - صفائیه</item>
+        <item>کرمان - فهرج</item>
+        <item>کرمان - کاظم‌آباد</item>
+        <item>کرمان - کرمان</item>
+        <item>کرمان - کوهبنان</item>
+        <item>کرمان - گلزار</item>
+        <item>کرمان - محی‌آباد</item>
+        <item>کرمان - مردهک</item>
+        <item>کرمان - منوجان</item>
+        <item>کرمان - نرماشیر</item>
+        <item>کرمان - نظام‌شهر</item>
+        <item>کرمان - نودژ</item>
+        <item>کرمان - یزدان‌شهر</item>
+        <item>کرمانشاه - ازگله</item>
+        <item>کرمانشاه - اسلام‌آباد غرب</item>
+        <item>کرمانشاه - باینگان</item>
+        <item>کرمانشاه - بیستون</item>
+        <item>کرمانشاه - پاوه</item>
+        <item>کرمانشاه - جوانرود</item>
+        <item>کرمانشاه - روانسر</item>
+        <item>کرمانشاه - سرپل ذهاب</item>
+        <item>کرمانشاه - سرمست</item>
+        <item>کرمانشاه - سطر</item>
+        <item>کرمانشاه - سنقر</item>
+        <item>کرمانشاه - سومار</item>
+        <item>کرمانشاه - صحنه</item>
+        <item>کرمانشاه - قصر شیرین</item>
+        <item>کرمانشاه - کرمانشاه</item>
+        <item>کرمانشاه - کنگاور</item>
+        <item>کرمانشاه - کوزران</item>
+        <item>کرمانشاه - گهواره</item>
+        <item>کرمانشاه - گیلانغرب</item>
+        <item>کرمانشاه - میان‌راهان</item>
+        <item>کرمانشاه - نوسود</item>
+        <item>کرمانشاه - هرسین</item>
+        <item>کرمانشاه - هلشی</item>
+        <item>کهگیلویه و بویر احمد - باشت</item>
+        <item>کهگیلویه و بویر احمد - پاتاوه</item>
+        <item>کهگیلویه و بویر احمد - چرام</item>
+        <item>کهگیلویه و بویر احمد - دوگنبدان</item>
+        <item>کهگیلویه و بویر احمد - دهدشت</item>
+        <item>کهگیلویه و بویر احمد - دیشموک</item>
+        <item>کهگیلویه و بویر احمد - سوق</item>
+        <item>کهگیلویه و بویر احمد - سی سخت</item>
+        <item>کهگیلویه و بویر احمد - کفشکنان</item>
+        <item>کهگیلویه و بویر احمد - گراب سفلی</item>
+        <item>کهگیلویه و بویر احمد - لنده</item>
+        <item>کهگیلویه و بویر احمد - یاسوج</item>
+        <item>گلستان - انبار آلوم</item>
+        <item>گلستان - اینچه‌بُرون</item>
+        <item>گلستان - آزادشهر</item>
+        <item>گلستان - آق قلا</item>
+        <item>گلستان - بندر ترکمن</item>
+        <item>گلستان - بندر گز</item>
+        <item>گلستان - خان‌ببین</item>
+        <item>گلستان - دلند</item>
+        <item>گلستان - سرخنکلاته</item>
+        <item>گلستان - سیمین‌شهر</item>
+        <item>گلستان - علی‌آباد کتول</item>
+        <item>گلستان - کردکوی</item>
+        <item>گلستان - کلاله</item>
+        <item>گلستان - گالیکش</item>
+        <item>گلستان - گرگان</item>
+        <item>گلستان - گمیشان</item>
+        <item>گلستان - گنبدکاووس</item>
+        <item>گلستان - مینودشت</item>
+        <item>گلستان - نگین‌شهر</item>
+        <item>گیلان - نوکنده</item>
+        <item>گیلان - احمدسرگوراب</item>
+        <item>گیلان - اسالم</item>
+        <item>گیلان - اطاقور</item>
+        <item>گیلان - املش</item>
+        <item>گیلان - آستانه اشرفیه</item>
+        <item>گیلان - بازارجمعه</item>
+        <item>گیلان - بندر انزلی</item>
+        <item>گیلان - بندر آستارا</item>
+        <item>گیلان - تالش</item>
+        <item>گیلان - تنکابن</item>
+        <item>گیلان - جیرنده</item>
+        <item>گیلان - چابکسر</item>
+        <item>گیلان - چوبر</item>
+        <item>گیلان - خلیفه محله</item>
+        <item>گیلان - رشت</item>
+        <item>گیلان - رضوان‌شهر</item>
+        <item>گیلان - رودبار</item>
+        <item>گیلان - رودبار زیتون</item>
+        <item>گیلان - رودبنه</item>
+        <item>گیلان - شفت</item>
+        <item>گیلان - شلمان</item>
+        <item>گیلان - صومعه سرا</item>
+        <item>گیلان - فومن</item>
+        <item>گیلان - کوچصفهان</item>
+        <item>گیلان - لاهیجان</item>
+        <item>گیلان - لشت نشا</item>
+        <item>گیلان - لنگرود</item>
+        <item>گیلان - لوشان</item>
+        <item>گیلان - لوندویل</item>
+        <item>گیلان - لیسار</item>
+        <item>گیلان - مارلیک</item>
+        <item>گیلان - ماسال</item>
+        <item>گیلان - مرجغل</item>
+        <item>گیلان - منجیل</item>
+        <item>گیلان - هشتپر</item>
+        <item>گیلان - واجارگاه</item>
+        <item>لرستان - ازنا</item>
+        <item>لرستان - الشتر</item>
+        <item>لرستان - الیگودرز</item>
+        <item>لرستان - بروجرد</item>
+        <item>لرستان - پل‌دختر</item>
+        <item>لرستان - چالانچولان</item>
+        <item>لرستان - خرم‌آباد</item>
+        <item>لرستان - درب گنبد</item>
+        <item>لرستان - دورود</item>
+        <item>لرستان - زاغه</item>
+        <item>لرستان - سراب‌دوره</item>
+        <item>لرستان - فرزیان</item>
+        <item>لرستان - فیروزآباد</item>
+        <item>لرستان - کونانی</item>
+        <item>لرستان - کوهدشت</item>
+        <item>لرستان - گراب</item>
+        <item>لرستان - معمولان</item>
+        <item>لرستان - نورآباد</item>
+        <item>لرستان - ویسیان</item>
+        <item>مازندران - ایزدشهر</item>
+        <item>مازندران - آلاشت</item>
+        <item>مازندران - آمل</item>
+        <item>مازندران - بابل</item>
+        <item>مازندران - بابلسر</item>
+        <item>مازندران - بلده</item>
+        <item>مازندران - بهشهر</item>
+        <item>مازندران - پل سفید</item>
+        <item>مازندران - تنکابن</item>
+        <item>مازندران - جویبار</item>
+        <item>مازندران - چالوس</item>
+        <item>مازندران - چمستان</item>
+        <item>مازندران - خلیل‌شهر</item>
+        <item>مازندران - خشرودپی</item>
+        <item>مازندران - دابودشت</item>
+        <item>مازندران - رامسر</item>
+        <item>مازندران - رستمکلا</item>
+        <item>مازندران - رویان</item>
+        <item>مازندران - زرگرمحله</item>
+        <item>مازندران - ساری</item>
+        <item>مازندران - شیرگاه</item>
+        <item>مازندران - فریدون‌کنار</item>
+        <item>مازندران - قائم‌شهر</item>
+        <item>مازندران - کلارآباد</item>
+        <item>مازندران - کلاردشت</item>
+        <item>مازندران - کله‌بست</item>
+        <item>مازندران - کوهی‌خیل</item>
+        <item>مازندران - کیاسر</item>
+        <item>مازندران - گتاب</item>
+        <item>مازندران - گرجی‌محله</item>
+        <item>مازندران - گزنک</item>
+        <item>مازندران - گلوگاه</item>
+        <item>مازندران - مرزن‌آباد</item>
+        <item>مازندران - مرزیکلا</item>
+        <item>مازندران - نشتارود</item>
+        <item>مازندران - نوشهر</item>
+        <item>مرکزی - اراک</item>
+        <item>مرکزی - انجدان</item>
+        <item>مرکزی - آشتیان</item>
+        <item>مرکزی - پرندک</item>
+        <item>مرکزی - تفرش</item>
+        <item>مرکزی - توره</item>
+        <item>مرکزی - خمین</item>
+        <item>مرکزی - خنداب</item>
+        <item>مرکزی - رازقان</item>
+        <item>مرکزی - زاویه</item>
+        <item>مرکزی - ساوه</item>
+        <item>مرکزی - سنجان</item>
+        <item>مرکزی - شازند</item>
+        <item>مرکزی - ضامنجان</item>
+        <item>مرکزی - غرق‌آباد</item>
+        <item>مرکزی - فرمهین</item>
+        <item>مرکزی - فیجان</item>
+        <item>مرکزی - قورچی‌باشی</item>
+        <item>مرکزی - کرهرود</item>
+        <item>مرکزی - کمیجان</item>
+        <item>مرکزی - مأمونیه</item>
+        <item>مرکزی - محلات</item>
+        <item>مرکزی - نراق</item>
+        <item>مرکزی - نوبران</item>
+        <item>مرکزی - نیم‌ور</item>
+        <item>هرمزگان - ابوموسی</item>
+        <item>هرمزگان - بستک</item>
+        <item>هرمزگان - بندر چارک</item>
+        <item>هرمزگان - بندر خمیر</item>
+        <item>هرمزگان - بندر عباس</item>
+        <item>هرمزگان - بندر لنگه</item>
+        <item>هرمزگان - پارسیان</item>
+        <item>هرمزگان - جاسک</item>
+        <item>هرمزگان - جزیره کیش</item>
+        <item>هرمزگان - جناح</item>
+        <item>هرمزگان - حاجی‌آباد</item>
+        <item>هرمزگان - درگهان</item>
+        <item>هرمزگان - رودان</item>
+        <item>هرمزگان - سندرک</item>
+        <item>هرمزگان - سیریک</item>
+        <item>هرمزگان - شهر رویدر</item>
+        <item>هرمزگان - شهر کنگ</item>
+        <item>هرمزگان - فین</item>
+        <item>هرمزگان - قشم</item>
+        <item>هرمزگان - میناب</item>
+        <item>همدان - برزول</item>
+        <item>همدان - بهار</item>
+        <item>همدان - حسین آباد ناظم</item>
+        <item>همدان - رزن</item>
+        <item>همدان - زنگنه</item>
+        <item>همدان - سامن</item>
+        <item>همدان - صالح‌آباد</item>
+        <item>همدان - فامنین</item>
+        <item>همدان - فرسفج</item>
+        <item>همدان - فیروزان</item>
+        <item>همدان - قهاوند</item>
+        <item>همدان - کبود رآهنگ</item>
+        <item>همدان - گیان</item>
+        <item>همدان - لالجین</item>
+        <item>همدان - ملایر</item>
+        <item>همدان - مهاجران</item>
+        <item>همدان - نهاوند</item>
+        <item>همدان - همدان</item>
+        <item>یزد - اردکان</item>
+        <item>یزد - بافق</item>
+        <item>یزد - فردوس</item>
+        <item>یزد - مروست</item>
+        <item>یزد - میبد</item>
+        <item>یزد - ندوشن</item>
+        <item>یزد - یزد</item>
+        <item>یزد - مهریز</item>
+        <item>یزد - ابر کوه</item>
+        <item>یزد - تفت</item>
+        <item>یزد - اشکذر</item>
+        <item>یزد - هرات</item>
+        <item>یزد - بهاباد</item>
+        <item>البرز - صفادشت</item>
+        <item>مرکزی - ساوه</item>
+        <item>اصفهان - زرین شهر</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_profile">پروفایل</string>
+    <string name="title_home">خانه</string>
+    <string name="title_notify">اعلانیه ها</string>
+    <string name="title_event">رویدادها</string>
+</resources>

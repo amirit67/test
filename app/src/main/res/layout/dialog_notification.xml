@@ -1,0 +1,87 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog_background"
+    android:gravity="center"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="right"
+        android:background="@color/colorPrimary"
+        android:gravity="right">
+
+        <ir.payebash.Moudle.CustomTextViewBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingRight="16dp"
+            android:text="تنظیمات دریافت نوتیفیکیشن"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/ll_contact_ways"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right|center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/compatSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="@dimen/dp8"
+            android:background="@android:color/white"
+            android:checked="true"
+            android:gravity="right|center_vertical"
+            android:layoutDirection="rtl"
+            android:padding="@dimen/dp8"
+            android:fontFamily="@font/iransansmedium"
+            android:text="نوتیفیکیشن ملحق شدن دیگران در رویدادهای شما"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/compatSwitch2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="@dimen/dp8"
+            android:background="@android:color/white"
+            android:checked="true"
+            android:gravity="right|center_vertical"
+            android:layoutDirection="rtl"
+            android:padding="@dimen/dp8"
+            android:fontFamily="@font/iransansmedium"
+            android:text="نوتیفیکیشن نظرات در رویدادهای شما"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/compatSwitch3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="@dimen/dp8"
+            android:background="@android:color/white"
+            android:checked="true"
+            android:gravity="right|center_vertical"
+            android:layoutDirection="rtl"
+            android:padding="@dimen/dp8"
+            android:fontFamily="@font/iransansmedium"
+            android:text="نوتیفیکیشن رویداد های درخواستی شما"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</LinearLayout>

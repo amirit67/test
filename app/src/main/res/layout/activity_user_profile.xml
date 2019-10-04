@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    tools:context=".Activities.MainActivity">
+
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar_top"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white"
+        android:weightSum="1">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="@android:color/transparent"
+            card_view:srcCompat="@drawable/ic_back" />
+
+        <ir.payebash.Moudle.CustomTextViewBold
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:tag="Name"
+            android:text="@string/app_name"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp14" />
+
+        <ImageButton
+            android:id="@+id/btnReport"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:background="@android:color/transparent"
+            card_view:srcCompat="@drawable/ic_report" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ededed" />
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/pb"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp160"
+        wheel:matProg_barColor="#000"
+        wheel:matProg_barWidth="1dp"
+        wheel:matProg_fillRadius="true"
+        wheel:matProg_progressIndeterminate="true"
+        wheel:matProg_spinSpeed="0.75" />
+
+    <ScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ir.payebash.Moudle.CircleImageView
+                android:id="@+id/img_profile"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp100"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_paye" />
+
+            <ir.payebash.Moudle.CustomTextViewBold
+                android:id="@+id/btn_vote"
+                android:layout_width="@dimen/dp140"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/bg_trust"
+                android:clickable="true"
+                android:drawableRight="@mipmap/trusted_user"
+                android:gravity="center"
+                android:padding="@dimen/dp6"
+                android:text="رای اعتماد"
+                android:textColor="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/txt_user_age"
+                style="@style/ProfileItem"
+                android:layout_below="@+id/img_profile"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@null"
+                android:drawableRight="@mipmap/user_age"
+                android:padding="8dp"
+                android:tag="UserAge"
+                android:textSize="@dimen/sp13" />
+
+            <TextView
+                android:id="@+id/txt_trust_count"
+                style="@style/ProfileItem"
+                android:layout_below="@+id/img_profile"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@null"
+                android:drawableRight="@mipmap/trusted_count"
+                android:padding="8dp"
+                android:tag="TrustedVoteCount"
+                android:textSize="@dimen/sp13" />
+
+            <TextView
+                android:id="@+id/txt_ActivityState"
+                style="@style/ProfileItem"
+                android:layout_below="@+id/img_profile"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@null"
+                android:drawableRight="@mipmap/number_ads"
+                android:padding="8dp"
+                android:tag="ActivityState"
+                android:textSize="@dimen/sp13"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_age"
+                style="@style/ProfileItem"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/txt_activity"
+                android:drawableLeft="@null"
+                android:drawableRight="@mipmap/age"
+                android:padding="8dp"
+                android:tag="Age"
+                android:textSize="@dimen/sp13" />
+
+            <TextView
+                android:id="@+id/txt_city"
+                style="@style/ProfileItem"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/txt_age"
+                android:drawableLeft="@null"
+                android:drawableRight="@mipmap/city"
+                android:padding="8dp"
+                android:tag="City"
+                android:textSize="@dimen/sp13" />
+
+            <TextView
+                android:id="@+id/txt_about"
+                style="@style/ProfileItem"
+                android:layout_below="@+id/txt_city"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@null"
+                android:drawableRight="@mipmap/about"
+                android:padding="8dp"
+                android:tag="AboutMe"
+                android:textSize="@dimen/sp13"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_favorites"
+                    style="@style/ProfileItem"
+                    android:layout_below="@+id/txt_about"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:drawableLeft="@null"
+                    android:drawableRight="@mipmap/favorites"
+                    android:padding="8dp"
+                    android:text="علاقه مندی ها :"
+                    android:textSize="@dimen/sp13"
+                    android:visibility="gone" />
+
+                <ir.payebash.Moudle.TagLayout
+                    android:id="@+id/mTagLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/status_press_items"
+                    android:tag="Favorites">
+
+
+                </ir.payebash.Moudle.TagLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_contact"
+                style="@style/ProfileItem"
+                android:layout_below="@+id/txt_favorites"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@null"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="راه های ارتباطی"
+                android:textSize="@dimen/sp13"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ll_contact_ways"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/txt_contact"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btn_instagram"
+                    style="@style/RegButton"
+                    android:layout_width="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/instagram"
+                    android:paddingRight="8dp"
+                    android:tag="@string/Instagram"
+                    android:text="اینستاگرام"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btn_telegram"
+                    style="@style/RegButton"
+                    android:layout_width="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/telegram"
+                    android:paddingRight="8dp"
+                    android:tag="@string/Telegram"
+                    android:text="تلگرام"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btn_soroosh"
+                    style="@style/RegButton"
+                    android:layout_width="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/soroosh"
+                    android:paddingRight="8dp"
+                    android:tag="@string/Soroosh"
+                    android:text="سروش"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp16" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

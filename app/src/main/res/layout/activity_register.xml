@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layoutDirection="ltr">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_bg" />
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/pb"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        wheel:matProg_barColor="#000"
+        wheel:matProg_barWidth="1dp"
+        wheel:matProg_fillRadius="true"
+        wheel:matProg_progressIndeterminate="true"
+        wheel:matProg_spinSpeed="0.75" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="@dimen/dp320"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingTop="30dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="#2ea67f"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp48"
+                    android:gravity="center"
+                    android:text="@string/register"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/sp15"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/mdtp_white"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@drawable/googleg_standard_color_18"
+                    android:text="ورود با حساب گوگل"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp12"
+                    android:visibility="visible" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp240"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:id="@+id/ll_register"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <LinearLayout
+                                    android:id="@+id/linearLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:paddingEnd="30dp"
+                                    android:paddingLeft="50dp"
+                                    android:paddingRight="30dp"
+                                    android:paddingStart="50dp">
+
+                                    <android.support.design.widget.TextInputLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:gravity="right"
+                                        android:textColorHint="#f0f7f4"
+                                        android:theme="@style/TextLabel">
+
+                                        <EditText
+                                            android:id="@+id/et_mobile"
+                                            style="@style/register_editText"
+                                            android:hint="@string/Mobile"
+                                            android:inputType="phone"
+                                            android:maxLength="11"
+                                            android:tag="Mobile" />
+                                    </android.support.design.widget.TextInputLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/linearLayout2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_below="@+id/linearLayout"
+                                    android:orientation="horizontal"
+                                    android:paddingEnd="30dp"
+                                    android:paddingLeft="50dp"
+                                    android:paddingRight="30dp"
+                                    android:paddingStart="50dp">
+
+                                    <android.support.design.widget.TextInputLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:gravity="right"
+                                        android:textColorHint="#f0f7f4"
+                                        android:theme="@style/TextLabel">
+
+                                        <EditText
+                                            android:id="@+id/et_name"
+                                            style="@style/register_editText"
+                                            android:hint="@string/Name"
+                                            android:inputType="text"
+                                            android:maxLength="15"
+                                            android:tag="Name" />
+                                    </android.support.design.widget.TextInputLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/linearLayout3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_below="@+id/linearLayout2"
+                                    android:orientation="horizontal"
+                                    android:paddingEnd="30dp"
+                                    android:paddingLeft="50dp"
+                                    android:paddingRight="30dp"
+                                    android:paddingStart="50dp">
+
+                                    <android.support.design.widget.TextInputLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:gravity="right"
+                                        android:textColorHint="#f0f7f4"
+                                        android:theme="@style/TextLabel">
+
+                                        <EditText
+                                            android:id="@+id/et_family"
+                                            style="@style/register_editText"
+                                            android:hint="@string/FamilyName"
+                                            android:inputType="text"
+                                            android:maxLength="15"
+                                            android:tag="Family" />
+                                    </android.support.design.widget.TextInputLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ll_age"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_below="@+id/linearLayout3"
+                                    android:orientation="horizontal"
+                                    android:paddingEnd="30dp"
+                                    android:paddingLeft="50dp"
+                                    android:paddingRight="30dp"
+                                    android:paddingStart="50dp">
+
+                                    <android.support.design.widget.TextInputLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:gravity="right"
+                                        android:textColorHint="#f0f7f4"
+                                        android:theme="@style/TextLabel">
+
+                                        <EditText
+                                            android:id="@+id/et_age"
+                                            style="@style/register_editText"
+                                            android:hint="@string/Age"
+                                            android:inputType="number"
+                                            android:maxLength="2"
+                                            android:tag="Age" />
+                                    </android.support.design.widget.TextInputLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_below="@+id/ll_age"
+                                    android:orientation="horizontal"
+                                    android:paddingEnd="30dp"
+                                    android:paddingLeft="50dp"
+                                    android:paddingRight="30dp"
+                                    android:paddingStart="50dp">
+
+                                    <android.support.design.widget.TextInputLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@android:color/transparent"
+                                        android:gravity="right"
+                                        android:textColorHint="#f0f7f4"
+                                        android:theme="@style/TextLabel">
+
+                                        <EditText
+                                            android:id="@+id/et_city"
+                                            style="@style/register_editText"
+                                            android:focusable="false"
+                                            android:focusableInTouchMode="false"
+                                            android:hint="@string/City"
+                                            android:inputType="text"
+                                            android:tag="City" />
+                                    </android.support.design.widget.TextInputLayout>
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </ScrollView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingEnd="30dp"
+                        android:paddingLeft="50dp"
+                        android:paddingRight="30dp"
+                        android:paddingStart="50dp"
+                        android:visibility="gone">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:textColorHint="#f0f7f4"
+                            android:theme="@style/TextLabel">
+
+                            <EditText
+                                android:id="@+id/et_code"
+                                style="@style/register_editText"
+                                android:hint="کد دریافتی"
+                                android:inputType="number" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_timer"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bt_shape"
+                    android:gravity="center"
+                    android:onClick="clickLogin"
+                    android:stateListAnimator="@drawable/state_list_animator_z"
+                    android:textColor="#d3d3d3"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/bt_register"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="@dimen/dp6"
+                        android:background="@drawable/bt_shape_2"
+                        android:onClick="clickRegister"
+                        android:stateListAnimator="@drawable/state_list_animator_z"
+                        android:text="@string/register"
+                        android:textColor="#2fa881"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/bt_go"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="@dimen/dp6"
+                        android:background="@drawable/bt_shape_2"
+                        android:onClick="clickSubmitRegister"
+                        android:stateListAnimator="@drawable/state_list_animator_z"
+                        android:text="@string/go"
+                        android:textColor="#2fa881"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/bt_register"
+                        android:layout_alignLeft="@+id/bt_register"
+                        android:layout_alignStart="@+id/bt_register"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginStart="50dp"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:onClick="clickBackLogin"
+            android:src="@mipmap/plus_x"
+            android:transitionName="loginFab"
+            app:fabSize="normal" />
+
+    </FrameLayout>
+
+</RelativeLayout>

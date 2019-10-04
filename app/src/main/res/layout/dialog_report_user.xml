@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="right"
+    android:background="@drawable/dialog_background"
+    android:gravity="right"
+    android:layoutDirection="ltr">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGray"
+        android:padding="15dp"
+        android:text="گزارش"
+        android:textColor="#000"
+        android:textSize="@dimen/sp14" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linearLayout"
+        android:layout_below="@+id/text"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp">
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/text"
+            android:gravity="right">
+
+            <ir.payebash.Moudle.CustomRadioButton
+                style="@style/radioButton"
+                android:tag="1"
+                android:text="ارائه محتوای نامناسب و خلاف قوانین" />
+
+            <ir.payebash.Moudle.CustomRadioButton
+                style="@style/radioButton"
+                android:tag="2"
+                android:text="ارائه محتوای اسپم" />
+
+            <ir.payebash.Moudle.CustomRadioButton
+                style="@style/radioButton"
+                android:tag="3"
+                android:text="ارائه اطلاعات کذب و ناصحیح" />
+
+            <ir.payebash.Moudle.CustomRadioButton
+                android:id="@+id/radioButton4"
+                style="@style/radioButton"
+                android:tag="4"
+                android:text="ایجاد مزاحمت" />
+
+            <ir.payebash.Moudle.CustomRadioButton
+                style="@style/radioButton"
+                android:tag="7"
+                android:text="دلایل دیگر..." />
+
+        </RadioGroup>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_reject"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/radioGroup"
+            android:layout_gravity="center_vertical"
+            android:layout_toLeftOf="@+id/txt_send"
+            android:layout_toStartOf="@+id/txt_send"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="بی خیال"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp" />
+
+        <ir.payebash.Moudle.CustomTextViewBold
+            android:id="@+id/txt_send"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/radioGroup"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="ارسال"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</RelativeLayout>

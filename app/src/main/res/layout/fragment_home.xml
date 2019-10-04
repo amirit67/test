@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="ir.payebash.Fragments.HomeFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppBar">
+        <!--"@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppBar"
+            app:contentScrim="@android:color/white"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways">
+            <!--android:theme="@style/ThemeOverlay.AppCompat.ActionBar"-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/ll_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/btn_search"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignBottom="@+id/mic"
+                                android:layout_alignTop="@+id/mic"
+                                android:layout_margin="4dp"
+                                android:background="@android:color/transparent"
+                                android:padding="8dp"
+                                app:srcCompat="@drawable/ic_filter" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/home_search"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/mic"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="5dp"
+                                    android:src="@mipmap/microphone" />
+
+                                <EditText
+                                    android:id="@+id/et_search"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toEndOf="@+id/btn_search"
+                                    android:layout_toRightOf="@+id/btn_search"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/home_search2"
+                                    android:cursorVisible="false"
+                                    android:gravity="right|center_vertical"
+                                    android:hint="جستجو برای ..."
+                                    android:imeOptions="actionSearch"
+                                    android:inputType="textCapWords"
+                                    android:maxLines="1"
+                                    android:padding="8dp"
+                                    android:paddingRight="8dp"
+                                    android:textColor="@android:color/black"
+                                    android:textColorHint="@android:color/darker_gray"
+                                    android:textSize="@dimen/sp13" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/fragment_home_content" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

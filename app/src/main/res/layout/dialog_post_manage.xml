@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_mng"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffffff"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
+
+    <ir.payebash.Moudle.CustomTextViewBold
+        android:id="@+id/txt_title_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="right"
+        android:layout_margin="5dp"
+        android:padding="@dimen/dp4"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/txt_description_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_title_state"
+        android:gravity="right|center_vertical"
+        android:padding="20dp"
+        android:textColor="#000"
+        android:textSize="@dimen/sp14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/txt_description_state"
+        android:background="@drawable/item_devider_horizontal" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_description_state"
+        android:layout_gravity="center"
+        android:background="#fff"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!--<Button
+            android:id="@+id/btn_cancel"
+            style="@style/RegButton"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="لغو"
+            android:visibility="gone" />-->
+
+        <ir.payebash.Moudle.CustomTextViewBold
+            android:id="@+id/btn_pay"
+            style="@style/dialog_post_manage"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="پرداخت"
+            android:visibility="gone" />
+
+        <ir.payebash.Moudle.CustomTextViewBold
+            android:id="@+id/btn_mobile"
+            style="@style/dialog_post_manage"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="تایید شماره موبایل"
+            android:visibility="gone" />
+
+        <ir.payebash.Moudle.CustomTextViewBold
+            android:id="@+id/btn_edit"
+            style="@style/dialog_post_manage"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="ویرایش" />
+
+        <ir.payebash.Moudle.CustomTextViewBold
+            android:id="@+id/btn_delete"
+            style="@style/dialog_post_manage"
+            android:layout_alignBottom="@+id/linearLayout4"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:text="حذف" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout4"
+        android:background="@drawable/item_devider_horizontal" />
+</LinearLayout>
