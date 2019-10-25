@@ -2,21 +2,20 @@ package ir.payebash.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Fragments.HomeFragment;
-import ir.payebash.Interfaces.TitleMain;
+import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.R;
 
 import static ir.payebash.Classes.HSH.openFragment;
 
-public class GuestActivity extends AppCompatActivity implements TitleMain {
+public class GuestActivity extends AppCompatActivity implements IWebservice.TitleMain {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +25,7 @@ public class GuestActivity extends AppCompatActivity implements TitleMain {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         findViewById(R.id.btn_new_event).setBackgroundResource(R.mipmap.ic_signup);
-        findViewById(R.id.btn_new_event).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HSH.onOpenPage(GuestActivity.this, RegisterActivity.class);
-            }
-        });
+        findViewById(R.id.btn_new_event).setOnClickListener(view -> HSH.onOpenPage(GuestActivity.this, RegisterActivity.class));
 
         HomeFragment home_fragment = new HomeFragment();
         openFragment(GuestActivity.this, home_fragment);

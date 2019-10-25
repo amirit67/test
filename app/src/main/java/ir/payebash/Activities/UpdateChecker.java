@@ -144,8 +144,8 @@ public class UpdateChecker {
         try {
 
             /* Convert the Bytes read to a String. */
-            final String s = version;         
-            
+            final String s = version;
+
             /* Get current Version Number */
             String newVersion = String.valueOf(s);
 

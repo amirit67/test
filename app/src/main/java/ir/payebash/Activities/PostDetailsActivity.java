@@ -11,8 +11,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -32,12 +30,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -59,6 +54,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -246,8 +242,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void getMap() {
-        switch (GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(PostDetailsActivity.this)) {
+        switch (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(PostDetailsActivity.this)) {
             case ConnectionResult.SUCCESS:
 
                 try {
@@ -261,22 +256,19 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        mMapView.getMapAsync(new OnMapReadyCallback() {
-                            @Override
-                            public void onMapReady(GoogleMap googleMap) {
-                                try {
-                                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                                            .target(new LatLng(latitude, longitude))
-                                            .zoom(13).build();
-                                    MarkerOptions marker2 = new MarkerOptions().position(
-                                            new LatLng(latitude, longitude)).title(result.getTitle()).snippet(fFeed.getTag());
-                                    marker2.icon(BitmapDescriptorFactory.fromResource(R.mipmap.city));
-                                    googleMap.addMarker(marker2);
-                                    googleMap.animateCamera(CameraUpdateFactory
-                                            .newCameraPosition(cameraPosition));
+                        mMapView.getMapAsync(googleMap -> {
+                            try {
+                                CameraPosition cameraPosition = new CameraPosition.Builder()
+                                        .target(new LatLng(latitude, longitude))
+                                        .zoom(13).build();
+                                MarkerOptions marker2 = new MarkerOptions().position(
+                                        new LatLng(latitude, longitude)).title(result.getTitle()).snippet(fFeed.getTag());
+                                marker2.icon(BitmapDescriptorFactory.fromResource(R.mipmap.city));
+                                googleMap.addMarker(marker2);
+                                googleMap.animateCamera(CameraUpdateFactory
+                                        .newCameraPosition(cameraPosition));
 
-                                } catch (Exception e) {
-                                }
+                            } catch (Exception e) {
                             }
                         });
                     }
@@ -404,31 +396,20 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                     findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
                                     if (Commentfeed.size() == 0)
                                         GetCommentAsynkTask();
-                                    btnBeup.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            final SweetAlertDialog dialog = new SweetAlertDialog(PostDetailsActivity.this, SweetAlertDialog.WARNING_TYPE);
-                                            dialog.setTitleText("لغو همراهی");
-                                            dialog.setContentText(getString(R.string.sure));
-                                            dialog.setConfirmText("بله");
-                                            dialog.setCancelText("فعلا نه");
-                                            dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                @Override
-                                                public void onClick(SweetAlertDialog sDialog) {
-                                                    UpdateApplicantAsynkTask();
-                                                    dialog.dismissWithAnimation();
-                                                }
-                                            });
-                                            dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                @Override
-                                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                                    dialog.dismissWithAnimation();
-                                                }
-                                            });
-                                            dialog.setCancelable(true);
-                                            HSH.dialog(dialog);
+                                    btnBeup.setOnClickListener(v -> {
+                                        final SweetAlertDialog dialog = new SweetAlertDialog(PostDetailsActivity.this, SweetAlertDialog.WARNING_TYPE);
+                                        dialog.setTitleText("لغو همراهی");
+                                        dialog.setContentText(getString(R.string.sure));
+                                        dialog.setConfirmText("بله");
+                                        dialog.setCancelText("فعلا نه");
+                                        dialog.setConfirmClickListener(sDialog -> {
+                                            UpdateApplicantAsynkTask();
+                                            dialog.dismissWithAnimation();
+                                        });
+                                        dialog.setCancelClickListener(sweetAlertDialog -> dialog.dismissWithAnimation());
+                                        dialog.setCancelable(true);
+                                        HSH.dialog(dialog);
 
-                                        }
                                     });
                                 }
                             } catch (Exception e) {
@@ -464,15 +445,12 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                         .putString("extra",name);*/
 
                                 pager.addSlider(textSliderView);
-                                textSliderView.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                                    @Override
-                                    public void onSliderClick(BaseSliderView slider) {
-                                        final Bundle bundle = new Bundle();
-                                        Intent i = new Intent(PostDetailsActivity.this, ViewPagerActivity.class);
-                                        bundle.putSerializable("feed", item);
-                                        i.putExtras(bundle);
-                                        startActivity(i);
-                                    }
+                                textSliderView.setOnSliderClickListener(slider -> {
+                                    final Bundle bundle = new Bundle();
+                                    Intent i1 = new Intent(PostDetailsActivity.this, ViewPagerActivity.class);
+                                    bundle.putSerializable("feed", item);
+                                    i1.putExtras(bundle);
+                                    startActivity(i1);
                                 });
                             }
                         } catch (Exception e) {
@@ -614,27 +592,24 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 txt1.setText(spannable, TextView.BufferType.SPANNABLE);
                 layout.addView(view1);
 
-                txt1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        try {
-                            if (txt1.getText().toString().equals(result.getBaseProperty().get(0))) {
-                                try {
-                                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                                    callIntent.setData(Uri.parse("tel:" + Uri.encode(result.getBaseProperty().get(0).split(":")[1])));
-                                    callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(callIntent);
-                                } catch (Exception e) {
-                                }
-                            } else {
-                                try {
-                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result.getBaseProperty().get(1).split(": ")[1]));
-                                    startActivity(browserIntent);
-                                } catch (Exception e1) {
-                                }
+                txt1.setOnClickListener(view -> {
+                    try {
+                        if (txt1.getText().toString().equals(result.getBaseProperty().get(0))) {
+                            try {
+                                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                                callIntent.setData(Uri.parse("tel:" + Uri.encode(result.getBaseProperty().get(0).split(":")[1])));
+                                callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(callIntent);
+                            } catch (Exception e) {
                             }
-                        } catch (Exception e) {
+                        } else {
+                            try {
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result.getBaseProperty().get(1).split(": ")[1]));
+                                startActivity(browserIntent);
+                            } catch (Exception e1) {
+                            }
                         }
+                    } catch (Exception e) {
                     }
                 });
             }
@@ -649,19 +624,11 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 .setContentText("برای نمایش اطلاعات لازم است ابتدا عضو شوید")
                 .setConfirmText("بله")
                 .setCancelText("فعلا نه")
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        HSH.onOpenPage(PostDetailsActivity.this, IntroLoginActivity.class);
-                        finish();
-                    }
+                .setConfirmClickListener(sDialog -> {
+                    HSH.onOpenPage(PostDetailsActivity.this, IntroLoginActivity.class);
+                    finish();
                 });
-        dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                dialog.dismissWithAnimation();
-            }
-        });
+        dialog.setCancelClickListener(sweetAlertDialog -> dialog.dismissWithAnimation());
         dialog.setCancelable(true);
         HSH.dialog(dialog);
     }
@@ -714,14 +681,11 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         loading.setTitleText("حذف رویداد!")
                                 .setContentText("رویداد شما حذف گردید")
                                 .setConfirmText("باشه")
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                        Intent resultData = new Intent();
-                                        resultData.putExtra("data", "data");
-                                        setResult(Activity.RESULT_OK, resultData);
-                                        finish();
-                                    }
+                                .setConfirmClickListener(sweetAlertDialog -> {
+                                    Intent resultData = new Intent();
+                                    resultData.putExtra("data", "data");
+                                    setResult(Activity.RESULT_OK, resultData);
+                                    finish();
                                 })
                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                     } catch (Exception e) {
@@ -769,14 +733,11 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         loading.setTitleText("لغو رویداد")
                                 .setContentText("رویداد شما لغو گردید")
                                 .setConfirmText("باشه")
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                        Intent resultData = new Intent();
-                                        resultData.putExtra("data", "data");
-                                        setResult(Activity.RESULT_OK, resultData);
-                                        finish();
-                                    }
+                                .setConfirmClickListener(sweetAlertDialog -> {
+                                    Intent resultData = new Intent();
+                                    resultData.putExtra("data", "data");
+                                    setResult(Activity.RESULT_OK, resultData);
+                                    finish();
                                 })
                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                     } catch (Exception e) {
@@ -1016,20 +977,17 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                             imageLoader.displayImage(Application.preferences.getString("ProfileImage", "0"), i, options);
                             HSH.display(PostDetailsActivity.this, ti);
                             ti.addTagView(i);
-                            i.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if (Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true"))
-                                        try {
-                                            Intent in = new Intent(PostDetailsActivity.this, UserProfileActivity.class);
-                                            in.putExtra("AdvertiserId", Application.preferences.getString(getString(R.string.UserId), "0"));
-                                            in.putExtra("profileimage", Application.preferences.getString("ProfileImage", "0"));
-                                            startActivity(in);
-                                        } catch (Exception e) {
-                                        }
-                                    else
-                                        registerDialog();
-                                }
+                            i.setOnClickListener(v -> {
+                                if (Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true"))
+                                    try {
+                                        Intent in = new Intent(PostDetailsActivity.this, UserProfileActivity.class);
+                                        in.putExtra("AdvertiserId", Application.preferences.getString(getString(R.string.UserId), "0"));
+                                        in.putExtra("profileimage", Application.preferences.getString("ProfileImage", "0"));
+                                        startActivity(in);
+                                    } catch (Exception e) {
+                                    }
+                                else
+                                    registerDialog();
                             });
 
                         } else if (s.equals("false") && s.length() > 0) {
@@ -1100,26 +1058,23 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         i.setImageDrawable(getResources().getDrawable(R.mipmap.ic_paye));
                     }
                     ti.addTagView(i);
-                    i.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true"))
-                                try {
-                                    Intent in = new Intent(PostDetailsActivity.this, UserProfileActivity.class);
-                                    in.putExtra("AdvertiserId", src.split("/")[0]);
-                                    in.putExtra("PostId", fFeed.getPostId());
-                                    if (src.split("/").length > 1) {
-                                        if (!src.split("/")[1].contains("https:"))
-                                            in.putExtra("profileimage", getString(R.string.url) + "Images/Users/" + src.split("/")[1] + ".jpg");
-                                        else
-                                            in.putExtra("profileimage", src.substring(37));
-                                    }
-                                    startActivity(in);
-                                } catch (Exception e) {
+                    i.setOnClickListener(v -> {
+                        if (Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true"))
+                            try {
+                                Intent in = new Intent(PostDetailsActivity.this, UserProfileActivity.class);
+                                in.putExtra("AdvertiserId", src.split("/")[0]);
+                                in.putExtra("PostId", fFeed.getPostId());
+                                if (src.split("/").length > 1) {
+                                    if (!src.split("/")[1].contains("https:"))
+                                        in.putExtra("profileimage", getString(R.string.url) + "Images/Users/" + src.split("/")[1] + ".jpg");
+                                    else
+                                        in.putExtra("profileimage", src.substring(37));
                                 }
-                            else
-                                registerDialog();
-                        }
+                                startActivity(in);
+                            } catch (Exception e) {
+                            }
+                        else
+                            registerDialog();
                     });
 
                 } catch (Exception e) {
@@ -1160,38 +1115,25 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         result.getState().split("-")[0].contains(getString(R.string.release2))) {
                     dialog2.findViewById(R.id.radioButton4).setVisibility(View.VISIBLE);
                 }
-                radioGroup01.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        checkid = Integer.parseInt(dialog2.findViewById(checkedId).getTag().toString());
-                    }
-                });
+                radioGroup01.setOnCheckedChangeListener((group, checkedId) -> checkid = Integer.parseInt(dialog2.findViewById(checkedId).getTag().toString()));
 
-                txt_delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (radioGroup01.getCheckedRadioButtonId() != -1) {
-                            if (NetworkUtils.getConnectivity(PostDetailsActivity.this) != false) {
-                                SweetAlertDialog dialog_wait = HSH.onProgress_Dialog(PostDetailsActivity.this, "شکیبا باشید ...");
-                                if (checkid == 1 || checkid == 2 || checkid == 3)
-                                    DeletePostAsynkTask(dialog_wait);
-                                else
-                                    CancelPostAsynkTask(dialog_wait);
-                                dialog2.dismiss();
-                            } else
-                                HSH.showtoast(PostDetailsActivity.this, "خطا در اتصال به اینترنت");
-
+                txt_delete.setOnClickListener(v1 -> {
+                    if (radioGroup01.getCheckedRadioButtonId() != -1) {
+                        if (NetworkUtils.getConnectivity(PostDetailsActivity.this) != false) {
+                            SweetAlertDialog dialog_wait = HSH.onProgress_Dialog(PostDetailsActivity.this, "شکیبا باشید ...");
+                            if (checkid == 1 || checkid == 2 || checkid == 3)
+                                DeletePostAsynkTask(dialog_wait);
+                            else
+                                CancelPostAsynkTask(dialog_wait);
+                            dialog2.dismiss();
                         } else
-                            HSH.showtoast(PostDetailsActivity.this, "یک گزینه را انتخاب کنید.");
-                    }
+                            HSH.showtoast(PostDetailsActivity.this, "خطا در اتصال به اینترنت");
+
+                    } else
+                        HSH.showtoast(PostDetailsActivity.this, "یک گزینه را انتخاب کنید.");
                 });
 
-                txt_reject.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog2.dismiss();
-                    }
-                });
+                txt_reject.setOnClickListener(v13 -> dialog2.dismiss());
                 HSH.dialog(dialog2);
                 dialog2.show();
                 break;
@@ -1256,27 +1198,19 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 TextView txt_reject2 = dialog2.findViewById(R.id.txt_reject);
                 final RadioGroup radioGroup001 = dialog2.findViewById(R.id.radioGroup);
 
-                radioGroup001.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        checkid = Integer.parseInt(dialog2.findViewById(checkedId).getTag().toString());
-                    }
-                });
+                radioGroup001.setOnCheckedChangeListener((group, checkedId) -> checkid = Integer.parseInt(dialog2.findViewById(checkedId).getTag().toString()));
 
-                txt_send.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (radioGroup001.getCheckedRadioButtonId() != -1) {
-                            if (NetworkUtils.getConnectivity(PostDetailsActivity.this) != false) {
-                                Dialog dialog_wait = HSH.onProgress_Dialog(PostDetailsActivity.this, "شکیبا باشید ...");
-                                SendingReportService(checkid, dialog_wait);
-                                dialog2.dismiss();
-                            } else
-                                HSH.showtoast(PostDetailsActivity.this, "خطا در اتصال به اینترنت");
-
+                txt_send.setOnClickListener(v12 -> {
+                    if (radioGroup001.getCheckedRadioButtonId() != -1) {
+                        if (NetworkUtils.getConnectivity(PostDetailsActivity.this) != false) {
+                            Dialog dialog_wait = HSH.onProgress_Dialog(PostDetailsActivity.this, "شکیبا باشید ...");
+                            SendingReportService(checkid, dialog_wait);
+                            dialog2.dismiss();
                         } else
-                            HSH.showtoast(PostDetailsActivity.this, "یک گزینه را انتخاب کنید.");
-                    }
+                            HSH.showtoast(PostDetailsActivity.this, "خطا در اتصال به اینترنت");
+
+                    } else
+                        HSH.showtoast(PostDetailsActivity.this, "یک گزینه را انتخاب کنید.");
                 });
 
                 txt_reject2.setOnClickListener(new View.OnClickListener() {
@@ -1319,51 +1253,42 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
 
                 if (result.getPhoneNumber().length() > 10) {
                     txt_phone.setVisibility(View.VISIBLE);
-                    txt_phone.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            try {
-                                Uri number = Uri.parse("tel:" + result.getPhoneNumber());
-                                final Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
-                                startActivity(callIntent);
-                            } catch (Exception e) {
-                            }
+                    txt_phone.setOnClickListener(view -> {
+                        try {
+                            Uri number = Uri.parse("tel:" + result.getPhoneNumber());
+                            final Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+                            startActivity(callIntent);
+                        } catch (Exception e) {
                         }
                     });
                 }
                 if (result.getSoroosh().length() > 4) {
                     txt_soroosh.setVisibility(View.VISIBLE);
-                    txt_soroosh.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
+                    txt_soroosh.setOnClickListener(view -> {
+                        try {
+                            Uri uri = Uri.parse("https://sapp.ir/" + result.getSoroosh());
+                            Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+                            likeIng.setPackage("mobi.mmdt.ott");
                             try {
-                                Uri uri = Uri.parse("https://sapp.ir/" + result.getSoroosh());
-                                Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
-                                likeIng.setPackage("mobi.mmdt.ott");
-                                try {
-                                    startActivity(likeIng);
-                                } catch (ActivityNotFoundException e) {
-                                    startActivity(new Intent(Intent.ACTION_VIEW,
-                                            Uri.parse("https://sapp.ir/" + result.getSoroosh())));
-                                }
-                            } catch (Exception e) {
+                                startActivity(likeIng);
+                            } catch (ActivityNotFoundException e) {
+                                startActivity(new Intent(Intent.ACTION_VIEW,
+                                        Uri.parse("https://sapp.ir/" + result.getSoroosh())));
                             }
+                        } catch (Exception e) {
                         }
                     });
                 }
 
                 if (result.getTelegram().length() > 4) {
                     txt_telegram.setVisibility(View.VISIBLE);
-                    txt_telegram.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            try {
-                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=" + result.getTelegram()));
-                                startActivity(intent);
-                            } catch (Exception e) {
-                                startActivity(new Intent(Intent.ACTION_VIEW,
-                                        Uri.parse("https://web.telegram.org/#/im?p=@" + result.getTelegram())));
-                            }
+                    txt_telegram.setOnClickListener(view -> {
+                        try {
+                            Intent intent12 = new Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=" + result.getTelegram()));
+                            startActivity(intent12);
+                        } catch (Exception e) {
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse("https://web.telegram.org/#/im?p=@" + result.getTelegram())));
                         }
                     });
                 }
@@ -1371,18 +1296,15 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 try {
                     if (result.getInstagram().length() > 4) {
                         txt_instagram.setVisibility(View.VISIBLE);
-                        txt_instagram.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Uri uri = Uri.parse("https://instagram.com/_u/" + result.getInstagram());
-                                Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
-                                likeIng.setPackage("com.instagram.android");
-                                try {
-                                    startActivity(likeIng);
-                                } catch (ActivityNotFoundException e) {
-                                    startActivity(new Intent(Intent.ACTION_VIEW,
-                                            Uri.parse("https://instagram.com/" + result.getInstagram())));
-                                }
+                        txt_instagram.setOnClickListener(view -> {
+                            Uri uri = Uri.parse("https://instagram.com/_u/" + result.getInstagram());
+                            Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+                            likeIng.setPackage("com.instagram.android");
+                            try {
+                                startActivity(likeIng);
+                            } catch (ActivityNotFoundException e) {
+                                startActivity(new Intent(Intent.ACTION_VIEW,
+                                        Uri.parse("https://instagram.com/" + result.getInstagram())));
                             }
                         });
                     }
@@ -1392,16 +1314,13 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
 
                 if (result.getGmail().length() > 4) {
                     txt_gmail.setVisibility(View.VISIBLE);
-                    txt_gmail.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            try {
-                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                Uri data = Uri.parse("mailto:" + result.getGmail());
-                                intent.setData(data);
-                                startActivity(intent);
-                            } catch (Exception e) {
-                            }
+                    txt_gmail.setOnClickListener(view -> {
+                        try {
+                            Intent intent1 = new Intent(Intent.ACTION_VIEW);
+                            Uri data = Uri.parse("mailto:" + result.getGmail());
+                            intent1.setData(data);
+                            startActivity(intent1);
+                        } catch (Exception e) {
                         }
                     });
                 }

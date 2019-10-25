@@ -111,7 +111,7 @@
                 android:paddingRight="30dp"
                 android:paddingStart="50dp">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_layout_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                         android:textColor="#2fa881"
                         android:textCursorDrawable="@drawable/bg_input_cursor"
                         android:textSize="@dimen/sp13" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <RelativeLayout
@@ -194,7 +194,7 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

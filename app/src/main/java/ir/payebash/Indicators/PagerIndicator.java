@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
-import androidx.viewpager.widget.PagerAdapter;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +14,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+import androidx.viewpager.widget.PagerAdapter;
 import ir.payebash.R;
 
 /**
@@ -72,39 +72,65 @@ public class PagerIndicator extends LinearLayout implements ViewPagerEx.OnPageCh
 
     private float mDefaultUnSelectedWidth;
     private float mDefaultUnSelectedHeight;
-
-    public enum IndicatorVisibility {
-        Visible,
-        Invisible;
-    }
+    private GradientDrawable mUnSelectedGradientDrawable;
 
     ;
-
-    private GradientDrawable mUnSelectedGradientDrawable;
     private GradientDrawable mSelectedGradientDrawable;
-
     private LayerDrawable mSelectedLayerDrawable;
     private LayerDrawable mUnSelectedLayerDrawable;
-
     private float mPadding_left;
     private float mPadding_right;
     private float mPadding_top;
     private float mPadding_bottom;
-
     private float mSelectedPadding_Left;
     private float mSelectedPadding_Right;
     private float mSelectedPadding_Top;
     private float mSelectedPadding_Bottom;
-
     private float mUnSelectedPadding_Left;
     private float mUnSelectedPadding_Right;
     private float mUnSelectedPadding_Top;
     private float mUnSelectedPadding_Bottom;
-
     /**
      * Put all the indicators into a ArrayList, so we can remove them easily.
      */
     private ArrayList<ImageView> mIndicators = new ArrayList<>();
+    private DataSetObserver dataChangeObserver = new DataSetObserver() {
+        @Override
+        public void onChanged() {
+            PagerAdapter adapter = mPager.getAdapter();
+            int count = 0;
+            if (adapter instanceof InfinitePagerAdapter) {
+                count = ((InfinitePagerAdapter) adapter).getRealCount();
+            } else {
+                count = adapter.getCount();
+            }
+            if (count > mItemCount) {
+                for (int i = 0; i < count - mItemCount; i++) {
+                    ImageView indicator = new ImageView(mContext);
+                    indicator.setImageDrawable(mUnselectedDrawable);
+                    indicator.setPadding((int) mUnSelectedPadding_Left,
+                            (int) mUnSelectedPadding_Top,
+                            (int) mUnSelectedPadding_Right,
+                            (int) mUnSelectedPadding_Bottom);
+                    addView(indicator);
+                    mIndicators.add(indicator);
+                }
+            } else if (count < mItemCount) {
+                for (int i = 0; i < mItemCount - count; i++) {
+                    removeView(mIndicators.get(0));
+                    mIndicators.remove(0);
+                }
+            }
+            mItemCount = count;
+            mPager.setCurrentItem(mItemCount * 20 + mPager.getCurrentItem());
+        }
+
+        @Override
+        public void onInvalidated() {
+            super.onInvalidated();
+            redraw();
+        }
+    };
 
 
     public PagerIndicator(Context context) {
@@ -180,10 +206,6 @@ public class PagerIndicator extends LinearLayout implements ViewPagerEx.OnPageCh
         attributes.recycle();
     }
 
-    public enum Shape {
-        Oval, Rectangle
-    }
-
     /**
      * if you are using the default indicator, this method will help you to set the shape of
      * indicator, there are two kind of shapes you  can set, oval and rect.
@@ -207,7 +229,6 @@ public class PagerIndicator extends LinearLayout implements ViewPagerEx.OnPageCh
         }
         resetDrawable();
     }
-
 
     /**
      * Set Indicator style.
@@ -247,10 +268,6 @@ public class PagerIndicator extends LinearLayout implements ViewPagerEx.OnPageCh
             mUnSelectedGradientDrawable.setColor(unselectedColor);
         }
         resetDrawable();
-    }
-
-    public enum Unit {
-        DP, Px
     }
 
     public void setDefaultSelectedIndicatorSize(float width, float height, Unit unit) {
@@ -293,20 +310,6 @@ public class PagerIndicator extends LinearLayout implements ViewPagerEx.OnPageCh
     }
 
     /**
-     * set the visibility of indicator.
-     *
-     * @param visibility
-     */
-    public void setIndicatorVisibility(IndicatorVisibility visibility) {
-        if (visibility == IndicatorVisibility.Visible) {
-            setVisibility(View.VISIBLE);
-        } else {
-            setVisibility(View.INVISIBLE);
-        }
-        resetDrawable();
-    }
-
-    /**
      * clear self means unregister the dataset observer and remove all the child views(indicators).
      */
     public void destroySelf() {
@@ -334,7 +337,6 @@ public class PagerIndicator extends LinearLayout implements ViewPagerEx.OnPageCh
         mPager.addOnPageChangeListener(this);
         ((InfinitePagerAdapter) mPager.getAdapter()).getRealAdapter().registerDataSetObserver(dataChangeObserver);
     }
-
 
     private void resetDrawable() {
         for (View i : mIndicators) {
@@ -383,44 +385,6 @@ public class PagerIndicator extends LinearLayout implements ViewPagerEx.OnPageCh
         }
     }
 
-    private DataSetObserver dataChangeObserver = new DataSetObserver() {
-        @Override
-        public void onChanged() {
-            PagerAdapter adapter = mPager.getAdapter();
-            int count = 0;
-            if (adapter instanceof InfinitePagerAdapter) {
-                count = ((InfinitePagerAdapter) adapter).getRealCount();
-            } else {
-                count = adapter.getCount();
-            }
-            if (count > mItemCount) {
-                for (int i = 0; i < count - mItemCount; i++) {
-                    ImageView indicator = new ImageView(mContext);
-                    indicator.setImageDrawable(mUnselectedDrawable);
-                    indicator.setPadding((int) mUnSelectedPadding_Left,
-                            (int) mUnSelectedPadding_Top,
-                            (int) mUnSelectedPadding_Right,
-                            (int) mUnSelectedPadding_Bottom);
-                    addView(indicator);
-                    mIndicators.add(indicator);
-                }
-            } else if (count < mItemCount) {
-                for (int i = 0; i < mItemCount - count; i++) {
-                    removeView(mIndicators.get(0));
-                    mIndicators.remove(0);
-                }
-            }
-            mItemCount = count;
-            mPager.setCurrentItem(mItemCount * 20 + mPager.getCurrentItem());
-        }
-
-        @Override
-        public void onInvalidated() {
-            super.onInvalidated();
-            redraw();
-        }
-    };
-
     private void setItemAsSelected(int position) {
         if (mPreviousSelectedIndicator != null) {
             mPreviousSelectedIndicator.setImageDrawable(mUnselectedDrawable);
@@ -453,6 +417,20 @@ public class PagerIndicator extends LinearLayout implements ViewPagerEx.OnPageCh
         return mVisibility;
     }
 
+    /**
+     * set the visibility of indicator.
+     *
+     * @param visibility
+     */
+    public void setIndicatorVisibility(IndicatorVisibility visibility) {
+        if (visibility == IndicatorVisibility.Visible) {
+            setVisibility(View.VISIBLE);
+        } else {
+            setVisibility(View.INVISIBLE);
+        }
+        resetDrawable();
+    }
+
     @Override
     public void onPageSelected(int position) {
         if (mItemCount == 0) {
@@ -471,6 +449,19 @@ public class PagerIndicator extends LinearLayout implements ViewPagerEx.OnPageCh
 
     public int getUnSelectedIndicatorResId() {
         return mUserSetUnSelectedIndicatorResId;
+    }
+
+    public enum IndicatorVisibility {
+        Visible,
+        Invisible;
+    }
+
+    public enum Shape {
+        Oval, Rectangle
+    }
+
+    public enum Unit {
+        DP, Px
     }
 
 }

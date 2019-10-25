@@ -1,16 +1,16 @@
 package ir.payebash.Fragments;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.fragment.app.Fragment;
 import ir.payebash.Adapters.NotificationAdapter;
 import ir.payebash.Classes.HSH;
-import ir.payebash.Interfaces.TitleMain;
+import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.R;
 
 public class NotificationFragment extends Fragment {

@@ -1,11 +1,11 @@
 package ir.payebash.Indicators;
 
 import android.os.Parcelable;
-import androidx.viewpager.widget.PagerAdapter;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.viewpager.widget.PagerAdapter;
 import ir.payebash.SliderTypes.SliderAdapter;
 
 /**

@@ -2,7 +2,6 @@ package ir.payebash.Indicators;
 
 import android.view.View;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,7 +18,9 @@ import androidx.viewpager.widget.ViewPager;
  */
 public abstract class BaseTransformer implements ViewPagerEx.PageTransformer {
 
+    boolean isApp, isDis;
     private BaseAnimationInterface mCustomAnimationInterface;
+    private HashMap<View, ArrayList<Float>> h = new HashMap<>();
 
     /**
      * Called each {@link #transformPage(View, float)}.
@@ -28,8 +29,6 @@ public abstract class BaseTransformer implements ViewPagerEx.PageTransformer {
      * @param position
      */
     protected abstract void onTransform(View view, float position);
-
-    private HashMap<View, ArrayList<Float>> h = new HashMap<>();
 
     @Override
     public void transformPage(View view, float position) {
@@ -113,8 +112,6 @@ public abstract class BaseTransformer implements ViewPagerEx.PageTransformer {
             }
         }
     }
-
-    boolean isApp, isDis;
 
     /**
      * Called each {@link #transformPage(View, float)} call after {@link #onTransform(View, float)} is finished.

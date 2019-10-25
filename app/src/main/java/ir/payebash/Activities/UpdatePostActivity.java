@@ -10,13 +10,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import androidx.core.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -26,10 +24,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -51,6 +47,7 @@ import javax.inject.Inject;
 
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.FileProvider;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Adapters.GalleryAdapter;
 import ir.payebash.Application;
@@ -86,8 +83,8 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
     private ExpandableHeightGridView gv;
     private GalleryAdapter adapter;
     private CardView cd_phone, cd_link;
-    private EditText et_title, et_tag, et_time_start, et_phone, et_link,
-            et_time_finish, et_cost, et_count, et_deadline, et_description;
+    private EditText etTitle, etTag, etTime_start, et_phone, et_link,
+            etTime_finish, et_cost, et_count, et_deadline, et_description;
     private Button btn_subject_post, btn_location_post, btn_register;
     private ImageButton btn_calender, btn_calender2;
     private SwitchCompat compatSwitch, compatSwitchImmediate;
@@ -120,15 +117,12 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
         adapter.notifyDataSetChanged();
         adapter.addAll(map);
         gv.setAdapter(adapter);
-        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                map.remove(position);
-                adapter.notifyDataSetChanged();
-                adapter.addAll(map);
-                gv.setAdapter(adapter);
+        gv.setOnItemClickListener((parent, view, position, id) -> {
+            map.remove(position);
+            adapter.notifyDataSetChanged();
+            adapter.addAll(map);
+            gv.setAdapter(adapter);
 
-            }
         });
 
         btn_register.setOnClickListener(this);
@@ -301,10 +295,10 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
         compatSwitchImmediate = findViewById(R.id.compatSwitchImmediate);
         sv = findViewById(R.id.sv);
         pb = findViewById(R.id.pb);
-        et_title = findViewById(R.id.et_title);
-        et_tag = findViewById(R.id.et_tag);
-        et_time_start = findViewById(R.id.et_time_start);
-        et_time_finish = findViewById(R.id.et_time_finish);
+        etTitle = findViewById(R.id.et_title);
+        etTag = findViewById(R.id.et_tag);
+        etTime_start = findViewById(R.id.et_time_start);
+        etTime_finish = findViewById(R.id.et_time_finish);
         et_cost = findViewById(R.id.et_cost);
         et_count = findViewById(R.id.et_count);
         et_deadline = findViewById(R.id.et_deadline);
@@ -316,10 +310,10 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
         cd_phone = findViewById(R.id.cd_phone);
         cd_link = findViewById(R.id.cd_link);
 
-        et_title.addTextChangedListener(new addListenerOnTextChange(et_title));
-        et_tag.addTextChangedListener(new addListenerOnTextChange(et_tag));
-        et_time_start.addTextChangedListener(new addListenerOnTextChange(et_time_start));
-        et_time_finish.addTextChangedListener(new addListenerOnTextChange(et_time_finish));
+        etTitle.addTextChangedListener(new addListenerOnTextChange(etTitle));
+        etTag.addTextChangedListener(new addListenerOnTextChange(etTag));
+        etTime_start.addTextChangedListener(new addListenerOnTextChange(etTime_start));
+        etTime_finish.addTextChangedListener(new addListenerOnTextChange(etTime_finish));
         et_cost.addTextChangedListener(new addListenerOnTextChange(et_cost));
         et_count.addTextChangedListener(new addListenerOnTextChange(et_count));
         et_deadline.addTextChangedListener(new addListenerOnTextChange(et_deadline));
@@ -330,12 +324,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
         btn_subject_post = findViewById(R.id.btn_subject_post);
         btn_location_post = findViewById(R.id.btn_location_post);
         btn_register = findViewById(R.id.btn_register);
-        findViewById(R.id.img_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        findViewById(R.id.img_back).setOnClickListener(v -> finish());
     }
 
     @Override
@@ -393,12 +382,12 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
                 break;
             }
             case R.id.btn_calender: {
-                HSH.setTimeDate(UpdatePostActivity.this, et_time_start);
+                HSH.setTimeDate(UpdatePostActivity.this, etTime_start);
                 break;
             }
 
             case R.id.btn_calender2: {
-                HSH.setTimeDate(UpdatePostActivity.this, et_time_finish);
+                HSH.setTimeDate(UpdatePostActivity.this, etTime_finish);
                 break;
             }
 
@@ -429,34 +418,28 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
                             dialog.setContentText("");
                             dialog.setConfirmText("دوربین");
                             dialog.setCancelText("انتخاب از گالری");
-                            dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sDialog) {
-                                    try {
-                                        Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        File file = new File(Environment.getExternalStoragePublicDirectory("PayeBash/Images"), "file" + String.valueOf(System.currentTimeMillis() + ".jpg"));
-                                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-                                            uri = Uri.fromFile(file);
-                                        else
-                                            uri = FileProvider.getUriForFile(UpdatePostActivity.this, getPackageName() + ".provider", file);
-                                        camIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                                        camIntent.putExtra("return-data", true);
-                                        startActivityForResult(camIntent, 0);
-                                        dialog.dismissWithAnimation();
-                                    } catch (Exception e) {
-                                    }
+                            dialog.setConfirmClickListener(sDialog -> {
+                                try {
+                                    Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    File file = new File(Environment.getExternalStoragePublicDirectory("PayeBash/Images"), "file" + String.valueOf(System.currentTimeMillis() + ".jpg"));
+                                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                                        uri = Uri.fromFile(file);
+                                    else
+                                        uri = FileProvider.getUriForFile(UpdatePostActivity.this, getPackageName() + ".provider", file);
+                                    camIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                                    camIntent.putExtra("return-data", true);
+                                    startActivityForResult(camIntent, 0);
+                                    dialog.dismissWithAnimation();
+                                } catch (Exception e) {
                                 }
                             });
-                            dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    Intent intent = new Intent(Intent.ACTION_PICK,
-                                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                    startActivityForResult
-                                            (Intent.createChooser
-                                                    (intent, HSH.setTypeFace(UpdatePostActivity.this, "انتخاب عکس")), 1);
-                                    dialog.dismissWithAnimation();
-                                }
+                            dialog.setCancelClickListener(sweetAlertDialog -> {
+                                Intent intent = new Intent(Intent.ACTION_PICK,
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult
+                                        (Intent.createChooser
+                                                (intent, HSH.setTypeFace(UpdatePostActivity.this, "انتخاب عکس")), 1);
+                                dialog.dismissWithAnimation();
                             });
                             dialog.setCancelable(true);
                             HSH.dialog(dialog);
@@ -474,7 +457,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
             case R.id.btn_register:
                 //ارسال سوال
                 try {
-                    String title = et_title.getText().toString().trim();
+                    String title = etTitle.getText().toString().trim();
                     String description = et_description.getText().toString().trim();
                     //PushNotifictionHelper.sendPushNotification(PostRegisterActivity.this, "/topics/2-01");
                     if (btn_subject_post.getTag().toString().trim().equals("")) {
@@ -486,11 +469,11 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
                         HSH.selectLocation(UpdatePostActivity.this, 1, btn_location_post);
                         btn_location_post.requestFocus();
                     } else if (title.equals("") || title.length() < 3) {
-                        error(et_title, "عنوان رویداد را وارد نمایید(حداقل 3 حرف)");
-                    } else if (et_time_start.getText().toString().trim().equals(""))
-                        error(et_time_start, "زمان شروع رویداد را وارد نمایید");
-                    else if (et_time_finish.getText().toString().trim().equals(""))
-                        error(et_time_finish, "زمان پایان رویداد را وارد نمایید");
+                        error(etTitle, "عنوان رویداد را وارد نمایید(حداقل 3 حرف)");
+                    } else if (etTime_start.getText().toString().trim().equals(""))
+                        error(etTime_start, "زمان شروع رویداد را وارد نمایید");
+                    else if (etTime_finish.getText().toString().trim().equals(""))
+                        error(etTime_finish, "زمان پایان رویداد را وارد نمایید");
                     else if (et_cost.getText().toString().trim().equals(""))
                         error(et_cost, "هزینه رویداد را وارد نمایید");
                     else if (et_count.getText().toString().trim().equals(""))
@@ -506,12 +489,12 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
                         params.put(getString(R.string.city), btn_location_post.getTag().toString());
                         params.put(getString(R.string.IsWoman), String.valueOf(compatSwitch.isChecked()));
                         params.put(getString(R.string.IsImmediate), String.valueOf(compatSwitchImmediate.isChecked()));
-                        params.put(getString(R.string.Title), et_title.getText().toString().trim());
-                        params.put(getString(R.string.Tag), et_tag.getText().toString().trim());
+                        params.put(getString(R.string.Title), etTitle.getText().toString().trim());
+                        params.put(getString(R.string.Tag), etTag.getText().toString().trim());
                         params.put(getString(R.string.PhoneNumber), et_phone.getText().toString().trim());
                         params.put(getString(R.string.Link), et_link.getText().toString().trim());
-                        params.put(getString(R.string.StartDate), et_time_start.getText().toString().trim());
-                        params.put(getString(R.string.finishDate), et_time_finish.getText().toString().trim());
+                        params.put(getString(R.string.StartDate), etTime_start.getText().toString().trim());
+                        params.put(getString(R.string.finishDate), etTime_finish.getText().toString().trim());
                         params.put(getString(R.string.Deadline), convertToMiladi(et_deadline));
                         try {
                             params.put(getString(R.string.Longitude), lon);
@@ -554,62 +537,47 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
         HSH.dialog(dialog1);
 
         try {
-            switch (GooglePlayServicesUtil
-                    .isGooglePlayServicesAvailable(UpdatePostActivity.this)) {
+            switch (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(UpdatePostActivity.this)) {
                 case ConnectionResult.SUCCESS:
                     try {
                         ((SupportMapFragment) getSupportFragmentManager()
-                                .findFragmentById(R.id.map)).getMapAsync(new OnMapReadyCallback() {
-                            @Override
-                            public void onMapReady(final GoogleMap googleMap) {
-                                LatLng latLng = new LatLng(35.70555520, 51.38485568);
+                                .findFragmentById(R.id.map)).getMapAsync(googleMap -> {
+                            LatLng latLng = new LatLng(35.70555520, 51.38485568);
 
-                                CameraPosition cameraPosition = new CameraPosition
-                                        .Builder()
-                                        .target(latLng)
-                                        .zoom(10)
-                                        .build();
-                                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                            CameraPosition cameraPosition = new CameraPosition
+                                    .Builder()
+                                    .target(latLng)
+                                    .zoom(10)
+                                    .build();
+                            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-                                googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-                                    @Override
-                                    public void onMapLongClick(final LatLng point) {
-                                        try {
-                                            if (googleMap.getCameraPosition().zoom < 16)
-                                                HSH.showtoast(UpdatePostActivity.this, "لطفا بیشتر زوم کنید");
+                            googleMap.setOnMapLongClickListener(point -> {
+                                try {
+                                    if (googleMap.getCameraPosition().zoom < 16)
+                                        HSH.showtoast(UpdatePostActivity.this, "لطفا بیشتر زوم کنید");
 
-                                            else {
-                                                final SweetAlertDialog dialog = new SweetAlertDialog(UpdatePostActivity.this, SweetAlertDialog.NORMAL_TYPE);
-                                                dialog.setTitleText("تنظیم مکان رویداد");
-                                                dialog.setContentText("می توانید روی مکان نما فشار داده و محل آن را بیشتر تنظیم کنید");
-                                                dialog.setConfirmText("تایید و ادامه");
-                                                dialog.setCancelText("تنظیم مجدد");
-                                                dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                    @Override
-                                                    public void onClick(SweetAlertDialog sDialog) {
-                                                        googleMap.clear();
-                                                        lat = String.valueOf(point.latitude);
-                                                        lon = String.valueOf(point.longitude);
-                                                        ((Button) findViewById(R.id.btn_location_map)).setText(HSH.getCompleteAddress(UpdatePostActivity.this, point.latitude, point.longitude));
-                                                        dialog1.dismiss();
-                                                        dialog.dismissWithAnimation();
-                                                    }
-                                                });
-                                                dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                    @Override
-                                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                                        dialog.dismissWithAnimation();
-                                                    }
-                                                });
-                                                dialog.setCancelable(true);
-                                                HSH.dialog(dialog);
-                                            }
-                                        } catch (Exception e) {
-                                        }
+                                    else {
+                                        final SweetAlertDialog dialog = new SweetAlertDialog(UpdatePostActivity.this, SweetAlertDialog.NORMAL_TYPE);
+                                        dialog.setTitleText("تنظیم مکان رویداد");
+                                        dialog.setContentText("می توانید روی مکان نما فشار داده و محل آن را بیشتر تنظیم کنید");
+                                        dialog.setConfirmText("تایید و ادامه");
+                                        dialog.setCancelText("تنظیم مجدد");
+                                        dialog.setConfirmClickListener(sDialog -> {
+                                            googleMap.clear();
+                                            lat = String.valueOf(point.latitude);
+                                            lon = String.valueOf(point.longitude);
+                                            ((Button) findViewById(R.id.btn_location_map)).setText(HSH.getCompleteAddress(UpdatePostActivity.this, point.latitude, point.longitude));
+                                            dialog1.dismiss();
+                                            dialog.dismissWithAnimation();
+                                        });
+                                        dialog.setCancelClickListener(sweetAlertDialog -> dialog.dismissWithAnimation());
+                                        dialog.setCancelable(true);
+                                        HSH.dialog(dialog);
                                     }
-                                });
+                                } catch (Exception e) {
+                                }
+                            });
 
-                            }
                         });
                     } catch (Exception e) {
                     }

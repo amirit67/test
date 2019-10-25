@@ -1,12 +1,11 @@
 package ir.payebash.Holders;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import ir.payebash.Application;
+import androidx.recyclerview.widget.RecyclerView;
 import ir.payebash.Moudle.CircleImageView;
 import ir.payebash.Moudle.TriangleLabelView;
 import ir.payebash.R;

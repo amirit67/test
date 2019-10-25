@@ -10,14 +10,13 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.os.Build;
+import android.util.AttributeSet;
+import android.view.View;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
-import android.util.AttributeSet;
-import android.view.View;
-
-import ir.payebash.Application;
 import ir.payebash.R;
 
 public class TriangleLabelView extends View {
@@ -306,7 +305,8 @@ public class TriangleLabelView extends View {
         TOP_LEFT(1),
         TOP_RIGHT(2),
         BOTTOM_LEFT(3),
-        BOTTOM_RIGHT(4),;
+        BOTTOM_RIGHT(4),
+        ;
         private final int type;
 
         Corner(int type) {

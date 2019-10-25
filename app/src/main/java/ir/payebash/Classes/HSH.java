@@ -18,11 +18,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Handler;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -56,12 +51,17 @@ import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Activities.CategoriesFilterDialog;
 import ir.payebash.Adapters.CitiesAdapter;
 import ir.payebash.Application;
 import ir.payebash.Fragments.NotificationFragment;
-import ir.payebash.Interfaces.setListenerCity;
+import ir.payebash.Interfaces.IWebservice.setListenerCity;
 import ir.payebash.Models.CityItem;
 import ir.payebash.Moudle.Roozh;
 import ir.payebash.Moudle.Utils;
@@ -131,9 +131,7 @@ public class HSH {
         return str;
     }
 
-    public static SpannableStringBuilder setTypeFace(Context cn, String s)
-
-    {
+    public static SpannableStringBuilder setTypeFace(Context cn, String s) {
         SpannableStringBuilder ssbuilder = new SpannableStringBuilder(s);
         ssbuilder.setSpan(new CustomTypefaceSpan("font/iransansmedium.ttf", cn), 0, ssbuilder.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         return ssbuilder;

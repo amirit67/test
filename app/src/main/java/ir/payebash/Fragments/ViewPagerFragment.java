@@ -19,7 +19,6 @@ package ir.payebash.Fragments;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 
+import androidx.fragment.app.Fragment;
 import ir.payebash.R;
 
 public class ViewPagerFragment extends Fragment {

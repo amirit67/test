@@ -14,10 +14,8 @@ import java.io.File;
 
 import javax.inject.Inject;
 
-import ir.payebash.Application;
 import ir.payebash.DI.DaggerMainComponent;
 import ir.payebash.DI.ImageLoaderMoudle;
-import ir.payebash.DI.MainComponent;
 import ir.payebash.R;
 
 
@@ -29,27 +27,21 @@ import ir.payebash.R;
 public abstract class BaseSliderView {
 
     protected Context mContext;
-
+    protected OnSliderClickListener mOnSliderClickListener;
+    @Inject
+    ImageLoader imageLoader;
     private Bundle mBundle;
-
     /**
      * Error place holder image.
      */
     private int mErrorPlaceHolderRes;
-
-    @Inject
-    ImageLoader imageLoader;
     /**
      * Empty imageView placeholder.
      */
     private int mEmptyPlaceHolderRes;
-
     private String mUrl;
     private File mFile;
     private int mRes;
-
-    protected OnSliderClickListener mOnSliderClickListener;
-
     private boolean mErrorDisappear;
 
     private ImageLoadListener mLoadListener;
@@ -62,10 +54,6 @@ public abstract class BaseSliderView {
      * Scale type of the image.
      */
     private ScaleType mScaleType = ScaleType.Fit;
-
-    public enum ScaleType {
-        CenterCrop, CenterInside, Fit, FitCenterCrop
-    }
 
     protected BaseSliderView(Context context) {
         mContext = context;
@@ -213,12 +201,9 @@ public abstract class BaseSliderView {
     protected void bindEventAndShow(final View v, ImageView targetImageView) {
         final BaseSliderView me = this;
 
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnSliderClickListener != null) {
-                    mOnSliderClickListener.onSliderClick(me);
-                }
+        v.setOnClickListener(v1 -> {
+            if (mOnSliderClickListener != null) {
+                mOnSliderClickListener.onSliderClick(me);
             }
         });
 
@@ -308,14 +293,13 @@ public abstract class BaseSliderView {
         });*/
     }
 
+    public ScaleType getScaleType() {
+        return mScaleType;
+    }
 
     public BaseSliderView setScaleType(ScaleType type) {
         mScaleType = type;
         return this;
-    }
-
-    public ScaleType getScaleType() {
-        return mScaleType;
     }
 
     /**
@@ -335,10 +319,6 @@ public abstract class BaseSliderView {
         mLoadListener = l;
     }
 
-    public interface OnSliderClickListener {
-        public void onSliderClick(BaseSliderView slider);
-    }
-
     /**
      * when you have some extra information, please put it in this bundle.
      *
@@ -346,6 +326,14 @@ public abstract class BaseSliderView {
      */
     public Bundle getBundle() {
         return mBundle;
+    }
+
+    public enum ScaleType {
+        CenterCrop, CenterInside, Fit, FitCenterCrop
+    }
+
+    public interface OnSliderClickListener {
+        public void onSliderClick(BaseSliderView slider);
     }
 
     public interface ImageLoadListener {

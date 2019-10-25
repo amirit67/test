@@ -1,10 +1,9 @@
 package ir.payebash.Holders;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import ir.payebash.R;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class LoadingViewHolder extends RecyclerView.ViewHolder {
     public ProgressBar progressBar;

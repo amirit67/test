@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ir.payebash.Application;
 import ir.payebash.R;
 
 /**

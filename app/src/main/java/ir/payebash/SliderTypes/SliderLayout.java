@@ -3,7 +3,6 @@ package ir.payebash.SliderTypes;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Message;
-import androidx.viewpager.widget.PagerAdapter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,6 +14,7 @@ import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import androidx.viewpager.widget.PagerAdapter;
 import ir.payebash.Indicators.BaseAnimationInterface;
 import ir.payebash.Indicators.BaseTransformer;
 import ir.payebash.Indicators.DefaultTransformer;
@@ -136,6 +136,13 @@ public class SliderLayout extends RelativeLayout {
      * @see BaseAnimationInterface
      */
     private BaseAnimationInterface mCustomAnimation;
+    private android.os.Handler mh = new android.os.Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            moveNextPosition(true);
+        }
+    };
 
     /**
      * {@link PagerIndicator} shape, rect or oval.
@@ -219,14 +226,6 @@ public class SliderLayout extends RelativeLayout {
     public <T extends BaseSliderView> void addSlider(T imageContent) {
         mSliderAdapter.addSlider(imageContent);
     }
-
-    private android.os.Handler mh = new android.os.Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            moveNextPosition(true);
-        }
-    };
 
     public void startAutoCycle() {
         startAutoCycle(mSliderDuration, mSliderDuration, mAutoRecover);
@@ -354,44 +353,6 @@ public class SliderLayout extends RelativeLayout {
     }
 
     /**
-     * preset transformers and their names
-     */
-    public enum Transformer {
-        Default("Default"),
-        Accordion("Accordion"),
-        Background2Foreground("Background2Foreground"),
-        CubeIn("CubeIn"),
-        DepthPage("DepthPage"),
-        Fade("Fade"),
-        FlipHorizontal("FlipHorizontal"),
-        FlipPage("FlipPage"),
-        Foreground2Background("Foreground2Background"),
-        RotateDown("RotateDown"),
-        RotateUp("RotateUp"),
-        Stack("Stack"),
-        Tablet("Tablet"),
-        ZoomIn("ZoomIn"),
-        ZoomOutSlide("ZoomOutSlide"),
-        ZoomOut("ZoomOut");
-
-        private final String name;
-
-        private Transformer(String s) {
-            name = s;
-        }
-
-        public String toString() {
-            return name;
-        }
-
-        public boolean equals(String other) {
-            return (other == null) ? false : name.equals(other);
-        }
-    }
-
-    ;
-
-    /**
      * set a preset viewpager transformer by id.
      *
      * @param transformerId
@@ -404,6 +365,8 @@ public class SliderLayout extends RelativeLayout {
             }
         }
     }
+
+    ;
 
     /**
      * set preset PagerTransformer via the name of transforemer.
@@ -450,6 +413,13 @@ public class SliderLayout extends RelativeLayout {
         setPagerTransformer(true, t);
     }
 
+    public PagerIndicator.IndicatorVisibility getIndicatorVisibility() {
+        if (mIndicator == null) {
+            return mIndicator.getIndicatorVisibility();
+        }
+        return PagerIndicator.IndicatorVisibility.Invisible;
+
+    }
 
     /**
      * Set the visibility of the indicators.
@@ -464,14 +434,6 @@ public class SliderLayout extends RelativeLayout {
         mIndicator.setIndicatorVisibility(visibility);
     }
 
-    public PagerIndicator.IndicatorVisibility getIndicatorVisibility() {
-        if (mIndicator == null) {
-            return mIndicator.getIndicatorVisibility();
-        }
-        return PagerIndicator.IndicatorVisibility.Invisible;
-
-    }
-
     /**
      * get the {@link PagerIndicator} instance.
      * You can manipulate the properties of the indicator.
@@ -480,31 +442,6 @@ public class SliderLayout extends RelativeLayout {
      */
     public PagerIndicator getPagerIndicator() {
         return mIndicator;
-    }
-
-    public enum PresetIndicators {
-        Center_Bottom("Center_Bottom", R.id.default_center_bottom_indicator);
-        /*Right_Bottom("Right_Bottom", R.id.default_bottom_right_indicator),
-        Left_Bottom("Left_Bottom", R.id.default_bottom_left_indicator),
-        Center_Top("Center_Top", R.id.default_center_top_indicator),
-        Right_Top("Right_Top", R.id.default_center_top_right_indicator),
-        Left_Top("Left_Top", R.id.default_center_top_left_indicator);*/
-
-        private final String name;
-        private final int id;
-
-        private PresetIndicators(String name, int id) {
-            this.name = name;
-            this.id = id;
-        }
-
-        public String toString() {
-            return name;
-        }
-
-        public int getResourceId() {
-            return id;
-        }
     }
 
     public void setPresetIndicator(PresetIndicators presetIndicator) {
@@ -541,6 +478,10 @@ public class SliderLayout extends RelativeLayout {
 
         return mViewPager.getCurrentItem() % getRealAdapter().getCount();
 
+    }
+
+    public void setCurrentPosition(int position) {
+        setCurrentPosition(position, true);
     }
 
     /**
@@ -597,10 +538,6 @@ public class SliderLayout extends RelativeLayout {
         mViewPager.setCurrentItem(n, smooth);
     }
 
-    public void setCurrentPosition(int position) {
-        setCurrentPosition(position, true);
-    }
-
     /**
      * move to prev slide.
      */
@@ -623,6 +560,67 @@ public class SliderLayout extends RelativeLayout {
         if (mSliderAdapter.getCount() > 1)
 
             mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, smooth);
+    }
+
+    /**
+     * preset transformers and their names
+     */
+    public enum Transformer {
+        Default("Default"),
+        Accordion("Accordion"),
+        Background2Foreground("Background2Foreground"),
+        CubeIn("CubeIn"),
+        DepthPage("DepthPage"),
+        Fade("Fade"),
+        FlipHorizontal("FlipHorizontal"),
+        FlipPage("FlipPage"),
+        Foreground2Background("Foreground2Background"),
+        RotateDown("RotateDown"),
+        RotateUp("RotateUp"),
+        Stack("Stack"),
+        Tablet("Tablet"),
+        ZoomIn("ZoomIn"),
+        ZoomOutSlide("ZoomOutSlide"),
+        ZoomOut("ZoomOut");
+
+        private final String name;
+
+        private Transformer(String s) {
+            name = s;
+        }
+
+        public String toString() {
+            return name;
+        }
+
+        public boolean equals(String other) {
+            return (other == null) ? false : name.equals(other);
+        }
+    }
+
+    public enum PresetIndicators {
+        Center_Bottom("Center_Bottom", R.id.default_center_bottom_indicator);
+        /*Right_Bottom("Right_Bottom", R.id.default_bottom_right_indicator),
+        Left_Bottom("Left_Bottom", R.id.default_bottom_left_indicator),
+        Center_Top("Center_Top", R.id.default_center_top_indicator),
+        Right_Top("Right_Top", R.id.default_center_top_right_indicator),
+        Left_Top("Left_Top", R.id.default_center_top_left_indicator);*/
+
+        private final String name;
+        private final int id;
+
+        private PresetIndicators(String name, int id) {
+            this.name = name;
+            this.id = id;
+        }
+
+        public String toString() {
+            return name;
+        }
+
+        public int getResourceId() {
+            return id;
+        }
     }
 
 }

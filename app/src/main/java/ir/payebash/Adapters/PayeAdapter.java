@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import androidx.recyclerview.widget.RecyclerView;
 import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Activities.ViewPagerActivity;
 import ir.payebash.Application;
@@ -148,39 +148,32 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 });
 
                 if (!feedItemList.get(i).getImages().equals("null"))
-                    Holder.img_post.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            String s = feedItemList.get(i).getImages().split(",")[0];
-                            if (!s.equals("")) {
-                                feedItemList.get(i).setImages(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + s + ".jpg");
-                                final Bundle bundle = new Bundle();
-                                bundle.putSerializable("feed", feedItemList.get(i));
-                                Intent in = new Intent(mContext, ViewPagerActivity.class);
-                                in.putExtras(bundle);
-                                mContext.startActivity(in);
-                                feedItemList.get(i).setImages(s);
-                            }
+                    Holder.img_post.setOnClickListener(v -> {
+                        String s = feedItemList.get(i).getImages().split(",")[0];
+                        if (!s.equals("")) {
+                            feedItemList.get(i).setImages(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + s + ".jpg");
+                            final Bundle bundle = new Bundle();
+                            bundle.putSerializable("feed", feedItemList.get(i));
+                            Intent in = new Intent(mContext, ViewPagerActivity.class);
+                            in.putExtras(bundle);
+                            mContext.startActivity(in);
+                            feedItemList.get(i).setImages(s);
                         }
                     });
             } catch (Exception e) {
             }
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int pos = i;
-                Intent intent;
-                intent = new Intent(mContext, PostDetailsActivity.class);
-                intent.putExtra("feedItem", feedItemList.get(pos));
-                intent.putExtra(mContext.getString(R.string.myAds), Application.myAds);
-                if (Application.myAds == 42907631) {
-                    ((Activity) mContext).startActivityForResult(intent, 321);
-                } else
-                    mContext.startActivity(intent);
-            }
-
+        holder.itemView.setOnClickListener(v -> {
+            final int pos = i;
+            Intent intent;
+            intent = new Intent(mContext, PostDetailsActivity.class);
+            intent.putExtra("feedItem", feedItemList.get(pos));
+            intent.putExtra(mContext.getString(R.string.myAds), Application.myAds);
+            if (Application.myAds == 42907631) {
+                ((Activity) mContext).startActivityForResult(intent, 321);
+            } else
+                mContext.startActivity(intent);
         });
     }
 
@@ -223,24 +216,21 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             //details.put(i, (LinearLayout) mTagLayout.getChildAt(0));
                    /* tagView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.checked,0,0);
                     tagView.setCompoundDrawablePadding(50);*/
-            tagView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //details.clear();
-                    //pb.setVisibility(View.VISIBLE);
-                    Cnt = 0;
-                    params.clear();
-                    params.put("ContentSearch", tagView.getText().toString().replace("#", "").trim());
-                    params.put(mContext.getString(R.string.Skip), String.valueOf(Cnt));
+            tagView.setOnClickListener(v -> {
+                //details.clear();
+                //pb.setVisibility(View.VISIBLE);
+                Cnt = 0;
+                params.clear();
+                params.put("ContentSearch", tagView.getText().toString().replace("#", "").trim());
+                params.put(mContext.getString(R.string.Skip), String.valueOf(Cnt));
 
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("HashMap", (Serializable) params);
-                    //set Fragmentclass Arguments
-                    fragobj = new SearchFragment();
-                    fragobj.setArguments(bundle);
-                    HSH.openFragment((Activity) mContext, fragobj);
-                    //GetPosts();
-                }
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("HashMap", (Serializable) params);
+                //set Fragmentclass Arguments
+                fragobj = new SearchFragment();
+                fragobj.setArguments(bundle);
+                HSH.openFragment((Activity) mContext, fragobj);
+                //GetPosts();
             });
 
         } catch (Exception e) {

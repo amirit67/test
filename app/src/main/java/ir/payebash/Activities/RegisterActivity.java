@@ -9,8 +9,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.View;
@@ -47,6 +45,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Application;
@@ -103,18 +102,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 ShowEnterAnimation();
             }
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    animateRevealClose();
-                }
-            });
-            et_city.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    HSH.selectLocation(RegisterActivity.this, 0, et_city);
-                }
-            });
+            fab.setOnClickListener(v -> animateRevealClose());
+            et_city.setOnClickListener(view -> HSH.selectLocation(RegisterActivity.this, 0, et_city));
         } catch (Exception e) {
             HSH.showtoast(RegisterActivity.this, e.getMessage() + "a");
         }
@@ -266,23 +255,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 dialog.setContentText("شماره موبایل صحیح است؟");
                 dialog.setConfirmText("بله");
                 dialog.setCancelText("خیر");
-                dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        if (NetworkUtils.getConnectivity(RegisterActivity.this) == true) {
-                            dialog.dismiss();
-                            params.put(getString(R.string.Type), "Register");
-                            UserInfo();
-                        } else
-                            HSH.showtoast(RegisterActivity.this, "خطا در اتصال به اینترنت");
-                    }
+                dialog.setConfirmClickListener(sDialog -> {
+                    if (NetworkUtils.getConnectivity(RegisterActivity.this) == true) {
+                        dialog.dismiss();
+                        params.put(getString(R.string.Type), "Register");
+                        UserInfo();
+                    } else
+                        HSH.showtoast(RegisterActivity.this, "خطا در اتصال به اینترنت");
                 });
-                dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        dialog.dismissWithAnimation();
-                    }
-                });
+                dialog.setCancelClickListener(sweetAlertDialog -> dialog.dismissWithAnimation());
                 dialog.setCancelable(true);
                 HSH.dialog(dialog);
             } else {

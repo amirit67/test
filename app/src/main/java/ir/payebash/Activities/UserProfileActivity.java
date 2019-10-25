@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -25,6 +24,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
@@ -120,18 +120,8 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             imageLoader.displayImage(getIntent().getExtras().getString("profileimage").trim(), imgProfile, options);
         } catch (Exception e) {
         }
-        findViewById(R.id.btnBack).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        btnVote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Vote();
-            }
-        });
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+        btnVote.setOnClickListener(view -> Vote());
 
         imgProfile.setOnClickListener(this);
         btnReport.setOnClickListener(this);
@@ -377,12 +367,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                     }
                 });
 
-                txt_reject.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
+                txt_reject.setOnClickListener(v1 -> dialog.dismiss());
                 HSH.dialog(dialog);
                 dialog.show();
                 break;

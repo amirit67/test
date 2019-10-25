@@ -10,10 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import androidx.core.content.FileProvider;
-
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.cardview.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
@@ -25,7 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -46,6 +42,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.FileProvider;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Adapters.GalleryAdapter;
 import ir.payebash.Application;
@@ -78,8 +77,8 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
     private ExpandableHeightGridView gv;
     private GalleryAdapter adapter;
     private CardView cd_phone, cd_link;
-    private EditText et_title, et_tag, et_time_start, et_phone, et_link,
-            et_time_finish, et_cost, et_count, et_deadline, et_description;
+    private EditText etTitle, etTag, etTime_start, et_phone, et_link,
+            etTime_finish, et_cost, et_count, et_deadline, et_description;
     private Button btn_subject_post, btn_location_post, btn_register;
     private ImageButton btn_calender, btn_calender2;
     private SwitchCompat compatSwitch, compatSwitchImmediate;
@@ -223,10 +222,10 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
         compatSwitch = findViewById(R.id.compatSwitch);
         compatSwitchImmediate = findViewById(R.id.compatSwitchImmediate);
         compatSwitchImmediate.setText("فوری (شامل هزینه ی " + Application.preferences.getInt("Feepayable", 1000) + " تومان)");
-        et_title = findViewById(R.id.et_title);
-        et_tag = findViewById(R.id.et_tag);
-        et_time_start = findViewById(R.id.et_time_start);
-        et_time_finish = findViewById(R.id.et_time_finish);
+        etTitle = findViewById(R.id.et_title);
+        etTag = findViewById(R.id.et_tag);
+        etTime_start = findViewById(R.id.et_time_start);
+        etTime_finish = findViewById(R.id.et_time_finish);
         et_cost = findViewById(R.id.et_cost);
         et_count = findViewById(R.id.et_count);
         et_deadline = findViewById(R.id.et_deadline);
@@ -238,10 +237,10 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
         cd_phone = findViewById(R.id.cd_phone);
         cd_link = findViewById(R.id.cd_link);
 
-        et_title.addTextChangedListener(new addListenerOnTextChange(et_title));
-        et_tag.addTextChangedListener(new addListenerOnTextChange(et_tag));
-        et_time_start.addTextChangedListener(new addListenerOnTextChange(et_time_start));
-        et_time_finish.addTextChangedListener(new addListenerOnTextChange(et_time_finish));
+        etTitle.addTextChangedListener(new addListenerOnTextChange(etTitle));
+        etTag.addTextChangedListener(new addListenerOnTextChange(etTag));
+        etTime_start.addTextChangedListener(new addListenerOnTextChange(etTime_start));
+        etTime_finish.addTextChangedListener(new addListenerOnTextChange(etTime_finish));
         et_cost.addTextChangedListener(new addListenerOnTextChange(et_cost));
         et_count.addTextChangedListener(new addListenerOnTextChange(et_count));
         et_deadline.addTextChangedListener(new addListenerOnTextChange(et_deadline));
@@ -253,12 +252,7 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
         btn_location_post = findViewById(R.id.btn_location_post);
         btn_register = findViewById(R.id.btn_register);
 
-        (findViewById(R.id.img_back)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        (findViewById(R.id.img_back)).setOnClickListener(v -> finish());
 
     }
 
@@ -272,12 +266,12 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
                 break;
             }
             case R.id.btn_calender: {
-                HSH.setTimeDate(PostRegisterActivity.this, et_time_start);
+                HSH.setTimeDate(PostRegisterActivity.this, etTime_start);
                 break;
             }
 
             case R.id.btn_calender2: {
-                HSH.setTimeDate(PostRegisterActivity.this, et_time_finish);
+                HSH.setTimeDate(PostRegisterActivity.this, etTime_finish);
                 break;
             }
 
@@ -356,7 +350,7 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
             case R.id.btn_register:
                 //ارسال سوال
                 try {
-                    String title = et_title.getText().toString().trim();
+                    String title = etTitle.getText().toString().trim();
                     String description = et_description.getText().toString().trim();
                     if (btn_subject_post.getTag().toString().trim().equals("")) {
                         HSH.showtoast(PostRegisterActivity.this, "موضوع رویداد را وارد نمایید");
@@ -367,11 +361,11 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
                         HSH.selectLocation(PostRegisterActivity.this, 1, btn_location_post);
                         btn_location_post.requestFocus();
                     } else if (title.equals("") || title.length() < 3) {
-                        error(et_title, "عنوان رویداد را وارد نمایید(حداقل 3 حرف)");
-                    } else if (et_time_start.getText().toString().trim().equals(""))
-                        error(et_time_start, "زمان شروع رویداد را وارد نمایید");
-                    else if (et_time_finish.getText().toString().trim().equals(""))
-                        error(et_time_finish, "زمان پایان رویداد را وارد نمایید");
+                        error(etTitle, "عنوان رویداد را وارد نمایید(حداقل 3 حرف)");
+                    } else if (etTime_start.getText().toString().trim().equals(""))
+                        error(etTime_start, "زمان شروع رویداد را وارد نمایید");
+                    else if (etTime_finish.getText().toString().trim().equals(""))
+                        error(etTime_finish, "زمان پایان رویداد را وارد نمایید");
                     else if (et_cost.getText().toString().trim().equals(""))
                         error(et_cost, "هزینه رویداد را وارد نمایید");
                     else if (et_count.getText().toString().trim().equals(""))
@@ -386,14 +380,14 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
                         DataParams.put(getString(R.string.city), btn_location_post.getTag().toString());
                         DataParams.put(getString(R.string.IsWoman), String.valueOf(compatSwitch.isChecked()));
                         DataParams.put(getString(R.string.IsImmediate), String.valueOf(compatSwitchImmediate.isChecked()));
-                        DataParams.put(getString(R.string.Title), et_title.getText().toString().trim());
-                        DataParams.put(getString(R.string.Tag), et_tag.getText().toString().trim());
-                        DataParams.put(getString(R.string.StartDate), et_time_start.getText().toString().trim());
-                        DataParams.put(getString(R.string.finishDate), et_time_finish.getText().toString().trim());
+                        DataParams.put(getString(R.string.Title), etTitle.getText().toString().trim());
+                        DataParams.put(getString(R.string.Tag), etTag.getText().toString().trim());
+                        DataParams.put(getString(R.string.StartDate), etTime_start.getText().toString().trim());
+                        DataParams.put(getString(R.string.finishDate), etTime_finish.getText().toString().trim());
                         DataParams.put(getString(R.string.Deadline), convertToMiladi(et_deadline));
                         DataParams.put(getString(R.string.PhoneNumber), et_phone.getText().toString().trim());
                         DataParams.put(getString(R.string.Link), et_link.getText().toString().trim());
-                        DataParams.put(getString(R.string.Tag), et_tag.getText().toString().trim());
+                        DataParams.put(getString(R.string.Tag), etTag.getText().toString().trim());
                         try {
                             DataParams.put(getString(R.string.Longitude), lon);
                             DataParams.put(getString(R.string.Latitude), lat);
@@ -500,8 +494,7 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
         HSH.dialog(dialog1);
         try {
 
-            switch (GooglePlayServicesUtil
-                    .isGooglePlayServicesAvailable(PostRegisterActivity.this)) {
+            switch (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(PostRegisterActivity.this)) {
                 case ConnectionResult.SUCCESS:
                     try {
 

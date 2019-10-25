@@ -3,7 +3,6 @@ package ir.payebash.asynktask;
 
 import android.app.Activity;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +17,7 @@ import retrofit2.Callback;
 public class AsynctaskUncomingGetPost {
 
     private Activity ac;
-    private Map<String, String> params ;
+    private Map<String, String> params;
     private IWebservice delegate;
 
     public AsynctaskUncomingGetPost(Activity ac,

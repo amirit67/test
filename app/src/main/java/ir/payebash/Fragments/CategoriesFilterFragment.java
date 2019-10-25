@@ -5,9 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -20,6 +17,9 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import ir.payebash.Adapters.FilterAdapter;
 import ir.payebash.Application;
 import ir.payebash.Models.FilterFeedItem;
@@ -62,33 +62,30 @@ public class CategoriesFilterFragment extends Fragment {
         adapter.notifyDataSetChanged();
         cr.close();
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (feed.get(position).getHasChild().equals("true")) {
-                    Cursor cr = Application.database.rawQuery("SELECT id from categories where parentId = '" + feed.get(position).getId() + "' ", null);
-                    if (cr.getCount() > 0) {
+        lv.setOnItemClickListener((parent, view, position, id) -> {
+            if (feed.get(position).getHasChild().equals("true")) {
+                Cursor cr = Application.database.rawQuery("SELECT id from categories where parentId = '" + feed.get(position).getId() + "' ", null);
+                if (cr.getCount() > 0) {
 
-                        CategoriesFilterFragment fragment = new CategoriesFilterFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("filter_item_pos", feed.get(position).getId());
-                        fragment.setArguments(bundle);
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction ftx = fragmentManager.beginTransaction();
-                        ftx.setCustomAnimations(R.anim.slide_in_right,
-                                R.anim.slide_out_left, R.anim.slide_in_left,
-                                R.anim.slide_out_right);
-                        ftx.addToBackStack(fragment.getClass().getSimpleName());
-                        ftx.replace(R.id.layoutFragment, fragment);
-                        ftx.commit();
+                    CategoriesFilterFragment fragment = new CategoriesFilterFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("filter_item_pos", feed.get(position).getId());
+                    fragment.setArguments(bundle);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction ftx = fragmentManager.beginTransaction();
+                    ftx.setCustomAnimations(R.anim.slide_in_right,
+                            R.anim.slide_out_left, R.anim.slide_in_left,
+                            R.anim.slide_out_right);
+                    ftx.addToBackStack(fragment.getClass().getSimpleName());
+                    ftx.replace(R.id.layoutFragment, fragment);
+                    ftx.commit();
 
-                    }
-                } else {
-                    Intent resultData = new Intent();
-                    resultData.putExtra(getString(R.string.CategoryId), feed.get(position).getId());
-                    getActivity().setResult(Activity.RESULT_OK, resultData);
-                    getActivity().finish();
                 }
+            } else {
+                Intent resultData = new Intent();
+                resultData.putExtra(getString(R.string.CategoryId), feed.get(position).getId());
+                getActivity().setResult(Activity.RESULT_OK, resultData);
+                getActivity().finish();
             }
         });
 

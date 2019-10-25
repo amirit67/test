@@ -2,10 +2,6 @@ package ir.payebash.Fragments;
 
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.widget.Toolbar;
-import ir.payebash.Application;
-import ir.payebash.Classes.HSH;
-import ir.payebash.Interfaces.TitleMain;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.R;
 
 public class ActivitiesFragment extends Fragment {
@@ -38,7 +36,7 @@ public class ActivitiesFragment extends Fragment {
             DeclareElements();
             tabHost = rootView.findViewById(R.id.materialTabHost);
             pager = rootView.findViewById(R.id.pager);
-            pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 }
@@ -118,5 +116,4 @@ public class ActivitiesFragment extends Fragment {
             return mFragmentTitleList.get(position);
         }
     }
-
 }

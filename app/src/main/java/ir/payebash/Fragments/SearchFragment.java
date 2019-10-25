@@ -11,9 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +22,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -39,19 +35,21 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import ir.payebash.asynktask.AsynctaskGetPost;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import ir.payebash.Adapters.PayeAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
 import ir.payebash.DI.DaggerMainComponent;
 import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.Interfaces.IWebservice;
-import ir.payebash.Interfaces.OnLoadMoreListener;
-import ir.payebash.Interfaces.TitleMain;
+import ir.payebash.Interfaces.IWebservice.OnLoadMoreListener;
+import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.Models.PayeItem;
 import ir.payebash.R;
+import ir.payebash.asynktask.AsynctaskGetPost;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -137,33 +135,27 @@ public class SearchFragment extends Fragment {
         getPost = new AsynctaskGetPost(getActivity(), params, m);
         getPost.getData();
 
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Cnt = 0;
-                //params.clear();
-                Application.myAds = 1;
-                adapter.ClearFeed();
-                params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                getPost.getData();
-            }
+        swipeContainer.setOnRefreshListener(() -> {
+            Cnt = 0;
+            //params.clear();
+            Application.myAds = 1;
+            adapter.ClearFeed();
+            params.put(getString(R.string.Skip), String.valueOf(Cnt));
+            getPost.getData();
         });
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                    /*feed.add(null);
-                    adapter.notifyItemInserted(feed.size() - 1);*/
-                swipeContainer.setRefreshing(true);
-                if (HSH.isNetworkConnection(getActivity())) {
-                    Cnt++;
-                    params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                    getPost.getData();
-                }
+        setOnLoadMoreListener(() -> {
+                /*feed.add(null);
+                adapter.notifyItemInserted(feed.size() - 1);*/
+            swipeContainer.setRefreshing(true);
+            if (HSH.isNetworkConnection(getActivity())) {
+                Cnt++;
+                params.put(getString(R.string.Skip), String.valueOf(Cnt));
+                getPost.getData();
             }
         });
 
@@ -244,39 +236,28 @@ public class SearchFragment extends Fragment {
         ImageView mic = rootView.findViewById(R.id.mic);
         ImageButton btn_search = rootView.findViewById(R.id.btn_search);
         et_search = rootView.findViewById(R.id.et_search);
-        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    Search(et_search.getText().toString().trim());
-                    return true;
-                }
-                return false;
+        et_search.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                Search(et_search.getText().toString().trim());
+                return true;
             }
+            return false;
         });
-        btn_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Filter(getActivity());
-            }
-        });
-        mic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                //intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "fa");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
-                        "دنبال چه هستید؟");
-                try {
-                    startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
-                } catch (ActivityNotFoundException a) {
-                    Toast.makeText(getActivity(),
-                            "خطا",
-                            Toast.LENGTH_SHORT).show();
-                }
+        btn_search.setOnClickListener(view -> Filter(getActivity()));
+        mic.setOnClickListener(v -> {
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            //intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "fa");
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                    "دنبال چه هستید؟");
+            try {
+                startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+            } catch (ActivityNotFoundException a) {
+                Toast.makeText(getActivity(),
+                        "خطا",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -318,55 +299,39 @@ public class SearchFragment extends Fragment {
 
                 Button btn_cancel = dialog_filter.findViewById(R.id.btn_cancel);
                 Button btn_submit = dialog_filter.findViewById(R.id.btn_submit);
-                btn_categories.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        HSH.selectSubject(getActivity(), btn_categories);
-                    }
-                });
+                btn_categories.setOnClickListener(v -> HSH.selectSubject(getActivity(), btn_categories));
 
-                btn_location.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        HSH.selectLocation(getActivity(), 0, btn_location);
-                    }
+                btn_location.setOnClickListener(v -> HSH.selectLocation(getActivity(), 0, btn_location));
+                btn_cancel.setOnClickListener(v -> {
+                    //et_search.setHint(String.format(getString(R.string.searchHint), "همه رویدادها", "سراسر کشور"));
+                    params.remove(getString(R.string.SubjectCode));
+                    params.remove(getString(R.string.CityCode));
+                    adapter.ClearFeed();
+                    swipeContainer.setRefreshing(true);
+                    getPost.getData();
+                    dialog_filter.dismiss();
                 });
-                btn_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //et_search.setHint(String.format(getString(R.string.searchHint), "همه رویدادها", "سراسر کشور"));
-                        params.remove(getString(R.string.SubjectCode));
-                        params.remove(getString(R.string.CityCode));
+                btn_submit.setOnClickListener(v -> {
+                    try {
+                        Cnt = 0;
+                        //params.clear();
                         adapter.ClearFeed();
-                        swipeContainer.setRefreshing(true);
-                        getPost.getData();
+                        pb.setVisibility(View.VISIBLE);
                         dialog_filter.dismiss();
-                    }
-                });
-                btn_submit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            Cnt = 0;
-                            //params.clear();
-                            adapter.ClearFeed();
-                            pb.setVisibility(View.VISIBLE);
-                            dialog_filter.dismiss();
-                            params.put(getString(R.string.SubjectCode), btn_categories.getTag().toString());
-                            params.put(getString(R.string.CityCode), btn_location.getTag().toString());
-                            params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                            et_search.setHint(
-                                    String.format(getString(R.string.searchHint),
-                                            btn_categories.getText().toString().trim(),
-                                            btn_location.getText().toString().trim()));
+                        params.put(getString(R.string.SubjectCode), btn_categories.getTag().toString());
+                        params.put(getString(R.string.CityCode), btn_location.getTag().toString());
+                        params.put(getString(R.string.Skip), String.valueOf(Cnt));
+                        et_search.setHint(
+                                String.format(getString(R.string.searchHint),
+                                        btn_categories.getText().toString().trim(),
+                                        btn_location.getText().toString().trim()));
 
-                            getPost = new AsynctaskGetPost(getActivity(),
-                                    params,
-                                    m);
-                            getPost.getData();
+                        getPost = new AsynctaskGetPost(getActivity(),
+                                params,
+                                m);
+                        getPost.getData();
 
-                        } catch (Exception e) {
-                        }
+                    } catch (Exception e) {
                     }
                 });
             }

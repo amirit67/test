@@ -5,13 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -20,7 +17,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -34,7 +30,7 @@ import ir.payebash.Fragments.NotificationFragment;
 import ir.payebash.Fragments.ProfileFragment;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
-import ir.payebash.Interfaces.TitleMain;
+import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.Models.UserItem;
 import ir.payebash.R;
 import okhttp3.ResponseBody;
@@ -71,47 +67,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toolbar toolbar = findViewById(R.id.toolbar_top);
             setSupportActionBar(toolbar);
             setTitle("");
-            findViewById(R.id.btn_new_event).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final SweetAlertDialog dialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
-                    String s = Application.preferences.getString("MobileTemp", "");
-                    if (s.length() < 11) {
-                        dialog.setCustomImage(R.mipmap.mobile);
-                        dialog.setTitleText("احراز هویت");
-                        dialog.setContentText("برای ثبت رویداد لازم است ابتدا اطلاعات خود را ثبت نمایید");
-                        dialog.setConfirmText("باشه");
-                        dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                Intent i = new Intent(MainActivity.this, RegisterActivity.class);
-                                i.putExtra("Type", "Update");
-                                startActivityForResult(i, 132);
-                                sDialog.dismissWithAnimation();
-                            }
-                        });
-                        HSH.dialog(dialog);
-                        dialog.show();
-                    } else if (Application.preferences.getString(getString(R.string.Telegram), "").length() < 5 &&
-                            Application.preferences.getString(getString(R.string.Soroosh), "").length() < 5 && !dialog.isShowing()) {
-                        dialog.setCustomImage(R.mipmap.completed_info);
-                        dialog.setTitleText("تکمیل اطلاعات");
-                        dialog.setContentText("قبل از ثبت رویداد جدید پروفایل خود را تکمیل نمایید");
-                        dialog.setConfirmText("باشه");
-                        dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                Intent i = new Intent(MainActivity.this, EditProfileActivity.class);
-                                startActivityForResult(i, 132);
-                                sDialog.dismissWithAnimation();
-                            }
-                        });
-                        HSH.dialog(dialog);
-                        dialog.show();
-                    } else {
-                        Intent intent = new Intent(MainActivity.this, PostRegisterActivity.class);
-                        startActivityForResult(intent, 321);
-                    }
+            findViewById(R.id.btn_new_event).setOnClickListener(view -> {
+                final SweetAlertDialog dialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
+                String s = Application.preferences.getString("MobileTemp", "");
+                if (s.length() < 11) {
+                    dialog.setCustomImage(R.mipmap.mobile);
+                    dialog.setTitleText("احراز هویت");
+                    dialog.setContentText("برای ثبت رویداد لازم است ابتدا اطلاعات خود را ثبت نمایید");
+                    dialog.setConfirmText("باشه");
+                    dialog.setConfirmClickListener(sDialog -> {
+                        Intent i = new Intent(MainActivity.this, RegisterActivity.class);
+                        i.putExtra("Type", "Update");
+                        startActivityForResult(i, 132);
+                        sDialog.dismissWithAnimation();
+                    });
+                    HSH.dialog(dialog);
+                    dialog.show();
+                } else if (Application.preferences.getString(getString(R.string.Telegram), "").length() < 5 &&
+                        Application.preferences.getString(getString(R.string.Soroosh), "").length() < 5 && !dialog.isShowing()) {
+                    dialog.setCustomImage(R.mipmap.completed_info);
+                    dialog.setTitleText("تکمیل اطلاعات");
+                    dialog.setContentText("قبل از ثبت رویداد جدید پروفایل خود را تکمیل نمایید");
+                    dialog.setConfirmText("باشه");
+                    dialog.setConfirmClickListener(sDialog -> {
+                        Intent i = new Intent(MainActivity.this, EditProfileActivity.class);
+                        startActivityForResult(i, 132);
+                        sDialog.dismissWithAnimation();
+                    });
+                    HSH.dialog(dialog);
+                    dialog.show();
+                } else {
+                    Intent intent = new Intent(MainActivity.this, PostRegisterActivity.class);
+                    startActivityForResult(intent, 321);
                 }
             });
 
@@ -122,30 +109,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //Application.fra = home_fragment;
 
             bottomNavigationView.getMenu().findItem(R.id.action_home).setChecked(true);
-            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    menuItem.setChecked(true);
-                    if (menuItem.getItemId() == R.id.action_home) {
-                        if (home_fragment == null)
-                            home_fragment = new HomeFragment();
-                        openFragment(MainActivity.this, home_fragment);
-                    }
-                    if (menuItem.getItemId() == R.id.action_profile) {
-                        if (profile_fragment == null)
-                            profile_fragment = new ProfileFragment();
-                        openFragment(MainActivity.this, profile_fragment);
-                    } else if (menuItem.getItemId() == R.id.action_notify) {
-                        if (notification_fragment == null)
-                            notification_fragment = new NotificationFragment();
-                        openFragment(MainActivity.this, notification_fragment);
-                    } else if (menuItem.getItemId() == R.id.action_event) {
-                        if (activities_fragment == null)
-                            activities_fragment = new ActivitiesFragment();
-                        openFragment(MainActivity.this, activities_fragment);
-                    }
-                    return false;
+            bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+                menuItem.setChecked(true);
+                if (menuItem.getItemId() == R.id.action_home) {
+                    if (home_fragment == null)
+                        home_fragment = new HomeFragment();
+                    openFragment(MainActivity.this, home_fragment);
                 }
+                if (menuItem.getItemId() == R.id.action_profile) {
+                    if (profile_fragment == null)
+                        profile_fragment = new ProfileFragment();
+                    openFragment(MainActivity.this, profile_fragment);
+                } else if (menuItem.getItemId() == R.id.action_notify) {
+                    if (notification_fragment == null)
+                        notification_fragment = new NotificationFragment();
+                    openFragment(MainActivity.this, notification_fragment);
+                } else if (menuItem.getItemId() == R.id.action_event) {
+                    if (activities_fragment == null)
+                        activities_fragment = new ActivitiesFragment();
+                    openFragment(MainActivity.this, activities_fragment);
+                }
+                return false;
             });
         }
     }
@@ -214,82 +198,100 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void IsAuthenticate() {
-        Map<String, String> params = new HashMap<>();
-        params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
-        params.put(getString(R.string.FbToken), FirebaseInstanceId.getInstance().getToken());
-        Call<UserItem> call =
-                ApiClient.getClient().create(ApiInterface.class).getAuthenticate(params);
-        call.enqueue(new Callback<UserItem>() {
-            @Override
-            public void onResponse(Call<UserItem> call, retrofit2.Response<UserItem> response) {
-                if (response.code() == 200)
-                    try {
-                        UserItem item = response.body();
-                        if (item.getIsAuthenticate().toLowerCase().equals("false")) {
-                            HSH.showtoast(MainActivity.this, "حساب کاربری شما مسدود گردید");
-                            new Handler().postDelayed(new Runnable() {
-                                public void run() {
-                                    Intent a = new Intent(Intent.ACTION_MAIN);
-                                    a.addCategory(Intent.CATEGORY_HOME);
-                                    a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(a);
-                                    System.exit(0);
-                                    finish();
-                                }
-                            }, 2500);
-                        }
-                        HSH.editor(getString(R.string.FullName), item.getFullName().trim().toLowerCase());
-                        if (!item.getProfileImage().contains("https://"))
-                            HSH.editor(getString(R.string.ProfileImage), getString(R.string.url) + "Images/Users/" + item.getProfileImage() + ".jpg");
-                        else
-                            HSH.editor(getString(R.string.ProfileImage), item.getProfileImage());
-                        HSH.editor(getString(R.string.Instagram), item.getInstagram().trim().toLowerCase());
-                        HSH.editor(getString(R.string.Telegram), item.getTelegram().trim().toLowerCase());
-                        HSH.editor(getString(R.string.Soroosh), item.getSoroosh().trim().toLowerCase());
-                        HSH.editor(getString(R.string.Gmail), item.getGmail().trim().toLowerCase());
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        //Log.w(TAG, "getInstanceId failed", task.getException());
+                        return;
+                    }
+
+                    Map<String, String> params = new HashMap<>();
+                    params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
+                    params.put(getString(R.string.FbToken), task.getResult().getToken());
+                    Call<UserItem> call =
+                            ApiClient.getClient().create(ApiInterface.class).getAuthenticate(params);
+                    call.enqueue(new Callback<UserItem>() {
+                        @Override
+                        public void onResponse(Call<UserItem> call, retrofit2.Response<UserItem> response) {
+                            if (response.code() == 200)
+                                try {
+                                    UserItem item = response.body();
+                                    if (item.getIsAuthenticate().toLowerCase().equals("false")) {
+                                        HSH.showtoast(MainActivity.this, "حساب کاربری شما مسدود گردید");
+                                        new Handler().postDelayed(new Runnable() {
+                                            public void run() {
+                                                Intent a = new Intent(Intent.ACTION_MAIN);
+                                                a.addCategory(Intent.CATEGORY_HOME);
+                                                a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                startActivity(a);
+                                                System.exit(0);
+                                                finish();
+                                            }
+                                        }, 2500);
+                                    }
+                                    HSH.editor(getString(R.string.FullName), item.getFullName().trim().toLowerCase());
+                                    if (!item.getProfileImage().contains("https://"))
+                                        HSH.editor(getString(R.string.ProfileImage), getString(R.string.url) + "Images/Users/" + item.getProfileImage() + ".jpg");
+                                    else
+                                        HSH.editor(getString(R.string.ProfileImage), item.getProfileImage());
+                                    HSH.editor(getString(R.string.Instagram), item.getInstagram().trim().toLowerCase());
+                                    HSH.editor(getString(R.string.Telegram), item.getTelegram().trim().toLowerCase());
+                                    HSH.editor(getString(R.string.Soroosh), item.getSoroosh().trim().toLowerCase());
+                                    HSH.editor(getString(R.string.Gmail), item.getGmail().trim().toLowerCase());
                         /*Cursor cr = Application.database.rawQuery("SELECT Id from RecentVisit WHERE data = '" + item.getMobile() + "'", null);
                         if (cr.getCount() > 0 && item.getMobile().length() > 10) */
-                        HSH.editor(getString(R.string.mobile), item.getMobile());
-                        HSH.editor("MobileTemp", item.getMobileTemp());
+                                    HSH.editor(getString(R.string.mobile), item.getMobile());
+                                    HSH.editor("MobileTemp", item.getMobileTemp());
 
-                        String s = item.getServicesIds().trim().toLowerCase();
-                        if (s.length() > 3 && !s.equals("null")) {
-                            String[] temp = s.trim().split(",");
-                            for (int i = 0; i < temp.length; i++) {
-                                temp[i] = temp[i].replace("\"", "");
-                                if (temp[i].contains("-"))
-                                    SubscribeTopic(temp[i]);
-                            }
+                                    String s = item.getServicesIds().trim().toLowerCase();
+                                    if (s.length() > 3 && !s.equals("null")) {
+                                        String[] temp = s.trim().split(",");
+                                        for (int i = 0; i < temp.length; i++) {
+                                            temp[i] = temp[i].replace("\"", "");
+                                            if (temp[i].contains("-"))
+                                                SubscribeTopic(temp[i]);
+                                        }
 
-                            if (!s.equals("") && !s.equals("null")) {
-                                HSH.editor(getString(R.string.ServicesIds), s.trim());
-                            }
+                                        if (!s.equals("") && !s.equals("null")) {
+                                            HSH.editor(getString(R.string.ServicesIds), s.trim());
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                }
+                            else if (!Application.preferences.getString(getString(R.string.UserId), "00000").equals("00000"))
+                                IsAuthenticate();
                         }
-                    } catch (Exception e) {
-                    }
-                else if (!Application.preferences.getString(getString(R.string.UserId), "00000").equals("00000"))
-                    IsAuthenticate();
-            }
 
-            @Override
-            public void onFailure(Call<UserItem> call, Throwable t) {
-                if (!Application.preferences.getString(getString(R.string.UserId), "00000").equals("00000"))
-                    IsAuthenticate();
-            }
-        });
+                        @Override
+                        public void onFailure(Call<UserItem> call, Throwable t) {
+                            if (!Application.preferences.getString(getString(R.string.UserId), "00000").equals("00000"))
+                                IsAuthenticate();
+                        }
+                    });
+                });
     }
 
     private void SubscribeTopic(String ServiceId) {
-        Call<ResponseBody> call = ApiClient.getClient3().create(ApiInterface.class).Subscribe(FirebaseInstanceId.getInstance().getToken(), ServiceId);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-            }
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        //Log.w(TAG, "getInstanceId failed", task.getException());
+                        return;
+                    }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-            }
-        });
+
+                    Call<ResponseBody> call = ApiClient.getClient3().create(ApiInterface.class).Subscribe(task.getResult().getToken(), ServiceId);
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        }
+                    });
+
+                });
     }
 
     public void exit() {
@@ -298,30 +300,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.setContentText("خوشحال میشیم نظر بدین");
         dialog.setConfirmText("نظر میدم");
         dialog.setCancelText("فعلا نه!خروج");
-        dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sDialog) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_EDIT);
-                    intent.setData(Uri.parse("bazaar://details?id=" + getPackageName()));
-                    intent.setPackage("com.farsitel.bazaar");
-                    startActivity(intent);
-                    dialog.dismiss();
-                } catch (Exception e) {
-                }
+        dialog.setConfirmClickListener(sDialog -> {
+            try {
+                Intent intent = new Intent(Intent.ACTION_EDIT);
+                intent.setData(Uri.parse("bazaar://details?id=" + getPackageName()));
+                intent.setPackage("com.farsitel.bazaar");
+                startActivity(intent);
+                dialog.dismiss();
+            } catch (Exception e) {
             }
         });
-        dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                sweetAlertDialog.dismissWithAnimation();
-                Intent a = new Intent(Intent.ACTION_MAIN);
-                a.addCategory(Intent.CATEGORY_HOME);
-                a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(a);
-                System.exit(0);
-                finish();
-            }
+        dialog.setCancelClickListener(sweetAlertDialog -> {
+            sweetAlertDialog.dismissWithAnimation();
+            Intent a = new Intent(Intent.ACTION_MAIN);
+            a.addCategory(Intent.CATEGORY_HOME);
+            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(a);
+            System.exit(0);
+            finish();
         });
         HSH.dialog(dialog);
         dialog.show();

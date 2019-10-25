@@ -4,9 +4,6 @@ package ir.payebash.Fragments;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +19,14 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import ir.payebash.Adapters.PayeAdapter;
 import ir.payebash.Application;
 import ir.payebash.DI.DaggerMainComponent;
 import ir.payebash.DI.ImageLoaderMoudle;
-import ir.payebash.Interfaces.TitleMain;
+import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.Models.PayeItem;
 import ir.payebash.R;
 

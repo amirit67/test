@@ -9,7 +9,6 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -58,23 +57,20 @@ public class AboutUsActivity extends Activity {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(AboutUsActivity.this, R.layout.item_spinner, data);
                 spiner_subject.setAdapter(adapter);
 
-                btn_send.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                btn_send.setOnClickListener(v1 -> {
 
-                        if (txt_message.getText().toString().equals(""))
-                            HSH.showtoast(getApplicationContext(), "متن ارسالی نمی تواند خالی باشد.");
+                    if (txt_message.getText().toString().equals(""))
+                        HSH.showtoast(getApplicationContext(), "متن ارسالی نمی تواند خالی باشد.");
 
-                        else if (NetworkUtils.getConnectivity(AboutUsActivity.this) != false) {
-                            Map<String, String> params = new HashMap<>();
-                            params.put(getString(R.string.Message), txt_message.getText().toString());
-                            params.put(getString(R.string.Subject), spiner_subject.getSelectedItem().toString());
-                            params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
-                            sendFeedBack(params);
-                            textEntryView.dismiss();
-                        } else
-                            HSH.showtoast(AboutUsActivity.this, "خطا در اتصال به اینترنت");
-                    }
+                    else if (NetworkUtils.getConnectivity(AboutUsActivity.this) != false) {
+                        Map<String, String> params = new HashMap<>();
+                        params.put(getString(R.string.Message), txt_message.getText().toString());
+                        params.put(getString(R.string.Subject), spiner_subject.getSelectedItem().toString());
+                        params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
+                        sendFeedBack(params);
+                        textEntryView.dismiss();
+                    } else
+                        HSH.showtoast(AboutUsActivity.this, "خطا در اتصال به اینترنت");
                 });
                 btn_rejct.setOnClickListener(new View.OnClickListener() {
                     @Override

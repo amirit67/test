@@ -19,8 +19,6 @@ package ir.payebash.Fragments;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +32,8 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import ir.payebash.Activities.ViewPagerActivity;
 import ir.payebash.Application;
 import ir.payebash.DI.DaggerMainComponent;

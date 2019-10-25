@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import androidx.core.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +35,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.FileProvider;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Activities.AboutUsActivity;
 import ir.payebash.Activities.EditProfileActivity;
@@ -52,7 +52,7 @@ import ir.payebash.DI.DaggerMainComponent;
 import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
-import ir.payebash.Interfaces.TitleMain;
+import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.Models.PayeItem;
 import ir.payebash.R;
 import okhttp3.MediaType;
@@ -110,77 +110,67 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             txt_name.setText(Application.preferences.getString(getString(R.string.FullName), ""));
             imageLoader.displayImage(Application.preferences.getString(getString(R.string.ProfileImage), "0"), img_profile, options);
 
-            img_profile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String imgPath = Application.preferences.getString(getString(R.string.ProfileImage), "0");
-                    if (!imgPath.equals("0")) {
-                        PayeItem feed = new PayeItem();
-                        feed.setImages(Application.preferences.getString(getString(R.string.ProfileImage), "0"));
-                        final Bundle bundle = new Bundle();
-                        bundle.putSerializable("feed", feed);
-                        Intent i = new Intent(getActivity(), ViewPagerActivity.class);
-                        i.putExtras(bundle);
-                        startActivity(i);
-                    }
+            img_profile.setOnClickListener(v -> {
+                String imgPath = Application.preferences.getString(getString(R.string.ProfileImage), "0");
+                if (!imgPath.equals("0")) {
+                    PayeItem feed = new PayeItem();
+                    feed.setImages(Application.preferences.getString(getString(R.string.ProfileImage), "0"));
+                    final Bundle bundle = new Bundle();
+                    bundle.putSerializable("feed", feed);
+                    Intent i = new Intent(getActivity(), ViewPagerActivity.class);
+                    i.putExtras(bundle);
+                    startActivity(i);
                 }
             });
             txt_pic.setPaintFlags(txt_pic.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-            txt_pic.setOnClickListener(new View.OnClickListener() {
+            txt_pic.setOnClickListener(v -> new PermissionHandler().checkPermission(getActivity(), permissions, new PermissionHandler.OnPermissionResponse() {
                 @Override
-                public void onClick(View v) {
-                    {
-                        new PermissionHandler().checkPermission(getActivity(), permissions, new PermissionHandler.OnPermissionResponse() {
-                            @Override
-                            public void onPermissionGranted() {
-                                final Dialog dialog_image_profile = new Dialog(getActivity());
-                                dialog_image_profile.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                dialog_image_profile.setContentView(R.layout.dialog_select_image_profile);
-                                dialog_image_profile.setCancelable(true);
-                                File dir = new File(Environment.getExternalStoragePublicDirectory("PayeBash/Profile").getPath());
-                                if (!dir.exists())
-                                    dir.mkdirs();
-                                dialog_image_profile.findViewById(R.id.rb1).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        try {
-                                            Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                            File file = new File(Environment.getExternalStoragePublicDirectory("PayeBash/Profile"), "file" + String.valueOf(System.currentTimeMillis() + ".jpg"));
-                                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-                                                uri = Uri.fromFile(file);
-                                            else
-                                                uri = FileProvider.getUriForFile(getActivity(), getActivity().getPackageName() + ".provider", file);
-                                            camIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                                            camIntent.putExtra("return-data", true);
-                                            getActivity().startActivityForResult(camIntent, 0);
-                                            dialog_image_profile.dismiss();
-                                        } catch (Exception e) {
-                                        }
-                                    }
-                                });
-
-                                dialog_image_profile.findViewById(R.id.rb2).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                        getActivity().startActivityForResult(pickPhoto, 1);
-                                        dialog_image_profile.dismiss();
-                                    }
-                                });
-
-                                //HSH.dialog(dialog_image_profile);
-                                dialog_image_profile.show();
+                public void onPermissionGranted() {
+                    final Dialog dialog_image_profile = new Dialog(getActivity());
+                    dialog_image_profile.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog_image_profile.setContentView(R.layout.dialog_select_image_profile);
+                    dialog_image_profile.setCancelable(true);
+                    File dir = new File(Environment.getExternalStoragePublicDirectory("PayeBash/Profile").getPath());
+                    if (!dir.exists())
+                        dir.mkdirs();
+                    dialog_image_profile.findViewById(R.id.rb1).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                File file = new File(Environment.getExternalStoragePublicDirectory("PayeBash/Profile"), "file" + String.valueOf(System.currentTimeMillis() + ".jpg"));
+                                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                                    uri = Uri.fromFile(file);
+                                else
+                                    uri = FileProvider.getUriForFile(getActivity(), getActivity().getPackageName() + ".provider", file);
+                                camIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                                camIntent.putExtra("return-data", true);
+                                getActivity().startActivityForResult(camIntent, 0);
+                                dialog_image_profile.dismiss();
+                            } catch (Exception e) {
                             }
+                        }
+                    });
 
-                            @Override
-                            public void onPermissionDenied() {
-                                HSH.showtoast(getActivity(), "برای تغییر تصویر پروفایل دسترسی را صادر نمایید.");
-                            }
-                        });
-                    }
+                    dialog_image_profile.findViewById(R.id.rb2).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            getActivity().startActivityForResult(pickPhoto, 1);
+                            dialog_image_profile.dismiss();
+                        }
+                    });
+
+                    //HSH.dialog(dialog_image_profile);
+                    dialog_image_profile.show();
                 }
-            });
+
+                @Override
+                public void onPermissionDenied() {
+                    HSH.showtoast(getActivity(), "برای تغییر تصویر پروفایل دسترسی را صادر نمایید.");
+                }
+            }));
 
             txt_profile = rootView.findViewById(R.id.txt_profile);
             txt_notification = rootView.findViewById(R.id.txt_notification);

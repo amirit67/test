@@ -3,7 +3,6 @@ package ir.payebash.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import ir.payebash.Application;
-import ir.payebash.Interfaces.setListenerCity;
+import ir.payebash.Interfaces.IWebservice.setListenerCity;
 import ir.payebash.Models.CityItem;
 import ir.payebash.R;
 
@@ -98,17 +98,12 @@ public class CitiesAdapter extends BaseAdapter {
                 listItem = layoutInflater.inflate(R.layout.item_city, null);
             }
             // Initialize the views in the layout
-            final TextView tvTitle = (TextView) listItem.findViewById(R.id.lbl_city);
+            final TextView tvTitle = listItem.findViewById(R.id.lbl_city);
             //final CheckBox check = (CheckBox) listItem.findViewById(R.id.check_city);
             tvTitle.setText(feedItemList.get(pos).getCityNameFa());
 
 
-            listItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemCheckListener.onItemCheck(feedItemList.get(position));
-                }
-            });
+            listItem.setOnClickListener(v -> onItemCheckListener.onItemCheck(feedItemList.get(position)));
 
             return listItem;
         } catch (Exception e) {

@@ -1,11 +1,12 @@
 package ir.payebash.SliderTypes;
 
 import android.content.Context;
-import androidx.viewpager.widget.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+
+import androidx.viewpager.widget.PagerAdapter;
 
 
 /**

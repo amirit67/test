@@ -2,7 +2,6 @@ package ir.payebash.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -15,6 +14,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import ir.payebash.Holders.CommentRowHolder;
 import ir.payebash.Models.CommentModel;
 import ir.payebash.R;

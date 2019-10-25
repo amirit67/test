@@ -3,6 +3,7 @@ package ir.payebash.Reciver;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +15,9 @@ import ir.payebash.R;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import com.google.firebase.messaging.FirebaseMessagingService;
 
 
-public class MyFirebaseInstanceIDService extends FirebaseMessagingService  {
+public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseIIDService";
 

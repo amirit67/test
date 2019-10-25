@@ -9,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -37,6 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import androidx.appcompat.app.AppCompatActivity;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final int RC_SIGN_IN = 9001;
     public static EditText editTextMobile, editTextCode;
     public TextView txt_timer, txt_register;
-    FloatingActionButton fab;
+    private FloatingActionButton fab;
     private TextInputLayout input_layout_code;
     private ProgressBar progressBar;
     private Map<String, String> params = new HashMap<>();
@@ -91,20 +91,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             editTextCode.requestFocus();
             bt_go.setText("تایید");
             txt_timer.setText("ارسال مجدد");
-            txt_timer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    HSH.editor("MobileTemp", "");
-                    finish();
-                    startActivity(getIntent());
-                }
+            txt_timer.setOnClickListener(v -> {
+                HSH.editor("MobileTemp", "");
+                finish();
+                startActivity(getIntent());
             });
-            bt_go.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CommitCode();
-                }
-            });
+            bt_go.setOnClickListener(v -> CommitCode());
         }
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -121,18 +113,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //mAuth = FirebaseAuth.getInstance();
 
         txt_register.setPaintFlags(txt_register.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txt_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickRegisterLayout();
-            }
-        });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickRegisterLayout();
-            }
-        });
+        txt_register.setOnClickListener(v -> clickRegisterLayout());
+        fab.setOnClickListener(v -> clickRegisterLayout());
 
         editTextMobile.addTextChangedListener(new TextWatcher() {
             @Override
@@ -160,6 +142,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loading = HSH.onProgress_Dialog(LoginActivity.this, "لطفا منتظر بمانید");
 
         if (null != getIntent().getExtras()) {
+
             ((TextView) findViewById(R.id.title)).setText("تایید شماره موبایل");
             txt_register.setVisibility(View.GONE);
             fab.setVisibility(View.GONE);
@@ -168,12 +151,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             bt_go.setEnabled(false);
             editTextMobile.setEnabled(false);
             editTextMobile.setText(Application.preferences.getString("MobileTemp", ""));
-            HSH.editor("MobileTemp", editTextMobile.getText().toString().trim());
-            params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), ""));
-            params.put(getString(R.string.mobile), editTextMobile.getText().toString().trim());
-            params.put(getString(R.string.Token), FirebaseInstanceId.getInstance().getToken());
-            params.put("Type", "Login");
-            SendPhoneNumber(bt_go);
+
+            FirebaseInstanceId.getInstance().getInstanceId()
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            //Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        String token = task.getResult().getToken();
+
+                        HSH.editor("MobileTemp", editTextMobile.getText().toString().trim());
+                        params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), ""));
+                        params.put(getString(R.string.mobile), editTextMobile.getText().toString().trim());
+                        params.put(getString(R.string.Token), token);
+                        params.put("Type", "Login");
+                        SendPhoneNumber(bt_go);
+                    });
         }
 
     }
@@ -207,30 +201,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             dialog.setContentText("شماره موبایل صحیح است؟");
             dialog.setConfirmText("بله");
             dialog.setCancelText("خیر");
-            dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                @Override
-                public void onClick(SweetAlertDialog sDialog) {
-                    if (NetworkUtils.getConnectivity(LoginActivity.this) == true) {
-                        dialog.dismiss();
-                        editTextMobile.setEnabled(false);
-                        progressBar.setVisibility(View.VISIBLE);
-                        view.setEnabled(false);
-                        HSH.editor("MobileTemp", editTextMobile.getText().toString().trim());
-                        params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), ""));
-                        params.put(getString(R.string.mobile), editTextMobile.getText().toString().trim());
-                        params.put(getString(R.string.Token), FirebaseInstanceId.getInstance().getToken());
-                        params.put("Type", "Login");
-                        SendPhoneNumber(view);
-                    } else
-                        HSH.showtoast(LoginActivity.this, "خطا در اتصال به اینترنت");
-                }
+            dialog.setConfirmClickListener(sDialog -> {
+                if (NetworkUtils.getConnectivity(LoginActivity.this) == true) {
+                    FirebaseInstanceId.getInstance().getInstanceId()
+                            .addOnCompleteListener(task -> {
+                                if (!task.isSuccessful()) {
+                                    //Log.w(TAG, "getInstanceId failed", task.getException());
+                                    return;
+                                }
+
+                                // Get new Instance ID token
+                                String token = task.getResult().getToken();
+
+                                editTextMobile.setEnabled(false);
+                                progressBar.setVisibility(View.VISIBLE);
+                                view.setEnabled(false);
+                                HSH.editor("MobileTemp", editTextMobile.getText().toString().trim());
+                                params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), ""));
+                                params.put(getString(R.string.mobile), editTextMobile.getText().toString().trim());
+                                params.put(getString(R.string.Token), token);
+                                params.put("Type", "Login");
+                                SendPhoneNumber(view);
+                            });
+                    dialog.dismiss();
+                } else
+                    HSH.showtoast(LoginActivity.this, "خطا در اتصال به اینترنت");
             });
-            dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                @Override
-                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    dialog.dismissWithAnimation();
-                }
-            });
+            dialog.setCancelClickListener(sweetAlertDialog -> dialog.dismissWithAnimation());
             dialog.setCancelable(true);
             HSH.dialog(dialog);
         }
@@ -260,12 +257,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 editTextCode.setEnabled(true);
                                 editTextCode.requestFocus();
                                 bt_go.setText("تایید");
-                                bt_go.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        CommitCode();
-                                    }
-                                });
+                                bt_go.setOnClickListener(v12 -> CommitCode());
                             }
                         } catch (Exception e1) {
                         }
@@ -292,12 +284,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             txt_timer.setText("ارسال مجدد");
                             txt_timer.setEnabled(true);
                             txt_timer.setVisibility(View.VISIBLE);
-                            txt_timer.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v1) {
-                                    SendPhoneNumber(v);
-                                }
-                            });
+                            txt_timer.setOnClickListener(v1 -> SendPhoneNumber(v));
                         }
                     }.start();
 
@@ -306,12 +293,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         HSH.display(LoginActivity.this, input_layout_code);
                         editTextCode.setEnabled(true);
                         ((Button) v).setText("تایید");
-                        v.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                CommitCode();
-                            }
-                        });
+                        v.setOnClickListener(v13 -> CommitCode());
 
                     } catch (Exception e) {
                     }

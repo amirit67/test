@@ -1,7 +1,6 @@
 package ir.payebash.Activities;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +16,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
@@ -55,12 +55,7 @@ public class EditProfileActivity extends AppCompatActivity {
         pb = findViewById(R.id.pb);
         sv = findViewById(R.id.sv);
         btnProfileUpdate = findViewById(R.id.btn_profile_update);
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        imgBack.setOnClickListener(view -> finish());
     }
 
     @Override
@@ -68,41 +63,33 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         assignViews();
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        imgBack.setOnClickListener(v -> finish());
         if (NetworkUtils.getConnectivity(EditProfileActivity.this) != false)
             getProfileInfo();
         else
             HSH.showtoast(EditProfileActivity.this, "خطا در اتصال به اینترنت");
 
-        btnProfileUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (etTelegram.getText().toString().trim().length() > 4 ||
-                        etSoroosh.getText().toString().trim().length() > 4 ||
-                        etInstagram.getText().toString().trim().length() > 4) {
-                    pb.setVisibility(View.VISIBLE);
-                    btnProfileUpdate.setEnabled(false);
-                    btnProfileUpdate.setText("");
-                    params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
-                    params.put(getString(R.string.AboutMe), etAbout.getText().toString().trim());
-                    params.put(getString(R.string.Favorites), etFavorites.getText().toString().trim());
-                    params.put(getString(R.string.Telegram), etTelegram.getText().toString().trim());
-                    params.put(getString(R.string.Instagram), etInstagram.getText().toString().trim());
-                    params.put(getString(R.string.Soroosh), etSoroosh.getText().toString().trim());
-                    params.put(getString(R.string.Gmail), etGmail.getText().toString().trim());
-                    params.put(getString(R.string.IsShowMobile), String.valueOf(compatSwitch.isChecked()));
-                    if (NetworkUtils.getConnectivity(EditProfileActivity.this) != false)
-                        SendUserInfo();
-                    else
-                        HSH.showtoast(EditProfileActivity.this, "خطا در اتصال به اینترنت");
-                } else {
-                    HSH.showtoast(EditProfileActivity.this, "لطفا راه های ارتباطی خود را تکمیل نمایید");
-                }
+        btnProfileUpdate.setOnClickListener(v -> {
+            if (etTelegram.getText().toString().trim().length() > 4 ||
+                    etSoroosh.getText().toString().trim().length() > 4 ||
+                    etInstagram.getText().toString().trim().length() > 4) {
+                pb.setVisibility(View.VISIBLE);
+                btnProfileUpdate.setEnabled(false);
+                btnProfileUpdate.setText("");
+                params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
+                params.put(getString(R.string.AboutMe), etAbout.getText().toString().trim());
+                params.put(getString(R.string.Favorites), etFavorites.getText().toString().trim());
+                params.put(getString(R.string.Telegram), etTelegram.getText().toString().trim());
+                params.put(getString(R.string.Instagram), etInstagram.getText().toString().trim());
+                params.put(getString(R.string.Soroosh), etSoroosh.getText().toString().trim());
+                params.put(getString(R.string.Gmail), etGmail.getText().toString().trim());
+                params.put(getString(R.string.IsShowMobile), String.valueOf(compatSwitch.isChecked()));
+                if (NetworkUtils.getConnectivity(EditProfileActivity.this) != false)
+                    SendUserInfo();
+                else
+                    HSH.showtoast(EditProfileActivity.this, "خطا در اتصال به اینترنت");
+            } else {
+                HSH.showtoast(EditProfileActivity.this, "لطفا راه های ارتباطی خود را تکمیل نمایید");
             }
         });
     }

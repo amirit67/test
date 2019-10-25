@@ -13,7 +13,6 @@ import ir.payebash.Fragments.SearchFragment;
 import ir.payebash.Fragments.SlideShowFragment;
 import ir.payebash.Fragments.UncomingEventsFragment;
 import ir.payebash.SliderTypes.BaseSliderView;
-import ir.payebash.SliderTypes.SliderLayout;
 
 /**
  * Created by KingStar on 3/2/2018.

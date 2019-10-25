@@ -1,9 +1,10 @@
 package ir.payebash.Indicators;
 
 import android.content.Context;
+import android.util.AttributeSet;
+
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import android.util.AttributeSet;
 
 /**
  * A {@link ViewPager} that allows pseudo-infinite paging with a wrap-around effect. Should be used with an {@link

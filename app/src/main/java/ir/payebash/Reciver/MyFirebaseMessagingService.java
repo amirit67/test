@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -19,6 +18,7 @@ import org.json.JSONObject;
 import java.util.Map;
 import java.util.Random;
 
+import androidx.core.app.NotificationCompat;
 import ir.payebash.Activities.MainActivity;
 import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Application;

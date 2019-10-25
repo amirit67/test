@@ -4,16 +4,14 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Typeface;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import java.io.File;
 
+import androidx.appcompat.app.AppCompatActivity;
 import ir.payebash.Classes.DataBaseHelper;
 import ir.payebash.DI.DaggerMainComponent;
 import ir.payebash.DI.ImageLoaderMoudle;
