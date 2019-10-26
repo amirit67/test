@@ -5,12 +5,17 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 
-public class NotificationAdapter extends BaseAdapter {
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
 
     private String ServicesIds;
     private List<CategoryItem> feedItemList;
@@ -40,13 +45,10 @@ public class NotificationAdapter extends BaseAdapter {
     private String subscribeType = "";
     private SweetAlertDialog dialog;
     private List<CategoryItem> feed = new ArrayList<>();
-    private LayoutInflater layoutInflater;
 
     public NotificationAdapter(Context context) {
 
         try {
-            layoutInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             this.context = context;
             ServicesIds = Application.preferences.getString(context.getString(R.string.ServicesIds), "").trim();
             cr = Application.database.rawQuery("SELECT * from categories where state = 'true' and parentId = 'null' order by sort", null);
@@ -71,22 +73,78 @@ public class NotificationAdapter extends BaseAdapter {
 
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        try {
-            return feedItemList.size();
-        } catch (Exception e) {
-            return 0;
+    public NotificationHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        View v;
+        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, null);
+        return new NotificationHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull final NotificationHolder Holder, final int pos) {
+
+        if (Holder instanceof NotificationHolder) {
+            Holder.tvTitle.setText(feedItemList.get(pos).getName());
+            Holder.tvdescription.setText(feedItemList.get(pos).getDescription());
+            if (ServicesIds.trim().contains("," + NotificationFragment.btn_location.getTag() + "-" + feedItemList.get(pos).getId()))
+                Holder.img_tick.setVisibility(View.VISIBLE);
+            else
+                Holder.img_tick.setVisibility(View.GONE);
+
+            Holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ServicesIds = Application.preferences.getString(context.getString(R.string.ServicesIds), "").replace(" ", "").trim();
+                    String[] temp = ServicesIds.split(",");
+                    ServicesIds = "";
+                    for (int i = 0; i < temp.length; i++)
+                        if (!temp[i].equals("") && !temp[i].contains("null") && temp[i].contains("-")) {
+                            if (i == temp.length - 1)
+                                ServicesIds += "," + temp[i] + ",";
+                            else
+                                ServicesIds += "," + temp[i];
+                        }
+
+                    if (!NotificationFragment.btn_location.getTag().toString().equals("0")) {
+                        Holder.pb.setVisibility(View.VISIBLE);
+                        int img_tick_isVisible = Holder.img_tick.getVisibility();
+                        Holder.img_tick.setVisibility(View.GONE);
+                        String ServiceId = NotificationFragment.btn_location.getTag() + "-" + feedItemList.get(pos).getId();
+                        if ((ServicesIds.trim() + ",").contains("," + ServiceId + ",")) {
+                            ServicesIds = ServicesIds.trim().replace("," + ServiceId + ",", ",");
+                            subscribeType = "unsubscribe";
+                        } else {
+                            ServicesIds += ServiceId.replace(",,", ",") + ",";
+                            subscribeType = "subscribe";
+                        }
+                        Map<String, String> params = new HashMap<>();
+                        params.put(context.getString(R.string.UserId), Application.preferences.getString(context.getString(R.string.UserId), "0").trim());
+                        params.put(context.getString(R.string.ServicesIds), ServicesIds.trim());
+                        params.put(context.getString(R.string.Token), FirebaseInstanceId.getInstance().getToken());
+                        ServicesIds(params, Holder.img_tick, img_tick_isVisible, Holder.pb, ServiceId.trim());
+                    } else {
+                        dialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                                .setTitleText("انتخاب شهر")
+                                .setContentText("برای دریافت اعلانیه های هر دسته لازم است ابتدا شهر و سپس دسته مورد نظر خود را انتخاب نمایید")
+                                .setConfirmText("باشه")
+                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sDialog) {
+                                        dialog.dismiss();
+                                        HSH.selectLocation(context, 1, NotificationFragment.btn_location);
+                                    }
+                                });
+                        HSH.dialog(dialog);
+                    }
+                }
+            });
         }
     }
 
     @Override
-    public Object getItem(int position) {
-        try {
-            return position;
-        } catch (Exception e) {
-            return true;
-        }
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
@@ -99,83 +157,8 @@ public class NotificationAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-
-
-        // Inflate the item layout and set the views
-        try {
-            View listItem = convertView;
-            final int pos = position;
-            if (listItem == null) {
-                listItem = layoutInflater.inflate(R.layout.item_category, null);
-            }
-            final TextView tvTitle = listItem.findViewById(R.id.lbl_name);
-            final TextView tvdescription = listItem.findViewById(R.id.lbl_description);
-            final ProgressBar pb = listItem.findViewById(R.id.pb);
-            final ImageView img_tick = listItem.findViewById(R.id.img_tick);
-
-            tvTitle.setText(feedItemList.get(pos).getName());
-            tvdescription.setText(feedItemList.get(pos).getDescription());
-            if (ServicesIds.trim().contains("," + NotificationFragment.btn_location.getTag() + "-" + feedItemList.get(pos).getId()))
-                img_tick.setVisibility(View.VISIBLE);
-            else
-                img_tick.setVisibility(View.GONE);
-
-            listItem.setOnClickListener(v -> {
-                ServicesIds = Application.preferences.getString(context.getString(R.string.ServicesIds), "").replace(" ", "").trim();
-                String[] temp = ServicesIds.split(",");
-                ServicesIds = "";
-                for (int i = 0; i < temp.length; i++)
-                    if (!temp[i].equals("") && !temp[i].contains("null") && temp[i].contains("-")) {
-                        if (i == temp.length - 1)
-                            ServicesIds += "," + temp[i] + ",";
-                        else
-                            ServicesIds += "," + temp[i];
-                    }
-
-                if (!NotificationFragment.btn_location.getTag().toString().equals("0")) {
-                    pb.setVisibility(View.VISIBLE);
-                    int img_tick_isVisible = img_tick.getVisibility();
-                    img_tick.setVisibility(View.GONE);
-                    String ServiceId = NotificationFragment.btn_location.getTag() + "-" + feedItemList.get(pos).getId();
-                    if ((ServicesIds.trim() + ",").contains("," + ServiceId + ",")) {
-                        ServicesIds = ServicesIds.trim().replace("," + ServiceId + ",", ",");
-                        subscribeType = "unsubscribe";
-                    } else {
-                        ServicesIds += ServiceId.replace(",,", ",") + ",";
-                        subscribeType = "subscribe";
-                    }
-                    FirebaseInstanceId.getInstance().getInstanceId()
-                            .addOnCompleteListener(task -> {
-                                if (!task.isSuccessful()) {
-                                    //Log.w(TAG, "getInstanceId failed", task.getException());
-                                    return;
-                                }
-                                Map<String, String> params = new HashMap<>();
-                                params.put(context.getString(R.string.UserId), Application.preferences.getString(context.getString(R.string.UserId), "0").trim());
-                                params.put(context.getString(R.string.ServicesIds), ServicesIds.trim());
-                                params.put(context.getString(R.string.Token), task.getResult().getToken());
-                                ServicesIds(params, img_tick, img_tick_isVisible, pb, ServiceId.trim());
-
-                            });
-
-                } else {
-                    dialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("انتخاب شهر")
-                            .setContentText("برای دریافت اعلانیه های هر دسته لازم است ابتدا شهر و سپس دسته مورد نظر خود را انتخاب نمایید")
-                            .setConfirmText("باشه")
-                            .setConfirmClickListener(sDialog -> {
-                                dialog.dismiss();
-                                HSH.selectLocation(context, 1, NotificationFragment.btn_location);
-                            });
-                    HSH.dialog(dialog);
-                }
-            });
-
-            return listItem;
-        } catch (Exception e) {
-            return null;
-        }
+    public int getItemCount() {
+        return (null != feedItemList ? feedItemList.size() : 0);
     }
 
     public void ServicesIds(final Map<String, String> params, final View img_tick, final int img_tick_isVisible, final ProgressBar pb, final String ServiceId) {
@@ -210,56 +193,66 @@ public class NotificationAdapter extends BaseAdapter {
     }
 
     public void SubscribeTopic(String ServiceId) {
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        //Log.w(TAG, "getInstanceId failed", task.getException());
-                        return;
-                    }
+        Call<ResponseBody> call = ApiClient.getClient3().create(ApiInterface.class).Subscribe(FirebaseInstanceId.getInstance().getToken(), ServiceId);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if (response.code() == 200) {
+                }
+            }
 
-                    Call<ResponseBody> call = ApiClient.getClient3().create(ApiInterface.class).Subscribe(task.getResult().getToken(), ServiceId);
-                    call.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                            if (response.code() == 200) {
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            HSH.showtoast(context, "خطا در ارسال");
-                        }
-                    });
-
-                });
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                HSH.showtoast(context, "خطا در ارسال");
+            }
+        });
     }
 
-    public void unSubscribeTopic(String ServiceId) {
+    public void unSubscribeTopic(final String ServiceId) {
         try {
+            final String[] s = new String[1];
             FirebaseInstanceId.getInstance().getInstanceId()
-                    .addOnCompleteListener(task -> {
-                        if (!task.isSuccessful()) {
-                            //Log.w(TAG, "getInstanceId failed", task.getException());
-                            return;
+                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                            if (!task.isSuccessful()) {
+                                s[0] = task.getResult().getToken();
+                                NotifyData.Data d = new NotifyData.Data(context.getString(R.string.topics) + ServiceId, s);
+                                Call<ResponseBody> call = ApiClient.getClient3().create(ApiInterface.class).unSubscribe(d);
+                                call.enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        HSH.showtoast(context, "خطا در ارسال");
+                                    }
+                                });
+                                return;
+                            }
                         }
-                        String[] s = new String[1];
-                        s[0] = task.getResult().getToken();
-                        NotifyData.Data d = new NotifyData.Data(context.getString(R.string.topics) + ServiceId, s);
-                        Call<ResponseBody> call = ApiClient.getClient3().create(ApiInterface.class).unSubscribe(d);
-                        call.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                HSH.showtoast(context, "خطا در ارسال");
-                            }
-                        });
-
                     });
 
         } catch (Exception e) {
         }
+    }
+
+    public class NotificationHolder extends RecyclerView.ViewHolder {
+        public TextView tvTitle;
+        public TextView tvdescription;
+        public ImageView img_tick;
+        public ProgressBar pb;
+
+        public NotificationHolder(View view) {
+            super(view);
+
+            this.tvTitle = view.findViewById(R.id.lbl_name);
+            this.tvdescription = view.findViewById(R.id.lbl_description);
+            this.pb = view.findViewById(R.id.pb);
+            this.img_tick = view.findViewById(R.id.img_tick);
+
+        }
+
     }
 }

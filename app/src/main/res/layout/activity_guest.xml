@@ -57,7 +57,6 @@
             android:id="@+id/frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/rl"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:orientation="vertical"></LinearLayout>
