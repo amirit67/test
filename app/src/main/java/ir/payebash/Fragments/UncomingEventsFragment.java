@@ -85,24 +85,7 @@ public class UncomingEventsFragment extends Fragment {
                         isLoading = false;
                         swipeContainer.setRefreshing(false);
                         pb.setVisibility(View.GONE);
-                        /*try {
-                            feed.remove(feed.size() - 1);
-                            adapter.notifyItemRemoved(feed.size());
-                        } catch (Exception e) {
-                        }*/
-                        String s;
-                        for (PayeItem m : list.body()) {
-                            try {
-                                s = ac.getResources().getStringArray(R.array.Citys)[m.getCity() - 2];
-                                m.setCityDate(m.getCreateDate() + " در " + s.substring(s.indexOf("-") + 2));
-                                adapter.addItem(m);
-                            } catch (Exception e) {
-                                if (m.getCity() == 1) {
-                                    m.setCityDate("سراسر کشور");
-                                    adapter.addItem(m);
-                                }
-                            }
-                        }
+                        adapter.addItems(list.body());
                     } catch (Exception e) {
                     }
                 }
@@ -119,21 +102,18 @@ public class UncomingEventsFragment extends Fragment {
                     m);
             getPost.getData();
 
-            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    if (NetworkUtils.getConnectivity(getActivity()) != false) {
-                        Cnt = 0;
-                        params.clear();
-                        Application.myAds = 1;
-                        adapter.ClearFeed();
-                        params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
-                        params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                        getPost.getData();
-                    } else {
-                        swipeContainer.setRefreshing(false);
-                        HSH.showtoast(getActivity(), "خطا در اتصال به اینترنت");
-                    }
+            swipeContainer.setOnRefreshListener(() -> {
+                if (NetworkUtils.getConnectivity(getActivity()) != false) {
+                    Cnt = 0;
+                    params.clear();
+                    Application.myAds = 1;
+                    adapter.ClearFeed();
+                    params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
+                    params.put(getString(R.string.Skip), String.valueOf(Cnt));
+                    getPost.getData();
+                } else {
+                    swipeContainer.setRefreshing(false);
+                    HSH.showtoast(getActivity(), "خطا در اتصال به اینترنت");
                 }
             });
             swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -141,17 +121,14 @@ public class UncomingEventsFragment extends Fragment {
                     android.R.color.holo_orange_light,
                     android.R.color.holo_red_light);
 
-            setOnLoadMoreListener(new OnLoadMoreListener() {
-                @Override
-                public void onLoadMore() {
-                    /*feed.add(null);
-                    adapter.notifyItemInserted(feed.size() - 1);*/
-                    swipeContainer.setRefreshing(true);
-                    if (HSH.isNetworkConnection(getActivity())) {
-                        Cnt++;
-                        params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                        getPost.getData();
-                    }
+            setOnLoadMoreListener(() -> {
+                /*feed.add(null);
+                adapter.notifyItemInserted(feed.size() - 1);*/
+                swipeContainer.setRefreshing(true);
+                if (HSH.isNetworkConnection(getActivity())) {
+                    Cnt++;
+                    params.put(getString(R.string.Skip), String.valueOf(Cnt));
+                    getPost.getData();
                 }
             });
 

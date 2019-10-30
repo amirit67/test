@@ -104,24 +104,7 @@ public class HomeFragment extends Fragment {
                         isLoading = false;
                         swipeContainer.setRefreshing(false);
                         pb.setVisibility(View.GONE);
-                       /* try {
-                            feed.remove(feed.size() - 1);
-                            adapter.notifyItemRemoved(feed.size());
-                        } catch (Exception e) {
-                        }*/
-                        String s;
-                        for (PayeItem m : list.body()) {
-                            try {
-                                s = ac.getResources().getStringArray(R.array.Citys)[m.getCity() - 2];
-                                m.setCityDate(m.getCreateDate() + " در " + s.substring(s.indexOf("-") + 2));
-                                adapter.addItem(m);
-                            } catch (Exception e) {
-                                if (m.getCity() == 1) {
-                                    m.setCityDate("سراسر کشور");
-                                    adapter.addItem(m);
-                                }
-                            }
-                        }
+                        adapter.addItems(list.body());
                     } catch (Exception e) {
                     }
                 }
@@ -136,20 +119,17 @@ public class HomeFragment extends Fragment {
             getPost = new AsynctaskGetPost(getActivity(), params, m);
             getPost.getData();
 
-            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    Cnt = 0;
-                    params.clear();
-                    Application.myAds = 1;
-                    adapter.ClearFeed();
-                    params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                    getPost.getData();
-                    et_search.setHint(
-                            String.format(getString(R.string.searchHint),
-                                    "همه رویدادها",
-                                    "سراسر کشور"));
-                }
+            swipeContainer.setOnRefreshListener(() -> {
+                Cnt = 0;
+                params.clear();
+                Application.myAds = 1;
+                adapter.ClearFeed();
+                params.put(getString(R.string.Skip), String.valueOf(Cnt));
+                getPost.getData();
+                et_search.setHint(
+                        String.format(getString(R.string.searchHint),
+                                "همه رویدادها",
+                                "سراسر کشور"));
             });
             swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                     android.R.color.holo_green_light,

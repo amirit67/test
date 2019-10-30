@@ -12,7 +12,6 @@ import ir.payebash.Fragments.ProfileFragment;
 import ir.payebash.Fragments.SearchFragment;
 import ir.payebash.Fragments.SlideShowFragment;
 import ir.payebash.Fragments.UncomingEventsFragment;
-import ir.payebash.SliderTypes.BaseSliderView;
 
 /**
  * Created by KingStar on 3/2/2018.
@@ -41,6 +40,4 @@ public interface MainComponent {
     void Inject(UserProfileActivity mainActivity);
 
     void Inject(SlideShowFragment mainActivity);
-
-    void Inject(BaseSliderView mainActivity);
 }

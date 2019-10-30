@@ -329,7 +329,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 0:
                 if (resultCode == UpdatePostActivity.this.RESULT_OK) {
@@ -483,7 +483,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
                     else if (description.equals("") || description.length() < 10)
                         error(et_description, "توضیحات رویداد را وارد نمایید(حداقل 10 حرف)");
                     else {
-                        params.put(getString(R.string.PostId), fFeed.PostId);
+                        params.put(getString(R.string.PostId), fFeed.getPostId());
                         params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
                         params.put(getString(R.string.Subject), btn_subject_post.getTag().toString());
                         params.put(getString(R.string.city), btn_location_post.getTag().toString());
@@ -645,9 +645,9 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
                             ((Button) v).setText(cr.getString(cr.getColumnIndex("StateCity")));
                             v.setTag(cr.getString(cr.getColumnIndex("id")));
                         } else if (v.getTag().toString().equals(getString(R.string.IsWoman))) {
-                            compatSwitch.setChecked(fFeed.getIsWoman());
+                            compatSwitch.setChecked(fFeed.IsWoman());
                         } else if (v.getTag().toString().equals(getString(R.string.IsImmediate))) {
-                            compatSwitchImmediate.setChecked(fFeed.getIsImmediate());
+                            compatSwitchImmediate.setChecked(fFeed.IsImmediate());
                         }
                     } catch (Exception e) {
                     }

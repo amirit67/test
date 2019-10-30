@@ -10,21 +10,18 @@ public class NotifyData implements Serializable {
     public String deadLine;
     public String subject;
     public int city;
-    public String cityDate;
     public String cost;
     public String tag;
     public String imgUrl;
     public String type;
 
-    public NotifyData(String id, String title, String deadLine, String subject, int city,
-                      String cityDate, String cost, String tag, String imgUrl, String type) {
+    public NotifyData(String id, String title, String deadLine, String subject, int city, String cost, String tag, String imgUrl, String type) {
 
         this.id = id;
         this.title = title;
         this.deadLine = deadLine;
         this.subject = subject;
         this.city = city;
-        this.cityDate = cityDate;
         this.cost = cost;
         this.tag = tag;
         this.imgUrl = imgUrl;

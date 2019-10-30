@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        HSH.editor("UserId", "3428efaf-df16-4048-8732-d589772279ad");
+        HSH.editor("IsAuthenticate", "true");
         if (!Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true")) {
             startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
             finish();

@@ -1,125 +1,249 @@
 package ir.payebash.Models;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
-public class PayeDetailsModel implements Serializable {
+public class PayeDetailsModel{
 
-    private static final long serialVersionUID = 1L;
-    public List<String> BaseProperty = new ArrayList<>();
-    public List<String> applicants = new ArrayList<>();
-    public int Subject;
-    public String state;
-    public String Token;
-    public String Images = "";
-    public String CreateDate = "";
-    public String profileimage = "";
-    public String Title = "";
-    public String City = "";
-    public String Telegram = "";
-    public String Instagram = "";
-    public String Soroosh = "";
-    public String Gmail = "";
-    public String Mobile = "";
-    public String username = "";
-    public String userId = "";
-    public String Longitude = "";
-    public String Latitude = "";
+	@SerializedName("Telegram")
+	private String telegram;
 
-    public String getSoroosh() {
-        return Soroosh;
-    }
+	@SerializedName("Soroosh")
+	private String soroosh;
 
-    public List<String> getBaseProperty() {
-        return BaseProperty;
-    }
+	@SerializedName("Gmail")
+	private String gmail;
 
-    public int getSubject() {
-        return Subject;
-    }
+    @SerializedName("PhoneNumber")
+    private String phoneNumber;
 
-    public void setSubject(int subject) {
-        Subject = subject;
-    }
+	@SerializedName("Comments")
+	private List<String> comments;
 
-    public String getState() {
-        return state;
-    }
+	@SerializedName("Images")
+	private String images;
 
-    public void setState(String state) {
-        this.state = state;
-    }
+	@SerializedName("applicants")
+	private List<String> applicants;
 
-    public String getImages() {
-        return Images;
-    }
+	@SerializedName("Title")
+	private String title;
 
-    public void setImages(String images) {
-        Images = images;
-    }
+	@SerializedName("Token")
+	private String token;
 
-    public String getCreateDate() {
-        return CreateDate;
-    }
+	@SerializedName("Latitude")
+	private String latitude;
 
-    public String getProfileimage() {
-        return profileimage;
-    }
+	@SerializedName("City")
+	private String city;
 
-    public String getTitle() {
-        return Title;
-    }
+	@SerializedName("userId")
+	private String userId;
 
-    public void setTitle(String title) {
-        Title = title;
-    }
+	@SerializedName("Mobile")
+	private String mobile;
 
-    public String getCity() {
-        return City;
-    }
+	@SerializedName("CreateDate")
+	private String createDate;
 
-    public void setCity(String city) {
-        City = city;
-    }
+	@SerializedName("Longitude")
+	private String longitude;
 
-    public String getTelegram() {
-        return Telegram;
-    }
+	@SerializedName("profileimage")
+	private String profileimage;
 
-    public String getInstagram() {
-        return Instagram;
-    }
+	@SerializedName("Subject")
+	private String subject;
+
+	@SerializedName("Instagram")
+	private String instagram;
+
+	@SerializedName("IsWoman")
+	private boolean isWoman;
+
+	@SerializedName("state")
+	private String state;
+
+	@SerializedName("BaseProperty")
+	private List<String> baseProperty;
+
+	@SerializedName("username")
+	private String username;
 
     public String getPhoneNumber() {
-        return Mobile;
+        return phoneNumber;
     }
 
-    public String getGmail() {
-        return Gmail;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getUsername() {
-        return username;
-    }
+	public void setTelegram(String telegram){
+		this.telegram = telegram;
+	}
 
-    public String getUserId() {
-        return userId;
-    }
+	public String getTelegram(){
+		return telegram;
+	}
 
-    public String getLatitude() {
-        return Latitude;
-    }
+	public void setSoroosh(String soroosh){
+		this.soroosh = soroosh;
+	}
 
-    public String getLongitude() {
-        return Longitude;
-    }
+	public String getSoroosh(){
+		return soroosh;
+	}
 
-    public List<String> getApplicants() {
-        return applicants;
-    }
+	public void setGmail(String gmail){
+		this.gmail = gmail;
+	}
 
-    public String getToken() {
-        return Token;
-    }
+	public String getGmail(){
+		return gmail;
+	}
+
+	public void setComments(List<String> comments){
+		this.comments = comments;
+	}
+
+	public List<String> getComments(){
+		return comments;
+	}
+
+	public void setImages(String images){
+		this.images = images;
+	}
+
+	public String getImages(){
+		return images;
+	}
+
+	public void setApplicants(List<String> applicants){
+		this.applicants = applicants;
+	}
+
+	public List<String> getApplicants(){
+		return applicants;
+	}
+
+	public void setTitle(String title){
+		this.title = title;
+	}
+
+	public String getTitle(){
+		return title;
+	}
+
+	public void setToken(String token){
+		this.token = token;
+	}
+
+	public String getToken(){
+		return token;
+	}
+
+	public void setLatitude(String latitude){
+		this.latitude = latitude;
+	}
+
+	public String getLatitude(){
+		return latitude;
+	}
+
+	public void setCity(String city){
+		this.city = city;
+	}
+
+	public String getCity(){
+		return city;
+	}
+
+	public void setUserId(String userId){
+		this.userId = userId;
+	}
+
+	public String getUserId(){
+		return userId;
+	}
+
+	public void setMobile(String mobile){
+		this.mobile = mobile;
+	}
+
+	public String getMobile(){
+		return mobile;
+	}
+
+	public void setCreateDate(String createDate){
+		this.createDate = createDate;
+	}
+
+	public String getCreateDate(){
+		return createDate;
+	}
+
+	public void setLongitude(String longitude){
+		this.longitude = longitude;
+	}
+
+	public String getLongitude(){
+		return longitude;
+	}
+
+	public void setProfileimage(String profileimage){
+		this.profileimage = profileimage;
+	}
+
+	public String getProfileimage(){
+		return profileimage;
+	}
+
+	public void setSubject(String subject){
+		this.subject = subject;
+	}
+
+	public String getSubject(){
+		return subject;
+	}
+
+	public void setInstagram(String instagram){
+		this.instagram = instagram;
+	}
+
+	public String getInstagram(){
+		return instagram;
+	}
+
+	public void setIsWoman(boolean isWoman){
+		this.isWoman = isWoman;
+	}
+
+	public boolean isIsWoman(){
+		return isWoman;
+	}
+
+	public void setState(String state){
+		this.state = state;
+	}
+
+	public String getState(){
+		return state;
+	}
+
+	public void setBaseProperty(List<String> baseProperty){
+		this.baseProperty = baseProperty;
+	}
+
+	public List<String> getBaseProperty(){
+		return baseProperty;
+	}
+
+	public void setUsername(String username){
+		this.username = username;
+	}
+
+	public String getUsername(){
+		return username;
+	}
 }

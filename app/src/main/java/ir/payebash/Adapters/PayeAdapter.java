@@ -39,7 +39,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int VIEW_TYPE_ITEM = 1;
     //private final int VIEW_TYPE_LOADING = 2;
     ImageLoader imageLoader;
-    private List<PayeItem> feedItemList = new ArrayList<>();
+    private List<PayeItem> feed = new ArrayList<>();
     //public List<PayeItem> Tempfeed = new ArrayList<>();
     private ProgressWheel pb;
     private int Cnt;
@@ -73,7 +73,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        /*if (feedItemList.get(position) == null)
+        /*if (feed.get(position) == null)
             return VIEW_TYPE_LOADING;
         else*/
         return VIEW_TYPE_ITEM;
@@ -88,10 +88,11 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             try {
                 Holder = (PayeHolder) holder;
                 Holder.setIsRecyclable(false);
-                Holder.txt_loc.setText(feedItemList.get(i).getCityDate());
-                Holder.txt_cost.setText(feedItemList.get(i).getCost());
-                Holder.txt_title.setText(feedItemList.get(i).getTitle());
-                Holder.txt_deadline.setText(feedItemList.get(i).getDeadline());
+                String city = mContext.getResources().getStringArray(R.array.Citys)[feed.get(i).getCity() - 2];
+                Holder.txt_loc.setText(feed.get(i).getCreateDate() + " در " + city.substring(city.indexOf("-") + 2));
+                Holder.txt_cost.setText(feed.get(i).getCost());
+                Holder.txt_title.setText(feed.get(i).getTitle());
+                Holder.txt_deadline.setText(feed.get(i).getTimeToJoin());
                 HSH.vectorRight(mContext, Holder.txt_loc, R.drawable.ic_location);
                 HSH.vectorRight(mContext, Holder.txt_cost, R.drawable.ic_coins);
                 HSH.vectorRight(mContext, Holder.txt_deadline, R.drawable.ic_hourglass);
@@ -101,8 +102,8 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     s = details.get(i).getChildCount();
                 } catch (Exception e) {
                 }*/
-                if (/*s == 0 && */feedItemList.get(i).getTag().length() > 3) {
-                    String[] temp = feedItemList.get(i).getTag().split("#");
+                if (/*s == 0 && */feed.get(i).getTag().length() > 3) {
+                    String[] temp = feed.get(i).getTag().split("#");
                     for (int j = 0; j < temp.length; j++) {
                         if (!temp[j].equals(""))
                             TagLayout(temp[j], Holder.mTagLayout, j, i);
@@ -116,26 +117,26 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     Holder.rl_tag.setVisibility(View.GONE);
 
                 if (Application.myAds == 1) {
-                    if (feedItemList.get(i).getIsImmediate()) {
+                    if (feed.get(i).IsImmediate()) {
                         Holder.lbl_state.setVisibility(View.VISIBLE);
                         Holder.lbl_state.setTriangleBackgroundColor(Color.parseColor("#C8FF0004"));
                         Holder.lbl_state.setPrimaryText("فوری");
                     } else
-                        Holder.lbl_state.setVisibility(feedItemList.get(i).getIsWoman() == true ? View.VISIBLE : View.GONE);
+                        Holder.lbl_state.setVisibility(feed.get(i).IsWoman() == true ? View.VISIBLE : View.GONE);
                 } else {
                     Holder.lbl_state.setVisibility(View.VISIBLE);
-                    Holder.lbl_state.setPrimaryText(feedItemList.get(i).getState().split("-")[0]);
-                    Holder.lbl_state.setTriangleBackgroundColor(Color.parseColor(feedItemList.get(i).getState().split("-")[2]));
+                    Holder.lbl_state.setPrimaryText(feed.get(i).getState().split("-")[0]);
+                    Holder.lbl_state.setTriangleBackgroundColor(Color.parseColor(feed.get(i).getState().split("-")[2]));
                 }
-                imageLoader.displayImage(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + feedItemList.get(i).getImages().split(",")[0] + ".jpg", Holder.img_post, new ImageLoadingListener() {
+                imageLoader.displayImage(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + feed.get(i).getImages().split(",")[0] + ".jpg", Holder.img_post, new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                     }
 
                     @Override
                     public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        if (!imageUri.contains("/.jpg") && !imageUri.contains("/null.jpg"))
-                            img_map(i, Holder.img_post);
+                       /* if (!imageUri.contains("/.jpg") && !imageUri.contains("/null.jpg"))
+                            img_map(i, Holder.img_post);*/
                     }
 
                     @Override
@@ -147,17 +148,17 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     }
                 });
 
-                if (!feedItemList.get(i).getImages().equals("null"))
+                if (!feed.get(i).getImages().equals("null"))
                     Holder.img_post.setOnClickListener(v -> {
-                        String s = feedItemList.get(i).getImages().split(",")[0];
+                        String s = feed.get(i).getImages().split(",")[0];
                         if (!s.equals("")) {
-                            feedItemList.get(i).setImages(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + s + ".jpg");
+                            feed.get(i).setImages(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + s + ".jpg");
                             final Bundle bundle = new Bundle();
-                            bundle.putSerializable("feed", feedItemList.get(i));
+                            bundle.putSerializable("feed", feed.get(i));
                             Intent in = new Intent(mContext, ViewPagerActivity.class);
                             in.putExtras(bundle);
                             mContext.startActivity(in);
-                            feedItemList.get(i).setImages(s);
+                            feed.get(i).setImages(s);
                         }
                     });
             } catch (Exception e) {
@@ -168,7 +169,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             final int pos = i;
             Intent intent;
             intent = new Intent(mContext, PostDetailsActivity.class);
-            intent.putExtra("feedItem", feedItemList.get(pos));
+            intent.putExtra("feedItem", feed.get(pos));
             intent.putExtra(mContext.getString(R.string.myAds), Application.myAds);
             if (Application.myAds == 42907631) {
                 ((Activity) mContext).startActivityForResult(intent, 321);
@@ -179,18 +180,18 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return (null != feedItemList ? feedItemList.size() : 0);
+        return (null != feed ? feed.size() : 0);
     }
 
-    public void addItem(PayeItem post) {
-        this.feedItemList.add(post);
+    public void addItems(List<PayeItem> posts) {
+        this.feed.addAll(posts);
         notifyDataSetChanged();
     }
 
     public void ClearFeed() {
         /*Tempfeed.clear();
-        Tempfeed.addAll(feedItemList);*/
-        feedItemList.clear();
+        Tempfeed.addAll(feed);*/
+        feed.clear();
         notifyDataSetChanged();
     }
 
@@ -237,10 +238,10 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public void img_map(int i, ImageView img_map) {
-        if (!feedItemList.get(i).getLatitude().equals("00")) {
-            String img_url = "https://maps.googleapis.com/maps/api/staticmap?center=" + feedItemList.get(i).getLatitude() + "," + feedItemList.get(i).getLongitude() + "&maptype=roadmap&zoom=14&size=512x512&language=FA&markers=size:small%7Ccolor:0xff0000%7Clabel:1%7C" + feedItemList.get(i).getLatitude() + "," + feedItemList.get(i).getLongitude();
+    /*public void img_map(int i, ImageView img_map) {
+        if (!feed.get(i).getLatitude().equals("00")) {
+            String img_url = "https://maps.googleapis.com/maps/api/staticmap?center=" + feed.get(i).getLatitude() + "," + feed.get(i).getLongitude() + "&maptype=roadmap&zoom=14&size=512x512&language=FA&markers=size:small%7Ccolor:0xff0000%7Clabel:1%7C" + feed.get(i).getLatitude() + "," + feed.get(i).getLongitude();
             imageLoader.displayImage(img_url, img_map);
         }
-    }
+    }*/
 }

@@ -14,6 +14,8 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.json.JSONArray;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,20 +56,19 @@ public class EventsWantedFragment extends Fragment {
             ac.getFragmentManager().popBackStack();*/
         } else {
             adapter.ClearFeed();
+            String postIds = "";
             for (int i = 0; i < cr.getCount(); i++) {
                 try {
                     cr.moveToPosition(i);
-                    JSONArray result = new JSONArray(cr.getString(cr.getColumnIndex("data")));
+                    postIds += cr.getString(cr.getColumnIndex("Id")) + ",";
+
+                    //JSONArray result = new JSONArray(cr.getString(cr.getColumnIndex("data")));
                     try {
-                        Gson gson = new Gson();
+                        /*Gson gson = new Gson();
                         if (result != null) {
                             PayeItem[] payeItems = gson.fromJson(result.toString(), PayeItem[].class);
-                            if (payeItems != null && payeItems.length > 0) {
-                                for (PayeItem item : payeItems) {
-                                    adapter.addItem(item);
-                                }
-                            }
-                        }
+                            adapter.addItems(Arrays.asList(payeItems));
+                        }*/
                     } catch (Exception e) {
                     }
                 } catch (Exception e) {

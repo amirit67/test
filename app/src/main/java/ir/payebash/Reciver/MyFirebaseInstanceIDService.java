@@ -50,15 +50,24 @@ public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
     }
 
     private void SubscribeTopic(String ServiceId) {
-        Call<ResponseBody> call = ApiClient.getClient3().create(ApiInterface.class).Subscribe(FirebaseInstanceId.getInstance().getToken(), ServiceId);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-            }
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        //Log.w(TAG, "getInstanceId failed", task.getException());
+                        return;
+                    }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-            }
-        });
+                    Call<ResponseBody> call = ApiClient.getClient3().create(ApiInterface.class).Subscribe(task.getResult().getToken(), ServiceId);
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        }
+                    });
+                });
+
     }
 }

@@ -1,136 +1,160 @@
 package ir.payebash.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
+
 
 public class PayeItem implements Serializable {
 
-    public static final long serialVersionUID = 1L;
-    public String PostId = "";
-    public String Title = "";
-    public String Subject = "";
-    public int City;
-    public boolean IsWoman = false;
-    public boolean IsImmediate = false;
-    public String Cost = "";
-    public String Images = "";
-    public String CreateDate = "";
-    public String Deadline = "";
-    public String Tag = "";
-    public String Longitude = "";
-    public String Latitude = "";
-    public String CityDate = "";
-    public String State = "";
+	@SerializedName("isWoman")
+	private boolean isWoman;
 
-    public String getPostId() {
-        return PostId;
-    }
+	@SerializedName("images")
+	private String images;
 
-    public void setPostId(String postId) {
-        PostId = postId;
-    }
+	@SerializedName("cost")
+	private String cost;
 
-    public String getTitle() {
-        return Title;
-    }
+	@SerializedName("city")
+	private int city;
 
-    public void setTitle(String title) {
-        Title = title;
-    }
+	@SerializedName("subject")
+	private String subject;
 
-    public String getSubject() {
-        return Subject;
-    }
+	@SerializedName("isImmediate")
+	private boolean isImmediate;
 
-    public void setSubject(String subject) {
-        Subject = subject;
-    }
+	@SerializedName("timeToJoin")
+	private String timeToJoin;
 
-    public int getCity() {
-        return City;
-    }
+	@SerializedName("postId")
+	private String postId;
 
-    public void setCity(int city) {
-        City = city;
-    }
+	@SerializedName("tag")
+	private String tag;
 
-    public boolean getIsWoman() {
-        return IsWoman;
-    }
+	@SerializedName("state")
+	private String state;
 
-    public boolean getIsImmediate() {
-        return IsImmediate;
-    }
+	@SerializedName("title")
+	private String title;
 
-    public String getCost() {
-        return Cost;
-    }
+	@SerializedName("createDate")
+	private String createDate;
 
-    public void setCost(String cost) {
-        Cost = cost;
-    }
+	public void setIsWoman(boolean isWoman){
+		this.isWoman = isWoman;
+	}
 
-    public String getImages() {
-        return Images;
-    }
+	public boolean IsWoman(){
+		return isWoman;
+	}
 
-    public void setImages(String images) {
-        Images = images;
-    }
+	public void setImages(String images){
+		this.images = images;
+	}
 
-    public String getCreateDate() {
-        return CreateDate;
-    }
+	public String getImages(){
+		return images;
+	}
 
-    public void setCreateDate(String createDate) {
-        CreateDate = createDate;
-    }
+	public void setCost(String cost){
+		this.cost = cost;
+	}
 
-    public String getDeadline() {
-        return Deadline;
-    }
+	public String getCost(){
+		return cost;
+	}
 
-    public void setDeadline(String deadline) {
-        Deadline = deadline;
-    }
+	public void setCity(int city){
+		this.city = city;
+	}
 
-    public String getTag() {
-        return Tag;
-    }
+	public int getCity(){
+		return city;
+	}
 
-    public void setTag(String tag) {
-        Tag = tag;
-    }
+	public void setSubject(String subject){
+		this.subject = subject;
+	}
 
-    public String getLongitude() {
-        return Longitude;
-    }
+	public String getSubject(){
+		return subject;
+	}
 
-    public void setLongitude(String longitude) {
-        Longitude = longitude;
-    }
+	public void setIsImmediate(boolean isImmediate){
+		this.isImmediate = isImmediate;
+	}
 
-    public String getLatitude() {
-        return Latitude;
-    }
+	public boolean IsImmediate(){
+		return isImmediate;
+	}
 
-    public void setLatitude(String latitude) {
-        Latitude = latitude;
-    }
+	public void setTimeToJoin(String timeToJoin){
+		this.timeToJoin = timeToJoin;
+	}
 
-    public String getCityDate() {
-        return CityDate;
-    }
+	public String getTimeToJoin(){
+		return timeToJoin;
+	}
 
-    public void setCityDate(String cityDate) {
-        CityDate = cityDate;
-    }
+	public void setPostId(String postId){
+		this.postId = postId;
+	}
 
-    public String getState() {
-        return State;
-    }
+	public String getPostId(){
+		return postId;
+	}
 
-    public void setState(String state) {
-        State = state;
-    }
+	public void setTag(String tag){
+		this.tag = tag;
+	}
 
+	public String getTag(){
+		return tag;
+	}
+
+	public void setState(String state){
+		this.state = state;
+	}
+
+	public String getState(){
+		return state;
+	}
+
+	public void setTitle(String title){
+		this.title = title;
+	}
+
+	public String getTitle(){
+		return title;
+	}
+
+	public void setCreateDate(String createDate){
+		this.createDate = createDate;
+	}
+
+	public String getCreateDate(){
+		return createDate;
+	}
+
+	@Override
+ 	public String toString(){
+		return 
+			"PayeItem{" + 
+			"isWoman = '" + isWoman + '\'' + 
+			",images = '" + images + '\'' + 
+			",cost = '" + cost + '\'' + 
+			",city = '" + city + '\'' + 
+			",subject = '" + subject + '\'' + 
+			",isImmediate = '" + isImmediate + '\'' + 
+			",timeToJoin = '" + timeToJoin + '\'' + 
+			",postId = '" + postId + '\'' + 
+			",tag = '" + tag + '\'' + 
+			",state = '" + state + '\'' + 
+			",title = '" + title + '\'' + 
+			",createDate = '" + createDate + '\'' + 
+			"}";
+		}
 }

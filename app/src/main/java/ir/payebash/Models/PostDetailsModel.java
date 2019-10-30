@@ -5,23 +5,23 @@ import java.io.Serializable;
 public class PostDetailsModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String _Id = "";
-    private String _title = "";
+    private String Id = "";
+    private String title = "";
 
     public String getTitle() {
-        return _title;
+        return title;
     }
 
     public void setTitle(String title) {
-        _title = title;
+        this.title = title;
     }
 
     public String getId() {
-        return _Id;
+        return this.Id;
     }
 
     public void setId(String Id) {
-        _Id = Id;
+        this.Id = Id;
     }
 
 

@@ -80,9 +80,6 @@ import ir.payebash.Models.PostDetailsModel;
 import ir.payebash.Moudle.CircleImageView;
 import ir.payebash.Moudle.TagLayoutImageView;
 import ir.payebash.R;
-import ir.payebash.SliderTypes.BaseSliderView;
-import ir.payebash.SliderTypes.SliderLayout;
-import ir.payebash.SliderTypes.TextSliderView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -102,7 +99,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     private CollapsingToolbarLayout i;
     private AppBarLayout appBar;
     private LinearLayout ll_advertisdetails;
-    private SliderLayout pager;
+    //private SliderLayout pager;
     private Button btn_contactWays, btn_advertiser, btnBeup;
     private EditText etComment;
     private ImageView imgProfile;
@@ -159,7 +156,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         appBar = findViewById(R.id.app_bar);
         toolbar_title = findViewById(R.id.toolbar_title);
         imgProfile = findViewById(R.id.profile_img);
-        pager = findViewById(R.id.pager);
+        //pager = findViewById(R.id.pager);
         ti = findViewById(R.id.tl);
         btnBeup = findViewById(R.id.btnBeup);
         btnBeup.setOnClickListener(this);
@@ -193,13 +190,6 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             } catch (Exception e) {
                 fFeed = new PayeItem();
                 fFeed.setPostId(getIntent().getExtras().getString(getString(R.string.PostId)));
-                fFeed.setTitle(getIntent().getExtras().getString(getString(R.string.Title)));
-                fFeed.setCreateDate(getIntent().getExtras().getString(getString(R.string.CreateDate)));
-                fFeed.setSubject(getIntent().getExtras().getString(getString(R.string.Subject)));
-                fFeed.setCity(getIntent().getExtras().getInt(getString(R.string.city)));
-                fFeed.setLatitude(getIntent().getExtras().getString(getString(R.string.Latitude)));
-                fFeed.setLongitude(getIntent().getExtras().getString(getString(R.string.Longitude)));
-                fFeed.setImages(getIntent().getExtras().getString(getString(R.string.Images)));
                 isPush = true;
             }
 
@@ -321,12 +311,12 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 try {
                     ll_advertisdetails.setVisibility(View.VISIBLE);
                     result = response.body();
-                    findViewById(R.id.lbl_is_woman).setVisibility(fFeed.getIsWoman() == true ? View.VISIBLE : View.GONE);
+                    findViewById(R.id.lbl_is_woman).setVisibility(fFeed.IsWoman() == true ? View.VISIBLE : View.GONE);
                     getMap();
                     toolbar_title.setText(result.getUsername());
                     imageLoader.displayImage(result.getProfileimage(), imgProfile, options);
                     try {
-                        if (fFeed.getIsImmediate()) {
+                        if (fFeed.IsImmediate()) {
                             Spannable spannable = new SpannableString(result.getTitle() + "(فوری)");
                             spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#C8FF0004")), (result.getTitle() + "(فوری)").length() - 6, (result.getTitle() + "(فوری)").length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                             txt_title.setText(spannable, TextView.BufferType.SPANNABLE);
@@ -360,11 +350,6 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                 feed.add(item);
                             }
                         }
-                        try {
-                            if (fFeed.getCityDate().equals(""))
-                                fFeed.setCityDate(cr.getString(cr.getColumnIndex("StateCity")));
-                        } catch (Exception e) {
-                        }
 
                         String s = "";
                         for (int i = 0; i < result2.size(); i++) {
@@ -376,7 +361,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                     if (s.contains("هزینه : "))
                                         fFeed.setCost(s.split(":")[1].trim());
                                     if (s.contains("مهلت هم پا شدن : "))
-                                        fFeed.setDeadline(s.split(":")[1].trim());
+                                        fFeed.setTimeToJoin(s.split(":")[1].trim());
                                     if (s.contains("هشتگ : "))
                                         fFeed.setTag(s.split(":")[1].trim());
                                 }
@@ -384,7 +369,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                             }
                             feed.add(item);
                         }
-                        getProperty(PostDetailsActivity.this, (LinearLayout) findViewById(R.id.ll_baseProperty), feed);
+                        getProperty(PostDetailsActivity.this, findViewById(R.id.ll_baseProperty), feed);
                         List<String> applicants_result = result.getApplicants();
                         for (int i = 0; i < applicants_result.size(); i++) {
                             try {
@@ -426,13 +411,13 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                             CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) appBar.getLayoutParams();
                             lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
                             lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                            pager.setVisibility(View.GONE);
+                            //pager.setVisibility(View.GONE);
                             appBar.setLayoutParams(lp);
                         }
                         final PayeItem item = new PayeItem();
                         item.setImages(result.getImages());
                         try {
-                            for (int i = 0; i < item.getImages().split(",").length; i++) {
+                            /*for (int i = 0; i < item.getImages().split(",").length; i++) {
                                 TextSliderView textSliderView = new TextSliderView(PostDetailsActivity.this);
                                 // initialize a SliderLayout
                                 textSliderView
@@ -440,9 +425,9 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                         .image(getString(R.string.image) + item.getImages().split(",")[i] + ".jpg")
                                         .setScaleType(BaseSliderView.ScaleType.CenterCrop);
 
-                                /*textSliderView.bundle(new Bundle());
+                                *//*textSliderView.bundle(new Bundle());
                                 textSliderView.getBundle()
-                                        .putString("extra",name);*/
+                                        .putString("extra",name);*//*
 
                                 pager.addSlider(textSliderView);
                                 textSliderView.setOnSliderClickListener(slider -> {
@@ -452,7 +437,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                     i1.putExtras(bundle);
                                     startActivity(i1);
                                 });
-                            }
+                            }*/
                         } catch (Exception e) {
                         }
 
@@ -461,43 +446,16 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     ///////////////////////////////////////////////////////////////////////////
                     if (!fFeed.getTitle().contains("لغو")) {
                         try {
-                            JSONArray jArray = new JSONArray();// /ItemDetail jsonArray
-                            JSONObject jGroup = new JSONObject();
-                            jGroup.put(getString(R.string.PostId), fFeed.getPostId());
-                            jGroup.put(getString(R.string.Title), fFeed.getTitle());
-                            jGroup.put(getString(R.string.Subject), fFeed.getSubject());
-                            jGroup.put(getString(R.string.CreateDate), fFeed.getCreateDate());
-                            jGroup.put(getString(R.string.Deadline), fFeed.getDeadline());
-                            jGroup.put(getString(R.string.CityDate), fFeed.getCityDate());
-                            jGroup.put(getString(R.string.city), fFeed.getCity());
-                            jGroup.put(getString(R.string.Tag), fFeed.getTag());
-                            jGroup.put(getString(R.string.Cost), fFeed.getCost());
-                            jGroup.put(getString(R.string.Latitude), result.getLatitude());
-                            jGroup.put(getString(R.string.Longitude), result.getLongitude());
-                            try {
-                                jGroup.put(getString(R.string.Images), fFeed.getImages().split(",")[1]);
-                            } catch (Exception e) {
-                                jGroup.put(getString(R.string.Images), fFeed.getImages());
-                            }
-                            jArray.put(jGroup);
-
                             Cursor cr = Application.database.rawQuery("SELECT Id from RecentVisit WHERE Id='" + fFeed.getPostId() + "'", null);
                             if (cr.getCount() == 0) {
                                 String query;
                                 if (isPush == false)
-                                    query = "INSERT INTO RecentVisit(Id,data,IsFavorite,IsWanted) VALUES " +
-                                            "('" + fFeed.getPostId() + "','"
-                                            + jArray + "','false','false') ";
+                                    query = "INSERT INTO RecentVisit(Id,IsFavorite,IsWanted) VALUES " +
+                                            "('" + fFeed.getPostId() + "','false','false') ";
                                 else
-                                    query = "INSERT INTO RecentVisit(Id,data,IsFavorite,IsWanted) VALUES " +
-                                            "('" + fFeed.getPostId() + "','"
-                                            + jArray + "','false','true') ";
+                                    query = "INSERT INTO RecentVisit(Id,IsFavorite,IsWanted) VALUES " +
+                                            "('" + fFeed.getPostId() + "','false','true') ";
 
-                                Application.database.execSQL(query);
-                            } else {
-                                String query = "UPDATE RecentVisit SET " +
-                                        "data='" + jArray + "' " +
-                                        "WHERE Id='" + fFeed.getPostId() + "' ";
                                 Application.database.execSQL(query);
                             }
                         } catch (Exception e) {
@@ -1029,7 +987,6 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 String.valueOf(now.getPersianLongDate()),
                 fFeed.getSubject(),
                 fFeed.getCity(),
-                fFeed.getCityDate(),
                 fFeed.getCost(),
                 fFeed.getTag(),
                 fFeed.getImages().split(",")[0],

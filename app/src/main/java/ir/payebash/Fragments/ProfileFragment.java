@@ -133,33 +133,27 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                     File dir = new File(Environment.getExternalStoragePublicDirectory("PayeBash/Profile").getPath());
                     if (!dir.exists())
                         dir.mkdirs();
-                    dialog_image_profile.findViewById(R.id.rb1).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            try {
-                                Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                File file = new File(Environment.getExternalStoragePublicDirectory("PayeBash/Profile"), "file" + String.valueOf(System.currentTimeMillis() + ".jpg"));
-                                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-                                    uri = Uri.fromFile(file);
-                                else
-                                    uri = FileProvider.getUriForFile(getActivity(), getActivity().getPackageName() + ".provider", file);
-                                camIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                                camIntent.putExtra("return-data", true);
-                                getActivity().startActivityForResult(camIntent, 0);
-                                dialog_image_profile.dismiss();
-                            } catch (Exception e) {
-                            }
+                    dialog_image_profile.findViewById(R.id.rb1).setOnClickListener(v12 -> {
+                        try {
+                            Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            File file = new File(Environment.getExternalStoragePublicDirectory("PayeBash/Profile"), "file" + String.valueOf(System.currentTimeMillis() + ".jpg"));
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                                uri = Uri.fromFile(file);
+                            else
+                                uri = FileProvider.getUriForFile(getActivity(), getActivity().getPackageName() + ".provider", file);
+                            camIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                            camIntent.putExtra("return-data", true);
+                            getActivity().startActivityForResult(camIntent, 0);
+                            dialog_image_profile.dismiss();
+                        } catch (Exception e) {
                         }
                     });
 
-                    dialog_image_profile.findViewById(R.id.rb2).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            getActivity().startActivityForResult(pickPhoto, 1);
-                            dialog_image_profile.dismiss();
-                        }
+                    dialog_image_profile.findViewById(R.id.rb2).setOnClickListener(v1 -> {
+                        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        getActivity().startActivityForResult(pickPhoto, 1);
+                        dialog_image_profile.dismiss();
                     });
 
                     //HSH.dialog(dialog_image_profile);
@@ -215,21 +209,15 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 dialog.setContentText("");
                 dialog.setConfirmText("اطلاعات اصلی");
                 dialog.setCancelText("اطلاعات تکمیلی");
-                dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        Intent i = new Intent(getActivity(), RegisterActivity.class);
-                        i.putExtra("Type", "Update");
-                        startActivityForResult(i, 123);
-                        dialog.dismissWithAnimation();
-                    }
+                dialog.setConfirmClickListener(sDialog -> {
+                    Intent i1 = new Intent(getActivity(), RegisterActivity.class);
+                    i1.putExtra("Type", "Update");
+                    startActivityForResult(i1, 123);
+                    dialog.dismissWithAnimation();
                 });
-                dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        HSH.onOpenPage(getActivity(), EditProfileActivity.class);
-                        dialog.dismissWithAnimation();
-                    }
+                dialog.setCancelClickListener(sweetAlertDialog -> {
+                    HSH.onOpenPage(getActivity(), EditProfileActivity.class);
+                    dialog.dismissWithAnimation();
                 });
                 dialog.setCancelable(true);
                 HSH.dialog(dialog);
@@ -244,21 +232,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 compatSwitch.setChecked(Boolean.valueOf(Application.preferences.getString("BeupNotif", "true")));
                 compatSwitch2.setChecked(Boolean.valueOf(Application.preferences.getString("CommentNotif", "true")));
                 compatSwitch3.setChecked(Boolean.valueOf(Application.preferences.getString("EventRequestNotif", "true")));
-                compatSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        HSH.editor("BeupNotif", String.valueOf(compatSwitch.isChecked()));
-                    }
-                });
-                compatSwitch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        HSH.editor("CommentNotif", String.valueOf(compatSwitch2.isChecked()));
-                    }
-                });
-                compatSwitch3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        HSH.editor("EventRequestNotif", String.valueOf(compatSwitch3.isChecked()));
-                    }
-                });
+                compatSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> HSH.editor("BeupNotif", String.valueOf(compatSwitch.isChecked())));
+                compatSwitch2.setOnCheckedChangeListener((buttonView, isChecked) -> HSH.editor("CommentNotif", String.valueOf(compatSwitch2.isChecked())));
+                compatSwitch3.setOnCheckedChangeListener((buttonView, isChecked) -> HSH.editor("EventRequestNotif", String.valueOf(compatSwitch3.isChecked())));
                 HSH.dialog(dialogNotif);
                 dialogNotif.show();
                 break;
@@ -303,31 +279,23 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                         .setContentText(getString(R.string.sure))
                         .setConfirmText("بله")
                         .setCancelText("فعلا نه")
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                try {
-                                    String query = "DELETE FROM RecentVisit " +
-                                            "WHERE IsFavorite != 'false' or IsMine = 'true' ";
-                                    Application.database.execSQL(query);
-                                } catch (Exception e1) {
-                                }
-                                Application.editor.clear();
-                                Application.editor.apply();
-                                Application.editor.commit();
-                                //mAuth.signOut();
-                                mGoogleSignInClient.signOut();
-                                HSH.showtoast(getActivity(), "از حساب خود خارج شدید");
-                                HSH.onOpenPage(getActivity(), LoginActivity.class);
-                                getActivity().finish();
+                        .setConfirmClickListener(sDialog -> {
+                            try {
+                                String query = "DELETE FROM RecentVisit " +
+                                        "WHERE IsFavorite != 'false' or IsMine = 'true' ";
+                                Application.database.execSQL(query);
+                            } catch (Exception e1) {
                             }
+                            Application.editor.clear();
+                            Application.editor.apply();
+                            Application.editor.commit();
+                            //mAuth.signOut();
+                            mGoogleSignInClient.signOut();
+                            HSH.showtoast(getActivity(), "از حساب خود خارج شدید");
+                            HSH.onOpenPage(getActivity(), LoginActivity.class);
+                            getActivity().finish();
                         });
-                _dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        _dialog.dismissWithAnimation();
-                    }
-                });
+                _dialog.setCancelClickListener(sweetAlertDialog -> _dialog.dismissWithAnimation());
                 _dialog.setCancelable(true);
                 HSH.dialog(_dialog);
                 break;
@@ -390,7 +358,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 if (response.code() == 200)
                     try {
-                        String s = response.body().string().toString();
+                        String s = response.body().string();
                         if (!s.contains("https://"))
                             HSH.editor(getString(R.string.ProfileImage), getString(R.string.url) + "Images/Users/" + s + ".jpg");
                         else

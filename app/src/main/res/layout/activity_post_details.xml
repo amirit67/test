@@ -26,7 +26,7 @@
             app:contentScrim="@android:color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ir.payebash.SliderTypes.SliderLayout
+            <!--<ir.payebash.SliderTypes.SliderLayout
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
                 android:gravity="center_horizontal|bottom"
-                android:padding="10dip" />
+                android:padding="10dip" />-->
 
             <TextView
                 android:layout_width="match_parent"

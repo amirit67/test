@@ -15,6 +15,7 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.json.JSONArray;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,25 +74,24 @@ public class MyPayeFragment extends Fragment {
 
         if (cr.getCount() == 0) {
             HSH.showtoast(ac, "موردی یافت نشد.");
-            ac.getFragmentManager().popBackStack();
+            getFragmentManager().popBackStack();
         } else {
             adapter.ClearFeed();
+            String postIds = "";
             for (int i = 0; i < cr.getCount(); i++) {
                 try {
                     cr.moveToPosition(i);
-                    JSONArray result = new JSONArray(cr.getString(cr.getColumnIndex("data")));
+                    postIds += cr.getString(cr.getColumnIndex("Id")) + ",";
+
+                    /*JSONArray result = new JSONArray(cr.getString(cr.getColumnIndex("data")));
                     try {
                         Gson gson = new Gson();
                         if (result != null) {
                             PayeItem[] payeItems = gson.fromJson(result.toString(), PayeItem[].class);
-                            if (payeItems != null && payeItems.length > 0) {
-                                for (PayeItem item : payeItems) {
-                                    adapter.addItem(item);
-                                }
-                            }
+                            adapter.addItems(Arrays.asList(payeItems));
                         }
                     } catch (Exception e) {
-                    }
+                    }*/
                 } catch (Exception e) {
                 }
             }
@@ -140,24 +140,7 @@ public class MyPayeFragment extends Fragment {
                         isLoading = false;
                         swipeContainer.setRefreshing(false);
                         pb.setVisibility(View.GONE);
-                        /*try {
-                            feed.remove(feed.size() - 1);
-                            adapter.notifyItemRemoved(feed.size());
-                        } catch (Exception e) {
-                        }*/
-                        String s;
-                        for (PayeItem m : list.body()) {
-                            try {
-                                s = getActivity().getResources().getStringArray(R.array.Citys)[m.getCity() - 2];
-                                m.setCityDate(m.getCreateDate() + " در " + s.substring(s.indexOf("-") + 2));
-                                adapter.addItem(m);
-                            } catch (Exception e) {
-                                if (m.getCity() == 1) {
-                                    m.setCityDate("سراسر کشور");
-                                    adapter.addItem(m);
-                                }
-                            }
-                        }
+                        adapter.addItems(list.body());
                     } catch (Exception e) {
                     }
                 }
@@ -173,17 +156,14 @@ public class MyPayeFragment extends Fragment {
                     params,
                     m);
             getPost.getData();
-            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    Cnt = 0;
-                    params.clear();
-                    Application.myAds = 42907631;
-                    adapter.ClearFeed();
-                    params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                    params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
-                    getPost.getData();
-                }
+            swipeContainer.setOnRefreshListener(() -> {
+                Cnt = 0;
+                params.clear();
+                Application.myAds = 42907631;
+                adapter.ClearFeed();
+                params.put(getString(R.string.Skip), String.valueOf(Cnt));
+                params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
+                getPost.getData();
             });
             swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                     android.R.color.holo_green_light,

@@ -212,25 +212,22 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         try {
             final String[] s = new String[1];
             FirebaseInstanceId.getInstance().getInstanceId()
-                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                            if (!task.isSuccessful()) {
-                                s[0] = task.getResult().getToken();
-                                NotifyData.Data d = new NotifyData.Data(context.getString(R.string.topics) + ServiceId, s);
-                                Call<ResponseBody> call = ApiClient.getClient3().create(ApiInterface.class).unSubscribe(d);
-                                call.enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                                    }
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            s[0] = task.getResult().getToken();
+                            NotifyData.Data d = new NotifyData.Data(context.getString(R.string.topics) + ServiceId, s);
+                            Call<ResponseBody> call = ApiClient.getClient3().create(ApiInterface.class).unSubscribe(d);
+                            call.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                                }
 
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        HSH.showtoast(context, "خطا در ارسال");
-                                    }
-                                });
-                                return;
-                            }
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    HSH.showtoast(context, "خطا در ارسال");
+                                }
+                            });
+                            return;
                         }
                     });
 

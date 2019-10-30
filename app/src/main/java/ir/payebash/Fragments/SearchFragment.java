@@ -103,24 +103,7 @@ public class SearchFragment extends Fragment {
                     isLoading = false;
                     swipeContainer.setRefreshing(false);
                     pb.setVisibility(View.GONE);
-                       /* try {
-                            feed.remove(feed.size() - 1);
-                            adapter.notifyItemRemoved(feed.size());
-                        } catch (Exception e) {
-                        }*/
-                    String s;
-                    for (PayeItem m : list.body()) {
-                        try {
-                            s = ac.getResources().getStringArray(R.array.Citys)[m.getCity() - 2];
-                            m.setCityDate(m.getCreateDate() + " در " + s.substring(s.indexOf("-") + 2));
-                            adapter.addItem(m);
-                        } catch (Exception e) {
-                            if (m.getCity() == 1) {
-                                m.setCityDate("سراسر کشور");
-                                adapter.addItem(m);
-                            }
-                        }
-                    }
+                    adapter.addItems(list.body());
                 } catch (Exception e) {
                 }
             }
