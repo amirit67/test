@@ -83,15 +83,6 @@ public class MyPayeFragment extends Fragment {
                     cr.moveToPosition(i);
                     postIds += cr.getString(cr.getColumnIndex("Id")) + ",";
 
-                    /*JSONArray result = new JSONArray(cr.getString(cr.getColumnIndex("data")));
-                    try {
-                        Gson gson = new Gson();
-                        if (result != null) {
-                            PayeItem[] payeItems = gson.fromJson(result.toString(), PayeItem[].class);
-                            adapter.addItems(Arrays.asList(payeItems));
-                        }
-                    } catch (Exception e) {
-                    }*/
                 } catch (Exception e) {
                 }
             }
@@ -170,17 +161,14 @@ public class MyPayeFragment extends Fragment {
                     android.R.color.holo_orange_light,
                     android.R.color.holo_red_light);
 
-            setOnLoadMoreListener(new OnLoadMoreListener() {
-                @Override
-                public void onLoadMore() {
-                    /*feed.add(null);
-                    adapter.notifyItemInserted(feed.size() - 1);*/
-                    swipeContainer.setRefreshing(true);
-                    if (HSH.isNetworkConnection(getActivity())) {
-                        Cnt++;
-                        params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                        getPost.getData();
-                    }
+            setOnLoadMoreListener(() -> {
+                /*feed.add(null);
+                adapter.notifyItemInserted(feed.size() - 1);*/
+                swipeContainer.setRefreshing(true);
+                if (HSH.isNetworkConnection(getActivity())) {
+                    Cnt++;
+                    params.put(getString(R.string.Skip), String.valueOf(Cnt));
+                    getPost.getData();
                 }
             });
 

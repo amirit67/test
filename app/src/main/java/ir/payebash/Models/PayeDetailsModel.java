@@ -5,67 +5,67 @@ import com.google.gson.annotations.SerializedName;
 
 public class PayeDetailsModel{
 
-	@SerializedName("Telegram")
+	@SerializedName("telegram")
 	private String telegram;
 
-	@SerializedName("Soroosh")
+	@SerializedName("soroosh")
 	private String soroosh;
 
-	@SerializedName("Gmail")
+	@SerializedName("gmail")
 	private String gmail;
 
-    @SerializedName("PhoneNumber")
+    @SerializedName("phoneNumber")
     private String phoneNumber;
 
-	@SerializedName("Comments")
+	@SerializedName("comments")
 	private List<String> comments;
 
-	@SerializedName("Images")
+	@SerializedName("images")
 	private String images;
 
 	@SerializedName("applicants")
 	private List<String> applicants;
 
-	@SerializedName("Title")
+	@SerializedName("title")
 	private String title;
 
-	@SerializedName("Token")
+	@SerializedName("token")
 	private String token;
 
-	@SerializedName("Latitude")
+	@SerializedName("latitude")
 	private String latitude;
 
-	@SerializedName("City")
-	private String city;
+	@SerializedName("city")
+	private int city;
 
 	@SerializedName("userId")
 	private String userId;
 
-	@SerializedName("Mobile")
+	@SerializedName("mobile")
 	private String mobile;
 
-	@SerializedName("CreateDate")
+	@SerializedName("createDate")
 	private String createDate;
 
-	@SerializedName("Longitude")
+	@SerializedName("longitude")
 	private String longitude;
 
 	@SerializedName("profileimage")
 	private String profileimage;
 
-	@SerializedName("Subject")
-	private String subject;
+	@SerializedName("subject")
+	private int subject;
 
-	@SerializedName("Instagram")
+	@SerializedName("instagram")
 	private String instagram;
 
-	@SerializedName("IsWoman")
+	@SerializedName("isWoman")
 	private boolean isWoman;
 
 	@SerializedName("state")
 	private String state;
 
-	@SerializedName("BaseProperty")
+	@SerializedName("baseProperty")
 	private List<String> baseProperty;
 
 	@SerializedName("username")
@@ -151,11 +151,11 @@ public class PayeDetailsModel{
 		return latitude;
 	}
 
-	public void setCity(String city){
+	public void setCity(int city){
 		this.city = city;
 	}
 
-	public String getCity(){
+	public int getCity(){
 		return city;
 	}
 
@@ -199,11 +199,11 @@ public class PayeDetailsModel{
 		return profileimage;
 	}
 
-	public void setSubject(String subject){
+	public void setSubject(int subject){
 		this.subject = subject;
 	}
 
-	public String getSubject(){
+	public int getSubject(){
 		return subject;
 	}
 

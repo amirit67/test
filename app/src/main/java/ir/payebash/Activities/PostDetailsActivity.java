@@ -344,7 +344,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                             item.setTitle("محل رویداد : " + cr.getString(cr.getColumnIndex("StateCity")));
                             feed.add(item);
                         } catch (Exception e) {
-                            if (result.getCity().equals("1")) {
+                            if (result.getCity() == 1) {
                                 item = new PostDetailsModel();
                                 item.setTitle("محل رویداد : سراسر کشور");
                                 feed.add(item);

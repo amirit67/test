@@ -29,6 +29,8 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
+
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -51,6 +53,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    //implementation 'com.google.code.gson:gson:2.8.0'
     //compile 'com.github.adrielcafe:AndroidOAuth:1.1.5'
     //compile 'com.github.ronaldsmartin:Material-ViewPagerIndicator:1.0.4'
     //compile 'com.pacioianu.david:ink-page-indicator:1.2.0'
@@ -65,6 +68,8 @@ dependencies {
     implementation 'com.jaredrummler:animated-svg-view:1.0.5'
     implementation project(path: ':library')
     implementation project(path: ':persianmaterialdatetimepicker')
+    implementation project(':signalr-client-sdk')
+    implementation project(':signalr-client-sdk-android-release')
 }
 
 apply plugin: 'com.google.gms.google-services'
