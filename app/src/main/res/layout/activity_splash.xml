@@ -27,12 +27,12 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 app:animatedSvgFillColors="@array/google_glyph_colors"
-                app:animatedSvgFillStart="2000"
-                app:animatedSvgFillTime="1500"
+                app:animatedSvgFillStart="1000"
+                app:animatedSvgFillTime="500"
                 app:animatedSvgGlyphStrings="@array/google_glyph_strings"
                 app:animatedSvgImageSizeX="600"
                 app:animatedSvgImageSizeY="600"
-                app:animatedSvgTraceTime="3000"
+                app:animatedSvgTraceTime="1500"
                 app:animatedSvgTraceTimePerGlyph="3000" />
 
             <com.jaredrummler.android.widget.AnimatedSvgView
@@ -41,13 +41,13 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 app:animatedSvgFillColors="@array/google_glyph_colors"
-                app:animatedSvgFillStart="2000"
-                app:animatedSvgFillTime="1500"
+                app:animatedSvgFillStart="1000"
+                app:animatedSvgFillTime="500"
                 app:animatedSvgGlyphStrings="@array/line_glyph_strings"
                 app:animatedSvgImageSizeX="600"
                 app:animatedSvgImageSizeY="50"
-                app:animatedSvgTraceTime="3000"
-                app:animatedSvgTraceTimePerGlyph="3000" />
+                app:animatedSvgTraceTime="1500"
+                app:animatedSvgTraceTimePerGlyph="1500" />
 
             <com.jaredrummler.android.widget.AnimatedSvgView
                 android:id="@+id/font_svg_view"

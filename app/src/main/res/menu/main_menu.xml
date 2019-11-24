@@ -20,10 +20,12 @@
         android:title="@string/title_event"/>
 
     <item
-        android:title=""
-        android:checkable="false"
-        android:enabled="false"
+        android:id="@+id/action_creat_event"
+        android:name="@string/title_event"
+        android:title="افزودن رویداد"
         app:showAsAction="always"/>
+    <!--android:checkable="false"
+    android:enabled="false"-->
 
     <item
         android:id="@+id/action_notify"

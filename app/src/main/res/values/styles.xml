@@ -8,7 +8,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">@font/iransansmedium</item>
+        <item name="android:fontFamily">@font/yekanmedium</item>
     </style>
 
     <style name="AppBar" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -16,7 +16,7 @@
         <item name="colorPrimary">@android:color/white</item>
         <item name="colorPrimaryDark">@android:color/white</item>
         <item name="colorAccent">@android:color/white</item>
-        <item name="android:fontFamily">@font/iransansmedium</item>
+        <item name="android:fontFamily">@font/yekanmedium</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
@@ -39,7 +39,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <item name="android:fontFamily">@font/iransansmedium</item>
+        <item name="android:fontFamily">@font/yekanmedium</item>
     </style>
 
     <style name="Theme.Transparent" parent="Theme.AppCompat.Light.NoActionBar">
@@ -54,7 +54,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="color">@android:color/white</item>
-        <item name="android:fontFamily">@font/iransansmedium</item>
+        <item name="android:fontFamily">@font/yekanmedium</item>
     </style>
 
     <!-- Dark Buttons -->
@@ -66,7 +66,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:backgroundDimEnabled">false</item>
-        <item name="android:fontFamily">@font/iransansmedium</item>
+        <item name="android:fontFamily">@font/yekanmedium</item>
     </style>
 
     <style name="TextLabel">

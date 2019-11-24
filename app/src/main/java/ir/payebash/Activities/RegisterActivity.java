@@ -61,7 +61,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     private static final int RC_SIGN_IN = 9001;
     public static EditText et_code;
     public static Button bt_register, bt_go, bt_signin;
@@ -277,13 +277,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         try {
             progressBar.setVisibility(View.VISIBLE);
             bt_register.setEnabled(false);
-            params.put(getString(R.string.Token), FirebaseInstanceId.getInstance().getToken());
+            //params.put(getString(R.string.Token), FirebaseInstanceId.getInstance().getToken());
             params.put(getString(R.string.Name2), et_name.getText().toString().trim());
             params.put(getString(R.string.Family), et_family.getText().toString().trim());
             params.put(getString(R.string.mobile), et_mobile.getText().toString().trim());
             params.put(getString(R.string.Age2), et_age.getText().toString().trim());
             params.put(getString(R.string.city), et_city.getTag().toString());
-            params.put(getString(R.string.Email), Application.preferences.getString(getString(R.string.Email), ""));
+            params.put(getString(R.string.Email), preferences.getString(getString(R.string.Email), ""));
             HSH.editor("MobileTemp", et_mobile.getText().toString().trim());
             if (NetworkUtils.getConnectivity(RegisterActivity.this) != false)
                 SendUserInfo("Normal", "");
@@ -316,7 +316,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void SendUserInfo(final String SigninType, final String email) {
-        params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), ""));
+        params.put(getString(R.string.UserId), preferences.getString(getString(R.string.UserId), ""));
         Call<ResponseBody> call =
                 ApiClient.getClient().create(ApiInterface.class).inesrtUser(params);
         call.enqueue(new Callback<ResponseBody>() {
@@ -348,7 +348,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         } else if (response.code() == 500) {
                             HSH.showtoast(RegisterActivity.this, "لطفا بعد از چند لحظه مجددا تلاش نمایید");
                         } else if (response.code() == 200) {
-                            if (params.size() > 0 && !params.get(getString(R.string.Type)).matches("Update") && Application.preferences.getString(getString(R.string.mobile), "").length() < 10)
+                            if (params.size() > 0 && !params.get(getString(R.string.Type)).matches("Update") && preferences.getString(getString(R.string.mobile), "").length() < 10)
                                 try {
                                     /**/
                                     HSH.editor(getString(R.string.UserId), response.body().string());
@@ -384,7 +384,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void getProfileDetails() {
         final Map<String, String> params = new HashMap<>();
-        params.put(getString(R.string.VoterUserId), Application.preferences.getString(getString(R.string.UserId), "0"));
+        params.put(getString(R.string.VoterUserId), preferences.getString(getString(R.string.UserId), "0"));
         Call<ResponseBody> call = ApiClient.getClient().create(ApiInterface.class).getProfileDetails(params);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -397,7 +397,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         frameLayout.setVisibility(View.VISIBLE);
                         pb.setVisibility(View.GONE);
                         ((TextView) findViewById(R.id.txt_title)).setText("ویرایش پروفایل");
-                        if (Application.preferences.getString(getString(R.string.mobile), "").length() < 11)
+                        if (preferences.getString(getString(R.string.mobile), "").length() < 11)
                             et_mobile.setEnabled(true);
                         else
                             et_mobile.setEnabled(false);
@@ -498,7 +498,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 HSH.editor(getString(R.string.ServicesIds), "");
 
                 params.put(getString(R.string.Type), "Register");
-                params.put(getString(R.string.Token), FirebaseInstanceId.getInstance().getToken());
+                //params.put(getString(R.string.Token), FirebaseInstanceId.getInstance().getToken());
                 params.put(getString(R.string.Name2), user.getDisplayName().getGivenName());
                 params.put(getString(R.string.Family), user.getDisplayName().getFamilyName());
                 params.put(getString(R.string.Email), user.getEmails().get(0).getValue());

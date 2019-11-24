@@ -52,7 +52,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private static final int RC_SIGN_IN = 9001;
     public static EditText editTextMobile, editTextCode;
     public TextView txt_timer, txt_register;
@@ -79,12 +79,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         txt_register = findViewById(R.id.txt_register);
         bt_go = findViewById(R.id.bt_go);
 
-        if (Application.preferences.getString("MobileTemp", "").length() == 11
+        if (preferences.getString("MobileTemp", "").length() == 11
                 && null == getIntent().getExtras()) {
             progressBar.setVisibility(View.GONE);
             bt_go.setEnabled(true);
             editTextMobile.setEnabled(false);
-            editTextMobile.setText(Application.preferences.getString("MobileTemp", ""));
+            editTextMobile.setText(preferences.getString("MobileTemp", ""));
             txt_timer.setVisibility(View.VISIBLE);
             input_layout_code.setVisibility(View.VISIBLE);
             editTextCode.setEnabled(true);
@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             progressBar.setVisibility(View.VISIBLE);
             bt_go.setEnabled(false);
             editTextMobile.setEnabled(false);
-            editTextMobile.setText(Application.preferences.getString("MobileTemp", ""));
+            editTextMobile.setText(preferences.getString("MobileTemp", ""));
 
             FirebaseInstanceId.getInstance().getInstanceId()
                     .addOnCompleteListener(task -> {
@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         String token = task.getResult().getToken();
 
                         HSH.editor("MobileTemp", editTextMobile.getText().toString().trim());
-                        params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), ""));
+                        params.put(getString(R.string.UserId), preferences.getString(getString(R.string.UserId), ""));
                         params.put(getString(R.string.mobile), editTextMobile.getText().toString().trim());
                         params.put(getString(R.string.Token), token);
                         params.put("Type", "Login");
@@ -217,7 +217,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 progressBar.setVisibility(View.VISIBLE);
                                 view.setEnabled(false);
                                 HSH.editor("MobileTemp", editTextMobile.getText().toString().trim());
-                                params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), ""));
+                                params.put(getString(R.string.UserId), preferences.getString(getString(R.string.UserId), ""));
                                 params.put(getString(R.string.mobile), editTextMobile.getText().toString().trim());
                                 params.put(getString(R.string.Token), token);
                                 params.put("Type", "Login");
@@ -396,8 +396,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     HSH.editor(getString(R.string.ProfileImage), user.getImage().getUrl());
                 HSH.editor(getString(R.string.ServicesIds), "");
 
-                params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), ""));
-                params.put(getString(R.string.Token), FirebaseInstanceId.getInstance().getToken());
+                params.put(getString(R.string.UserId), preferences.getString(getString(R.string.UserId), ""));
+                //params.put(getString(R.string.Token), FirebaseInstanceId.getInstance().getToken());
                 params.put(getString(R.string.Type), "Login");
                 params.put(getString(R.string.GivenName), user.getDisplayName().getGivenName());
                 params.put(getString(R.string.familyName), user.getDisplayName().getFamilyName());

@@ -20,8 +20,6 @@ import ir.payebash.DI.MainComponent;
 public class Application extends android.app.Application {
 
 
-    public static Animation in;
-    public static Animation out;
     public static SQLiteDatabase database;
     public static SharedPreferences preferences;
     public static SharedPreferences.Editor editor;
@@ -47,12 +45,6 @@ public class Application extends android.app.Application {
         component = DaggerMainComponent.builder()
                 .imageLoaderMoudle(new ImageLoaderMoudle(this))
                 .build();
-
-        in = AnimationUtils.loadAnimation(this,
-                R.anim.zoom_in);
-
-        out = AnimationUtils.loadAnimation(this,
-                R.anim.zoom_out);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();

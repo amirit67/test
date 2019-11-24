@@ -35,6 +35,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
+import static ir.payebash.Application.preferences;
+
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
 
@@ -50,7 +52,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         try {
             this.context = context;
-            ServicesIds = Application.preferences.getString(context.getString(R.string.ServicesIds), "").trim();
+            ServicesIds = preferences.getString(context.getString(R.string.ServicesIds), "").trim();
             cr = Application.database.rawQuery("SELECT * from categories where state = 'true' and parentId = 'null' order by sort", null);
             while (cr.moveToNext()) {
                 CategoryItem item = new CategoryItem();
@@ -92,51 +94,45 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             else
                 Holder.img_tick.setVisibility(View.GONE);
 
-            Holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ServicesIds = Application.preferences.getString(context.getString(R.string.ServicesIds), "").replace(" ", "").trim();
-                    String[] temp = ServicesIds.split(",");
-                    ServicesIds = "";
-                    for (int i = 0; i < temp.length; i++)
-                        if (!temp[i].equals("") && !temp[i].contains("null") && temp[i].contains("-")) {
-                            if (i == temp.length - 1)
-                                ServicesIds += "," + temp[i] + ",";
-                            else
-                                ServicesIds += "," + temp[i];
-                        }
-
-                    if (!NotificationFragment.btn_location.getTag().toString().equals("0")) {
-                        Holder.pb.setVisibility(View.VISIBLE);
-                        int img_tick_isVisible = Holder.img_tick.getVisibility();
-                        Holder.img_tick.setVisibility(View.GONE);
-                        String ServiceId = NotificationFragment.btn_location.getTag() + "-" + feedItemList.get(pos).getId();
-                        if ((ServicesIds.trim() + ",").contains("," + ServiceId + ",")) {
-                            ServicesIds = ServicesIds.trim().replace("," + ServiceId + ",", ",");
-                            subscribeType = "unsubscribe";
-                        } else {
-                            ServicesIds += ServiceId.replace(",,", ",") + ",";
-                            subscribeType = "subscribe";
-                        }
-                        Map<String, String> params = new HashMap<>();
-                        params.put(context.getString(R.string.UserId), Application.preferences.getString(context.getString(R.string.UserId), "0").trim());
-                        params.put(context.getString(R.string.ServicesIds), ServicesIds.trim());
-                        params.put(context.getString(R.string.Token), FirebaseInstanceId.getInstance().getToken());
-                        ServicesIds(params, Holder.img_tick, img_tick_isVisible, Holder.pb, ServiceId.trim());
-                    } else {
-                        dialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                                .setTitleText("انتخاب شهر")
-                                .setContentText("برای دریافت اعلانیه های هر دسته لازم است ابتدا شهر و سپس دسته مورد نظر خود را انتخاب نمایید")
-                                .setConfirmText("باشه")
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sDialog) {
-                                        dialog.dismiss();
-                                        HSH.selectLocation(context, 1, NotificationFragment.btn_location);
-                                    }
-                                });
-                        HSH.dialog(dialog);
+            Holder.itemView.setOnClickListener(v -> {
+                ServicesIds = preferences.getString(context.getString(R.string.ServicesIds), "").replace(" ", "").trim();
+                String[] temp = ServicesIds.split(",");
+                ServicesIds = "";
+                for (int i = 0; i < temp.length; i++)
+                    if (!temp[i].equals("") && !temp[i].contains("null") && temp[i].contains("-")) {
+                        if (i == temp.length - 1)
+                            ServicesIds += "," + temp[i] + ",";
+                        else
+                            ServicesIds += "," + temp[i];
                     }
+
+                if (!NotificationFragment.btn_location.getTag().toString().equals("0")) {
+                    Holder.pb.setVisibility(View.VISIBLE);
+                    int img_tick_isVisible = Holder.img_tick.getVisibility();
+                    Holder.img_tick.setVisibility(View.GONE);
+                    String ServiceId = NotificationFragment.btn_location.getTag() + "-" + feedItemList.get(pos).getId();
+                    if ((ServicesIds.trim() + ",").contains("," + ServiceId + ",")) {
+                        ServicesIds = ServicesIds.trim().replace("," + ServiceId + ",", ",");
+                        subscribeType = "unsubscribe";
+                    } else {
+                        ServicesIds += ServiceId.replace(",,", ",") + ",";
+                        subscribeType = "subscribe";
+                    }
+                    Map<String, String> params = new HashMap<>();
+                    params.put(context.getString(R.string.UserId), preferences.getString(context.getString(R.string.UserId), "0").trim());
+                    params.put(context.getString(R.string.ServicesIds), ServicesIds.trim());
+                    //params.put(context.getString(R.string.Token), FirebaseInstanceId.getInstance().getToken());
+                    ServicesIds(params, Holder.img_tick, img_tick_isVisible, Holder.pb, ServiceId.trim());
+                } else {
+                    dialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("انتخاب شهر")
+                            .setContentText("برای دریافت اعلانیه های هر دسته لازم است ابتدا شهر و سپس دسته مورد نظر خود را انتخاب نمایید")
+                            .setConfirmText("باشه")
+                            .setConfirmClickListener(sDialog -> {
+                                dialog.dismiss();
+                                HSH.selectLocation(context, 1, NotificationFragment.btn_location);
+                            });
+                    HSH.dialog(dialog);
                 }
             });
         }

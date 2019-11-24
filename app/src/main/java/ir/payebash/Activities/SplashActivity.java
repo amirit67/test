@@ -49,9 +49,9 @@ public class SplashActivity extends Activity {
                         }
                         //finish();
                     }
-                }, 3000);
+                }, 1500);
             }
-        }, 3000);
+        }, 1500);
     }
 
     private void GetServices() {

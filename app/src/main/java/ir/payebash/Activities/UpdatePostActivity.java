@@ -83,12 +83,11 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
     private ExpandableHeightGridView gv;
     private GalleryAdapter adapter;
     private CardView cd_phone, cd_link;
-    private EditText etTitle, etTag, etTime_start, et_phone, et_link,
-            etTime_finish, et_cost, et_count, et_deadline, et_description;
-    private Button btn_subject_post, btn_location_post, btn_register;
-    private ImageButton btn_calender, btn_calender2;
+    private EditText etTitle, etTag, etTimeStart, etPhone, etLink,
+            etTimeFinish, etCost, etCount, etDeadline, etDescription;
+    private Button btnSubjectPost, btnLocationPost, btnRegister;
+    private ImageButton btnCalender, btnCalender2;
     private SwitchCompat compatSwitch, compatSwitchImmediate;
-    private Intent _data;
     private Map<String, String> params = new HashMap<>();
     private Roozh jCal;
     private SweetAlertDialog dialog;
@@ -96,6 +95,50 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
     private String lat = "00", lon = "00", imagesName = "";
     private ScrollView sv;
     private ProgressWheel pb;
+
+    private void DeclareElements() {
+        ll_parent = findViewById(R.id.ll_parent);
+        gv = findViewById(R.id.gridview);
+        compatSwitch = findViewById(R.id.compatSwitch);
+        compatSwitchImmediate = findViewById(R.id.compatSwitchImmediate);
+        sv = findViewById(R.id.sv);
+        pb = findViewById(R.id.pb);
+        etTitle = findViewById(R.id.et_title);
+        etTag = findViewById(R.id.et_tag);
+        etTimeStart = findViewById(R.id.et_time_start);
+        etTimeFinish = findViewById(R.id.et_time_finish);
+        etCost = findViewById(R.id.et_cost);
+        etCount = findViewById(R.id.et_count);
+        etDeadline = findViewById(R.id.et_deadline);
+        etPhone = findViewById(R.id.et_phone);
+        etLink = findViewById(R.id.et_link);
+        etDescription = findViewById(R.id.et_description);
+        btnCalender = findViewById(R.id.btn_calender);
+        btnCalender2 = findViewById(R.id.btn_calender2);
+        cd_phone = findViewById(R.id.cd_phone);
+        cd_link = findViewById(R.id.cd_link);
+
+        etTitle.addTextChangedListener(new addListenerOnTextChange(etTitle));
+        etTag.addTextChangedListener(new addListenerOnTextChange(etTag));
+        etTimeStart.addTextChangedListener(new addListenerOnTextChange(etTimeStart));
+        etTimeFinish.addTextChangedListener(new addListenerOnTextChange(etTimeFinish));
+        etCost.addTextChangedListener(new addListenerOnTextChange(etCost));
+        etCount.addTextChangedListener(new addListenerOnTextChange(etCount));
+        etDeadline.addTextChangedListener(new addListenerOnTextChange(etDeadline));
+        etPhone.addTextChangedListener(new addListenerOnTextChange(etPhone));
+        etLink.addTextChangedListener(new addListenerOnTextChange(etLink));
+        etDescription.addTextChangedListener(new addListenerOnTextChange(etDescription));
+
+        btnSubjectPost = findViewById(R.id.btn_subject_post);
+        btnLocationPost = findViewById(R.id.btn_location_post);
+        btnRegister = findViewById(R.id.btn_register);
+        findViewById(R.id.img_back).setOnClickListener(v -> finish());
+
+        btnRegister.setOnClickListener(this);
+        btnCalender.setOnClickListener(this);
+        btnCalender2.setOnClickListener(this);
+        etDeadline.setOnClickListener(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,15 +168,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
 
         });
 
-        btn_register.setOnClickListener(this);
-        btn_calender.setOnClickListener(this);
-        btn_calender2.setOnClickListener(this);
-        et_deadline.setOnClickListener(this);
-
-
-        ll_parent = findViewById(R.id.ll_parent);
         fFeed = (PayeItem) getIntent().getExtras().getSerializable("feedItem");
-
         if (NetworkUtils.getConnectivity(UpdatePostActivity.this) != false)
             AdvertisementDetails();
         else
@@ -288,45 +323,6 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
         });
     }
 
-    private void DeclareElements() {
-
-        gv = findViewById(R.id.gridview);
-        compatSwitch = findViewById(R.id.compatSwitch);
-        compatSwitchImmediate = findViewById(R.id.compatSwitchImmediate);
-        sv = findViewById(R.id.sv);
-        pb = findViewById(R.id.pb);
-        etTitle = findViewById(R.id.et_title);
-        etTag = findViewById(R.id.et_tag);
-        etTime_start = findViewById(R.id.et_time_start);
-        etTime_finish = findViewById(R.id.et_time_finish);
-        et_cost = findViewById(R.id.et_cost);
-        et_count = findViewById(R.id.et_count);
-        et_deadline = findViewById(R.id.et_deadline);
-        et_phone = findViewById(R.id.et_phone);
-        et_link = findViewById(R.id.et_link);
-        et_description = findViewById(R.id.et_description);
-        btn_calender = findViewById(R.id.btn_calender);
-        btn_calender2 = findViewById(R.id.btn_calender2);
-        cd_phone = findViewById(R.id.cd_phone);
-        cd_link = findViewById(R.id.cd_link);
-
-        etTitle.addTextChangedListener(new addListenerOnTextChange(etTitle));
-        etTag.addTextChangedListener(new addListenerOnTextChange(etTag));
-        etTime_start.addTextChangedListener(new addListenerOnTextChange(etTime_start));
-        etTime_finish.addTextChangedListener(new addListenerOnTextChange(etTime_finish));
-        et_cost.addTextChangedListener(new addListenerOnTextChange(et_cost));
-        et_count.addTextChangedListener(new addListenerOnTextChange(et_count));
-        et_deadline.addTextChangedListener(new addListenerOnTextChange(et_deadline));
-        et_phone.addTextChangedListener(new addListenerOnTextChange(et_phone));
-        et_link.addTextChangedListener(new addListenerOnTextChange(et_link));
-        et_description.addTextChangedListener(new addListenerOnTextChange(et_description));
-
-        btn_subject_post = findViewById(R.id.btn_subject_post);
-        btn_location_post = findViewById(R.id.btn_location_post);
-        btn_register = findViewById(R.id.btn_register);
-        findViewById(R.id.img_back).setOnClickListener(v -> finish());
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -348,12 +344,11 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
                 break;
             case 456:
                 if (null != data) {
-                    _data = data;
                     try {
                         final Cursor cr = Application.database.rawQuery("SELECT name from categories where id = '" + data.getStringExtra(getString(R.string.CategoryId)) + "'", null);
                         if (cr.moveToFirst()) {
-                            btn_subject_post.setText(cr.getString(cr.getColumnIndex("name")));
-                            btn_subject_post.setTag(data.getStringExtra(getString(R.string.CategoryId)));
+                            btnSubjectPost.setText(cr.getString(cr.getColumnIndex("name")));
+                            btnSubjectPost.setTag(data.getStringExtra(getString(R.string.CategoryId)));
                             params.put("Activity", data.getStringExtra(getString(R.string.CategoryId)));
                             params.put(getString(R.string.IsCommercial), cr.getString(cr.getColumnIndex("isCommercial")));
                         }
@@ -378,26 +373,26 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
         switch (v.getId()) {
 
             case R.id.et_deadline: {
-                HSH.setTimeDate(UpdatePostActivity.this, et_deadline);
+                HSH.setTimeDate(UpdatePostActivity.this, etDeadline);
                 break;
             }
             case R.id.btn_calender: {
-                HSH.setTimeDate(UpdatePostActivity.this, etTime_start);
+                HSH.setTimeDate(UpdatePostActivity.this, etTimeStart);
                 break;
             }
 
             case R.id.btn_calender2: {
-                HSH.setTimeDate(UpdatePostActivity.this, etTime_finish);
+                HSH.setTimeDate(UpdatePostActivity.this, etTimeFinish);
                 break;
             }
 
             case R.id.btn_subject_post:
-                HSH.selectSubject(UpdatePostActivity.this, btn_subject_post);
+                HSH.selectSubject(UpdatePostActivity.this, btnSubjectPost);
                 //SelectUnit();
                 break;
 
             case R.id.btn_location_post:
-                HSH.selectLocation(UpdatePostActivity.this, 1, btn_location_post);
+                HSH.selectLocation(UpdatePostActivity.this, 1, btnLocationPost);
                 break;
 
             case R.id.btn_location_map:
@@ -458,52 +453,52 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
                 //ارسال سوال
                 try {
                     String title = etTitle.getText().toString().trim();
-                    String description = et_description.getText().toString().trim();
+                    String description = etDescription.getText().toString().trim();
                     //PushNotifictionHelper.sendPushNotification(PostRegisterActivity.this, "/topics/2-01");
-                    if (btn_subject_post.getTag().toString().trim().equals("")) {
+                    if (btnSubjectPost.getTag().toString().trim().equals("")) {
                         HSH.showtoast(UpdatePostActivity.this, "موضوع رویداد را وارد نمایید");
-                        HSH.selectSubject(UpdatePostActivity.this, btn_subject_post);
-                        btn_subject_post.requestFocus();
-                    } else if (btn_location_post.getTag().toString().trim().equals("")) {
+                        HSH.selectSubject(UpdatePostActivity.this, btnSubjectPost);
+                        btnSubjectPost.requestFocus();
+                    } else if (btnLocationPost.getTag().toString().trim().equals("")) {
                         HSH.showtoast(UpdatePostActivity.this, "مکان رویداد را وارد نمایید");
-                        HSH.selectLocation(UpdatePostActivity.this, 1, btn_location_post);
-                        btn_location_post.requestFocus();
+                        HSH.selectLocation(UpdatePostActivity.this, 1, btnLocationPost);
+                        btnLocationPost.requestFocus();
                     } else if (title.equals("") || title.length() < 3) {
                         error(etTitle, "عنوان رویداد را وارد نمایید(حداقل 3 حرف)");
-                    } else if (etTime_start.getText().toString().trim().equals(""))
-                        error(etTime_start, "زمان شروع رویداد را وارد نمایید");
-                    else if (etTime_finish.getText().toString().trim().equals(""))
-                        error(etTime_finish, "زمان پایان رویداد را وارد نمایید");
-                    else if (et_cost.getText().toString().trim().equals(""))
-                        error(et_cost, "هزینه رویداد را وارد نمایید");
-                    else if (et_count.getText().toString().trim().equals(""))
-                        error(et_count, "تعداد پایه رویداد را وارد نمایید");
-                    else if (et_deadline.getText().toString().trim().equals(""))
-                        error(et_deadline, "مهلت اتمام رویداد را وارد نمایید");
+                    } else if (etTimeStart.getText().toString().trim().equals(""))
+                        error(etTimeStart, "زمان شروع رویداد را وارد نمایید");
+                    else if (etTimeFinish.getText().toString().trim().equals(""))
+                        error(etTimeFinish, "زمان پایان رویداد را وارد نمایید");
+                    else if (etCost.getText().toString().trim().equals(""))
+                        error(etCost, "هزینه رویداد را وارد نمایید");
+                    else if (etCount.getText().toString().trim().equals(""))
+                        error(etCount, "تعداد پایه رویداد را وارد نمایید");
+                    else if (etDeadline.getText().toString().trim().equals(""))
+                        error(etDeadline, "مهلت اتمام رویداد را وارد نمایید");
                     else if (description.equals("") || description.length() < 10)
-                        error(et_description, "توضیحات رویداد را وارد نمایید(حداقل 10 حرف)");
+                        error(etDescription, "توضیحات رویداد را وارد نمایید(حداقل 10 حرف)");
                     else {
                         params.put(getString(R.string.PostId), fFeed.getPostId());
                         params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
-                        params.put(getString(R.string.Subject), btn_subject_post.getTag().toString());
-                        params.put(getString(R.string.city), btn_location_post.getTag().toString());
+                        params.put(getString(R.string.Subject), btnSubjectPost.getTag().toString());
+                        params.put(getString(R.string.city), btnLocationPost.getTag().toString());
                         params.put(getString(R.string.IsWoman), String.valueOf(compatSwitch.isChecked()));
                         params.put(getString(R.string.IsImmediate), String.valueOf(compatSwitchImmediate.isChecked()));
                         params.put(getString(R.string.Title), etTitle.getText().toString().trim());
                         params.put(getString(R.string.Tag), etTag.getText().toString().trim());
-                        params.put(getString(R.string.PhoneNumber), et_phone.getText().toString().trim());
-                        params.put(getString(R.string.Link), et_link.getText().toString().trim());
-                        params.put(getString(R.string.StartDate), etTime_start.getText().toString().trim());
-                        params.put(getString(R.string.finishDate), etTime_finish.getText().toString().trim());
-                        params.put(getString(R.string.Deadline), convertToMiladi(et_deadline));
+                        params.put(getString(R.string.PhoneNumber), etPhone.getText().toString().trim());
+                        params.put(getString(R.string.Link), etLink.getText().toString().trim());
+                        params.put(getString(R.string.StartDate), etTimeStart.getText().toString().trim());
+                        params.put(getString(R.string.finishDate), etTimeFinish.getText().toString().trim());
+                        params.put(getString(R.string.Deadline), convertToMiladi(etDeadline));
                         try {
                             params.put(getString(R.string.Longitude), lon);
                             params.put(getString(R.string.Latitude), lat);
                         } catch (Exception e) {
                         }
-                        params.put(getString(R.string.Cost), et_cost.getText().toString().trim().toString());
-                        params.put(getString(R.string.NumberFollowers), et_count.getText().toString().trim());
-                        params.put(getString(R.string.Description), et_description.getText().toString().trim());
+                        params.put(getString(R.string.Cost), etCost.getText().toString().trim().toString());
+                        params.put(getString(R.string.NumberFollowers), etCount.getText().toString().trim());
+                        params.put(getString(R.string.Description), etDescription.getText().toString().trim());
                         if (HSH.isNetworkConnection(UpdatePostActivity.this))
                             saveRequest();
                         else

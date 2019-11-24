@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Activities.ViewPagerActivity;
@@ -31,7 +33,10 @@ import ir.payebash.Classes.HSH;
 import ir.payebash.Fragments.SearchFragment;
 import ir.payebash.Holders.PayeHolder;
 import ir.payebash.Models.PayeItem;
+import ir.payebash.Moudle.CircleImageView;
+import ir.payebash.Moudle.TriangleLabelView;
 import ir.payebash.R;
+import ir.payebash.utils.roundedimageview.OverlapRecyclerViewDecoration;
 
 
 public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -62,8 +67,8 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         if (i == VIEW_TYPE_ITEM) {
             View v;
-            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_main, null);
-            return new PayeHolder(v);
+            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_main2, null);
+            return new Paye2Holder(v);
         } /*else if (i == VIEW_TYPE_LOADING) {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_loading, null);
             return new LoadingViewHolder(view);
@@ -81,39 +86,65 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int i) {
 
-        if (holder instanceof PayeHolder) {
+        if (holder instanceof Paye2Holder) {
             /*if (i == 0)
                 details.clear();*/
-            final PayeHolder Holder;
+            final Paye2Holder Holder;
             try {
-                Holder = (PayeHolder) holder;
+                Holder = (Paye2Holder) holder;
                 Holder.setIsRecyclable(false);
-                String city = mContext.getResources().getStringArray(R.array.Citys)[feed.get(i).getCity() - 2];
+
+                Holder.rv.setHasFixedSize(true);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, true);
+                Holder.rv.setLayoutManager(layoutManager);
+                Holder.rv.addItemDecoration(new OverlapRecyclerViewDecoration(mContext, 0));
+                PersonAddedAdapter adapterStory = new PersonAddedAdapter(mContext, imageLoader);
+
+                Holder.rv.setAdapter(adapterStory);
+                adapterStory.addItems(feed);
+
+                imageLoader.displayImage(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + feed.get(i).getImages().split(",")[0] + ".jpg", Holder.img_content, new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+                    }
+                });
+               /* String city = mContext.getResources().getStringArray(R.array.Citys)[feed.get(i).getCity() - 2];
                 Holder.txt_loc.setText(feed.get(i).getCreateDate() + " در " + city.substring(city.indexOf("-") + 2));
                 Holder.txt_cost.setText(feed.get(i).getCost());
                 Holder.txt_title.setText(feed.get(i).getTitle());
                 Holder.txt_deadline.setText(feed.get(i).getTimeToJoin());
-                HSH.vectorRight(mContext, Holder.txt_loc, R.drawable.ic_location);
                 HSH.vectorRight(mContext, Holder.txt_cost, R.drawable.ic_coins);
                 HSH.vectorRight(mContext, Holder.txt_deadline, R.drawable.ic_hourglass);
 
                 //s = 0;
-                /*try {
+                *//*try {
                     s = details.get(i).getChildCount();
                 } catch (Exception e) {
-                }*/
-                if (/*s == 0 && */feed.get(i).getTag().length() > 3) {
+                }*//*
+                if (*//*s == 0 && *//*feed.get(i).getTag().length() > 3) {
                     String[] temp = feed.get(i).getTag().split("#");
                     for (int j = 0; j < temp.length; j++) {
                         if (!temp[j].equals(""))
                             TagLayout(temp[j], Holder.mTagLayout, j, i);
                     }
-                } /*else if (s > 0) {
+                } *//*else if (s > 0) {
                     LinearLayout v;
                     v = details.get(i);
                     ((TagLayout2) v.getParent()).removeViewAt(0);
                     Holder.mTagLayout.addView(v);
-                }*/ else
+                }*//* else
                     Holder.rl_tag.setVisibility(View.GONE);
 
                 if (Application.myAds == 1) {
@@ -128,25 +159,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     Holder.lbl_state.setPrimaryText(feed.get(i).getState().split("-")[0]);
                     Holder.lbl_state.setTriangleBackgroundColor(Color.parseColor(feed.get(i).getState().split("-")[2]));
                 }
-                imageLoader.displayImage(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + feed.get(i).getImages().split(",")[0] + ".jpg", Holder.img_post, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                    }
 
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                       /* if (!imageUri.contains("/.jpg") && !imageUri.contains("/null.jpg"))
-                            img_map(i, Holder.img_post);*/
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    }
-
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-                    }
-                });
 
                 if (!feed.get(i).getImages().equals("null"))
                     Holder.img_post.setOnClickListener(v -> {
@@ -160,7 +173,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             mContext.startActivity(in);
                             feed.get(i).setImages(s);
                         }
-                    });
+                    });*/
             } catch (Exception e) {
             }
         }
@@ -244,4 +257,16 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             imageLoader.displayImage(img_url, img_map);
         }
     }*/
+
+
+    public class Paye2Holder extends RecyclerView.ViewHolder {
+        public RecyclerView rv;
+        public ImageView img_content;
+                public Paye2Holder(View view) {
+            super(view);
+            this.rv = view.findViewById(R.id.rv);
+            this.img_content = view.findViewById(R.id.img_content);
+        }
+
+    }
 }

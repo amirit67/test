@@ -1,5 +1,7 @@
 package ir.payebash.DI;
 
+import javax.inject.Singleton;
+
 import dagger.Component;
 import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Activities.PostRegisterActivity;
@@ -16,8 +18,9 @@ import ir.payebash.Fragments.UncomingEventsFragment;
 /**
  * Created by KingStar on 3/2/2018.
  */
+@Singleton
 @MainScope
-@Component(modules = ImageLoaderMoudle.class)
+@Component(modules = {ImageLoaderMoudle.class, NetModule.class})
 public interface MainComponent {
     void Inject(HomeFragment mainActivity);
 

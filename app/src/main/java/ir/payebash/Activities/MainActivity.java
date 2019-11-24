@@ -39,7 +39,7 @@ import retrofit2.Callback;
 
 import static ir.payebash.Classes.HSH.openFragment;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, TitleMain/*, HideActionbar*/ {
+public class MainActivity extends BaseActivity implements View.OnClickListener, TitleMain/*, HideActionbar*/ {
 
     public static LinearLayout ll_bottomNavigation;
     BottomNavigationView bottomNavigationView;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         HSH.editor("UserId", "3428efaf-df16-4048-8732-d589772279ad");
         HSH.editor("IsAuthenticate", "true");
-        if (!Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true")) {
+        if (!preferences.getString(getString(R.string.IsAuthenticate), "").equals("true")) {
             startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
             finish();
         } else {
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setTitle("");
             findViewById(R.id.btn_new_event).setOnClickListener(view -> {
                 final SweetAlertDialog dialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
-                String s = Application.preferences.getString("MobileTemp", "");
+                String s = preferences.getString("MobileTemp", "");
                 if (s.length() < 11) {
                     dialog.setCustomImage(R.mipmap.mobile);
                     dialog.setTitleText("احراز هویت");
@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     });
                     HSH.dialog(dialog);
                     dialog.show();
-                } else if (Application.preferences.getString(getString(R.string.Telegram), "").length() < 5 &&
-                        Application.preferences.getString(getString(R.string.Soroosh), "").length() < 5 && !dialog.isShowing()) {
+                } else if (preferences.getString(getString(R.string.Telegram), "").length() < 5 &&
+                        preferences.getString(getString(R.string.Soroosh), "").length() < 5 && !dialog.isShowing()) {
                     dialog.setCustomImage(R.mipmap.completed_info);
                     dialog.setTitleText("تکمیل اطلاعات");
                     dialog.setContentText("قبل از ثبت رویداد جدید پروفایل خود را تکمیل نمایید");
@@ -143,13 +143,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             MyPayeFragment fra = new MyPayeFragment();
             HSH.openFragment(MainActivity.this, fra);
         } else if (requestCode == 132 &&
-                Application.preferences.getString(getString(R.string.mobile), "").length() > 10 &&
+                preferences.getString(getString(R.string.mobile), "").length() > 10 &&
                 (
-                        Application.preferences.getString(getString(R.string.Telegram), "").length() > 4
+                        preferences.getString(getString(R.string.Telegram), "").length() > 4
                                 ||
-                                Application.preferences.getString(getString(R.string.Soroosh), "").length() > 4
+                                preferences.getString(getString(R.string.Soroosh), "").length() > 4
                                 ||
-                                Application.preferences.getString(getString(R.string.Instagram), "").length() > 4
+                                preferences.getString(getString(R.string.Instagram), "").length() > 4
                 )
         ) {
             Intent intent = new Intent(MainActivity.this, PostRegisterActivity.class);
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     Map<String, String> params = new HashMap<>();
-                    params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
+                    params.put(getString(R.string.UserId), preferences.getString(getString(R.string.UserId), "0"));
                     params.put(getString(R.string.FbToken), task.getResult().getToken());
                     Call<UserItem> call =
                             ApiClient.getClient().create(ApiInterface.class).getAuthenticate(params);
@@ -259,13 +259,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     }
                                 } catch (Exception e) {
                                 }
-                            else if (!Application.preferences.getString(getString(R.string.UserId), "00000").equals("00000"))
+                            else if (!preferences.getString(getString(R.string.UserId), "00000").equals("00000"))
                                 IsAuthenticate();
                         }
 
                         @Override
                         public void onFailure(Call<UserItem> call, Throwable t) {
-                            if (!Application.preferences.getString(getString(R.string.UserId), "00000").equals("00000"))
+                            if (!preferences.getString(getString(R.string.UserId), "00000").equals("00000"))
                                 IsAuthenticate();
                         }
                     });
@@ -333,8 +333,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (response.code() == 200)
                     try {
                         JSONObject result = new JSONObject(response.body().string().trim());
-                        Application.editor.putInt(getString(R.string.Feepayable), result.getInt(getString(R.string.Feepayable)));
-                        Application.editor.commit();
+                        editor.putInt(getString(R.string.Feepayable), result.getInt(getString(R.string.Feepayable)));
+                        editor.commit();
                         String _version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
                         String newVersion = result.getString(getString(R.string.VersionName));
                         if (!newVersion.equals(_version) && !newVersion.equals("")) {

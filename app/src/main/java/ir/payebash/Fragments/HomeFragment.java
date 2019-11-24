@@ -39,12 +39,15 @@ import javax.inject.Inject;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import ir.payebash.Adapters.PayeAdapter;
+import ir.payebash.Adapters.StoryAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
+import ir.payebash.Classes.ItemDecorationAlbumColumns;
 import ir.payebash.DI.DaggerMainComponent;
 import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.Interfaces.IWebservice;
@@ -53,6 +56,7 @@ import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.Models.PayeItem;
 import ir.payebash.R;
 import ir.payebash.asynktask.AsynctaskGetPost;
+import ir.payebash.utils.roundedimageview.OverlapRecyclerViewDecoration;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -66,18 +70,20 @@ public class HomeFragment extends Fragment {
     AsynctaskGetPost getPost;
     IWebservice m;
     private RecyclerView rv;
+    private RecyclerView rvStory;
     private boolean isLoading;
     private Map<String, String> params = new HashMap<>();
     private int Cnt = 0;
     private SwipeRefreshLayout swipeContainer;
     private ProgressWheel pb;
     private PayeAdapter adapter;
+    private StoryAdapter adapterStory;
     private Activity ac;
     private int MY_DATA_CHECK_CODE = 0;
     private EditText et_search;
     private Dialog dialog_filter = null;
-    private CardView ll_search;
-    private Button btn_categories, btn_location;
+    private CardView llSearch;
+    private Button btnCategories, btnLocation;
     private LinearLayoutManager layoutManager;
     private OnLoadMoreListener mOnLoadMoreListener;
     private int visibleThreshold = 1, lastVisibleItem, totalItemCount = 0;
@@ -105,6 +111,7 @@ public class HomeFragment extends Fragment {
                         swipeContainer.setRefreshing(false);
                         pb.setVisibility(View.GONE);
                         adapter.addItems(list.body());
+                        adapterStory.addItems(list.body());
                     } catch (Exception e) {
                     }
                 }
@@ -136,17 +143,14 @@ public class HomeFragment extends Fragment {
                     android.R.color.holo_orange_light,
                     android.R.color.holo_red_light);
 
-            setOnLoadMoreListener(new OnLoadMoreListener() {
-                @Override
-                public void onLoadMore() {
-                    /*feed.add(null);
-                    adapter.notifyItemInserted(feed.size() - 1);*/
-                    swipeContainer.setRefreshing(true);
-                    if (HSH.isNetworkConnection(getActivity())) {
-                        Cnt++;
-                        params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                        getPost.getData();
-                    }
+            setOnLoadMoreListener(() -> {
+                /*feed.add(null);
+                adapter.notifyItemInserted(feed.size() - 1);*/
+                swipeContainer.setRefreshing(true);
+                if (HSH.isNetworkConnection(getActivity())) {
+                    Cnt++;
+                    params.put(getString(R.string.Skip), String.valueOf(Cnt));
+                    getPost.getData();
                 }
             });
 
@@ -171,7 +175,7 @@ public class HomeFragment extends Fragment {
         }
         ((TitleMain) getContext()).FragName("خانه");
         Application.myAds = 1;
-        ll_search.setVisibility(View.VISIBLE);
+        llSearch.setVisibility(View.VISIBLE);
         return rootView;
     }
 
@@ -201,8 +205,8 @@ public class HomeFragment extends Fragment {
                     try {
                         final Cursor cr = Application.database.rawQuery("SELECT name from categories where id = '" + data.getStringExtra(getString(R.string.CategoryId)) + "'", null);
                         if (cr.moveToFirst()) {
-                            btn_categories.setText(cr.getString(cr.getColumnIndex("name")));
-                            btn_categories.setTag(data.getStringExtra(getString(R.string.CategoryId)));
+                            btnCategories.setText(cr.getString(cr.getColumnIndex("name")));
+                            btnCategories.setTag(data.getStringExtra(getString(R.string.CategoryId)));
 
                             params.put("Activity", data.getStringExtra(getString(R.string.CategoryId)));
                         }
@@ -214,30 +218,35 @@ public class HomeFragment extends Fragment {
     }
 
     public void DeclareElements() {
-        ll_search = rootView.findViewById(R.id.ll_search);
+        llSearch = rootView.findViewById(R.id.ll_search);
         swipeContainer = rootView.findViewById(R.id.swipeContainer);
         pb = rootView.findViewById(R.id.pb);
         rv = rootView.findViewById(R.id.rv_paye);
+        rv.addItemDecoration(new ItemDecorationAlbumColumns(getActivity(), 0));
         rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
         adapter = new PayeAdapter(getActivity(), pb, Cnt, params, imageLoader);
         rv.setAdapter(adapter);
 
+        rvStory = rootView.findViewById(R.id.rv_story);
+        rvStory.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true);
+        rvStory.setLayoutManager(layoutManager);
+        adapterStory = new StoryAdapter(getActivity(), imageLoader);
+        rvStory.setAdapter(adapterStory);
+
         ImageView mic = rootView.findViewById(R.id.mic);
-        ImageButton btn_search = rootView.findViewById(R.id.btn_search);
+        //ImageView btn_search = rootView.findViewById(R.id.btn_search);
         et_search = rootView.findViewById(R.id.et_search);
-        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    Search(et_search.getText().toString().trim());
-                    return true;
-                }
-                return false;
+        et_search.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                Search(et_search.getText().toString().trim());
+                return true;
             }
+            return false;
         });
-        btn_search.setOnClickListener(view -> Filter(getActivity()));
+        //btn_search.setOnClickListener(view -> Filter(getActivity()));
         mic.setOnClickListener(v -> {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -294,19 +303,14 @@ public class HomeFragment extends Fragment {
                 dialog_filter = new Dialog(cn);
                 dialog_filter.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog_filter.setContentView(R.layout.dialog_filter_posts);
-                btn_categories = dialog_filter.findViewById(R.id.btn_categories);
-                btn_location = dialog_filter.findViewById(R.id.btn_location);
+                btnCategories = dialog_filter.findViewById(R.id.btn_categories);
+                btnLocation = dialog_filter.findViewById(R.id.btn_location);
 
                 Button btn_cancel = dialog_filter.findViewById(R.id.btn_cancel);
                 Button btn_submit = dialog_filter.findViewById(R.id.btn_submit);
-                btn_categories.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        HSH.selectSubject(getActivity(), btn_categories);
-                    }
-                });
+                btnCategories.setOnClickListener(v -> HSH.selectSubject(getActivity(), btnCategories));
 
-                btn_location.setOnClickListener(v -> HSH.selectLocation(getActivity(), 0, btn_location));
+                btnLocation.setOnClickListener(v -> HSH.selectLocation(getActivity(), 0, btnLocation));
                 btn_cancel.setOnClickListener(v -> {
                     et_search.setHint(String.format(getString(R.string.searchHint), "همه رویدادها", "سراسر کشور"));
                     params.remove(getString(R.string.SubjectCode));
@@ -324,13 +328,13 @@ public class HomeFragment extends Fragment {
                         //adapter.ClearFeed();
                         //pb.setVisibility(View.VISIBLE);
                         dialog_filter.dismiss();
-                        params.put(getString(R.string.SubjectCode), btn_categories.getTag().toString());
-                        params.put(getString(R.string.CityCode), btn_location.getTag().toString());
+                        params.put(getString(R.string.SubjectCode), btnCategories.getTag().toString());
+                        params.put(getString(R.string.CityCode), btnLocation.getTag().toString());
                         params.put(getString(R.string.Skip), String.valueOf(Cnt));
                         et_search.setHint(
                                 String.format(getString(R.string.searchHint),
-                                        btn_categories.getText().toString().trim(),
-                                        btn_location.getText().toString().trim()));
+                                        btnCategories.getText().toString().trim(),
+                                        btnLocation.getText().toString().trim()));
                         TransToSearchFrag();
                         /*getPost = new AsynctaskGetPost(getActivity(),
                                 params,

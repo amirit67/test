@@ -11,7 +11,7 @@
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
-        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:statusBarColor">@color/colorAccent</item>
         <item name="colorPrimaryDark" tools:targetApi="23">#000</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
         <!--<item name="android:navigationBarColor">@color/colorPrimaryDark</item>-->

@@ -39,7 +39,7 @@ public class AsynctaskGetPost {
                     if (response.code() == 200) {
                         delegate.getResult(response);
                     } else
-                        getData();
+                        delegate.getError();
                 } catch (Exception e) {
                 }
             }
