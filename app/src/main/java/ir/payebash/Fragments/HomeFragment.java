@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment {
     private int MY_DATA_CHECK_CODE = 0;
     private EditText et_search;
     private Dialog dialog_filter = null;
-    private CardView llSearch;
+    //private CardView llSearch;
     private Button btnCategories, btnLocation;
     private LinearLayoutManager layoutManager;
     private OnLoadMoreListener mOnLoadMoreListener;
@@ -175,7 +175,7 @@ public class HomeFragment extends Fragment {
         }
         ((TitleMain) getContext()).FragName("خانه");
         Application.myAds = 1;
-        llSearch.setVisibility(View.VISIBLE);
+        //llSearch.setVisibility(View.VISIBLE);
         return rootView;
     }
 
@@ -218,14 +218,14 @@ public class HomeFragment extends Fragment {
     }
 
     public void DeclareElements() {
-        llSearch = rootView.findViewById(R.id.ll_search);
+        //llSearch = rootView.findViewById(R.id.ll_search);
         swipeContainer = rootView.findViewById(R.id.swipeContainer);
         pb = rootView.findViewById(R.id.pb);
         rv = rootView.findViewById(R.id.rv_paye);
-        rv.addItemDecoration(new ItemDecorationAlbumColumns(getActivity(), 0));
         rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
+        rv.addItemDecoration(new ItemDecorationAlbumColumns(getActivity(), ItemDecorationAlbumColumns.VERTICAL_LIST));
         adapter = new PayeAdapter(getActivity(), pb, Cnt, params, imageLoader);
         rv.setAdapter(adapter);
 
@@ -349,12 +349,7 @@ public class HomeFragment extends Fragment {
             HSH.dialog(dialog_filter);
             dialog_filter.show();
             Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    HSH.display(getActivity(), ll_dialog);
-                }
-            }, 50);
+            handler.postDelayed(() -> HSH.display(getActivity(), ll_dialog), 50);
         } catch (Exception e) {
         }
     }

@@ -12,14 +12,14 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppBar"
-        android:layout_marginTop="@dimen/dp16">
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical"
+        android:theme="@style/AppBar">
         <!--"@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:theme="@style/AppBar"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways">
             <!--android:theme="@style/ThemeOverlay.AppCompat.ActionBar"-->

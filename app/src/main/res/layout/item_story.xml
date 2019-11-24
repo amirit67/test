@@ -12,7 +12,7 @@
         android:layout_height="90dp"
         android:gravity="center"
         android:layoutDirection="ltr"
-        app:status="loading"
+        app:status="unclicked"
         app:start_color="@color/white"
         app:end_color="@color/black"
         android:src="@mipmap/ic_paye"/>

@@ -74,7 +74,7 @@ public class PersonAddedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return (null != feed ? feed.size() : 0);
+        return (null != feed ? 3 : 0);
     }
 
     public void addItems(List<PayeItem> posts) {
