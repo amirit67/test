@@ -6,8 +6,7 @@
     xmlns:app="http://schemas.android.com/tools"
     android:background="#e8f1cc"
     android:layoutDirection="ltr"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/dp60">
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/btn_location"
