@@ -10,6 +10,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/fragment_home">
 
+
     <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/pb"
         android:layout_width="wrap_content"
@@ -42,7 +43,7 @@
             android:clipToPadding="false"
             android:divider="@null"
             android:dividerHeight="2dp"
-            android:fadingEdgeLength="50dp"
+            android:fadingEdgeLength="5dp"
             android:headerDividersEnabled="false"
             android:listSelector="@android:color/transparent"
             android:requiresFadingEdge="vertical"

@@ -19,7 +19,7 @@ public class AsynctaskGetPost {
 
     IWebservice delegate;
     private Activity ac;
-    private Map<String, String> params = new HashMap<>();
+    private Map<String, String> params;
 
     public AsynctaskGetPost(Activity ac,
                             Map<String, String> params,
