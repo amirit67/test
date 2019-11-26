@@ -48,7 +48,6 @@ import ir.payebash.Classes.BaseFragment;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
 import ir.payebash.Classes.PermissionHandler;
-import ir.payebash.DI.DaggerMainComponent;
 import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
@@ -89,10 +88,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-            DaggerMainComponent.builder()
-                    .imageLoaderMoudle(new ImageLoaderMoudle(getActivity()))
-                    .build()
-                    .Inject(this);
+            Application.getComponent().Inject(this);
             //component = Application.get((AppCompatActivity) getActivity()).getComponent();
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(GOOGLE_CLIENT_ID)

@@ -1,6 +1,5 @@
 package ir.payebash.DI;
 
-import android.app.Application;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.FieldNamingPolicy;
@@ -10,11 +9,16 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import ir.payebash.Application;
+import ir.payebash.BuildConfig;
 import ir.payebash.Interfaces.ApiInterface;
+import ir.payebash.Interfaces.FireBaseMessagingInteface;
+import ir.payebash.R;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -28,11 +32,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 @Module
 public class NetModule {
-    String mBaseUrl;
     String fbToken;
 
-    public NetModule(String mBaseUrl) {
-        this.mBaseUrl = mBaseUrl;
+    public NetModule() {
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
@@ -74,8 +76,13 @@ public class NetModule {
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .header("Authorization",
                             "")
-                    .header("fbToken",
-                            fbToken)
+                    .header(Application.resources.getString(R.string.UserId),
+                            Application.preferences.getString(Application.resources.getString(R.string.UserId), "0000"))
+                    .header(Application.resources.getString(R.string.app_name_en),
+                            Application.resources.getString(R.string.Authorization)
+                                    + Application.resources.getString(R.string.b).toUpperCase())
+                   /* .header("fbToken",
+                            fbToken)*/
                     /*.header(BuildConfig.UserId,
                             Application.getInstance().getPreferences().getString(BuildConfig.UserId, ""))*/;
             Request request = requestBuilder.build();
@@ -93,9 +100,42 @@ public class NetModule {
 
     @Provides
     @Singleton
+    /*@Named("BaseUrl")*/
     Retrofit provideRetrofit(OkHttpClient okHttpClient) {
+        return retrofit(okHttpClient);
+    }
+
+   /* @Provides
+    @Singleton
+    @Named("SendMessageUrl")
+    Retrofit provideRetrofitSendMessage(OkHttpClient okHttpClient) {
+        return retrofit(okHttpClient);
+    }
+
+    @Provides
+    @Singleton
+    @Named("SubscribeUrl")
+    Retrofit provideRetrofitSubscribe(OkHttpClient okHttpClient) {
+        return retrofit(okHttpClient);
+    }
+
+    @Provides
+    @Singleton
+    @Named("BirthDayUrl")
+    Retrofit provideRetrofitBirthDay(OkHttpClient okHttpClient) {
+        return retrofit(okHttpClient);
+    }
+
+    @Provides
+    @Singleton
+    @Named("GooglePlusUrl")
+    Retrofit provideRetrofitGooglePlus(OkHttpClient okHttpClient) {
+        return retrofit(okHttpClient);
+    }*/
+
+    private Retrofit retrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl(mBaseUrl)
+                .baseUrl(BuildConfig.BaseUrl)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -104,9 +144,34 @@ public class NetModule {
                 .build();
     }
 
+
     @Provides
     @Singleton
-    ApiInterface provideApiInterface(Retrofit retrofit) {
+    ApiInterface provideApiInterface(@Named("BaseUrl")  Retrofit retrofit) {
         return retrofit.create(ApiInterface.class);
+    }
+
+    @Provides
+    @Singleton
+    FireBaseMessagingInteface.ISendMessage provideISendMessageInterface(@Named("SendMessageUrl") Retrofit retrofit) {
+        return retrofit.create(FireBaseMessagingInteface.ISendMessage.class);
+    }
+
+    @Provides
+    @Singleton
+    FireBaseMessagingInteface.ISubscribe provideISubscribeInterface(@Named("SubscribeUrl") Retrofit retrofit) {
+        return retrofit.create(FireBaseMessagingInteface.ISubscribe.class);
+    }
+
+    @Provides
+    @Singleton
+    FireBaseMessagingInteface.IBirthDay provideIBirthDayInterface(@Named("BirthDayUrl") Retrofit retrofit) {
+        return retrofit.create(FireBaseMessagingInteface.IBirthDay.class);
+    }
+
+    @Provides
+    @Singleton
+    FireBaseMessagingInteface.IGooglePlus provideIGooglePlusInterface(@Named("GooglePlusUrl") Retrofit retrofit) {
+        return retrofit.create(FireBaseMessagingInteface.IGooglePlus.class);
     }
 }

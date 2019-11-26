@@ -26,10 +26,14 @@ import java.util.Map;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import javax.inject.Inject;
+
 import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Activities.ViewPagerActivity;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
+import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.Fragments.SearchFragment;
 import ir.payebash.Holders.PayeHolder;
 import ir.payebash.Models.PayeItem;
@@ -43,23 +47,20 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int VIEW_TYPE_ITEM = 1;
     //private final int VIEW_TYPE_LOADING = 2;
+    @Inject
     ImageLoader imageLoader;
     private List<PayeItem> feed = new ArrayList<>();
     //public List<PayeItem> Tempfeed = new ArrayList<>();
-    private ProgressWheel pb;
-    private int Cnt;
     private Map<String, String> params;
     //private Map<Integer, LinearLayout> details = new HashMap<>();
     //private int s = 0;
     private SearchFragment fragobj = null;
     private Context mContext;
 
-    public PayeAdapter(Context context, ProgressWheel pb, int Cnt, Map<String, String> params, ImageLoader imageLoader) {
+    public PayeAdapter(Context context, Map<String, String> params) {
         this.mContext = context;
-        this.pb = pb;
-        this.Cnt = Cnt;
         this.params = params;
-        this.imageLoader = imageLoader;
+        Application.getComponent().Inject(this);
     }
 
     @Override
@@ -233,10 +234,13 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tagView.setOnClickListener(v -> {
                 //details.clear();
                 //pb.setVisibility(View.VISIBLE);
-                Cnt = 0;
+
+
+
+                /*Cnt = 0;
                 params.clear();
                 params.put("ContentSearch", tagView.getText().toString().replace("#", "").trim());
-                params.put(mContext.getString(R.string.Skip), String.valueOf(Cnt));
+                params.put(mContext.getString(R.string.Skip), String.valueOf(Cnt));*/
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("HashMap", (Serializable) params);

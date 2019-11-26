@@ -55,8 +55,6 @@ import ir.payebash.Classes.BaseActivity;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
 import ir.payebash.Classes.PermissionHandler;
-import ir.payebash.DI.DaggerMainComponent;
-import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Models.CustomGallery;
@@ -144,10 +142,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_post);
-        DaggerMainComponent.builder()
-                .imageLoaderMoudle(new ImageLoaderMoudle(this))
-                .build()
-                .Inject(this);
+        Application.getComponent().Inject(this);
         dialog = HSH.onProgress_Dialog(UpdatePostActivity.this, "لطفا شکیبا باشید ...");
         dialog.setCancelable(true);
         jCal = new Roozh(); // ایجاد یک نمونه از کلاس تبدیل تاریخ

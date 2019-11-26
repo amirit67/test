@@ -26,8 +26,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import ir.payebash.Adapters.PayeAdapter;
 import ir.payebash.Application;
-import ir.payebash.DI.DaggerMainComponent;
-import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.Models.PayeItem;
 import ir.payebash.R;
@@ -99,10 +97,7 @@ public class EventsWantedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        DaggerMainComponent.builder()
-                .imageLoaderMoudle(new ImageLoaderMoudle(getActivity()))
-                .build()
-                .Inject(this);
+        Application.getComponent().Inject(this);
         DeclareElements();
 
         return rootView;
@@ -115,7 +110,7 @@ public class EventsWantedFragment extends Fragment {
         rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
-        adapter = new PayeAdapter(getActivity(), pb, 0, params, imageLoader);
+        adapter = new PayeAdapter(getActivity(), params);
         rv.setAdapter(adapter);
     }
 }

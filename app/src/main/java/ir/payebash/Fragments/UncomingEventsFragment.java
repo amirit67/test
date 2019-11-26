@@ -24,8 +24,6 @@ import ir.payebash.Adapters.PayeAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
-import ir.payebash.DI.DaggerMainComponent;
-import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.OnLoadMoreListener;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
@@ -71,10 +69,7 @@ public class UncomingEventsFragment extends Fragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_home, container, false);
             ac = getActivity();
-            DaggerMainComponent.builder()
-                    .imageLoaderMoudle(new ImageLoaderMoudle(getActivity()))
-                    .build()
-                    .Inject(this);
+            Application.getComponent().Inject(this);
             DeclareElements();
             params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
             params.put(getString(R.string.Skip), String.valueOf(Cnt));
@@ -161,7 +156,7 @@ public class UncomingEventsFragment extends Fragment {
         rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
-        adapter = new PayeAdapter(getActivity(), pb, Cnt, params, imageLoader);
+        adapter = new PayeAdapter(getActivity(), params);
         rv.setAdapter(adapter);
     }
 

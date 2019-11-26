@@ -67,8 +67,6 @@ import ir.payebash.Adapters.CommentsAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
-import ir.payebash.DI.DaggerMainComponent;
-import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Models.CommentModel;
@@ -84,6 +82,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class PostDetailsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -96,6 +95,8 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     ImageLoader imageLoader;
     @Inject
     DisplayImageOptions options;
+    @Inject
+    Retrofit retrofit;
     private CollapsingToolbarLayout i;
     private AppBarLayout appBar;
     private LinearLayout ll_advertisdetails;
@@ -109,7 +110,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     private PayeDetailsModel result;
     private ProgressWheel cpv;
     private TagLayoutImageView ti;
-    private RecyclerView rv_comment;
+    private RecyclerView rvComment;
     private CommentsAdapter adapter;
     private List<CommentModel> Commentfeed = new ArrayList<>();
 
@@ -162,12 +163,12 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         btnBeup.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
 
-        rv_comment = findViewById(R.id.rv_comment);
-        rv_comment.setHasFixedSize(true);
+        rvComment = findViewById(R.id.rv_comment);
+        rvComment.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(PostDetailsActivity.this);
-        rv_comment.setLayoutManager(layoutManager);
+        rvComment.setLayoutManager(layoutManager);
         adapter = new CommentsAdapter(PostDetailsActivity.this, Commentfeed, imageLoader);
-        rv_comment.setAdapter(adapter);
+        rvComment.setAdapter(adapter);
     }
 
     @Override
@@ -175,10 +176,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         try {
             setContentView(R.layout.activity_post_details);
-            DaggerMainComponent.builder()
-                    .imageLoaderMoudle(new ImageLoaderMoudle(this))
-                    .build()
-                    .Inject(this);
+            Application.getComponent().Inject(this);
             try {
                 fFeed = (PayeItem) getIntent().getExtras().getSerializable("feedItem");
                 if (fFeed == null) {
@@ -301,9 +299,8 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     public void AdvertisementDetails() {
         Map<String, String> params = new HashMap<>();
         params.put(getString(R.string.PostId), fFeed.getPostId());
-        params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0000"));
         Call<PayeDetailsModel> call =
-                ApiClient.getClient().create(ApiInterface.class).GetPostDetails(params);
+                retrofit.create(ApiInterface.class).GetPostDetails(params);
         call.enqueue(new Callback<PayeDetailsModel>() {
             @Override
             public void onResponse
@@ -769,7 +766,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                             for (CommentModel m : response.body())
                                 Commentfeed.add(m);
                             adapter.notifyDataSetChanged();
-                            rv_comment.scrollToPosition(adapter.getItemCount());
+                            rvComment.scrollToPosition(adapter.getItemCount());
                         }
                     } catch (Exception e) {
                     }
@@ -1219,7 +1216,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         }
                     });
                 }
-                if (result.getSoroosh().length() > 4) {
+               /* if (result.getSoroosh().length() > 4) {
                     txt_soroosh.setVisibility(View.VISIBLE);
                     txt_soroosh.setOnClickListener(view -> {
                         try {
@@ -1235,9 +1232,9 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         } catch (Exception e) {
                         }
                     });
-                }
+                }*/
 
-                if (result.getTelegram().length() > 4) {
+                /*if (result.getTelegram().length() > 4) {
                     txt_telegram.setVisibility(View.VISIBLE);
                     txt_telegram.setOnClickListener(view -> {
                         try {
@@ -1248,9 +1245,9 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                     Uri.parse("https://web.telegram.org/#/im?p=@" + result.getTelegram())));
                         }
                     });
-                }
+                }*/
 
-                try {
+               /* try {
                     if (result.getInstagram().length() > 4) {
                         txt_instagram.setVisibility(View.VISIBLE);
                         txt_instagram.setOnClickListener(view -> {
@@ -1267,7 +1264,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     }
 
                 } catch (Exception e) {
-                }
+                }*/
 
                 if (result.getGmail().length() > 4) {
                     txt_gmail.setVisibility(View.VISIBLE);

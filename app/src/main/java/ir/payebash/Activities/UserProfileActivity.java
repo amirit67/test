@@ -29,8 +29,6 @@ import androidx.appcompat.widget.Toolbar;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
-import ir.payebash.DI.DaggerMainComponent;
-import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.DI.MainComponent;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
@@ -84,19 +82,12 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         btnInstagram.setOnClickListener(this);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         assignViews();
-        Toolbar toolbar = findViewById(R.id.toolbar_top);
-        setSupportActionBar(toolbar);
-        setTitle("");
-        DaggerMainComponent.builder()
-                .imageLoaderMoudle(new ImageLoaderMoudle(this))
-                .build()
-                .Inject(this);
+        Application.getComponent().Inject(this);
 
         try {
             Cursor cr = Application.database.rawQuery("SELECT IsMine from RecentVisit WHERE Id='" + getIntent().getExtras().getString("PostId") + "' and IsMine = 'true'", null);

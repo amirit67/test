@@ -36,8 +36,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import ir.payebash.Activities.ViewPagerActivity;
 import ir.payebash.Application;
-import ir.payebash.DI.DaggerMainComponent;
-import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.DI.MainComponent;
 import ir.payebash.Models.PayeItem;
 import ir.payebash.R;
@@ -67,10 +65,7 @@ public class SlideShowFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.item_slideshow, container, false);
-        DaggerMainComponent.builder()
-                .imageLoaderMoudle(new ImageLoaderMoudle(getActivity()))
-                .build()
-                .Inject(this);
+        Application.getComponent().Inject(this);
         if (savedInstanceState != null) {
             if (asset == null && savedInstanceState.containsKey(BUNDLE_ASSET)) {
                 asset = savedInstanceState.getString(BUNDLE_ASSET);

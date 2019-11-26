@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Activities.ViewPagerActivity;
 import ir.payebash.Application;
@@ -39,13 +41,14 @@ import ir.payebash.utils.roundedimageview.InsLoadingView;
 public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int VIEW_TYPE_ITEM = 1;
+    @Inject
     ImageLoader imageLoader;
     private List<PayeItem> feed = new ArrayList<>();
     private Context mContext;
 
-    public StoryAdapter(Context context, ImageLoader imageLoader) {
+    public StoryAdapter(Context context) {
         this.mContext = context;
-        this.imageLoader = imageLoader;
+        Application.getComponent().Inject(this);
     }
 
     @Override

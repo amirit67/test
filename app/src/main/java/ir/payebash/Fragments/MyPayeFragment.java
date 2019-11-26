@@ -29,8 +29,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import ir.payebash.Adapters.PayeAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
-import ir.payebash.DI.DaggerMainComponent;
-import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.OnLoadMoreListener;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
@@ -110,10 +108,7 @@ public class MyPayeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        DaggerMainComponent.builder()
-                .imageLoaderMoudle(new ImageLoaderMoudle(getActivity()))
-                .build()
-                .Inject(this);
+        Application.getComponent().Inject(this);
         DeclareElements();
         bundle = getArguments();
         if (null != bundle) {
@@ -201,7 +196,7 @@ public class MyPayeFragment extends Fragment {
         rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
-        adapter = new PayeAdapter(getActivity(), pb, Cnt, params, imageLoader);
+        adapter = new PayeAdapter(getActivity(), params);
         rv.setAdapter(adapter);
     }
 

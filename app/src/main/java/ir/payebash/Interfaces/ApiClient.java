@@ -19,6 +19,7 @@ package ir.payebash.Interfaces;
 import java.io.IOException;
 
 import ir.payebash.Application;
+import ir.payebash.BuildConfig;
 import ir.payebash.R;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -31,7 +32,7 @@ public class ApiClient {
     public static final String BASE_URL =
             Application.preferences.getString(
                     Application.resources.getString(R.string.baseUrl),
-                    Application.resources.getString(R.string.url)
+                    BuildConfig.BaseUrl
             );
     private static Retrofit retrofit = null;
     private static Retrofit retrofit2 = null;
@@ -42,20 +43,17 @@ public class ApiClient {
     public static Retrofit getClient() {
         if (retrofit == null) {
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-            httpClient.addInterceptor(new Interceptor() {
-                @Override
-                public okhttp3.Response intercept(Chain chain) throws IOException {
-                    Request original = chain.request();
-                    // Request customization: add request headers
-                    Request.Builder requestBuilder = original.newBuilder()
-                            .header(Application.resources.getString(R.string.app_name_en),
-                                    Application.resources.getString(R.string.Authorization)
-                                            + Application.resources.getString(R.string.b).toUpperCase())
-                            .header(String.valueOf(Application.myAds),
-                                    String.valueOf(Application.myAds));
-                    Request request = requestBuilder.build();
-                    return chain.proceed(request);
-                }
+            httpClient.addInterceptor(chain -> {
+                Request original = chain.request();
+                // Request customization: add request headers
+                Request.Builder requestBuilder = original.newBuilder()
+                        .header(Application.resources.getString(R.string.app_name_en),
+                                Application.resources.getString(R.string.Authorization)
+                                        + Application.resources.getString(R.string.b).toUpperCase())
+                        .header(String.valueOf(Application.myAds),
+                                String.valueOf(Application.myAds));
+                Request request = requestBuilder.build();
+                return chain.proceed(request);
             });
             OkHttpClient client = httpClient.build();
 

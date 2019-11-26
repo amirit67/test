@@ -12,10 +12,13 @@ import android.view.animation.AnimationUtils;
 import java.io.File;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import ir.payebash.Classes.DataBaseHelper;
+import ir.payebash.DI.AppModule;
 import ir.payebash.DI.DaggerMainComponent;
 import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.DI.MainComponent;
+import ir.payebash.DI.NetModule;
 
 public class Application extends android.app.Application {
 
@@ -26,15 +29,23 @@ public class Application extends android.app.Application {
     public static int myAds = 42907631;
     public static Resources resources;
     public static Activity activity;
-    private MainComponent component;
+    private static MainComponent component;
 
     public static Application get(AppCompatActivity activity) {
         return (Application) activity.getApplication();
     }
 
-    public MainComponent getComponent() {
+    public static MainComponent getComponent() {
         return component;
     }
+
+   /* @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        MainComponent appComponent = DaggerMainComponent.builder().application(this).build();
+        appComponent.inject(this);
+
+        return appComponent;
+    }*/
 
     @Override
     public void onCreate() {
@@ -43,7 +54,9 @@ public class Application extends android.app.Application {
         resources = getResources();
 
         component = DaggerMainComponent.builder()
+                .appModule(new AppModule(this))
                 .imageLoaderMoudle(new ImageLoaderMoudle(this))
+                .netModule(new NetModule())
                 .build();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -53,10 +66,10 @@ public class Application extends android.app.Application {
             new DataBaseHelper(getApplicationContext()) {
                 @Override
                 public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-                    String DB_PATH = Environment.getDataDirectory() + "/data/" + getBaseContext().getPackageName() + "/databases/Paye.db";
+                    /*String DB_PATH = Environment.getDataDirectory() + "/data/" + getBaseContext().getPackageName() + "/databases/Paye.db";
                     String myPath = DB_PATH;
                     SQLiteDatabase.deleteDatabase(new File(myPath));
-                    getBaseContext().deleteDatabase(Environment.getDataDirectory() + "/data/" + getBaseContext().getPackageName() + "/databases/Paye.db");
+                    getBaseContext().deleteDatabase(Environment.getDataDirectory() + "/data/" + getBaseContext().getPackageName() + "/databases/Paye.db");*/
                 }
 
                 @Override
