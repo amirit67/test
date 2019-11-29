@@ -5,11 +5,19 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "ir.payebash"
-        minSdkVersion 16
+        minSdkVersion 17
 
         versionCode 3
         versionName "1.0.0"
+        multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
 
         buildConfigField "String", "BaseUrl", "\"http://paye.ariaapps.ir\""
     }
@@ -54,6 +62,8 @@ dependencies {
     //compile 'com.google.firebase:firebase-auth:11.6.2'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
@@ -69,15 +79,19 @@ dependencies {
     implementation 'org.parceler:parceler-api:1.1.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.22'
 
-    /*implementation 'com.google.dagger:dagger-android:2.22'
+    implementation 'com.google.dagger:dagger-android:2.22'
     implementation 'com.google.dagger:dagger-android-support:2.22'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.22'*/
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.22'
+
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
 
     implementation 'com.pnikosis:materialish-progress:1.7'
     implementation 'com.github.smarteist:autoimageslider:1.3.2'
 
     /*implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'*/
+    implementation 'com.github.IslamKhSh:CardSlider:0.4'
 
     implementation files('libs/ZarinPal-Android-0.1.0.jar')
     implementation 'com.jaredrummler:animated-svg-view:1.0.5'

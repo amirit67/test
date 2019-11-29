@@ -91,13 +91,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 jArray.put(jGroup);
                 Cursor cr = Application.database.rawQuery("SELECT Id from RecentVisit WHERE Id='" + data.get("id").trim() + "' and IsMine = 'true'", null);
                 if (cr.getCount() < 1) {
-                    String query = "INSERT INTO RecentVisit(Id,data,IsFavorite,IsWanted) VALUES " +
-                            "('" + data.get("id").trim() + "','"
-                            + jArray + "','false','true') ";
+                    String query = "INSERT INTO RecentVisit(Id,IsFavorite,IsWanted) VALUES " +
+                            "('" + data.get("id").trim() + "','false','true') ";
                     Application.database.execSQL(query);
                 } else {
                     String query = "UPDATE RecentVisit SET " +
-                            "data='" + jArray + "' , IsWanted = 'true' " +
+                            "IsWanted = 'true' " +
                             "WHERE Id = '" + data.get("id").trim() + "' ";
                     Application.database.execSQL(query);
                 }

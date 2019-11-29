@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.github.islamkhsh.CardSliderViewPager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -58,11 +59,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.moslem_deris.apps.zarinpal.PaymentBuilder;
 import ir.moslem_deris.apps.zarinpal.enums.ZarinPalError;
 import ir.moslem_deris.apps.zarinpal.listeners.OnPaymentListener;
 import ir.moslem_deris.apps.zarinpal.models.Payment;
+import ir.payebash.Adapters.BannerAdapter;
 import ir.payebash.Adapters.CommentsAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
@@ -196,9 +199,9 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             mMapView = findViewById(R.id.map);
             mMapView.onCreate(savedInstanceState);
 
-            float heightDp = (float) (getResources().getDisplayMetrics().heightPixels / 2.5);
+            /*float heightDp = (float) (getResources().getDisplayMetrics().heightPixels / 2);
             CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) appBar.getLayoutParams();
-            lp.height = (int) heightDp;
+            lp.height = (int) heightDp;*/
             AdvertisementDetails();
             try {
                 Cursor cr = Application.database.rawQuery("SELECT * from RecentVisit WHERE Id='" + fFeed.getPostId() + "'", null);
@@ -402,40 +405,13 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     cpv.setVisibility(View.GONE);
                     /////////////////////////////////////////////////////////////////////////
                     try {
+                        ArrayList<String> banners = new ArrayList<>();
                         String[] temp = result.getImages().split(",");
-                        if (temp.length > 0 && !temp[0].equals("null") && !temp[0].equals("")) {
-                        } else {
-                            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) appBar.getLayoutParams();
-                            lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                            lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                            //pager.setVisibility(View.GONE);
-                            appBar.setLayoutParams(lp);
-                        }
-                        final PayeItem item = new PayeItem();
-                        item.setImages(result.getImages());
-                        try {
-                            /*for (int i = 0; i < item.getImages().split(",").length; i++) {
-                                TextSliderView textSliderView = new TextSliderView(PostDetailsActivity.this);
-                                // initialize a SliderLayout
-                                textSliderView
-                                        //.description(name)
-                                        .image(getString(R.string.image) + item.getImages().split(",")[i] + ".jpg")
-                                        .setScaleType(BaseSliderView.ScaleType.CenterCrop);
+                        for (int i = 0; i < temp.length; i++) {
 
-                                *//*textSliderView.bundle(new Bundle());
-                                textSliderView.getBundle()
-                                        .putString("extra",name);*//*
-
-                                pager.addSlider(textSliderView);
-                                textSliderView.setOnSliderClickListener(slider -> {
-                                    final Bundle bundle = new Bundle();
-                                    Intent i1 = new Intent(PostDetailsActivity.this, ViewPagerActivity.class);
-                                    bundle.putSerializable("feed", item);
-                                    i1.putExtras(bundle);
-                                    startActivity(i1);
-                                });
-                            }*/
-                        } catch (Exception e) {
+                            banners.add(getString(R.string.image) + temp[i] + ".jpg");
+                            CardSliderViewPager cardSliderViewPager = findViewById(R.id.pager);
+                            cardSliderViewPager.setAdapter(new BannerAdapter(banners, imageLoader));
                         }
 
                     } catch (Exception e) {
@@ -864,7 +840,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 } else {
                     InsertPaymentAsynkTask(refID);
                     String query = "Update RecentVisit set IsSuccessed = 'false' " +
-                            "WHERE data LIKE '%" + fFeed.getPostId() + "%' ";
+                            "WHERE Id LIKE '%" + fFeed.getPostId() + "%' ";
                     Application.database.execSQL(query);
                 }
             }
@@ -873,7 +849,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 InsertPaymentAsynkTask(refID);
                 String query = "Update RecentVisit set IsSuccessed = 'false' " +
-                        "WHERE data LIKE '%" + fFeed.getPostId() + "%' ";
+                        "WHERE Id LIKE '%" + fFeed.getPostId() + "%' ";
                 Application.database.execSQL(query);
             }
         });
@@ -907,7 +883,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                     @Override
                                     public void onResponse(Call<Message> call, Response<Message> response) {
                                         String query = "Update RecentVisit set IsBeup = 'true' " +
-                                                "WHERE data LIKE '%" + fFeed.getPostId() + "%' ";
+                                                "WHERE Id LIKE '%" + fFeed.getPostId() + "%' ";
                                         Application.database.execSQL(query);
                                     }
 

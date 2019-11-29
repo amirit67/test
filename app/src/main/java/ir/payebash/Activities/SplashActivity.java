@@ -118,7 +118,7 @@ public class SplashActivity extends Activity {
             Cursor cr = Application.database.rawQuery("SELECT * from RecentVisit WHERE IsPaid='true' and IsSuccessed = 'false'", null);
             for (int i = 0; i < cr.getCount(); i++) {
                 cr.moveToPosition(i);
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
                 params.put(getString(R.string.PostId), cr.getString(cr.getColumnIndex("Id")));
                 params.put(getString(R.string.Amount), "1000");

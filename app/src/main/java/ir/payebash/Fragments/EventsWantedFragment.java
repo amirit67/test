@@ -60,15 +60,7 @@ public class EventsWantedFragment extends Fragment {
                     cr.moveToPosition(i);
                     postIds += cr.getString(cr.getColumnIndex("Id")) + ",";
 
-                    //JSONArray result = new JSONArray(cr.getString(cr.getColumnIndex("data")));
-                    try {
-                        /*Gson gson = new Gson();
-                        if (result != null) {
-                            PayeItem[] payeItems = gson.fromJson(result.toString(), PayeItem[].class);
-                            adapter.addItems(Arrays.asList(payeItems));
-                        }*/
-                    } catch (Exception e) {
-                    }
+
                 } catch (Exception e) {
                 }
             }

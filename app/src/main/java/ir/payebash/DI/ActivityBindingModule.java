@@ -2,6 +2,7 @@ package ir.payebash.DI;
 
 
 import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
 import ir.payebash.asynktask.AsynctaskGetPost;
 
 /**
@@ -17,8 +18,8 @@ import ir.payebash.asynktask.AsynctaskGetPost;
 @Module
 public abstract class ActivityBindingModule {
 
-    /*//@FragmentScoped
-    @ContributesAndroidInjector(modules = AsynctaskGetPost.class)
+    //@FragmentScoped
+    /*@ContributesAndroidInjector(modules = AsynctaskGetPost.class)
     abstract AsynctaskGetPost timePostingFragment();*/
 }
 

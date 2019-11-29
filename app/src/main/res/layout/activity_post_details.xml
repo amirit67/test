@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    android:background="@android:color/white"
+    android:background="@color/colorAccent"
     android:layoutDirection="ltr"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -22,49 +22,57 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="@android:color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:layout_height="325dp"
+            android:elevation="0dp"
+            app:contentScrim="?attr/colorAccent"
+            android:background="@color/colorAccent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways"
+            app:titleEnabled="false"
+            android:nestedScrollingEnabled="true"
+            android:layout_gravity="center"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
-            <!--<ir.payebash.SliderTypes.SliderLayout
-                android:id="@+id/pager"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignBottom="@+id/rg_indicator"
-                android:layout_alignWithParentIfMissing="true"
-                app:layout_collapseMode="parallax">
+                android:layout_height="350dp"
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax"
+                android:layout_marginTop="@dimen/dp60"
+                android:layout_below="@+id/toolbar">
 
-            </ir.payebash.SliderTypes.SliderLayout>
+                <com.github.islamkhsh.CardSliderViewPager
+                    android:id="@+id/pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    app:auto_slide_time="-1"
+                    app:cardSlider_baseShadow="@dimen/dp8"
+                    app:cardSlider_cardCornerRadius="5dp"
+                    app:cardSlider_otherPagesWidth="6dp"
+                    app:cardSlider_pageMargin="8dp"
+                    app:cardSlider_smallScaleFactor="0.6"
+                    android:layout_gravity="center"
+                    app:cardSlider_indicator="@id/indicator"/>
 
-            <ir.payebash.Indicators.PagerIndicator
-                android:id="@+id/indicator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
-                android:gravity="center_horizontal|bottom"
-                android:padding="10dip" />-->
+                <com.github.islamkhsh.CardSliderIndicator
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="25dp"
+                    android:id="@+id/indicator"
+                    android:layout_gravity="center_horizontal"
+                    app:indicatorsToShow="5" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_gravity="top"
-                android:background="@drawable/item_devider_vertical" />
+            </LinearLayout>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:contentInsetEnd="0dp"
-                android:contentInsetLeft="0dp"
-                android:contentInsetRight="0dp"
-                android:contentInsetStart="0dp"
-                android:gravity="center_vertical"
-                android:title=""
                 app:contentInsetEnd="0dp"
                 app:contentInsetLeft="0dp"
                 app:contentInsetRight="0dp"
                 app:contentInsetStart="0dp"
                 app:layout_collapseMode="pin"
+                android:layout_gravity="top"
+                android:background="#D9EEF2F6"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <androidx.appcompat.widget.AppCompatImageButton
@@ -117,11 +125,19 @@
 
             </androidx.appcompat.widget.Toolbar>
 
+           <!-- <TextView
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="top"
+                android:background="@drawable/item_devider_vertical" />-->
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_post_details" />
+    <include
+        android:id="@+id/include3"
+        layout="@layout/content_post_details" />
 
     <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/cpv"

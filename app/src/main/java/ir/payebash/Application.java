@@ -13,6 +13,8 @@ import java.io.File;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
 import ir.payebash.Classes.DataBaseHelper;
 import ir.payebash.DI.AppModule;
 import ir.payebash.DI.DaggerMainComponent;
@@ -39,9 +41,10 @@ public class Application extends android.app.Application {
         return component;
     }
 
-   /* @Override
+    /*@Override
     protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        MainComponent appComponent = DaggerMainComponent.builder().application(this).build();
+        MainComponent appComponent = DaggerMainComponent.builder()
+                .application(this).build();
         appComponent.inject(this);
 
         return appComponent;

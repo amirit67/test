@@ -1,17 +1,19 @@
 package ir.payebash.DI;
 
-import android.app.Application;
-
 import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
+import dagger.android.support.AndroidSupportInjectionModule;
 import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Activities.PostRegisterActivity;
 import ir.payebash.Activities.UpdatePostActivity;
 import ir.payebash.Activities.UserProfileActivity;
 import ir.payebash.Adapters.PayeAdapter;
 import ir.payebash.Adapters.StoryAdapter;
+import ir.payebash.Application;
 import ir.payebash.Fragments.EventsWantedFragment;
 import ir.payebash.Fragments.HomeFragment;
 import ir.payebash.Fragments.MyPayeFragment;
@@ -63,12 +65,11 @@ public interface MainComponent {
     void Inject(SlideShowFragment mainActivity);
 }
 
-
 /*
 @Singleton
 @Component(modules = {
         ActivityBindingModule.class,
-        AndroidSupportInjectionModule.class, ImageLoaderMoudle.class, NetModule.class})
+        AndroidSupportInjectionModule.class, AppModule.class, ImageLoaderMoudle.class, NetModule.class})
 
 public interface MainComponent extends AndroidInjector<DaggerApplication> {
 
