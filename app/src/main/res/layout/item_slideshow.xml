@@ -6,8 +6,10 @@
     android:layoutDirection="ltr"
     android:orientation="vertical">
 
-    <ImageView
+    <ir.payebash.utils.roundedimageview.RoundedImageView
         android:id="@+id/imgView"
+        app:riv_corner_radius="10dp"
+        android:src="@drawable/bg_gradient"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
