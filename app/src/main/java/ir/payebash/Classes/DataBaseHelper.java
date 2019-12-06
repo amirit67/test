@@ -39,6 +39,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
             System.out.println(" Database exists.");
         } else {
             this.getReadableDatabase();
+            this.close();
             try {
                 copydatabase();
             } catch (IOException e) {

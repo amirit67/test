@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="8dp">
+
+
+        <ir.payebash.Moudle.CircleImageView
+            android:id="@+id/img_event"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="@dimen/dp8"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/example"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="right"
+            android:text="پایه ای بریم سینما؟"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintBottom_toTopOf="@+id/txt_host"
+            app:layout_constraintEnd_toStartOf="@+id/img_event"
+            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintTop_toTopOf="@+id/img_event" />
+
+        <TextView
+            android:id="@+id/txt_host"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/yekanlight"
+            android:gravity="right"
+            android:text="میزبان امیر خدابنده"
+            android:textColor="#969393"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_event"
+            app:layout_constraintEnd_toEndOf="@+id/txt_title"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:cardCornerRadius="@dimen/dp8"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView35"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView36"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#f8f8f8"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp6"
+                    android:paddingTop="@dimen/dp8"
+                    android:paddingRight="@dimen/dp6"
+                    android:paddingBottom="@dimen/dp8"
+                    android:text="20 روز"
+                    android:textSize="@dimen/sp12" />
+
+                <TextView
+                    android:id="@+id/textView37"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#e7e7e7"
+                    android:fontFamily="@font/yekanlight"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp6"
+                    android:paddingRight="@dimen/dp6"
+                    android:textSize="@dimen/sp12"
+                    android:text="دیگه" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/textView35"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#f8f8f8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/txt_host"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_event"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

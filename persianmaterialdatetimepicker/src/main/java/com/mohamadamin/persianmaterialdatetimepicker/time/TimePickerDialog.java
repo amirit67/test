@@ -292,7 +292,7 @@ public class TimePickerDialog extends DialogFragment implements OnValueSelectedL
             }
         });
         mOkButton.setOnKeyListener(keyboardListener);
-        mOkButton.setTypeface(TypefaceHelper.get(getDialog().getContext(),"iransansmedium"));
+        mOkButton.setTypeface(TypefaceHelper.get(getDialog().getContext(),"yekanmedium"));
 
         Button mCancelButton = (Button) view.findViewById(R.id.cancel);
         mCancelButton.setOnClickListener(new OnClickListener() {
@@ -302,7 +302,7 @@ public class TimePickerDialog extends DialogFragment implements OnValueSelectedL
                 getDialog().cancel();
             }
         });
-        mCancelButton.setTypeface(TypefaceHelper.get(getDialog().getContext(),"iransansmedium"));
+        mCancelButton.setTypeface(TypefaceHelper.get(getDialog().getContext(),"yekanmedium"));
         mCancelButton.setVisibility(isCancelable() ? View.VISIBLE : View.GONE);
 
         // Enable or disable the AM/PM view.

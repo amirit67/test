@@ -7,7 +7,7 @@
     android:layoutDirection="ltr"
     android:orientation="vertical">
 
-    <ir.payebash.Moudle.CustomTextViewBold
+    <TextView
         android:id="@+id/txt_title_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:text="لغو"
             android:visibility="gone" />-->
 
-        <ir.payebash.Moudle.CustomTextViewBold
+        <TextView
             android:id="@+id/btn_pay"
             style="@style/dialog_post_manage"
             android:layout_margin="4dp"
@@ -62,7 +62,7 @@
             android:text="پرداخت"
             android:visibility="gone" />
 
-        <ir.payebash.Moudle.CustomTextViewBold
+        <TextView
             android:id="@+id/btn_mobile"
             style="@style/dialog_post_manage"
             android:layout_margin="4dp"
@@ -70,14 +70,14 @@
             android:text="تایید شماره موبایل"
             android:visibility="gone" />
 
-        <ir.payebash.Moudle.CustomTextViewBold
+        <TextView
             android:id="@+id/btn_edit"
             style="@style/dialog_post_manage"
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:text="ویرایش" />
 
-        <ir.payebash.Moudle.CustomTextViewBold
+        <TextView
             android:id="@+id/btn_delete"
             style="@style/dialog_post_manage"
             android:layout_alignBottom="@+id/linearLayout4"

@@ -25,7 +25,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
-                android:fontFamily="@font/iransansmedium"
+                android:fontFamily="@font/yekanmedium"
                 android:gravity="right"
                 android:padding="5dp"
                 android:textSize="@dimen/sp12" />

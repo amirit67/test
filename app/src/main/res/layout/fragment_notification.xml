@@ -32,7 +32,7 @@
             android:layout_weight="0.4"
             android:orientation="vertical">
 
-            <ir.payebash.Moudle.CustomTextViewBold
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.35"
@@ -41,7 +41,8 @@
                 android:paddingRight="1dp"
                 android:text="اینجا میتونین بگین\nاز کدوم شهرها،\nکدوم رویداد هارو،\nبهتون اطلاع بدیم."
                 android:textColor="#113541"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:fontFamily="@font/yekanbold"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"

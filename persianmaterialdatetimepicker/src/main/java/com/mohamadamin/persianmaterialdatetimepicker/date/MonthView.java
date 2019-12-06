@@ -308,7 +308,7 @@ public abstract class MonthView extends View {
         mMonthDayLabelPaint.setAntiAlias(true);
         mMonthDayLabelPaint.setTextSize(MONTH_DAY_LABEL_TEXT_SIZE);
         mMonthDayLabelPaint.setColor(mMonthDayTextColor);
-        mMonthDayLabelPaint.setTypeface(TypefaceHelper.get(getContext(),"iransansmedium"));
+        mMonthDayLabelPaint.setTypeface(TypefaceHelper.get(getContext(),"yekanmedium"));
         mMonthDayLabelPaint.setStyle(Style.FILL);
         mMonthDayLabelPaint.setTextAlign(Align.CENTER);
         mMonthDayLabelPaint.setFakeBoldText(true);

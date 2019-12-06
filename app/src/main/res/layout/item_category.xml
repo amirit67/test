@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:fontFamily="@font/iransansmedium"
+                android:fontFamily="@font/yekanmedium"
                 android:gravity="right|center_vertical"
                 android:paddingRight="16dp"
                 android:textColor="@android:color/white"
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.6"
-            android:fontFamily="@font/iransansmedium"
+            android:fontFamily="@font/yekanmedium"
             android:textColor="@android:color/white"
             android:textSize="10sp" />
     </LinearLayout>

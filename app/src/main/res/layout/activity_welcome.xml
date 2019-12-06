@@ -37,7 +37,7 @@
                 android:layout_weight="0.25"
                 android:background="@null"
                 android:gravity="center"
-                android:fontFamily="@font/iransansbold"
+                android:fontFamily="@font/yekanbold"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/sp14" />
 
@@ -63,7 +63,7 @@
                 android:gravity="center"
                 android:text="@string/next"
                 android:textColor="@android:color/black"
-                android:fontFamily="@font/iransansbold"
+                android:fontFamily="@font/yekanbold"
                 android:textSize="@dimen/sp14" />
         </LinearLayout>
 

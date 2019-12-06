@@ -39,7 +39,7 @@
             android:padding="8dp"
             android:textAllCaps="true"
             android:textColor="@color/mdtp_white"
-            android:fontFamily="@font/iransansmedium"
+            android:fontFamily="@font/yekanmedium"
             android:background="@color/mdtp_accent_color_dark"/>
 
         <include

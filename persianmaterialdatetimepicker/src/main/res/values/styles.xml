@@ -19,7 +19,7 @@
     <style name="mdtp_time_label">
         <item name="android:textSize">@dimen/mdtp_time_label_size</item>
         <item name="android:textColor">@color/mdtp_numbers_text_color</item>
-        <item name="android:fontFamily">@font/iransansmedium</item>
+        <item name="android:fontFamily">@font/yekanmedium</item>
     </style>
 
     <style name="mdtp_ampm_label">
@@ -27,7 +27,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/mdtp_ampm_text_color</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">@font/iransansmedium</item>
+        <item name="android:fontFamily">@font/yekanmedium</item>
     </style>
 
     <style name="mdtp_ActionButton">
@@ -35,7 +35,7 @@
         <item name="android:layout_height">@dimen/mdtp_material_button_height</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:focusable">true</item>
-        <item name="android:fontFamily">@font/iransansmedium</item>
+        <item name="android:fontFamily">@font/yekanmedium</item>
     </style>
 
     <style name="mdtp_ActionButton.Text" tools:ignore="NewApi">
@@ -50,6 +50,6 @@
         <item name="android:paddingRight">@dimen/mdtp_material_button_textpadding_horizontal</item>
         <item name="android:textColor">@color/mdtp_button_color</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:fontFamily">@font/iransansmedium</item>
+        <item name="android:fontFamily">@font/yekanmedium</item>
     </style>
 </resources>

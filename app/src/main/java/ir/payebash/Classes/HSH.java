@@ -133,7 +133,7 @@ public class HSH {
 
     public static SpannableStringBuilder setTypeFace(Context cn, String s) {
         SpannableStringBuilder ssbuilder = new SpannableStringBuilder(s);
-        ssbuilder.setSpan(new CustomTypefaceSpan("font/iransansmedium.ttf", cn), 0, ssbuilder.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        ssbuilder.setSpan(new CustomTypefaceSpan("font/yekanmedium.ttf", cn), 0, ssbuilder.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         return ssbuilder;
     }
 

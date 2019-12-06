@@ -49,6 +49,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,6 +69,7 @@ import ir.moslem_deris.apps.zarinpal.listeners.OnPaymentListener;
 import ir.moslem_deris.apps.zarinpal.models.Payment;
 import ir.payebash.Adapters.BannerAdapter;
 import ir.payebash.Adapters.CommentsAdapter;
+import ir.payebash.Adapters.PersonAddedAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
@@ -81,17 +84,20 @@ import ir.payebash.Models.PostDetailsModel;
 import ir.payebash.Moudle.CircleImageView;
 import ir.payebash.Moudle.TagLayoutImageView;
 import ir.payebash.R;
+import ir.payebash.utils.RecyclerSnapHelper;
+import ir.payebash.utils.roundedimageview.OverlapRecyclerViewDecoration;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
 
 
 public class PostDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static Double latitude, longitude;
-    com.google.android.gms.maps.MapView mMapView;
+    //com.google.android.gms.maps.MapView mMapView;
     int checkid = 0;
     boolean isPush = false;
     @Inject
@@ -100,22 +106,23 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     DisplayImageOptions options;
     @Inject
     Retrofit retrofit;
+    private ConstraintLayout eventOrganizer;
     private CollapsingToolbarLayout i;
     private AppBarLayout appBar;
-    private LinearLayout ll_advertisdetails;
+    //private LinearLayout ll_advertisdetails;
     //private SliderLayout pager;
-    private Button btn_contactWays, btn_advertiser, btnBeup;
-    private EditText etComment;
-    private ImageView imgProfile;
-    private TextView toolbar_title, txt_title, txt_date, txt_report, btnMobile, btnEdit, btnDelete, btnPay;
+    private Button /*btn_contactWays,*/ btnBeup;
+    //private EditText etComment;
+    private ImageView imgProfile, btnShare, btnReport;
+    private TextView txtFullname, txt_title, txt_date/*, btnMobile, btnEdit, btnDelete, btnPay*/;
     private PayeItem fFeed;
-    private ImageButton btn_fav, btn_share, btnSendComment, back;
+    //private ImageButton /*btn_fav,*/ btnSendComment, back;
     private PayeDetailsModel result;
-    private ProgressWheel cpv;
-    private TagLayoutImageView ti;
-    private RecyclerView rvComment;
-    private CommentsAdapter adapter;
-    private List<CommentModel> Commentfeed = new ArrayList<>();
+    //private ProgressWheel cpv;
+    private RecyclerView rvGroupFriends;
+    //private RecyclerView rvComment;
+    //private CommentsAdapter adapter;
+   // private List<CommentModel> Commentfeed = new ArrayList<>();
 
     public static int getPixelValue(Context context, int dimenId) {
         Resources resources = context.getResources();
@@ -127,58 +134,58 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void DeclareElements() {
-        ll_advertisdetails = findViewById(R.id.ll_advertisdetails);
-        txt_title = findViewById(R.id.txt_title);
-        txt_date = findViewById(R.id.txt_date);
-        txt_report = findViewById(R.id.txt_report);
-        cpv = findViewById(R.id.cpv);
+        //ll_advertisdetails = findViewById(R.id.ll_advertisdetails);
+        txt_title = findViewById(R.id.txt_event_title);
+        txt_date = findViewById(R.id.txt_event_date);
+        btnReport = findViewById(R.id.btn_report);
+        /*cpv = findViewById(R.id.cpv);
 
         btnPay = findViewById(R.id.btn_pay);
         btnEdit = findViewById(R.id.btn_edit);
         btnDelete = findViewById(R.id.btn_delete);
         btnMobile = findViewById(R.id.btn_mobile);
-        btn_fav = findViewById(R.id.btn_fav);
-        btn_share = findViewById(R.id.btn_share);
-        btn_advertiser = findViewById(R.id.btn_advertiser);
-        btn_contactWays = findViewById(R.id.btn_contactWays);
-        btnSendComment = findViewById(R.id.btn_sendComment);
+        //btn_fav = findViewById(R.id.btn_fav);*/
+        btnShare = findViewById(R.id.btn_share);
+        eventOrganizer = findViewById(R.id.cl_event_organizer);
+        //btn_contactWays = findViewById(R.id.btn_contactWays);
+        /*btnSendComment = findViewById(R.id.btn_sendComment);
         back = findViewById(R.id.img_back);
 
         btnPay.setOnClickListener(this);
         btnEdit.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
         btnMobile.setOnClickListener(this);
-        btn_fav.setOnClickListener(this);
-        btn_share.setOnClickListener(this);
-        btn_advertiser.setOnClickListener(this);
-        btn_contactWays.setOnClickListener(this);
-        btnSendComment.setOnClickListener(this);
-        back.setOnClickListener(this);
-        txt_report.setOnClickListener(this);
+        //btn_fav.setOnClickListener(this);*/
+        btnShare.setOnClickListener(this);
+        eventOrganizer.setOnClickListener(this);
+        //btn_contactWays.setOnClickListener(this);
+        /*btnSendComment.setOnClickListener(this);
+        back.setOnClickListener(this);*/
+        btnReport.setOnClickListener(this);
 
-        etComment = findViewById(R.id.et_comment);
+        //etComment = findViewById(R.id.et_comment);
         appBar = findViewById(R.id.app_bar);
-        toolbar_title = findViewById(R.id.toolbar_title);
-        imgProfile = findViewById(R.id.profile_img);
+        txtFullname = findViewById(R.id.txt_fullname);
+        imgProfile = findViewById(R.id.img_profile);
         //pager = findViewById(R.id.pager);
-        ti = findViewById(R.id.tl);
-        btnBeup = findViewById(R.id.btnBeup);
+        rvGroupFriends = findViewById(R.id.rv_group_friends);
+        btnBeup = findViewById(R.id.btn_beup);
         btnBeup.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
 
-        rvComment = findViewById(R.id.rv_comment);
+        /*rvComment = findViewById(R.id.rv_comment);
         rvComment.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(PostDetailsActivity.this);
         rvComment.setLayoutManager(layoutManager);
         adapter = new CommentsAdapter(PostDetailsActivity.this, Commentfeed, imageLoader);
-        rvComment.setAdapter(adapter);
+        rvComment.setAdapter(adapter);*/
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            setContentView(R.layout.activity_post_details);
+            setContentView(R.layout.activity_post_details2);
             Application.getComponent().Inject(this);
             try {
                 fFeed = (PayeItem) getIntent().getExtras().getSerializable("feedItem");
@@ -196,8 +203,8 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
 
             DeclareElements();
 
-            mMapView = findViewById(R.id.map);
-            mMapView.onCreate(savedInstanceState);
+            /*mMapView = findViewById(R.id.map);
+            mMapView.onCreate(savedInstanceState);*/
 
             /*float heightDp = (float) (getResources().getDisplayMetrics().heightPixels / 2);
             CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) appBar.getLayoutParams();
@@ -206,10 +213,10 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             try {
                 Cursor cr = Application.database.rawQuery("SELECT * from RecentVisit WHERE Id='" + fFeed.getPostId() + "'", null);
                 cr.moveToFirst();
-                if (cr.getString(cr.getColumnIndex("IsFavorite")).equals("true"))
+                /*if (cr.getString(cr.getColumnIndex("IsFavorite")).equals("true"))
                     btn_fav.setImageResource(R.drawable.ic_bookmark);
                 else
-                    btn_fav.setImageResource(R.drawable.ic_bookmark_white);
+                    btn_fav.setImageResource(R.drawable.ic_bookmark_white);*/
             } catch (Exception e) {
             }
 
@@ -238,16 +245,16 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
 
                 try {
                     if (!result.getLatitude().trim().equals("00")) {
-                        mMapView.setVisibility(View.VISIBLE);
+                        /*mMapView.setVisibility(View.VISIBLE);
                         latitude = Double.parseDouble(result.getLatitude());
                         longitude = Double.parseDouble(result.getLongitude());
-                        mMapView.onResume();
+                        mMapView.onResume();*/
                         try {
                             MapsInitializer.initialize(PostDetailsActivity.this);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        mMapView.getMapAsync(googleMap -> {
+                       /* mMapView.getMapAsync(googleMap -> {
                             try {
                                 CameraPosition cameraPosition = new CameraPosition.Builder()
                                         .target(new LatLng(latitude, longitude))
@@ -261,7 +268,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
 
                             } catch (Exception e) {
                             }
-                        });
+                        });*/
                     }
                 } catch (Exception e) {
                 }
@@ -278,7 +285,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mMapView.onLowMemory();
+        //mMapView.onLowMemory();
     }
 
    /* @Override
@@ -290,13 +297,15 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onPause() {
         super.onPause();
-        mMapView.onPause();
+        /*if (null != mMapView)
+            mMapView.onPause();*/
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mMapView.onDestroy();
+        /*if (null != mMapView)
+            mMapView.onDestroy();*/
     }
 
     public void AdvertisementDetails() {
@@ -309,11 +318,11 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             public void onResponse
                     (Call<PayeDetailsModel> call, retrofit2.Response<PayeDetailsModel> response) {
                 try {
-                    ll_advertisdetails.setVisibility(View.VISIBLE);
+                    //ll_advertisdetails.setVisibility(View.VISIBLE);
                     result = response.body();
-                    findViewById(R.id.lbl_is_woman).setVisibility(fFeed.IsWoman() == true ? View.VISIBLE : View.GONE);
+                    //findViewById(R.id.lbl_is_woman).setVisibility(fFeed.IsWoman() == true ? View.VISIBLE : View.GONE);
                     getMap();
-                    toolbar_title.setText(result.getUsername());
+                    txtFullname.setText(result.getUsername());
                     imageLoader.displayImage(result.getProfileimage(), imgProfile, options);
                     try {
                         if (fFeed.IsImmediate()) {
@@ -379,8 +388,8 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                     btnBeup.setTextColor(Color.WHITE);
                                     btnBeup.setText("منصرف شدم");
                                     findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
-                                    if (Commentfeed.size() == 0)
-                                        GetCommentAsynkTask();
+                                    /*if (Commentfeed.size() == 0)
+                                        GetCommentAsynkTask();*/
                                     btnBeup.setOnClickListener(v -> {
                                         final SweetAlertDialog dialog = new SweetAlertDialog(PostDetailsActivity.this, SweetAlertDialog.WARNING_TYPE);
                                         dialog.setTitleText("لغو همراهی");
@@ -402,17 +411,31 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         }
                     } catch (Exception e) {
                     }
-                    cpv.setVisibility(View.GONE);
+                    //cpv.setVisibility(View.GONE);
                     /////////////////////////////////////////////////////////////////////////
                     try {
                         ArrayList<String> banners = new ArrayList<>();
                         String[] temp = result.getImages().split(",");
+
+                        RecyclerView recyclerView = findViewById(R.id.recycler_banner);
+                        ScrollingPagerIndicator indicator = findViewById(R.id.indicator);
                         for (int i = 0; i < temp.length; i++) {
 
+                            temp[i] = (getString(R.string.image) + temp[i] + ".jpg");
                             banners.add(getString(R.string.image) + temp[i] + ".jpg");
                             CardSliderViewPager cardSliderViewPager = findViewById(R.id.pager);
-                            cardSliderViewPager.setAdapter(new BannerAdapter(banners, imageLoader));
+                            //cardSliderViewPager.setAdapter(new BannerAdapter(banners, imageLoader));
                         }
+
+                        BannerAdapter bannerAdapter = new BannerAdapter(Arrays.asList(temp), PostDetailsActivity.this);
+                        recyclerView.setAdapter(bannerAdapter);
+
+                        RecyclerSnapHelper snapHelper = new RecyclerSnapHelper();
+                        snapHelper.attachToRecyclerView(recyclerView);
+
+                        indicator.attachToRecyclerView(recyclerView);
+                        indicator.setSelectedDotColor(getResources().getColor(R.color.white));
+                        indicator.setVisibleDotCount(3);
 
                     } catch (Exception e) {
                     }
@@ -447,10 +470,10 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     if (null != getIntent().getExtras())
                         if (result.getUserId().equals(Application.preferences.getString(getString(R.string.UserId), "0000"))) {
 
-                            HSH.vectorRight(PostDetailsActivity.this, btnEdit, R.drawable.ic_edit);
+                            /*HSH.vectorRight(PostDetailsActivity.this, btnEdit, R.drawable.ic_edit);
                             HSH.vectorRight(PostDetailsActivity.this, btnDelete, R.drawable.ic_delete);
                             HSH.vectorRight(PostDetailsActivity.this, btnPay, R.drawable.ic_payment);
-                            HSH.vectorRight(PostDetailsActivity.this, btnMobile, R.drawable.ic_mobile);
+                            HSH.vectorRight(PostDetailsActivity.this, btnMobile, R.drawable.ic_mobile);*/
                             try {
                                 String query = "update RecentVisit set " +
                                         "IsMine = 'true' where Id = '" + fFeed.getPostId() + "'";
@@ -460,27 +483,27 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                             findViewById(R.id.ll_mng).setVisibility(View.VISIBLE);
                             btnBeup.setVisibility(View.GONE);
                             findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
-                            if (Commentfeed.size() == 0)
+                            /*if (Commentfeed.size() == 0)
                                 GetCommentAsynkTask();
                             String[] temp = result.getState().split("-");
                             if (temp[0].contains(getString(R.string.pay)))
                                 btnPay.setVisibility(View.VISIBLE);
                             else if (temp[0].contains("تایید شماره")) {
                                 btnMobile.setVisibility(View.VISIBLE);
-                            }
+                            }*/
 
 
-                            ((TextView) findViewById(R.id.txt_title_state)).setText(temp[0]);
+                            /*((TextView) findViewById(R.id.txt_title_state)).setText(temp[0]);
                             ((TextView) findViewById(R.id.txt_description_state)).setText(temp[1]);
                             findViewById(R.id.txt_title_state).setBackgroundColor(Color.parseColor(temp[2]));
-                            ((TextView) findViewById(R.id.txt_description_state)).setTextColor(Color.parseColor(temp[2]));
+                            ((TextView) findViewById(R.id.txt_description_state)).setTextColor(Color.parseColor(temp[2]));*/
                         } else {
                             try {
                                 if (result.getUserId().equals(Application.preferences.getString(getString(R.string.UserId), "0000"))) {
                                     btnBeup.setVisibility(View.GONE);
                                     findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
-                                    if (Commentfeed.size() == 0)
-                                        GetCommentAsynkTask();
+                                    /*if (Commentfeed.size() == 0)
+                                        GetCommentAsynkTask();*/
                                 } else {
                                     findViewById(R.id.ll_mng).setVisibility(View.GONE);
                                     btnBeup.setVisibility(View.VISIBLE);
@@ -491,14 +514,14 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                             }
                         }
                 } catch (Exception e) {
-                    findViewById(R.id.ll_mng).setVisibility(View.GONE);
+                    /*findViewById(R.id.ll_mng).setVisibility(View.GONE);*/
                     btnBeup.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onFailure(Call<PayeDetailsModel> call, Throwable t) {
-                cpv.setVisibility(View.VISIBLE);
+                //cpv.setVisibility(View.VISIBLE);
                 AdvertisementDetails();
             }
         });
@@ -713,9 +736,9 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         }
                     });
                     try {
-                        etComment.setText("");
+                        /*etComment.setText("");
                         Commentfeed.add(response.body());
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged();*/
                     } catch (Exception e) {
                     }
                 } else
@@ -738,12 +761,12 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     (Call<List<CommentModel>> call, retrofit2.Response<List<CommentModel>> response) {
                 if (response.code() == 200) {
                     try {
-                        if (adapter.getItemCount() == 0) {
+                        /*if (adapter.getItemCount() == 0) {
                             for (CommentModel m : response.body())
                                 Commentfeed.add(m);
                             adapter.notifyDataSetChanged();
                             rvComment.scrollToPosition(adapter.getItemCount());
-                        }
+                        }*/
                     } catch (Exception e) {
                     }
                 } else
@@ -870,9 +893,9 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     try {
                         String s = response.body().string();
                         if (s.equals("true") && s.length() > 0) {
-                            findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
-                            if (adapter.getItemCount() == 0)
-                                GetCommentAsynkTask();
+                            //findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
+                            /*if (adapter.getItemCount() == 0)
+                                GetCommentAsynkTask();*/
                             Cursor cr = Application.database.rawQuery("SELECT * from RecentVisit WHERE Id='" + fFeed.getPostId() + "'", null);
                             cr.moveToFirst();
                             if (null == cr.getString(cr.getColumnIndex("IsBeup"))) {
@@ -899,15 +922,8 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
 
                             btnBeup.setBackgroundColor(Color.parseColor("#DB5255"));
                             btnBeup.setText("منصرف شدم");
-                            final CircleImageView i = new CircleImageView(PostDetailsActivity.this);
-                            i.setTag(Application.preferences.getString(getString(R.string.UserId), "0"));
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                    getPixelValue(PostDetailsActivity.this, getResources().getInteger(R.integer.image))
-                                    , getPixelValue(PostDetailsActivity.this, getResources().getInteger(R.integer.image)));
-                            i.setLayoutParams(params);
-                            imageLoader.displayImage(Application.preferences.getString("ProfileImage", "0"), i, options);
-                            HSH.display(PostDetailsActivity.this, ti);
-                            ti.addTagView(i);
+                            //HSH.display(PostDetailsActivity.this, ti);
+                            //ti.addTagView(i);
                             i.setOnClickListener(v -> {
                                 if (Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true"))
                                     try {
@@ -928,16 +944,19 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                             Application.database.execSQL(query);*/
                            /* btnBeup.setBackgroundColor(Color.parseColor("#5bb85d"));
                             btnBeup.setText("پایه ام");*/
-                            findViewById(R.id.ll_comments).setVisibility(View.GONE);
+
+
+                           //jadid bardashtam
+                            //findViewById(R.id.ll_comments).setVisibility(View.GONE);
                             HSH.hide(PostDetailsActivity.this, btnBeup);
-                            for (int i = 0; i < ti.getChildCount(); i++) {
+                            /*for (int i = 0; i < ti.getChildCount(); i++) {
                                 LinearLayout v = (LinearLayout) ti.getChildAt(i);
                                 for (int j = 0; j < v.getChildCount(); j++) {
                                     CircleImageView img = (CircleImageView) v.getChildAt(j);
                                     if (img.getTag().equals(Application.preferences.getString(getString(R.string.UserId), "0")))
                                         img.setVisibility(View.GONE);
                                 }
-                            }
+                            }*/
                         }
                     } catch (Exception e) {
                     }
@@ -972,22 +991,16 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void run() {
                 try {
-                    final CircleImageView i = new CircleImageView(PostDetailsActivity.this);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            getPixelValue(PostDetailsActivity.this, getResources().getInteger(R.integer.image))
-                            , getPixelValue(PostDetailsActivity.this, getResources().getInteger(R.integer.image)));
-                    i.setLayoutParams(params);
-                    i.setTag(src.split("/")[0]);
-                    try {
-                        if (!src.split("/")[1].contains("https:"))
-                            imageLoader.displayImage(getString(R.string.url) + "Images/Users/" + src.split("/")[1] + ".jpg", i, options);
-                        else
-                            imageLoader.displayImage(src.substring(37), i, options);
+                    rvGroupFriends.setHasFixedSize(true);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(PostDetailsActivity.this, LinearLayoutManager.HORIZONTAL, true);
+                    rvGroupFriends.setLayoutManager(layoutManager);
+                    rvGroupFriends.addItemDecoration(new OverlapRecyclerViewDecoration(PostDetailsActivity.this, 0));
+                    PersonAddedAdapter adapterFriends = new PersonAddedAdapter(PostDetailsActivity.this, imageLoader);
 
-                    } catch (Exception e) {
-                        i.setImageDrawable(getResources().getDrawable(R.mipmap.ic_paye));
-                    }
-                    ti.addTagView(i);
+                    rvGroupFriends.setAdapter(adapterFriends);
+                    adapterFriends.addItems(result.getApplicants());
+
+                    /*ti.addTagView(i);
                     i.setOnClickListener(v -> {
                         if (Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true"))
                             try {
@@ -1005,7 +1018,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                             }
                         else
                             registerDialog();
-                    });
+                    });*/
 
                 } catch (Exception e) {
                 }
@@ -1069,11 +1082,11 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.btn_sendComment:
-                if (!etComment.getText().toString().trim().equals(""))
+                /*if (!etComment.getText().toString().trim().equals(""))
                     if (NetworkUtils.getConnectivity(PostDetailsActivity.this) != false)
                         SendCommentAsynkTask(etComment.getText().toString().trim());
                     else
-                        HSH.showtoast(PostDetailsActivity.this, "خطا در اتصال به اینترنت");
+                        HSH.showtoast(PostDetailsActivity.this, "خطا در اتصال به اینترنت");*/
                 break;
             case R.id.btn_fav:
                 Cursor cr = Application.database.rawQuery("SELECT IsFavorite from RecentVisit WHERE Id = '" + fFeed.getPostId() + "'", null);
@@ -1087,7 +1100,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                         "WHERE Id='" + fFeed.getPostId() + "' ";
                                 Application.database.execSQL(query2);
                                 HSH.showtoast(PostDetailsActivity.this, "نشان حذف شد");
-                                btn_fav.setImageResource(R.drawable.ic_bookmark_white);
+                                //btn_fav.setImageResource(R.drawable.ic_bookmark_white);
                             } catch (Exception e) {
                             }
 
@@ -1099,7 +1112,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
 
                                 Application.database.execSQL(query2);
                                 HSH.showtoast(getApplicationContext(), "نشان شد");
-                                btn_fav.setImageResource(R.drawable.ic_bookmark);
+                                //btn_fav.setImageResource(R.drawable.ic_bookmark);
 
                             } catch (Exception e) {
                             }
@@ -1121,7 +1134,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
 
-            case R.id.txt_report:
+            case R.id.btn_report:
                 dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog2.setContentView(R.layout.dialog_report_post);
                 TextView txt_send = dialog2.findViewById(R.id.txt_send);
@@ -1158,7 +1171,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 break;
 
 
-            case R.id.btn_advertiser:
+            case R.id.cl_event_organizer:
                 if (Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true"))
                     try {
                         Intent i = new Intent(PostDetailsActivity.this, UserProfileActivity.class);
@@ -1262,7 +1275,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     registerDialog();
                 break;
 
-            case R.id.btnBeup:
+            case R.id.btn_beup:
                 try {
                     if (Application.preferences.getString(getString(R.string.Telegram), "").length() > 4 ||
                             Application.preferences.getString(getString(R.string.Soroosh), "").length() > 4 ||

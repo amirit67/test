@@ -99,10 +99,10 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, true);
                 Holder.rv.setLayoutManager(layoutManager);
                 Holder.rv.addItemDecoration(new OverlapRecyclerViewDecoration(mContext, 0));
-                PersonAddedAdapter adapterStory = new PersonAddedAdapter(mContext, imageLoader);
+                PersonAddedAdapter adapterFriends = new PersonAddedAdapter(mContext, imageLoader);
 
-                Holder.rv.setAdapter(adapterStory);
-                adapterStory.addItems(feed);
+                Holder.rv.setAdapter(adapterFriends);
+                //adapterFriends.addItems(feed);
 
                 imageLoader.displayImage(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + feed.get(i).getImages().split(",")[0] + ".jpg", Holder.img_content, new ImageLoadingListener() {
                     @Override

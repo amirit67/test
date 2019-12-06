@@ -20,5 +20,5 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:textColor="@color/mdtp_date_picker_year_selector"
-    android:fontFamily="@font/iransansmedium"
+    android:fontFamily="@font/yekanmedium"
     android:textSize="@dimen/mdtp_year_label_text_size" />

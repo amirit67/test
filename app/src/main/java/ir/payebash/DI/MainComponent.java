@@ -11,6 +11,7 @@ import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Activities.PostRegisterActivity;
 import ir.payebash.Activities.UpdatePostActivity;
 import ir.payebash.Activities.UserProfileActivity;
+import ir.payebash.Adapters.BannerAdapter;
 import ir.payebash.Adapters.PayeAdapter;
 import ir.payebash.Adapters.StoryAdapter;
 import ir.payebash.Application;
@@ -45,6 +46,8 @@ public interface MainComponent {
     void Inject(SearchFragment mainActivity);
 
     void Inject(EventsWantedFragment mainActivity);
+
+    void Inject(BannerAdapter bannerAdapter);
 
 
 

@@ -84,14 +84,14 @@
                     card_view:srcCompat="@drawable/ic_back" />
 
                 <ir.payebash.Moudle.CircleImageView
-                    android:id="@+id/profile_img"
+                    android:id="@+id/img_profile"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_centerVertical="true"
                     android:layout_gravity="right" />
 
                 <TextView
-                    android:id="@+id/toolbar_title"
+                    android:id="@+id/txt_fullname"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="right|center_vertical"
@@ -154,7 +154,7 @@
         wheel:matProg_spinSpeed="0.75" />
 
     <Button
-        android:id="@+id/btnBeup"
+        android:id="@+id/btn_beup"
         style="@style/RegButton"
         android:layout_gravity="bottom"
         android:background="#5bb85d"

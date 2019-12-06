@@ -37,6 +37,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".chat.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".Activities.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -126,6 +130,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <service
+            android:name=".chat.ChatService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <service
             android:name=".Reciver.MyFirebaseMessagingService"

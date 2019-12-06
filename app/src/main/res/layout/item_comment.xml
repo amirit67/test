@@ -29,7 +29,7 @@
         android:id="@+id/txt1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/iransansmedium"
+        android:fontFamily="@font/yekanmedium"
         android:layout_centerVertical="true"
         android:layout_gravity="right|center_vertical"
         android:layout_toLeftOf="@+id/img_profile"

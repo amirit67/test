@@ -19,7 +19,7 @@
         android:scaleType="fitCenter"
         card_view:srcCompat="@drawable/ic_a2" />
 
-    <ir.payebash.Moudle.CustomTextViewBold
+    <TextView
         android:id="@+id/customTextViewBold2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,6 +28,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp20"
         android:gravity="center"
+        android:fontFamily="@font/yekanbold"
         android:text="پایه باش و علایق مشترک پیدا کن"
         android:textColor="@android:color/black"
         android:textSize="16sp" />

@@ -31,7 +31,7 @@
         android:layout_gravity="center"
         android:clickable="true"
         android:orientation="vertical"
-        android:fontFamily="@font/iransansmedium"
+        android:fontFamily="@font/yekanmedium"
         android:textColor="@color/mdtp_date_picker_selector" >
 
         <TextView
@@ -43,7 +43,7 @@
             android:includeFontPadding="false"
             android:textColor="@color/mdtp_date_picker_selector"
             android:textSize="@dimen/mdtp_selected_date_month_size"
-            android:fontFamily="@font/iransansmedium"
+            android:fontFamily="@font/yekanmedium"
             tools:text="May"/>
 
         <TextView
@@ -57,7 +57,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:textColor="@color/mdtp_date_picker_selector"
-            android:fontFamily="@font/iransansmedium"
+            android:fontFamily="@font/yekanmedium"
             android:textSize="@dimen/mdtp_selected_date_day_size"
             tools:text="15"/>
     </com.mohamadamin.persianmaterialdatetimepicker.AccessibleLinearLayout>
@@ -70,7 +70,7 @@
         android:gravity="center_horizontal|top"
         android:includeFontPadding="false"
         android:textColor="@color/mdtp_date_picker_selector"
-        android:fontFamily="@font/iransansmedium"
+        android:fontFamily="@font/yekanmedium"
         android:textSize="@dimen/mdtp_selected_date_year_size"
         tools:text="2015" />
 

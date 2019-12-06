@@ -29,6 +29,7 @@ import ir.payebash.Fragments.MyPayeFragment;
 import ir.payebash.Fragments.NewAddressActivity;
 import ir.payebash.Fragments.NotificationFragment;
 import ir.payebash.Fragments.ProfileFragment;
+import ir.payebash.Fragments.RoomsFragment;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
@@ -46,7 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     BottomNavigationView bottomNavigationView;
     private HomeFragment home_fragment = null;
     private NewAddressActivity activities_fragment = null;
-    private NotificationFragment notification_fragment = null;
+    private RoomsFragment roomsFragment = null;
     private ProfileFragment profile_fragment = null;
 
     @Override
@@ -123,9 +124,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                         profile_fragment = new ProfileFragment();
                     openFragment(MainActivity.this, profile_fragment);
                 } else if (menuItem.getItemId() == R.id.action_notify) {
-                    if (notification_fragment == null)
-                        notification_fragment = new NotificationFragment();
-                    openFragment(MainActivity.this, notification_fragment);
+                    if (roomsFragment == null)
+                        roomsFragment = new RoomsFragment();
+                    openFragment(MainActivity.this, roomsFragment);
                 } else if (menuItem.getItemId() == R.id.action_event) {
                     if (activities_fragment == null)
                         activities_fragment = new NewAddressActivity();

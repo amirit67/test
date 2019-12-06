@@ -18,7 +18,6 @@
         android:layout_height="match_parent"
         android:layout_margin="@dimen/dp4"
         android:orientation="vertical"
-        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <include layout="@layout/dialog_post_manage" />
@@ -54,19 +53,19 @@
                         app:primaryTextSize="@dimen/sp13" />
 
                     <TextView
-                        android:id="@+id/txt_title"
+                        android:id="@+id/txt_event_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp6"
                         android:textColor="@color/gray1"
                         android:textSize="@dimen/sp16"
-                        android:fontFamily="@font/iransansbold"/>
+                        android:fontFamily="@font/yekanbold"/>
 
                     <TextView
-                        android:id="@+id/txt_date"
+                        android:id="@+id/txt_event_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/txt_title"
+                        android:layout_below="@+id/txt_event_title"
                         android:padding="@dimen/dp6"
                         android:textColor="@color/colorAccent"
                         android:textSize="@dimen/sp14" />
@@ -81,7 +80,7 @@
                 android:layout_marginRight="@dimen/dp4"
                 android:background="@color/gray2" />
 
-            <ir.payebash.Moudle.CustomTextViewBold
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -132,7 +131,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txt_report"
+                    android:id="@+id/btn_report"
                     style="@style/RegButton"
                     android:layout_height="match_parent"
                     android:layout_margin="4dp"

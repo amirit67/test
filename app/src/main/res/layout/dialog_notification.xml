@@ -15,12 +15,13 @@
         android:background="@color/colorPrimary"
         android:gravity="right">
 
-        <ir.payebash.Moudle.CustomTextViewBold
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:paddingRight="16dp"
+            android:fontFamily="@font/yekanbold"
             android:text="تنظیمات دریافت نوتیفیکیشن"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
@@ -46,7 +47,7 @@
             android:gravity="right|center_vertical"
             android:layoutDirection="rtl"
             android:padding="@dimen/dp8"
-            android:fontFamily="@font/iransansmedium"
+            android:fontFamily="@font/yekanmedium"
             android:text="نوتیفیکیشن ملحق شدن دیگران در رویدادهای شما"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
@@ -62,7 +63,7 @@
             android:gravity="right|center_vertical"
             android:layoutDirection="rtl"
             android:padding="@dimen/dp8"
-            android:fontFamily="@font/iransansmedium"
+            android:fontFamily="@font/yekanmedium"
             android:text="نوتیفیکیشن نظرات در رویدادهای شما"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
@@ -78,7 +79,7 @@
             android:gravity="right|center_vertical"
             android:layoutDirection="rtl"
             android:padding="@dimen/dp8"
-            android:fontFamily="@font/iransansmedium"
+            android:fontFamily="@font/yekanmedium"
             android:text="نوتیفیکیشن رویداد های درخواستی شما"
             android:textColor="@android:color/black"
             android:textSize="12sp" />

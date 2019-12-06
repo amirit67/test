@@ -29,7 +29,7 @@ public class PersonAddedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private final int VIEW_TYPE_ITEM = 1;
     ImageLoader imageLoader;
-    private List<PayeItem> feed = new ArrayList<>();
+    private List<String> feed = new ArrayList<>();
     private Context mContext;
 
     public PersonAddedAdapter(Context context, ImageLoader imageLoader) {
@@ -66,7 +66,16 @@ public class PersonAddedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             try {
                 Holder = (PersonAddedHolder) holder;
                 Holder.setIsRecyclable(false);
-                imageLoader.displayImage(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + feed.get(i).getImages().split(",")[0] + ".jpg", Holder.iv_image);
+
+                try {
+                    if (!feed.get(i).split("/")[1].contains("https:"))
+                        imageLoader.displayImage(mContext.getString(R.string.url) + "Images/Users/" + feed.get(i).split("/")[1] + ".jpg", Holder.iv_image);
+                    else
+                        imageLoader.displayImage(feed.get(i).substring(37), Holder.iv_image);
+
+                } catch (Exception e) {
+                    Holder.iv_image.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.ic_paye));
+                }
             } catch (Exception e) {
             }
         }
@@ -74,10 +83,10 @@ public class PersonAddedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return (null != feed ? 3 : 0);
+        return (null != feed ? feed.size() < 4 ? feed.size() : 3 : 0);
     }
 
-    public void addItems(List<PayeItem> posts) {
+    public void addItems(List<String> posts) {
         this.feed.addAll(posts);
         notifyDataSetChanged();
     }

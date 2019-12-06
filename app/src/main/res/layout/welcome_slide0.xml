@@ -19,7 +19,7 @@
         android:scaleType="fitCenter"
         card_view:srcCompat="@drawable/ic_a1" />
 
-    <ir.payebash.Moudle.CustomTextViewBold
+    <TextView
         android:id="@+id/customTextViewBold2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,9 +30,10 @@
         android:gravity="center"
         android:text="پایه باش و خاطرات نو بساز"
         android:textColor="@android:color/black"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:fontFamily="@font/yekanbold"/>
 
-    <ir.payebash.Moudle.CustomTextViewBold
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/customTextViewBold2"
@@ -41,6 +42,7 @@
         android:layout_marginLeft="@dimen/dp16"
         android:layout_marginRight="@dimen/dp16"
         android:gravity="center"
+        android:fontFamily="@font/yekanbold"
         android:text="چند ساعت از روز رو واسه خودمون وقت میزاریم؟\nزمانی که مهمه و باید به علایقمون برسیم\nوقتشه از نگاه کردن به زندگی دیگرون بیرون بیایم و خودمون این تجربه ها رو زندگی کنیم."
         android:textColor="@android:color/darker_gray"
         android:textSize="13sp" />

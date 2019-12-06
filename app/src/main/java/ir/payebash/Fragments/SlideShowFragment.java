@@ -74,42 +74,17 @@ public class SlideShowFragment extends Fragment {
         if (asset != null) {
             MainComponent component = Application.get((AppCompatActivity) getActivity()).getComponent();
             final ImageView imageView = rootView.findViewById(R.id.imgView);
-            final ProgressBar p = rootView.findViewById(R.id.PrgrsBar);
-
             imageView.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            final Bundle bundle = new Bundle();
-                            Intent i = new Intent(getActivity(), ViewPagerActivity.class);
-                            bundle.putSerializable("feed", item);
-                            i.putExtras(bundle);
-                            startActivity(i);
-                        }
+                    view -> {
+                        final Bundle bundle = new Bundle();
+                        Intent i = new Intent(getActivity(), ViewPagerActivity.class);
+                        bundle.putSerializable("feed", item);
+                        i.putExtras(bundle);
+                        startActivity(i);
                     }
 
             );
-            imageLoader.displayImage(asset, imageView, options, new ImageLoadingListener() {
-                @Override
-                public void onLoadingStarted(String imageUri, View view) {
-                    p.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                    p.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    p.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onLoadingCancelled(String imageUri, View view) {
-
-                }
-            });
+            imageLoader.displayImage(asset, imageView, options);
         }
 
         return rootView;

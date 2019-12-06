@@ -274,7 +274,7 @@ public class MultiDatePickerDialog extends DialogFragment implements
                 dismiss();
             }
         });
-        okButton.setTypeface(TypefaceHelper.get(activity, "iransansmedium"));
+        okButton.setTypeface(TypefaceHelper.get(activity, "yekanmedium"));
 
         Button cancelButton = (Button) view.findViewById(R.id.cancel);
         cancelButton.setOnClickListener(new OnClickListener() {
@@ -284,7 +284,7 @@ public class MultiDatePickerDialog extends DialogFragment implements
                 getDialog().cancel();
             }
         });
-        cancelButton.setTypeface(TypefaceHelper.get(activity, "iransansmedium"));
+        cancelButton.setTypeface(TypefaceHelper.get(activity, "yekanmedium"));
         cancelButton.setVisibility(isCancelable() ? View.VISIBLE : View.GONE);
 
         updateDisplay(false);
