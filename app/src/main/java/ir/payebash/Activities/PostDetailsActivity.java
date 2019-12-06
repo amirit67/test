@@ -1,5 +1,9 @@
 package ir.payebash.Activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
@@ -172,6 +176,22 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         btnBeup = findViewById(R.id.btn_beup);
         btnBeup.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
+
+        ImageView img = findViewById(R.id.imageView8);
+        ObjectAnimator fadeOut = ObjectAnimator.ofFloat(img, "alpha", 1f, .1f);
+        fadeOut.setDuration(1000);
+        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(img, "alpha", .1f, 1f);
+        fadeIn.setDuration(1000);
+        AnimatorSet mAnimationSet = new AnimatorSet();
+        mAnimationSet.play(fadeIn).after(fadeOut);
+        mAnimationSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mAnimationSet.start();
+            }
+        });
+        mAnimationSet.start();
 
         /*rvComment = findViewById(R.id.rv_comment);
         rvComment.setHasFixedSize(true);
