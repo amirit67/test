@@ -267,7 +267,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public RecyclerView rv;
         public ImageView img_content;
                 public Paye2Holder(View view) {
-            super(view);
+                    super(view);
             this.rv = view.findViewById(R.id.rv);
             this.img_content = view.findViewById(R.id.img_content);
         }

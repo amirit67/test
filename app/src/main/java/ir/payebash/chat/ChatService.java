@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
+import ir.payebash.BuildConfig;
 import ir.payebash.helpers.Globals;
 import ir.payebash.helpers.User;
 import ir.payebash.modelviewsChat.MessageViewModel;
@@ -37,7 +38,7 @@ public class ChatService extends Service {
     private HubProxy proxy;
     private Handler handler;
 
-    private String serverUrl = "http://paye.ariaapps.ir";
+    private String serverUrl = BuildConfig.BaseUrl;
     private String hubName = "ChatHub";
 
     @Override

@@ -15,8 +15,11 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import ir.payebash.Adapters.MessageAdapter;
+import ir.payebash.Classes.ItemDecorationAlbumColumns;
 import ir.payebash.R;
 import ir.payebash.helpers.Globals;
 import ir.payebash.helpers.User;
@@ -61,25 +64,29 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(User.CurrentRoom);
+        /*getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(User.CurrentRoom);*/
 
         // Setup Grid View
-        GridView gridView = (GridView) findViewById(R.id.gvMessages);
-        gridView.setTranscriptMode(GridView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+        RecyclerView rv = findViewById(R.id.gvMessages);
+        //gridView.setTranscriptMode(GridView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+        rv.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rv.setLayoutManager(layoutManager);
+        rv.addItemDecoration(new ItemDecorationAlbumColumns(this, ItemDecorationAlbumColumns.VERTICAL_LIST));
         adapter = new MessageAdapter(this, Globals.Messages);
-        gridView.setAdapter(adapter);
+        rv.setAdapter(adapter);
 
         // Listeners
-        EditText editText = (EditText) findViewById(R.id.editMessage);
-        ImageButton btnSend = (ImageButton) findViewById(R.id.btnSend);
+        EditText editText = findViewById(R.id.editMessage);
+        ImageButton btnSend = findViewById(R.id.btnSend);
         btnSend.setOnClickListener(v -> {
             chatService.Send(User.CurrentRoom, editText.getText().toString());
             editText.setText("");
         });
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu2, menu);
         return true;
@@ -98,7 +105,7 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

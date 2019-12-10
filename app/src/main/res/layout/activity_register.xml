@@ -70,7 +70,7 @@
                     android:layout_gravity="center"
                     android:backgroundTint="@color/mdtp_white"
                     android:drawablePadding="8dp"
-                    android:drawableRight="@drawable/googleg_standard_color_18"
+                    android:drawableRight="@drawable/googleg_standard"
                     android:text="ورود با حساب گوگل"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/sp12"

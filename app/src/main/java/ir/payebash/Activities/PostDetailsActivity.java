@@ -118,7 +118,9 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     private Button /*btn_contactWays,*/ btnBeup;
     //private EditText etComment;
     private ImageView imgProfile, btnShare, btnReport;
-    private TextView txtFullname, txt_title, txt_date/*, btnMobile, btnEdit, btnDelete, btnPay*/;
+    private TextView txtFullname, txtEventTitle, txtEventDate, txtLocation ,
+    txtCategory , txtTimeToJoin , txtCost, txtStartDate, txtFollowes, txtDescription
+            /*, btnMobile, btnEdit, btnDelete, btnPay*/;
     private PayeItem fFeed;
     //private ImageButton /*btn_fav,*/ btnSendComment, back;
     private PayeDetailsModel result;
@@ -126,7 +128,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     private RecyclerView rvGroupFriends;
     //private RecyclerView rvComment;
     //private CommentsAdapter adapter;
-   // private List<CommentModel> Commentfeed = new ArrayList<>();
+    // private List<CommentModel> Commentfeed = new ArrayList<>();
 
     public static int getPixelValue(Context context, int dimenId) {
         Resources resources = context.getResources();
@@ -139,8 +141,15 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
 
     private void DeclareElements() {
         //ll_advertisdetails = findViewById(R.id.ll_advertisdetails);
-        txt_title = findViewById(R.id.txt_event_title);
-        txt_date = findViewById(R.id.txt_event_date);
+        txtEventTitle = findViewById(R.id.txt_event_title);
+        txtEventDate = findViewById(R.id.txt_event_date);
+        txtCategory = findViewById(R.id.txt_category);
+        txtLocation = findViewById(R.id.txt_location);
+        txtTimeToJoin = findViewById(R.id.txt_time_to_join);
+        txtCost = findViewById(R.id.txt_cost);
+        txtStartDate = findViewById(R.id.txt_startdate);
+        txtFollowes = findViewById(R.id.txt_follwers);
+        txtDescription = findViewById(R.id.txt_description);
         btnReport = findViewById(R.id.btn_report);
         /*cpv = findViewById(R.id.cpv);
 
@@ -345,60 +354,37 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     txtFullname.setText(result.getUsername());
                     imageLoader.displayImage(result.getProfileimage(), imgProfile, options);
                     try {
-                        if (fFeed.IsImmediate()) {
-                            Spannable spannable = new SpannableString(result.getTitle() + "(فوری)");
-                            spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#C8FF0004")), (result.getTitle() + "(فوری)").length() - 6, (result.getTitle() + "(فوری)").length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            txt_title.setText(spannable, TextView.BufferType.SPANNABLE);
-                        } else
-                            txt_title.setText(result.getTitle());
-                        txt_date.setText(result.getCreateDate());
-                        List<PostDetailsModel> feed = new ArrayList<>();
-                        List<String> result2 = result.getBaseProperty();
+                        if (fFeed.IsImmediate())
+                        {
+
+                        }
+                        txtEventDate.setText(result.getCreateDate());
+                        txtTimeToJoin.setText(result.getTimeToJoin());
+                        txtCost.setText(result.getCost());
+                        txtStartDate.setText(result.getStartDate());
+                        txtFollowes.setText(result.getNumberFollowers());
+                        txtDescription.setText(result.getDescription());
+                        //List<PostDetailsModel> feed = new ArrayList<>();
+                        //List<String> result2 = result.getBaseProperty();
 
                         Cursor cr = null;
-                        PostDetailsModel item = null;
+                        //PostDetailsModel item = null;
                         try {
                             cr = Application.database.rawQuery("SELECT name from categories where id = '" + result.getSubject() + "' ", null);
                             cr.moveToFirst();
-                            item = new PostDetailsModel();
-                            item.setTitle("موضوع : " + cr.getString(cr.getColumnIndex("name")));
-                            feed.add(item);
+                            txtCategory.setText(cr.getString(cr.getColumnIndex("name")));
                         } catch (Exception e) {
                         }
 
                         try {
                             cr = Application.database.rawQuery("SELECT id,StateCity from Citys where id = '" + result.getCity() + "' ", null);
                             cr.moveToFirst();
-                            item = new PostDetailsModel();
-                            item.setTitle("محل رویداد : " + cr.getString(cr.getColumnIndex("StateCity")));
-                            feed.add(item);
+                            txtLocation.setText(cr.getString(cr.getColumnIndex("StateCity")));
                         } catch (Exception e) {
-                            if (result.getCity() == 1) {
-                                item = new PostDetailsModel();
-                                item.setTitle("محل رویداد : سراسر کشور");
-                                feed.add(item);
-                            }
+                            if (result.getCity() == 1)
+                                txtLocation.setText("سراسر کشور");
                         }
 
-                        String s = "";
-                        for (int i = 0; i < result2.size(); i++) {
-                            item = new PostDetailsModel();
-                            try {
-                                s = result2.get(i);
-                                item.setTitle(s);
-                                if (fFeed.getCost().equals("")) {
-                                    if (s.contains("هزینه : "))
-                                        fFeed.setCost(s.split(":")[1].trim());
-                                    if (s.contains("مهلت هم پا شدن : "))
-                                        fFeed.setTimeToJoin(s.split(":")[1].trim());
-                                    if (s.contains("هشتگ : "))
-                                        fFeed.setTag(s.split(":")[1].trim());
-                                }
-                            } catch (Exception e) {
-                            }
-                            feed.add(item);
-                        }
-                        getProperty(PostDetailsActivity.this, findViewById(R.id.ll_baseProperty), feed);
                         List<String> applicants_result = result.getApplicants();
                         for (int i = 0; i < applicants_result.size(); i++) {
                             try {
@@ -545,51 +531,6 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 AdvertisementDetails();
             }
         });
-    }
-
-    private void getProperty(final Context _cn, final LinearLayout layout, final List<PostDetailsModel> feed) {
-
-        try {
-            int scrollviewposition = 0;
-            for (scrollviewposition = 0; scrollviewposition < feed.size(); scrollviewposition++) {
-
-                @SuppressWarnings("static-access")
-                LayoutInflater inflater = (LayoutInflater)
-                        _cn.getSystemService(_cn.LAYOUT_INFLATER_SERVICE);
-                View view1 = inflater.inflate(R.layout.item_post_details, null);
-
-                final TextView txt1 = view1.findViewById(R.id.txt1);
-                //txt1.setTypeface(Application.font);
-                String[] temp = feed.get(scrollviewposition).getTitle().split(":");
-                Spannable spannable = new SpannableString(HSH.toPersianNumber(feed.get(scrollviewposition).getTitle()));
-                spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#026d37")), temp[0].length() + 1, feed.get(scrollviewposition).getTitle().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                txt1.setText(spannable, TextView.BufferType.SPANNABLE);
-                layout.addView(view1);
-
-                txt1.setOnClickListener(view -> {
-                    try {
-                        if (txt1.getText().toString().equals(result.getBaseProperty().get(0))) {
-                            try {
-                                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                                callIntent.setData(Uri.parse("tel:" + Uri.encode(result.getBaseProperty().get(0).split(":")[1])));
-                                callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(callIntent);
-                            } catch (Exception e) {
-                            }
-                        } else {
-                            try {
-                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result.getBaseProperty().get(1).split(": ")[1]));
-                                startActivity(browserIntent);
-                            } catch (Exception e1) {
-                            }
-                        }
-                    } catch (Exception e) {
-                    }
-                });
-            }
-
-        } catch (Exception e) {
-        }
     }
 
     private void registerDialog() {
@@ -966,7 +907,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                             btnBeup.setText("پایه ام");*/
 
 
-                           //jadid bardashtam
+                            //jadid bardashtam
                             //findViewById(R.id.ll_comments).setVisibility(View.GONE);
                             HSH.hide(PostDetailsActivity.this, btnBeup);
                             /*for (int i = 0; i < ti.getChildCount(); i++) {
@@ -1214,7 +1155,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 TextView txt_phone = dialog2.findViewById(R.id.txt_phone);
                 TextView txt_gmail = dialog2.findViewById(R.id.txt_gmail);
 
-                if (result.getPhoneNumber().length() > 10) {
+                /*if (result.getPhoneNumber().length() > 10) {
                     txt_phone.setVisibility(View.VISIBLE);
                     txt_phone.setOnClickListener(view -> {
                         try {
@@ -1224,7 +1165,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         } catch (Exception e) {
                         }
                     });
-                }
+                }*/
                /* if (result.getSoroosh().length() > 4) {
                     txt_soroosh.setVisibility(View.VISIBLE);
                     txt_soroosh.setOnClickListener(view -> {

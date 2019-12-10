@@ -6,5 +6,6 @@ public class MessageViewModel implements Serializable {
     public String Content;
     public String From;
     public String Avatar;
+    public String Timestamp;
     public int IsMine;
 }

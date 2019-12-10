@@ -5,44 +5,44 @@ import com.google.gson.annotations.SerializedName;
 
 public class PayeDetailsModel{
 
-	@SerializedName("telegram")
-	private String telegram;
-
-	@SerializedName("soroosh")
-	private String soroosh;
-
 	@SerializedName("gmail")
 	private String gmail;
-
-    @SerializedName("phoneNumber")
-    private String phoneNumber;
-
-	@SerializedName("comments")
-	private List<String> comments;
-
-	@SerializedName("images")
-	private String images;
-
-	@SerializedName("applicants")
-	private List<String> applicants;
-
-	@SerializedName("title")
-	private String title;
-
-	@SerializedName("token")
-	private String token;
-
-	@SerializedName("latitude")
-	private String latitude;
 
 	@SerializedName("city")
 	private int city;
 
-	@SerializedName("userId")
-	private String userId;
+	@SerializedName("endDate")
+	private String endDate;
 
-	@SerializedName("mobile")
-	private String mobile;
+	@SerializedName("subject")
+	private int subject;
+
+	@SerializedName("latitude")
+	private String latitude;
+
+	@SerializedName("applicants")
+	private List<String> applicants;
+
+	@SerializedName("description")
+	private String description;
+
+	@SerializedName("instagram")
+	private String instagram;
+
+	@SerializedName("title")
+	private String title;
+
+	@SerializedName("isWoman")
+	private boolean isWoman;
+
+	@SerializedName("timeToJoin")
+	private String timeToJoin;
+
+	@SerializedName("soroosh")
+	private String soroosh;
+
+	@SerializedName("state")
+	private String state;
 
 	@SerializedName("createDate")
 	private String createDate;
@@ -50,50 +50,38 @@ public class PayeDetailsModel{
 	@SerializedName("longitude")
 	private String longitude;
 
+	@SerializedName("images")
+	private String images;
+
+	@SerializedName("comments")
+	private List<String> comments;
+
+	@SerializedName("cost")
+	private String cost;
+
+	@SerializedName("mobile")
+	private String mobile;
+
+	@SerializedName("telegram")
+	private String telegram;
+
+	@SerializedName("userId")
+	private String userId;
+
 	@SerializedName("profileimage")
 	private String profileimage;
 
-	@SerializedName("subject")
-	private int subject;
+	@SerializedName("token")
+	private String token;
 
-	@SerializedName("instagram")
-	private String instagram;
+	@SerializedName("numberFollowers")
+	private String numberFollowers;
 
-	@SerializedName("isWoman")
-	private boolean isWoman;
-
-	@SerializedName("state")
-	private String state;
-
-	@SerializedName("baseProperty")
-	private List<String> baseProperty;
+	@SerializedName("startDate")
+	private String startDate;
 
 	@SerializedName("username")
 	private String username;
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-	public void setTelegram(String telegram){
-		this.telegram = telegram;
-	}
-
-	public String getTelegram(){
-		return telegram;
-	}
-
-	public void setSoroosh(String soroosh){
-		this.soroosh = soroosh;
-	}
-
-	public String getSoroosh(){
-		return soroosh;
-	}
 
 	public void setGmail(String gmail){
 		this.gmail = gmail;
@@ -101,54 +89,6 @@ public class PayeDetailsModel{
 
 	public String getGmail(){
 		return gmail;
-	}
-
-	public void setComments(List<String> comments){
-		this.comments = comments;
-	}
-
-	public List<String> getComments(){
-		return comments;
-	}
-
-	public void setImages(String images){
-		this.images = images;
-	}
-
-	public String getImages(){
-		return images;
-	}
-
-	public void setApplicants(List<String> applicants){
-		this.applicants = applicants;
-	}
-
-	public List<String> getApplicants(){
-		return applicants;
-	}
-
-	public void setTitle(String title){
-		this.title = title;
-	}
-
-	public String getTitle(){
-		return title;
-	}
-
-	public void setToken(String token){
-		this.token = token;
-	}
-
-	public String getToken(){
-		return token;
-	}
-
-	public void setLatitude(String latitude){
-		this.latitude = latitude;
-	}
-
-	public String getLatitude(){
-		return latitude;
 	}
 
 	public void setCity(int city){
@@ -159,20 +99,92 @@ public class PayeDetailsModel{
 		return city;
 	}
 
-	public void setUserId(String userId){
-		this.userId = userId;
+	public void setEndDate(String endDate){
+		this.endDate = endDate;
 	}
 
-	public String getUserId(){
-		return userId;
+	public String getEndDate(){
+		return endDate;
 	}
 
-	public void setMobile(String mobile){
-		this.mobile = mobile;
+	public void setSubject(int subject){
+		this.subject = subject;
 	}
 
-	public String getMobile(){
-		return mobile;
+	public int getSubject(){
+		return subject;
+	}
+
+	public void setLatitude(String latitude){
+		this.latitude = latitude;
+	}
+
+	public String getLatitude(){
+		return latitude;
+	}
+
+	public void setApplicants(List<String> applicants){
+		this.applicants = applicants;
+	}
+
+	public List<String> getApplicants(){
+		return applicants;
+	}
+
+	public void setDescription(String description){
+		this.description = description;
+	}
+
+	public String getDescription(){
+		return description;
+	}
+
+	public void setInstagram(String instagram){
+		this.instagram = instagram;
+	}
+
+	public String getInstagram(){
+		return instagram;
+	}
+
+	public void setTitle(String title){
+		this.title = title;
+	}
+
+	public String getTitle(){
+		return title;
+	}
+
+	public void setIsWoman(boolean isWoman){
+		this.isWoman = isWoman;
+	}
+
+	public boolean isIsWoman(){
+		return isWoman;
+	}
+
+	public void setTimeToJoin(String timeToJoin){
+		this.timeToJoin = timeToJoin;
+	}
+
+	public String getTimeToJoin(){
+		return timeToJoin;
+	}
+
+	public void setSoroosh(String soroosh){
+		this.soroosh = soroosh;
+	}
+
+	public String getSoroosh(){
+		return soroosh;
+	}
+
+	public void setState(String state){
+		this.state = state;
+	}
+
+	public String getState(){
+		return state;
 	}
 
 	public void setCreateDate(String createDate){
@@ -191,6 +203,54 @@ public class PayeDetailsModel{
 		return longitude;
 	}
 
+	public void setImages(String images){
+		this.images = images;
+	}
+
+	public String getImages(){
+		return images;
+	}
+
+	public void setComments(List<String> comments){
+		this.comments = comments;
+	}
+
+	public List<String> getComments(){
+		return comments;
+	}
+
+	public void setCost(String cost){
+		this.cost = cost;
+	}
+
+	public String getCost(){
+		return cost;
+	}
+
+	public void setMobile(String mobile){
+		this.mobile = mobile;
+	}
+
+	public String getMobile(){
+		return mobile;
+	}
+
+	public void setTelegram(String telegram){
+		this.telegram = telegram;
+	}
+
+	public String getTelegram(){
+		return telegram;
+	}
+
+	public void setUserId(String userId){
+		this.userId = userId;
+	}
+
+	public String getUserId(){
+		return userId;
+	}
+
 	public void setProfileimage(String profileimage){
 		this.profileimage = profileimage;
 	}
@@ -199,44 +259,28 @@ public class PayeDetailsModel{
 		return profileimage;
 	}
 
-	public void setSubject(int subject){
-		this.subject = subject;
+	public void setToken(String token){
+		this.token = token;
 	}
 
-	public int getSubject(){
-		return subject;
+	public String getToken(){
+		return token;
 	}
 
-	public void setInstagram(String instagram){
-		this.instagram = instagram;
+	public void setNumberFollowers(String numberFollowers){
+		this.numberFollowers = numberFollowers;
 	}
 
-	public String getInstagram(){
-		return instagram;
+	public String getNumberFollowers(){
+		return numberFollowers;
 	}
 
-	public void setIsWoman(boolean isWoman){
-		this.isWoman = isWoman;
+	public void setStartDate(String startDate){
+		this.startDate = startDate;
 	}
 
-	public boolean isIsWoman(){
-		return isWoman;
-	}
-
-	public void setState(String state){
-		this.state = state;
-	}
-
-	public String getState(){
-		return state;
-	}
-
-	public void setBaseProperty(List<String> baseProperty){
-		this.baseProperty = baseProperty;
-	}
-
-	public List<String> getBaseProperty(){
-		return baseProperty;
+	public String getStartDate(){
+		return startDate;
 	}
 
 	public void setUsername(String username){

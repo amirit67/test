@@ -19,24 +19,34 @@
         android:minWidth="140dp"
         android:paddingTop="3dp"
         android:paddingBottom="8dp"
-        android:background="@drawable/bordered_message_other"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/txtMessageOwner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
+            android:background="@drawable/rounded_corners_elevation_white"
             android:textSize="12sp"
-            android:textColor="#1a6baa"
+            android:textColor="#B7B7B7"
             android:text="User"/>
 
         <TextView
             android:id="@+id/txtMessageContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:textSize="16sp"
             android:text="Content"
             android:textColor="#555" />
+
+        <TextView
+            android:id="@+id/txt_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:fontFamily="@font/yekanlight"
+            android:text="TextView" />
 
     </LinearLayout>
 

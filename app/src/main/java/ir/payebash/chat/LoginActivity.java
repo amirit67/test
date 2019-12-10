@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import ir.payebash.BuildConfig;
 import ir.payebash.R;
 import ir.payebash.helpers.PrefsManager;
 import ir.payebash.helpers.Utils;
@@ -19,8 +20,8 @@ import microsoft.aspnet.signalr.client.http.CookieCredentials;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String loginUrl = "http://paye.ariaapps.ir/Account/Login";
-    private String registerUrl = "http://paye.ariaapps.ir/Account/Register";
+    private String loginUrl = BuildConfig.BaseUrl + "/Account/Login";
+    private String registerUrl = BuildConfig.BaseUrl + "/Account/Register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

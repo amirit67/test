@@ -2,6 +2,7 @@ package ir.payebash.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -12,23 +13,42 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
 import java.util.ArrayList;
 
+import ir.payebash.Activities.PostDetailsActivity;
+import ir.payebash.Application;
 import ir.payebash.R;
 import ir.payebash.modelviewsChat.MessageViewModel;
+import ir.payebash.utils.roundedimageview.OverlapRecyclerViewDecoration;
 
-public class MessageAdapter extends BaseAdapter {
+public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     ArrayList<MessageViewModel> messages;
     Context context;
+
     public MessageAdapter(Context context, ArrayList<MessageViewModel> messages) {
         this.context = context;
         this.messages = messages;
     }
 
     @Override
-    public int getViewTypeCount() {
-        return 2;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, final int i) {
+
+        if (i == 1) {
+            View v;
+            v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_message_mine, null);
+            return new ViewHolder(v);
+        } else {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_message_other, null);
+            return new ViewHolder(view);
+        }
+
     }
 
     @Override
@@ -37,13 +57,8 @@ public class MessageAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return messages.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return messages.get(position);
     }
 
     @Override
@@ -51,50 +66,42 @@ public class MessageAdapter extends BaseAdapter {
         return position;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
 
-        View rowView = convertView;
-        ViewHolder holder = null;
-        final MessageViewModel temp = messages.get(position);
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int i) {
 
-        int listViewItemType = getItemViewType(position);
+        if (holder instanceof ViewHolder) {
+            /*if (i == 0)
+                details.clear();*/
+            final ViewHolder Holder;
+            Holder = (ViewHolder) holder;
+            Holder.setIsRecyclable(false);
 
-        if (rowView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            if (listViewItemType == 1)
-                rowView = inflater.inflate(R.layout.item_message_mine, parent, false);
-            else
-                rowView = inflater.inflate(R.layout.item_message_other, parent, false);
-            holder = new ViewHolder(rowView);
-            rowView.setTag(holder);
-        } else {
-            holder = (ViewHolder) rowView.getTag();
+            try {
+                byte[] decodedString = Base64.decode(messages.get(i).Avatar.replace("data:image/false;base64,", ""), Base64.DEFAULT);
+                Bitmap avatarBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                Holder.avatar.setImageBitmap(avatarBitmap);
+                Holder.from.setText(messages.get(i).Timestamp);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //Holder.from.setText(messages.get(i).From);
+            Holder.content.setText(messages.get(i).Content);
+
+
         }
-
-        try {
-            byte[] decodedString = Base64.decode(temp.Avatar.replace("data:image/false;base64,", ""), Base64.DEFAULT);
-            Bitmap avatarBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            holder.avatar.setImageBitmap(avatarBitmap);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        holder.from.setText(temp.From);
-        holder.content.setText(temp.Content);
-
-        return rowView;
-    }
-}
-
-class ViewHolder {
-    ImageView avatar;
-    TextView from, content;
-
-    ViewHolder(View v) {
-        avatar = (ImageView) v.findViewById(R.id.imgMessageAvatar);
-        from = (TextView) v.findViewById(R.id.txtMessageOwner);
-        content = (TextView) v.findViewById(R.id.txtMessageContent);
     }
 
+    class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView avatar;
+        TextView from, content;
+
+        ViewHolder(View v) {
+            super(v);
+            avatar = v.findViewById(R.id.imgMessageAvatar);
+            from = v.findViewById(R.id.txt_time);
+            content = v.findViewById(R.id.txtMessageContent);
+        }
+
+    }
 }
