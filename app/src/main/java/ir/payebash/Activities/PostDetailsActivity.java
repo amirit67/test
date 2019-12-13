@@ -6,7 +6,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -15,42 +14,27 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.github.islamkhsh.CardSliderViewPager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,7 +46,6 @@ import javax.inject.Inject;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,7 +55,6 @@ import ir.moslem_deris.apps.zarinpal.enums.ZarinPalError;
 import ir.moslem_deris.apps.zarinpal.listeners.OnPaymentListener;
 import ir.moslem_deris.apps.zarinpal.models.Payment;
 import ir.payebash.Adapters.BannerAdapter;
-import ir.payebash.Adapters.CommentsAdapter;
 import ir.payebash.Adapters.PersonAddedAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
@@ -82,14 +64,11 @@ import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Models.CommentModel;
 import ir.payebash.Models.NotifyData;
 import ir.payebash.Models.NotifyData.Message;
-import ir.payebash.Models.PayeDetailsModel;
+import ir.payebash.Models.event.EventModel;
 import ir.payebash.Models.PayeItem;
-import ir.payebash.Models.PostDetailsModel;
-import ir.payebash.Moudle.CircleImageView;
-import ir.payebash.Moudle.TagLayoutImageView;
 import ir.payebash.R;
 import ir.payebash.utils.RecyclerSnapHelper;
-import ir.payebash.utils.roundedimageview.OverlapRecyclerViewDecoration;
+import ir.payebash.utils.OverlapRecyclerViewDecoration;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -123,7 +102,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             /*, btnMobile, btnEdit, btnDelete, btnPay*/;
     private PayeItem fFeed;
     //private ImageButton /*btn_fav,*/ btnSendComment, back;
-    private PayeDetailsModel result;
+    private EventModel result;
     //private ProgressWheel cpv;
     private RecyclerView rvGroupFriends;
     //private RecyclerView rvComment;
@@ -148,7 +127,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         txtTimeToJoin = findViewById(R.id.txt_time_to_join);
         txtCost = findViewById(R.id.txt_cost);
         txtStartDate = findViewById(R.id.txt_startdate);
-        txtFollowes = findViewById(R.id.txt_follwers);
+        txtFollowes = findViewById(R.id.txt_followers);
         txtDescription = findViewById(R.id.txt_description);
         btnReport = findViewById(R.id.btn_report);
         /*cpv = findViewById(R.id.cpv);
@@ -340,13 +319,14 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     public void AdvertisementDetails() {
         Map<String, String> params = new HashMap<>();
         params.put(getString(R.string.PostId), fFeed.getPostId());
-        Call<PayeDetailsModel> call =
+        Call<EventModel> call =
                 retrofit.create(ApiInterface.class).GetPostDetails(params);
-        call.enqueue(new Callback<PayeDetailsModel>() {
+        call.enqueue(new Callback<EventModel>() {
             @Override
             public void onResponse
-                    (Call<PayeDetailsModel> call, retrofit2.Response<PayeDetailsModel> response) {
+                    (Call<EventModel> call, retrofit2.Response<EventModel> response) {
                 try {
+                    txtEventTitle.setText(fFeed.getTitle());
                     //ll_advertisdetails.setVisibility(View.VISIBLE);
                     result = response.body();
                     //findViewById(R.id.lbl_is_woman).setVisibility(fFeed.IsWoman() == true ? View.VISIBLE : View.GONE);
@@ -385,13 +365,12 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                 txtLocation.setText("سراسر کشور");
                         }
 
-                        List<String> applicants_result = result.getApplicants();
-                        for (int i = 0; i < applicants_result.size(); i++) {
+                        for (int i = 0; i < result.getApplicants().size(); i++) {
                             try {
-                                TagLayout(applicants_result.get(i), i);
-                                if (applicants_result.get(i).contains(Application.preferences.getString(getString(R.string.UserId), "00000000-0000-0000-0000-00000000000000"))) {
-                                    btnBeup.setBackgroundColor(Color.parseColor("#DB5255"));
-                                    btnBeup.setTextColor(Color.WHITE);
+                                TagLayout(result.getApplicants().get(i).getProfileImage(), i);
+                                if (result.getApplicants().get(i).getUserId().contains(Application.preferences.getString(getString(R.string.UserId), "00000000-0000-0000-0000-00000000000000"))) {
+                                    btnBeup.setBackgroundResource(R.drawable.rounded_corners_strok_black);
+                                    btnBeup.setTextColor(Color.BLACK);
                                     btnBeup.setText("منصرف شدم");
                                     findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
                                     /*if (Commentfeed.size() == 0)
@@ -526,7 +505,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             }
 
             @Override
-            public void onFailure(Call<PayeDetailsModel> call, Throwable t) {
+            public void onFailure(Call<EventModel> call, Throwable t) {
                 //cpv.setVisibility(View.VISIBLE);
                 AdvertisementDetails();
             }
@@ -881,7 +860,8 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                     "WHERE Id = '" + fFeed.getPostId() + "' ";
                             Application.database.execSQL(query);*/
 
-                            btnBeup.setBackgroundColor(Color.parseColor("#DB5255"));
+                            btnBeup.setBackgroundResource(R.drawable.rounded_corners_strok_black);
+                            btnBeup.setTextColor(Color.BLACK);
                             btnBeup.setText("منصرف شدم");
                             //HSH.display(PostDetailsActivity.this, ti);
                             //ti.addTagView(i);
@@ -957,7 +937,6 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     rvGroupFriends.setLayoutManager(layoutManager);
                     rvGroupFriends.addItemDecoration(new OverlapRecyclerViewDecoration(PostDetailsActivity.this, 0));
                     PersonAddedAdapter adapterFriends = new PersonAddedAdapter(PostDetailsActivity.this, imageLoader);
-
                     rvGroupFriends.setAdapter(adapterFriends);
                     adapterFriends.addItems(result.getApplicants());
 

@@ -46,7 +46,7 @@ import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.Models.PayeItem;
 import ir.payebash.R;
 import ir.payebash.asynktask.AsynctaskGetPost;
-import ir.payebash.utils.roundedimageview.OverlapRecyclerViewDecoration;
+import ir.payebash.utils.OverlapRecyclerViewDecoration;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -287,6 +287,7 @@ public class HomeFragment extends Fragment {
 
     public void Filter(final Context cn) {
         try {
+            HSH.openFragment(getActivity(), new FilterFragment());
             if (dialogFilter == null) {
                 dialogFilter = new Dialog(cn);
                 dialogFilter.requestWindowFeature(Window.FEATURE_NO_TITLE);

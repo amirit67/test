@@ -43,6 +43,7 @@ import static ir.payebash.Classes.HSH.openFragment;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, TitleMain/*, HideActionbar*/ {
 
+    private int CREATEEVENT = 321;
     public static LinearLayout ll_bottomNavigation;
     BottomNavigationView bottomNavigationView;
     private HomeFragment home_fragment = null;
@@ -101,7 +102,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     dialog.show();
                 } else {
                     Intent intent = new Intent(MainActivity.this, PostRegisterActivity.class);
-                    startActivityForResult(intent, 321);
+                    startActivityForResult(intent, CREATEEVENT);
                 }
             });
 
@@ -119,11 +120,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                         home_fragment = new HomeFragment();
                     openFragment(MainActivity.this, home_fragment);
                 }
-                if (menuItem.getItemId() == R.id.action_profile) {
+                else if (menuItem.getItemId() == R.id.action_profile) {
                     if (profile_fragment == null)
                         profile_fragment = new ProfileFragment();
                     openFragment(MainActivity.this, profile_fragment);
-                } else if (menuItem.getItemId() == R.id.action_notify) {
+                } else if (menuItem.getItemId() == R.id.action_creat_event) {
+                    Intent intent = new Intent(MainActivity.this, PostRegisterActivity.class);
+                    startActivityForResult(intent, CREATEEVENT);
+                }else if (menuItem.getItemId() == R.id.action_notify) {
                     if (roomsFragment == null)
                         roomsFragment = new RoomsFragment();
                     openFragment(MainActivity.this, roomsFragment);
@@ -140,7 +144,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 321 && null != data) {
+        if (requestCode == CREATEEVENT && null != data) {
             Application.myAds = 42907631;
             MyPayeFragment fra = new MyPayeFragment();
             HSH.openFragment(MainActivity.this, fra);
@@ -155,7 +159,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 )
         ) {
             Intent intent = new Intent(MainActivity.this, PostRegisterActivity.class);
-            startActivityForResult(intent, 321);
+            startActivityForResult(intent, CREATEEVENT);
         } else
             for (Fragment fragment : getSupportFragmentManager().getFragments()) {
                 if (fragment != null) {

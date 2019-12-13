@@ -33,7 +33,7 @@ import ir.payebash.Classes.HSH;
 import ir.payebash.Fragments.SearchFragment;
 import ir.payebash.Models.PayeItem;
 import ir.payebash.R;
-import ir.payebash.utils.roundedimageview.OverlapRecyclerViewDecoration;
+import ir.payebash.utils.OverlapRecyclerViewDecoration;
 
 
 public class RoomsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

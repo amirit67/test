@@ -25,7 +25,7 @@ import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Application;
 import ir.payebash.R;
 import ir.payebash.modelviewsChat.MessageViewModel;
-import ir.payebash.utils.roundedimageview.OverlapRecyclerViewDecoration;
+import ir.payebash.utils.OverlapRecyclerViewDecoration;
 
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

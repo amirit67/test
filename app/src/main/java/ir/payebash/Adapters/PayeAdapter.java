@@ -21,6 +21,7 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +41,7 @@ import ir.payebash.Models.PayeItem;
 import ir.payebash.Moudle.CircleImageView;
 import ir.payebash.Moudle.TriangleLabelView;
 import ir.payebash.R;
-import ir.payebash.utils.roundedimageview.OverlapRecyclerViewDecoration;
+import ir.payebash.utils.OverlapRecyclerViewDecoration;
 
 
 public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -95,6 +96,12 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Holder = (Paye2Holder) holder;
                 Holder.setIsRecyclable(false);
 
+                Holder.txtTitle.setText(feed.get(i).getTitle());
+                String city = mContext.getResources().getStringArray(R.array.Citys)[feed.get(i).getCity() - 2];
+                Holder.txtLoc.setText(feed.get(i).getCreateDate() + " در " + city.substring(city.indexOf("-") + 2));
+                Holder.txtCost.setText(feed.get(i).getCost());
+                Holder.imgWoman.setVisibility(feed.get(i).IsWoman() ? View.VISIBLE : View.GONE);
+                Holder.imgImmadiate.setVisibility(feed.get(i).IsImmediate() ? View.VISIBLE : View.GONE);
                 Holder.rv.setHasFixedSize(true);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, true);
                 Holder.rv.setLayoutManager(layoutManager);
@@ -102,9 +109,9 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 PersonAddedAdapter adapterFriends = new PersonAddedAdapter(mContext, imageLoader);
 
                 Holder.rv.setAdapter(adapterFriends);
-                //adapterFriends.addItems(feed);
+                //adapterFriends.addItems(new ArrayList<>(Arrays.asList(new String [] {"ba48-56177c7ba1a5", "ba48-56177c7ba1a5","ba48-56177c7ba1a5" })));
 
-                imageLoader.displayImage(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + feed.get(i).getImages().split(",")[0] + ".jpg", Holder.img_content, new ImageLoadingListener() {
+                imageLoader.displayImage(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + feed.get(i).getImages().split(",")[0] + ".jpg", Holder.imgContent, new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                     }
@@ -121,9 +128,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public void onLoadingCancelled(String imageUri, View view) {
                     }
                 });
-               /* String city = mContext.getResources().getStringArray(R.array.Citys)[feed.get(i).getCity() - 2];
-                Holder.txt_loc.setText(feed.get(i).getCreateDate() + " در " + city.substring(city.indexOf("-") + 2));
-                Holder.txt_cost.setText(feed.get(i).getCost());
+               /*
                 Holder.txt_title.setText(feed.get(i).getTitle());
                 Holder.txt_deadline.setText(feed.get(i).getTimeToJoin());
                 HSH.vectorRight(mContext, Holder.txt_cost, R.drawable.ic_coins);
@@ -209,67 +214,21 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    private void TagLayout(final String title, final LinearLayout mTagLayout, final int j, final int i) {
-        try {
-            final TextView tagView = new TextView(mContext);
-            tagView.setText("#" + title);
-            tagView.setBackgroundResource(R.drawable.tagview_shape2);
-            tagView.setTextColor(Color.BLACK);
-            tagView.setPadding(2, 2, 2, 2);
-            tagView.setTextSize(11);
-            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-            param.setMargins(0, 0, 5, 0);
-            tagView.setLayoutParams(param);
-            mTagLayout.addView(tagView);
-            /*try {
-                details.remove(i);
-            } catch (Exception e) {
-            }*/
-            //details.put(i, (LinearLayout) mTagLayout.getChildAt(0));
-                   /* tagView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.checked,0,0);
-                    tagView.setCompoundDrawablePadding(50);*/
-            tagView.setOnClickListener(v -> {
-                //details.clear();
-                //pb.setVisibility(View.VISIBLE);
-
-
-
-                /*Cnt = 0;
-                params.clear();
-                params.put("ContentSearch", tagView.getText().toString().replace("#", "").trim());
-                params.put(mContext.getString(R.string.Skip), String.valueOf(Cnt));*/
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("HashMap", (Serializable) params);
-                //set Fragmentclass Arguments
-                fragobj = new SearchFragment();
-                fragobj.setArguments(bundle);
-                HSH.openFragment((Activity) mContext, fragobj);
-                //GetPosts();
-            });
-
-        } catch (Exception e) {
-        }
-    }
-
-    /*public void img_map(int i, ImageView img_map) {
-        if (!feed.get(i).getLatitude().equals("00")) {
-            String img_url = "https://maps.googleapis.com/maps/api/staticmap?center=" + feed.get(i).getLatitude() + "," + feed.get(i).getLongitude() + "&maptype=roadmap&zoom=14&size=512x512&language=FA&markers=size:small%7Ccolor:0xff0000%7Clabel:1%7C" + feed.get(i).getLatitude() + "," + feed.get(i).getLongitude();
-            imageLoader.displayImage(img_url, img_map);
-        }
-    }*/
-
 
     public class Paye2Holder extends RecyclerView.ViewHolder {
+        public TextView txtTitle, txtLoc, txtCost;
         public RecyclerView rv;
-        public ImageView img_content;
-                public Paye2Holder(View view) {
-                    super(view);
+        public ImageView imgContent, imgWoman, imgImmadiate;
+
+        public Paye2Holder(View view) {
+            super(view);
+            this.txtTitle = view.findViewById(R.id.txt_title);
+            this.txtLoc = view.findViewById(R.id.txt_location);
+            this.txtCost = view.findViewById(R.id.txt_cost);
             this.rv = view.findViewById(R.id.rv);
-            this.img_content = view.findViewById(R.id.img_content);
+            this.imgContent = view.findViewById(R.id.img_content);
+            this.imgWoman = view.findViewById(R.id.img_woman);
+            this.imgImmadiate = view.findViewById(R.id.img_immadiate);
         }
 
     }

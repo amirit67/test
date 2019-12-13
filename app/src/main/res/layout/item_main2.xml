@@ -30,20 +30,18 @@
             android:id="@+id/txt_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:gravity="right"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="پایه ای بریم سینما؟"
-            android:textColor="#3C444C"
-            android:textSize="12sp"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/txt_cost"
             app:layout_constraintEnd_toStartOf="@+id/img_content"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_woman"
             app:layout_constraintTop_toTopOf="@+id/img_content" />
 
         <TextView
@@ -54,9 +52,10 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:gravity="right"
+            android:fontFamily="@font/yekanlight"
             android:text="رایگان"
             android:textColor="#969393"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/txt_title"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,15 +65,19 @@
             android:id="@+id/txt_location"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:layout_marginStart="8dp"
+            android:drawablePadding="@dimen/dp4"
+            android:drawableRight="@drawable/ic_location"
+            android:fontFamily="@font/yekanlight"
+            android:gravity="right|center_vertical"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="کرج"
             android:textColor="@color/black"
-            android:textSize="10sp"
-            android:fontFamily="@font/yekanlight"
-            android:drawablePadding="@dimen/dp8"
-            android:drawableRight="@drawable/ic_location"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/txt_title"
+            app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/txt_cost" />
 
         <TextView
@@ -82,15 +85,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:fontFamily="@font/yekanlight"
             android:text="0 نفر پایه"
             android:textColor="@color/black"
             android:textSize="10sp"
-            android:fontFamily="@font/yekanlight"
             app:layout_constraintBottom_toBottomOf="@+id/txt_location"
             app:layout_constraintStart_toEndOf="@+id/rv"
             app:layout_constraintTop_toTopOf="@+id/txt_location"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.5" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
@@ -98,11 +100,30 @@
             android:layout_height="25dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            tools:listitem="@layout/item_person_added"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/txt_location"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txt_location" />
+
+        <ImageView
+            android:id="@+id/img_immadiate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_title"
+            app:srcCompat="@drawable/ic_immadiate" />
+
+        <ImageView
+            android:id="@+id/img_woman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_title"
+            app:layout_constraintStart_toEndOf="@+id/img_immadiate"
+            app:layout_constraintTop_toTopOf="@+id/txt_title"
+            app:srcCompat="@drawable/ic_flower" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

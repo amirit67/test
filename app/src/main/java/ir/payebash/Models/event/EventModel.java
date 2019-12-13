@@ -1,9 +1,9 @@
-package ir.payebash.Models;
+package ir.payebash.Models.event;
 
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class PayeDetailsModel{
+public class EventModel {
 
 	@SerializedName("gmail")
 	private String gmail;
@@ -21,7 +21,7 @@ public class PayeDetailsModel{
 	private String latitude;
 
 	@SerializedName("applicants")
-	private List<String> applicants;
+	private List<ApplicantsItem> applicants;
 
 	@SerializedName("description")
 	private String description;
@@ -54,7 +54,7 @@ public class PayeDetailsModel{
 	private String images;
 
 	@SerializedName("comments")
-	private List<String> comments;
+	private List<Object> comments;
 
 	@SerializedName("cost")
 	private String cost;
@@ -83,208 +83,104 @@ public class PayeDetailsModel{
 	@SerializedName("username")
 	private String username;
 
-	public void setGmail(String gmail){
-		this.gmail = gmail;
-	}
-
 	public String getGmail(){
 		return gmail;
-	}
-
-	public void setCity(int city){
-		this.city = city;
 	}
 
 	public int getCity(){
 		return city;
 	}
 
-	public void setEndDate(String endDate){
-		this.endDate = endDate;
-	}
-
 	public String getEndDate(){
 		return endDate;
-	}
-
-	public void setSubject(int subject){
-		this.subject = subject;
 	}
 
 	public int getSubject(){
 		return subject;
 	}
 
-	public void setLatitude(String latitude){
-		this.latitude = latitude;
-	}
-
 	public String getLatitude(){
 		return latitude;
 	}
 
-	public void setApplicants(List<String> applicants){
-		this.applicants = applicants;
-	}
-
-	public List<String> getApplicants(){
+	public List<ApplicantsItem> getApplicants(){
 		return applicants;
-	}
-
-	public void setDescription(String description){
-		this.description = description;
 	}
 
 	public String getDescription(){
 		return description;
 	}
 
-	public void setInstagram(String instagram){
-		this.instagram = instagram;
-	}
-
 	public String getInstagram(){
 		return instagram;
-	}
-
-	public void setTitle(String title){
-		this.title = title;
 	}
 
 	public String getTitle(){
 		return title;
 	}
 
-	public void setIsWoman(boolean isWoman){
-		this.isWoman = isWoman;
-	}
-
 	public boolean isIsWoman(){
 		return isWoman;
-	}
-
-	public void setTimeToJoin(String timeToJoin){
-		this.timeToJoin = timeToJoin;
 	}
 
 	public String getTimeToJoin(){
 		return timeToJoin;
 	}
 
-	public void setSoroosh(String soroosh){
-		this.soroosh = soroosh;
-	}
-
 	public String getSoroosh(){
 		return soroosh;
-	}
-
-	public void setState(String state){
-		this.state = state;
 	}
 
 	public String getState(){
 		return state;
 	}
 
-	public void setCreateDate(String createDate){
-		this.createDate = createDate;
-	}
-
 	public String getCreateDate(){
 		return createDate;
-	}
-
-	public void setLongitude(String longitude){
-		this.longitude = longitude;
 	}
 
 	public String getLongitude(){
 		return longitude;
 	}
 
-	public void setImages(String images){
-		this.images = images;
-	}
-
 	public String getImages(){
 		return images;
 	}
 
-	public void setComments(List<String> comments){
-		this.comments = comments;
-	}
-
-	public List<String> getComments(){
+	public List<Object> getComments(){
 		return comments;
-	}
-
-	public void setCost(String cost){
-		this.cost = cost;
 	}
 
 	public String getCost(){
 		return cost;
 	}
 
-	public void setMobile(String mobile){
-		this.mobile = mobile;
-	}
-
 	public String getMobile(){
 		return mobile;
-	}
-
-	public void setTelegram(String telegram){
-		this.telegram = telegram;
 	}
 
 	public String getTelegram(){
 		return telegram;
 	}
 
-	public void setUserId(String userId){
-		this.userId = userId;
-	}
-
 	public String getUserId(){
 		return userId;
-	}
-
-	public void setProfileimage(String profileimage){
-		this.profileimage = profileimage;
 	}
 
 	public String getProfileimage(){
 		return profileimage;
 	}
 
-	public void setToken(String token){
-		this.token = token;
-	}
-
 	public String getToken(){
 		return token;
-	}
-
-	public void setNumberFollowers(String numberFollowers){
-		this.numberFollowers = numberFollowers;
 	}
 
 	public String getNumberFollowers(){
 		return numberFollowers;
 	}
 
-	public void setStartDate(String startDate){
-		this.startDate = startDate;
-	}
-
 	public String getStartDate(){
 		return startDate;
-	}
-
-	public void setUsername(String username){
-		this.username = username;
 	}
 
 	public String getUsername(){

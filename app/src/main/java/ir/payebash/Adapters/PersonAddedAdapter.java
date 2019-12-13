@@ -21,6 +21,7 @@ import java.util.List;
 import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Application;
 import ir.payebash.Models.PayeItem;
+import ir.payebash.Models.event.ApplicantsItem;
 import ir.payebash.R;
 import ir.payebash.utils.roundedimageview.InsLoadingView;
 
@@ -29,7 +30,7 @@ public class PersonAddedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private final int VIEW_TYPE_ITEM = 1;
     ImageLoader imageLoader;
-    private List<String> feed = new ArrayList<>();
+    private List<ApplicantsItem> feed = new ArrayList<>();
     private Context mContext;
 
     public PersonAddedAdapter(Context context, ImageLoader imageLoader) {
@@ -68,10 +69,10 @@ public class PersonAddedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 Holder.setIsRecyclable(false);
 
                 try {
-                    if (!feed.get(i).split("/")[1].contains("https:"))
-                        imageLoader.displayImage(mContext.getString(R.string.url) + "Images/Users/" + feed.get(i).split("/")[1] + ".jpg", Holder.iv_image);
+                    if (!feed.get(i).getProfileImage().contains("https:"))
+                        imageLoader.displayImage(mContext.getString(R.string.url) + "Images/Users/" + feed.get(i).getProfileImage() + ".jpg", Holder.iv_image);
                     else
-                        imageLoader.displayImage(feed.get(i).substring(37), Holder.iv_image);
+                        imageLoader.displayImage(feed.get(i).getProfileImage(), Holder.iv_image);
 
                 } catch (Exception e) {
                     Holder.iv_image.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.ic_paye));
@@ -86,7 +87,7 @@ public class PersonAddedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return (null != feed ? feed.size() < 4 ? feed.size() : 3 : 0);
     }
 
-    public void addItems(List<String> posts) {
+    public void addItems(List<ApplicantsItem> posts) {
         this.feed.addAll(posts);
         notifyDataSetChanged();
     }

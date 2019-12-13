@@ -23,7 +23,7 @@ import ir.payebash.Models.CommentModel;
 import ir.payebash.Models.GoogleOuathItem;
 import ir.payebash.Models.NotifItem;
 import ir.payebash.Models.NotifyData;
-import ir.payebash.Models.PayeDetailsModel;
+import ir.payebash.Models.event.EventModel;
 import ir.payebash.Models.PayeItem;
 import ir.payebash.Models.PlusItem;
 import ir.payebash.Models.ProfileItem;
@@ -118,7 +118,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/getpostDetails/")
-    Call<PayeDetailsModel> GetPostDetails(@FieldMap Map<String, String> data);
+    Call<EventModel> GetPostDetails(@FieldMap Map<String, String> data);
 
     @GET("api/getpostDetailsUpdate/{postId}")
     Call<ResponseBody> GetPostDetailsUpdate(@Path("postId") String postId);

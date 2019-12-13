@@ -1,4 +1,4 @@
-package ir.payebash.utils.roundedimageview;
+package ir.payebash.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -34,7 +34,7 @@ public class OverlapRecyclerViewDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
         // outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
         if (itemPosition != parent.getAdapter().getItemCount() - 1)
-            outRect.set(-30, 10, 0, 0);
+            outRect.set(-15, 10, 0, 0);
         else
             outRect.set(0, 10, 0, 0);
     }
