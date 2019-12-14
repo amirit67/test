@@ -10,15 +10,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Application;
@@ -72,7 +77,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             setSupportActionBar(toolbar);
             setTitle("");
             findViewById(R.id.btn_new_event).setOnClickListener(view -> {
-                final SweetAlertDialog dialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
+                showBottomsheetNavigation();
+                /*final SweetAlertDialog dialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
                 String s = preferences.getString("MobileTemp", "");
                 if (s.length() < 11) {
                     dialog.setCustomImage(R.mipmap.mobile);
@@ -103,7 +109,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 } else {
                     Intent intent = new Intent(MainActivity.this, PostRegisterActivity.class);
                     startActivityForResult(intent, CREATEEVENT);
-                }
+                }*/
+
             });
 
             bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -395,4 +402,44 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         return super.onOptionsItemSelected(item);
     }*/
+
+    private void showBottomsheetNavigation() {
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_create_event_step_1, null);
+        BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
+        dialog.setContentView(view);
+        BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+
+                switch (i) {
+
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        dialog.show();
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+                //setScrim(v);
+                dialog.show();
+            }
+        });
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        dialog.show();
+        //ConstraintLayout c1 = view.findViewById(R.id.constraintLayout1);
+
+    }
 }
