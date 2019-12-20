@@ -1,7 +1,6 @@
 package ir.payebash.chat;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
@@ -30,14 +29,14 @@ import ir.payebash.helpers.PrefsManager;
 import ir.payebash.helpers.User;
 import microsoft.aspnet.signalr.client.http.CookieCredentials;
 
-public class AsyncLoginTask extends AsyncTask<String, Void, CookieCredentials> {
+public class AsyncRegisterTask extends AsyncTask<String, Void, CookieCredentials> {
 
     Activity activity;
     //ProgressDialog progressDialog;
     ProgressBar pb;
     TextView btGo;
 
-    public AsyncLoginTask(Activity activity, ProgressBar pb, TextView btGo) {
+    public AsyncRegisterTask(Activity activity, ProgressBar pb, TextView btGo) {
         this.activity = activity;
         this.pb = pb;
         this.btGo = btGo;
@@ -59,8 +58,10 @@ public class AsyncLoginTask extends AsyncTask<String, Void, CookieCredentials> {
         try {
 
             String url = params[0];
-            String username = params[1];
-            String password = params[2];
+            String fullname = params[1];
+            String username = params[2];
+            String email = params[3];
+            String password = params[4];
 
             HttpGet httpGet = new HttpGet(url);
             HttpResponse response = httpclient.execute(httpGet);
@@ -75,10 +76,12 @@ public class AsyncLoginTask extends AsyncTask<String, Void, CookieCredentials> {
             httpPost.setHeader("Set-Cookie", token);
 
             // Build Request Form
-            List<NameValuePair> nameValuePairs = new ArrayList<>(3);
+            List<NameValuePair> nameValuePairs = new ArrayList<>(5);
             nameValuePairs.add(new BasicNameValuePair("__RequestVerificationToken", token));
             nameValuePairs.add(new BasicNameValuePair("Username", username));
             nameValuePairs.add(new BasicNameValuePair("Password", password));
+            nameValuePairs.add(new BasicNameValuePair("DisplayName", fullname));
+            nameValuePairs.add(new BasicNameValuePair("Email", email));
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             // Execute Post Request

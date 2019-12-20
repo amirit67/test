@@ -17,9 +17,10 @@ public class UserItem implements Serializable {
     public String Gmail = "";
     public String Email = "";
     public String Message = "";
+    public String Password = "";
     public String Mobile = "";
     public String MobileTemp = "";
-
+    public String __RequestVerificationToken = "";
 
     public String getUserId() {
         return UserId;
@@ -87,5 +88,17 @@ public class UserItem implements Serializable {
 
     public void setEmail(String email) {
         Email = email;
+    }
+
+    public void set__RequestVerificationToken(String __RequestVerificationToken) {
+        this.__RequestVerificationToken = __RequestVerificationToken;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
     }
 }

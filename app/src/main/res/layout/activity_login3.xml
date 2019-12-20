@@ -91,7 +91,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_corners_solid_black"
+            android:background="@drawable/rounded_corners_solid_gray"
+            android:enabled="false"
             android:fontFamily="@font/yekanblack"
             android:gravity="center"
             android:padding="@dimen/dp8"
@@ -125,7 +126,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.56">
+            app:layout_constraintVertical_bias="0.57">
 
             <EditText
                 android:id="@+id/et_username"

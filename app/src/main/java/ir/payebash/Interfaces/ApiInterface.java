@@ -36,6 +36,7 @@ import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -55,7 +56,7 @@ public interface ApiInterface {
 
     @POST("api/registeruser")
     //insertuser
-    Call<ResponseBody> inesrtUser(@Body UserItem data);
+    Call<ResponseBody> inesrtUser(@Header ("Set-Cookie") String cookie, @Body UserItem data);
 
     @FormUrlEncoded
     @POST("api/InsertPayment")

@@ -58,12 +58,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 
-public class Login2Activity extends BaseActivity implements View.OnClickListener {
+public class Login2Activity extends BaseActivity implements View.OnClickListener, TextWatcher {
 
     private static final int RC_SIGN_IN = 9001;
     private String loginUrl = BuildConfig.BaseUrl + "/Account/Login";
     public static EditText etUsername, etPassword;
-    public TextView txtRegister, btGo, txtForgotPassword;
+    public TextView txtRegister, btLogin, txtForgotPassword;
     private ProgressBar progressBar;
     private Map<String, String> params = new HashMap<>();
     //private FirebaseAuth mAuth;
@@ -75,9 +75,11 @@ public class Login2Activity extends BaseActivity implements View.OnClickListener
         progressBar = findViewById(R.id.progressBar);
         txtRegister = findViewById(R.id.txt_register);
         txtForgotPassword = findViewById(R.id.txt_forgot_password);
-        btGo = findViewById(R.id.bt_login);
+        btLogin = findViewById(R.id.bt_login);
 
-        btGo.setOnClickListener(this::onClick);
+        etUsername.addTextChangedListener(this);
+        etPassword.addTextChangedListener(this);
+        btLogin.setOnClickListener(this::onClick);
         txtRegister.setOnClickListener(this::onClick);
         txtForgotPassword.setOnClickListener(this::onClick);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -106,29 +108,6 @@ public class Login2Activity extends BaseActivity implements View.OnClickListener
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
             mGoogleSignInClient.signOut();
             //mAuth = FirebaseAuth.getInstance();
-
-            etUsername.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if (s.length() == 0) {
-                        btGo.setEnabled(false);
-                        btGo.setBackgroundResource(R.drawable.bt_shape);
-                    } else if (s.length() == 11) {
-                        btGo.setEnabled(true);
-                        btGo.setBackgroundResource(R.drawable.press_button_background_green);
-                    }
-                }
-
-                @Override
-                public void beforeTextChanged(CharSequence s, int start,
-                                              int count, int after) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start,
-                                          int before, int count) {
-                }
-            });
         }
 
     }
@@ -172,7 +151,7 @@ public class Login2Activity extends BaseActivity implements View.OnClickListener
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                new AsyncLoginTask(this,  progressBar, btGo).execute(loginUrl, username, password);
+                new AsyncLoginTask(this, progressBar, btLogin).execute(loginUrl, username, password);
 
             } else {
                 Toast.makeText(this, "خطا در اتصال به اینترنت!", Toast.LENGTH_SHORT).show();
@@ -180,7 +159,7 @@ public class Login2Activity extends BaseActivity implements View.OnClickListener
         } else if (i == R.id.txt_forgot_password) {
             HSH.openFragment(this, new ForgotPasswordFragment());
         } else if (i == R.id.txt_register) {
-            signIn();
+            startActivity(new Intent(this, Register2Activity.class));
         }
     }
 
@@ -350,6 +329,31 @@ public class Login2Activity extends BaseActivity implements View.OnClickListener
                 getUserInfo(result);
             } else
                 HSH.showtoast(Login2Activity.this, "مجددا تلاش نمایید");
+        }
+    }
+
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+        if (etUsername.getText().length() > 5 &&
+                etPassword.getText().length() > 5) {
+            btLogin.setEnabled(true);
+            btLogin.setBackground(getResources().getDrawable(R.drawable.rounded_corners_solid_black));
+        } else {
+            btLogin.setEnabled(false);
+            btLogin.setBackground(getResources().getDrawable(R.drawable.rounded_corners_solid_gray));
+
         }
     }
 }

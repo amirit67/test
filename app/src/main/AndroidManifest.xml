@@ -28,7 +28,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:allowBackup">
         <activity
-            android:name=".Activities.Register2Activity"
+            android:name=".Activities.Login2Activity"
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme">
             <intent-filter>
@@ -58,6 +58,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
+        <activity
+            android:name=".Activities.Register2Activity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".Activities.IntroLoginActivity"
             android:launchMode="singleTop"
