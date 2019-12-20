@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import ir.payebash.Activities.MainActivity;
 import ir.payebash.BuildConfig;
 import ir.payebash.R;
 import ir.payebash.helpers.PrefsManager;
@@ -53,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String username = ((EditText) findViewById(R.id.editUsername)).getText().toString();
                     String password = ((EditText) findViewById(R.id.editPassword)).getText().toString();
 
-                    new AsyncLoginTask(this).execute(loginUrl, username, password);
+                    //new AsyncLoginTask(this).execute(loginUrl, username, password);
 
                 } else {
                     Toast.makeText(this, "You are not connected to the Internet!", Toast.LENGTH_SHORT).show();

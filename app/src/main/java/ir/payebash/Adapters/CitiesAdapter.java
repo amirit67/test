@@ -52,6 +52,7 @@ public class CitiesAdapter extends BaseAdapter {
                 feed.add(item);
             }
             this.feedItemList = feed;
+            cr.close();
         } catch (Exception e) {
         }
 
@@ -130,6 +131,7 @@ public class CitiesAdapter extends BaseAdapter {
                         //item.setCityNameEn(cr.getString(cr.getColumnIndex("city_name_en")));
                         feedItemList.add(item);
                     }
+                    cr.close();
                     // Set on UI Thread
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override

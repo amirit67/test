@@ -69,7 +69,7 @@ public class MyPayeFragment extends Fragment {
             ((TitleMain) getContext()).FragName("رویدادهای درخواستی من");
             cr = Application.database.rawQuery("SELECT * from RecentVisit where IsWanted = 'true' ORDER BY Id DESC limit 100", null);
         }*/
-
+        cr.close();
         if (cr.getCount() == 0) {
             HSH.showtoast(ac, "موردی یافت نشد.");
             getFragmentManager().popBackStack();

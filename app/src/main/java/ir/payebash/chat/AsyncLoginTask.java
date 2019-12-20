@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -22,6 +25,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ir.payebash.Activities.MainActivity;
 import ir.payebash.helpers.PrefsManager;
 import ir.payebash.helpers.User;
 import microsoft.aspnet.signalr.client.http.CookieCredentials;
@@ -29,16 +33,22 @@ import microsoft.aspnet.signalr.client.http.CookieCredentials;
 public class AsyncLoginTask extends AsyncTask<String, Void, CookieCredentials> {
 
     Activity activity;
-    ProgressDialog progressDialog;
+    //ProgressDialog progressDialog;
+    ProgressBar pb;
+    TextView btGo;
 
-    public AsyncLoginTask(Activity activity) {
+    public AsyncLoginTask(Activity activity, ProgressBar pb, TextView btGo) {
         this.activity = activity;
+        this.pb = pb;
+        this.btGo = btGo;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = ProgressDialog.show(activity, "", "Signing In...", true, false);
+        pb.setVisibility(View.VISIBLE);
+        btGo.setVisibility(View.GONE);
+        //progressDialog = ProgressDialog.show(activity, "", "Signing In...", true, false);
     }
 
     @Override
@@ -96,8 +106,9 @@ public class AsyncLoginTask extends AsyncTask<String, Void, CookieCredentials> {
 
     @Override
     protected void onPostExecute(CookieCredentials cookieCredentials) {
-        progressDialog.cancel();
-
+        //progressDialog.cancel();
+        pb.setVisibility(View.GONE);
+        btGo.setVisibility(View.VISIBLE);
         if (cookieCredentials != null) {
             User.loginCredentials = cookieCredentials;
             PrefsManager.saveAuthCookie(activity, cookieCredentials);

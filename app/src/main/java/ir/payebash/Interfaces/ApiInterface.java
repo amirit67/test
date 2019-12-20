@@ -53,9 +53,9 @@ public interface ApiInterface {
     @POST("api/getUncomingPosts")
     Call<List<PayeItem>> getUncomingPosts(@FieldMap Map<String, String> data);
 
-    @FormUrlEncoded
-    @POST("api/insertuser")
-    Call<ResponseBody> inesrtUser(@FieldMap Map<String, String> data);
+    @POST("api/registeruser")
+    //insertuser
+    Call<ResponseBody> inesrtUser(@Body UserItem data);
 
     @FormUrlEncoded
     @POST("api/InsertPayment")

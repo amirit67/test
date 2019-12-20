@@ -6,7 +6,8 @@ public class UserItem implements Serializable {
 
     public static final long serialVersionUID = 1L;
     public String UserId = "";
-    public String FullName = "";
+    public String UserName = "";
+    public String Name = "";
     public String ProfileImage = "";
     public String ServicesIds = "";
     public String IsAuthenticate = "";
@@ -14,6 +15,7 @@ public class UserItem implements Serializable {
     public String Telegram = "";
     public String Soroosh = "";
     public String Gmail = "";
+    public String Email = "";
     public String Message = "";
     public String Mobile = "";
     public String MobileTemp = "";
@@ -24,7 +26,7 @@ public class UserItem implements Serializable {
     }
 
     public String getFullName() {
-        return FullName;
+        return Name;
     }
 
     public String getProfileImage() {
@@ -65,5 +67,25 @@ public class UserItem implements Serializable {
 
     public String getMobileTemp() {
         return MobileTemp;
+    }
+
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String userName) {
+        UserName = userName;
+    }
+
+    public void setFullName(String fullName) {
+        Name = fullName;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
     }
 }

@@ -2,15 +2,23 @@ package ir.payebash.Fragments;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -49,6 +58,10 @@ import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.Models.PayeItem;
 import ir.payebash.R;
 import ir.payebash.asynktask.AsynctaskGetPost;
+import ir.payebash.chat.ChatActivity;
+import ir.payebash.chat.ChatService;
+import ir.payebash.chat.MainActivity;
+import ir.payebash.modelviewsChat.RoomViewModel;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -56,25 +69,44 @@ import static android.app.Activity.RESULT_OK;
 public class RoomsFragment extends Fragment {
 
 
-    private final int REQ_CODE_SPEECH_INPUT = 100;
-
-    AsynctaskGetPost getPost;
-    IWebservice m;
+    // Used to receive messages from ChatService
+    MyReceiver myReceiver;
+    // Chat Service
+    ChatService chatService;
+    boolean mBound = false;
     private RecyclerView rv;
-    private boolean isLoading;
     private Map<String, String> params = new HashMap<>();
     private int Cnt = 0;
     private SwipeRefreshLayout swipeContainer;
     private ProgressWheel pb;
     private RoomsAdapter adapter;
-    private Activity ac;
-    private int MY_DATA_CHECK_CODE = 0;
     private EditText etSearch;
     private LinearLayoutManager layoutManager;
-    private OnLoadMoreListener mOnLoadMoreListener;
-    private int visibleThreshold = 1, lastVisibleItem, totalItemCount = 0;
 
     private View rootView = null;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Intent intent = new Intent(getActivity(), ChatService.class);
+        getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        //Register events we want to receive from Chat Service
+        myReceiver = new MyReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("notifyAdapter");
+        getActivity().registerReceiver(myReceiver, intentFilter);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (mBound) {
+            getActivity().unbindService(mConnection);
+            mBound = false;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,115 +115,10 @@ public class RoomsFragment extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_rooms, container, false);
 
             DeclareElements();
-            ac = getActivity();
-            getEvents();
-
-            swipeContainer.setOnRefreshListener(() -> {
-                Cnt = 0;
-                params.clear();
-                adapter.ClearFeed();
-                params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                getPost.getData();
-            });
-
-            setOnLoadMoreListener(() -> {
-                /*feed.add(null);
-                adapter.notifyItemInserted(feed.size() - 1);*/
-                swipeContainer.setRefreshing(true);
-                if (HSH.isNetworkConnection(getActivity())) {
-                    Cnt++;
-                    params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                    getPost.getData();
-                }
-            });
-
-            rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-                    if (dy > 0) //check for scroll down
-                    {
-                        totalItemCount = layoutManager.getItemCount();
-                        lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-
-                        if (!isLoading && adapter.getItemCount() > 19 && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-                            if (mOnLoadMoreListener != null) {
-                                mOnLoadMoreListener.onLoadMore();
-                            }
-                            isLoading = true;
-                        }
-                    }
-                }
-            });
         }
         return rootView;
     }
 
-
-    private void getEvents() {
-        params.put(getString(R.string.Skip), String.valueOf(Cnt));
-        m = new IWebservice() {
-            @Override
-            public void getResult(retrofit2.Response<List<PayeItem>> list) throws Exception {
-                try {
-                    isLoading = false;
-                    swipeContainer.setRefreshing(false);
-                    pb.setVisibility(View.GONE);
-                    adapter.addItems(list.body());
-                } catch (Exception e) {
-                }
-            }
-
-            @Override
-            public void getError() throws Exception {
-                HSH.showtoast(ac, "خطا در اتصال به اینترنت");
-                swipeContainer.setRefreshing(false);
-                pb.setVisibility(View.GONE);
-            }
-        };
-        getPost = new AsynctaskGetPost(getActivity(), params, m);
-        getPost.getData();
-
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, final int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == MY_DATA_CHECK_CODE) {
-            {
-                Intent installTTSIntent = new Intent();
-                installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-                startActivity(installTTSIntent);
-            }
-        }
-
-        switch (requestCode) {
-            case REQ_CODE_SPEECH_INPUT: {
-                if (resultCode == RESULT_OK && null != data) {
-                    ArrayList<String> result = data
-                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    //et_search.setText(result.get(0));
-                    Search(result.get(0));
-                }
-                break;
-            }
-            case 456:
-                if (null != data) {
-                    try {
-                        final Cursor cr = Application.database.rawQuery("SELECT name from categories where id = '" + data.getStringExtra(getString(R.string.CategoryId)) + "'", null);
-                        if (cr.moveToFirst()) {
-                            //btnCategories.setText(cr.getString(cr.getColumnIndex("name")));
-                            //btnCategories.setTag(data.getStringExtra(getString(R.string.CategoryId)));
-
-                            params.put("Activity", data.getStringExtra(getString(R.string.CategoryId)));
-                        }
-                    } catch (Exception e) {
-                    }
-                }
-                break;
-        }
-    }
 
     public void DeclareElements() {
         //llSearch = rootView.findViewById(R.id.ll_search);
@@ -202,7 +129,16 @@ public class RoomsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
         rv.addItemDecoration(new ItemDecorationAlbumColumns(getActivity(), ItemDecorationAlbumColumns.VERTICAL_LIST));
-        adapter = new RoomsAdapter(getActivity());
+        adapter = new RoomsAdapter(getActivity(), new RoomsAdapter.IGetRoom() {
+            @Override
+            public void Room(RoomViewModel room) {
+                //final String text = ((TextView) view).getText().toString();
+                chatService.Join(room.name);
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.putExtra("room", room);
+                startActivity(intent);
+            }
+        });
         rv.setAdapter(adapter);
 
         etSearch = rootView.findViewById(R.id.et_search);
@@ -237,8 +173,32 @@ public class RoomsFragment extends Fragment {
         }
     }
 
-    public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
-        this.mOnLoadMoreListener = mOnLoadMoreListener;
-    }
+    //https://developer.android.com/guide/components/bound-services.html
+    private ServiceConnection mConnection = new ServiceConnection() {
 
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            ChatService.LocalBinder binder = (ChatService.LocalBinder) service;
+            chatService = binder.getService();
+            chatService.GetRooms();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
+    private class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            switch (intent.getAction()) {
+                case "notifyAdapter":
+                    adapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    } // MyReceiver
 }

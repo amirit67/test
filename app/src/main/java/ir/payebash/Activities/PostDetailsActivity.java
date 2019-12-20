@@ -81,6 +81,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
 
     private static Double latitude, longitude;
     //com.google.android.gms.maps.MapView mMapView;
+    private ConstraintLayout pB;
     int checkid = 0;
     boolean isPush = false;
     @Inject
@@ -93,7 +94,6 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     private CollapsingToolbarLayout i;
     private AppBarLayout appBar;
     //private LinearLayout ll_advertisdetails;
-    //private SliderLayout pager;
     private Button /*btn_contactWays,*/ btnBeup;
     //private EditText etComment;
     private ImageView imgProfile, btnShare, btnReport;
@@ -109,17 +109,8 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     //private CommentsAdapter adapter;
     // private List<CommentModel> Commentfeed = new ArrayList<>();
 
-    public static int getPixelValue(Context context, int dimenId) {
-        Resources resources = context.getResources();
-        return (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                dimenId,
-                resources.getDisplayMetrics()
-        );
-    }
-
     private void DeclareElements() {
-        //ll_advertisdetails = findViewById(R.id.ll_advertisdetails);
+        pB = findViewById(R.id.progressBar);
         txtEventTitle = findViewById(R.id.txt_event_title);
         txtEventDate = findViewById(R.id.txt_event_date);
         txtCategory = findViewById(R.id.txt_category);
@@ -326,6 +317,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             public void onResponse
                     (Call<EventModel> call, retrofit2.Response<EventModel> response) {
                 try {
+                    pB.setVisibility(View.GONE);
                     txtEventTitle.setText(fFeed.getTitle());
                     //ll_advertisdetails.setVisibility(View.VISIBLE);
                     result = response.body();
@@ -438,6 +430,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                             "('" + fFeed.getPostId() + "','false','true') ";
 
                                 Application.database.execSQL(query);
+                                cr.close();
                             }
                         } catch (Exception e) {
                         }
@@ -838,6 +831,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                 GetCommentAsynkTask();*/
                             Cursor cr = Application.database.rawQuery("SELECT * from RecentVisit WHERE Id='" + fFeed.getPostId() + "'", null);
                             cr.moveToFirst();
+                            cr.close();
                             if (null == cr.getString(cr.getColumnIndex("IsBeup"))) {
                                 NotifyData notifydata = notifyData();
                                 notifydata.type = "Beup";
@@ -1030,6 +1024,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.btn_fav:
                 Cursor cr = Application.database.rawQuery("SELECT IsFavorite from RecentVisit WHERE Id = '" + fFeed.getPostId() + "'", null);
+                cr.close();
                 if (cr.getCount() > 0) {
                     try {
                         cr.moveToFirst();

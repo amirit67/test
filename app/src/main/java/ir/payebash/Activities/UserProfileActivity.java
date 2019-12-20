@@ -91,6 +91,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
         try {
             Cursor cr = Application.database.rawQuery("SELECT IsMine from RecentVisit WHERE Id='" + getIntent().getExtras().getString("PostId") + "' and IsMine = 'true'", null);
+            cr.close();
             if (cr.getCount() > 0) {
                 findViewById(R.id.txt_contact).setVisibility(View.VISIBLE);
                 findViewById(R.id.ll_contact_ways).setVisibility(View.VISIBLE);
@@ -167,6 +168,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
                         try {
                             Cursor cr = Application.database.rawQuery("SELECT * from Citys where id = '" + Integer.parseInt(obj.getCity()) + "'", null);
+                            cr.close();
                             cr.moveToFirst();
                             txtCity.setText(String.format(getString(R.string.location), cr.getString(cr.getColumnIndex("StateCity"))));
                         } catch (Exception e) {

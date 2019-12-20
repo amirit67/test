@@ -316,7 +316,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void SendUserInfo(final String SigninType, final String email) {
-        params.put(getString(R.string.UserId), preferences.getString(getString(R.string.UserId), ""));
+        /*params.put(getString(R.string.UserId), preferences.getString(getString(R.string.UserId), ""));
         Call<ResponseBody> call =
                 ApiClient.getClient().create(ApiInterface.class).inesrtUser(params);
         call.enqueue(new Callback<ResponseBody>() {
@@ -350,7 +350,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         } else if (response.code() == 200) {
                             if (params.size() > 0 && !params.get(getString(R.string.Type)).matches("Update") && preferences.getString(getString(R.string.mobile), "").length() < 10)
                                 try {
-                                    /**/
+                                    *//**//*
                                     HSH.editor(getString(R.string.UserId), response.body().string());
                                     HSH.editor(getString(R.string.IsAuthenticate), "true");
                                     HSH.editor(getString(R.string.FullName), params.get("Name") + params.get("Family"));
@@ -379,7 +379,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 bt_register.setEnabled(true);
                 loading.dismiss();
             }
-        });
+        });*/
     }
 
     private void getProfileDetails() {

@@ -70,6 +70,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 feed.add(item);
             }
             this.feedItemList = feed;
+            cr.close();
         } catch (Exception e) {
         }
 

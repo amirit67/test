@@ -192,6 +192,7 @@ public class HomeFragment extends Fragment {
                 if (null != data) {
                     try {
                         final Cursor cr = Application.database.rawQuery("SELECT name from categories where id = '" + data.getStringExtra(getString(R.string.CategoryId)) + "'", null);
+                        cr.close();
                         if (cr.moveToFirst()) {
                             btnCategories.setText(cr.getString(cr.getColumnIndex("name")));
                             btnCategories.setTag(data.getStringExtra(getString(R.string.CategoryId)));

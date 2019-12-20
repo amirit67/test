@@ -59,6 +59,7 @@ public class CategoriesFilterFragment extends Fragment {
             item.setHasChild(cr.getString(cr.getColumnIndex("hasChild")));
             feed.add(item);
         }
+        cr.close();
         adapter.notifyDataSetChanged();
         cr.close();
 

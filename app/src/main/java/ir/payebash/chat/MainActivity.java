@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_power_settings_new_white_24dp);
 
         // Setup ListView
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Globals.Rooms);
+        //adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Globals.Rooms);
         ListView lv = findViewById(R.id.lvRooms);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener((parent, view, position, id) -> {

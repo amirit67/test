@@ -68,6 +68,7 @@ public class SplashActivity extends Activity {
                         for (int i = 0; i < result.size(); i++) {
                             cr = Application.database.rawQuery("SELECT id FROM categories WHERE id = '" + result.get(i).getId() + "'", null);
                             try {
+                                cr.close();
                                 if (cr.getCount() > 0) {
                                     query = "UPDATE categories SET " +
                                             "parentId='" + result.get(i).getParentId() + "' , " +
@@ -116,6 +117,7 @@ public class SplashActivity extends Activity {
 
         try {
             Cursor cr = Application.database.rawQuery("SELECT * from RecentVisit WHERE IsPaid='true' and IsSuccessed = 'false'", null);
+            cr.close();
             for (int i = 0; i < cr.getCount(); i++) {
                 cr.moveToPosition(i);
                 Map<String, String> params = new HashMap<>();

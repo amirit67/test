@@ -341,6 +341,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
                 if (null != data) {
                     try {
                         final Cursor cr = Application.database.rawQuery("SELECT name from categories where id = '" + data.getStringExtra(getString(R.string.CategoryId)) + "'", null);
+                        cr.close();
                         if (cr.moveToFirst()) {
                             btnSubjectPost.setText(cr.getString(cr.getColumnIndex("name")));
                             btnSubjectPost.setTag(data.getStringExtra(getString(R.string.CategoryId)));
@@ -615,6 +616,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
                     try {
                         if (v.getTag().toString().equals(getString(R.string.Subject))) {
                             Cursor cr = Application.database.rawQuery("SELECT * from categories where id = '" + result.getString(v.getTag().toString()).trim() + "' ", null);
+                            cr.close();
                             cr.moveToFirst();
                             ((Button) v).setText(cr.getString(cr.getColumnIndex("name")));
                             v.setTag(cr.getString(cr.getColumnIndex("id")));
@@ -631,6 +633,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
 
                         } else if (v.getTag().toString().equals(getString(R.string.city))) {
                             Cursor cr = Application.database.rawQuery("SELECT id,StateCity from Citys where id = '" + fFeed.getCity() + "' ", null);
+                            cr.close();
                             cr.moveToFirst();
                             ((Button) v).setText(cr.getString(cr.getColumnIndex("StateCity")));
                             v.setTag(cr.getString(cr.getColumnIndex("id")));

@@ -193,6 +193,7 @@ public class SearchFragment extends Fragment {
 
                             params.put("Activity", data.getStringExtra(getString(R.string.CategoryId)));
                         }
+                        cr.close();
                     } catch (Exception e) {
                     }
                 }

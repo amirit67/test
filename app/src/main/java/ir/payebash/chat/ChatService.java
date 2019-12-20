@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutionException;
 
 import ir.payebash.BuildConfig;
 import ir.payebash.helpers.Globals;
+import ir.payebash.helpers.PrefsManager;
 import ir.payebash.helpers.User;
 import ir.payebash.modelviewsChat.MessageViewModel;
 import ir.payebash.modelviewsChat.RoomViewModel;
@@ -93,7 +94,7 @@ public class ChatService extends Service {
 
         // Create Connection
         connection = new HubConnection(serverUrl);
-        connection.setCredentials(User.loginCredentials);
+        connection.setCredentials(/*User.loginCredentials*/PrefsManager.loadAuthCookie(this));
         connection.getHeaders().put("Device", "Mobile");
 
         // Create Proxy
@@ -138,7 +139,7 @@ public class ChatService extends Service {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Globals.Rooms.add(room.Name);
+                            Globals.Rooms.add(/*room.Name*/room);
                             sendBroadcast(new Intent().setAction("notifyAdapter"));
                         }
                     });
@@ -151,7 +152,7 @@ public class ChatService extends Service {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Globals.Rooms.remove(room.Name);
+                            Globals.Rooms.remove(/*room.Name*/room);
                             sendBroadcast(new Intent().setAction("notifyAdapter"));
                         }
                     });
@@ -238,7 +239,10 @@ public class ChatService extends Service {
                                 Globals.Messages.addAll(Arrays.asList(messageViewModels));
 
                                 for (MessageViewModel m : Globals.Messages) {
-                                    m.IsMine = m.From.equals(User.DisplayName) ? 1 : 0;
+                                    try {
+                                        m.IsMine = m.From.equals(User.DisplayName) ? 1 : 0;
+                                    } catch (Exception e) {
+                                    }
                                 }
                                 sendBroadcast(new Intent().setAction("notifyAdapter"));
                             }
@@ -259,7 +263,7 @@ public class ChatService extends Service {
                                 Globals.Rooms.clear();
 
                                 for (RoomViewModel room : rooms)
-                                    Globals.Rooms.add(room.Name);
+                                    Globals.Rooms.add(room);
 
                                 sendBroadcast(new Intent().setAction("notifyAdapter"));
                             }

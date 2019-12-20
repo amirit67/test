@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#c5c5c5</color>
     <color name="colorAccent">#EEF2F6</color>
 
+    <color name="blue">#2B8CFF</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
@@ -15,7 +16,7 @@
 
     <color name="google_red">#ef7f1a</color>
     <color name="google_blue">#5e5971</color>
-
+    <color name="rippelColor">#0099CC</color>
     <integer-array name="google_glyph_colors">
         <item>@color/google_blue</item>
         <item>@color/google_red</item>

@@ -234,7 +234,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void SendPhoneNumber(final View v) {
-        Call<ResponseBody> call =
+       /* Call<ResponseBody> call =
                 ApiClient.getClient().create(ApiInterface.class).inesrtUser(params);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -315,7 +315,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     v.setEnabled(true);
                 }
             }
-        });
+        });*/
     }
 
     private void CommitCode() {

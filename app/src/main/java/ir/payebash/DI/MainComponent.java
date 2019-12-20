@@ -12,7 +12,9 @@ import ir.payebash.Activities.PostRegisterActivity;
 import ir.payebash.Activities.UpdatePostActivity;
 import ir.payebash.Activities.UserProfileActivity;
 import ir.payebash.Adapters.BannerAdapter;
+import ir.payebash.Adapters.ImagesAdapter;
 import ir.payebash.Adapters.PayeAdapter;
+import ir.payebash.Adapters.RoomsAdapter;
 import ir.payebash.Adapters.StoryAdapter;
 import ir.payebash.Application;
 import ir.payebash.Fragments.EventsWantedFragment;
@@ -49,7 +51,9 @@ public interface MainComponent {
 
     void Inject(BannerAdapter bannerAdapter);
 
+    void Inject(RoomsAdapter roomsAdapter);
 
+    void Inject(ImagesAdapter imagesAdapter);
 
     void Inject(UncomingEventsFragment mainActivity);
 

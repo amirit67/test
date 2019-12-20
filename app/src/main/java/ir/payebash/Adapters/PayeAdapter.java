@@ -118,6 +118,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                     @Override
                     public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        Holder.imgContent.setBackgroundResource(R.drawable.ic_thumbnail);
                     }
 
                     @Override

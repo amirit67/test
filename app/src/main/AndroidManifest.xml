@@ -28,7 +28,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:allowBackup">
         <activity
-            android:name=".Activities.SplashActivity"
+            android:name=".Activities.Register2Activity"
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme">
             <intent-filter>

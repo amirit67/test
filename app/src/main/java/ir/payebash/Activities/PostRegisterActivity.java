@@ -443,6 +443,7 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
                     _data = data;
                     try {
                         final Cursor cr = Application.database.rawQuery("SELECT * from categories where id = '" + data.getStringExtra(getString(R.string.CategoryId)) + "'", null);
+                        cr.close();
                         if (cr.moveToFirst()) {
                             btn_subject_post.setText(cr.getString(cr.getColumnIndex("name")));
                             btn_subject_post.setTag(data.getStringExtra(getString(R.string.CategoryId)));

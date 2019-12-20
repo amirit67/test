@@ -45,11 +45,11 @@ public class ImageLoaderMoudle {
     @Provides
     public DisplayImageOptions options() {
         return new DisplayImageOptions.Builder()
-                .showImageOnFail(R.mipmap.ic_paye)
-                .showImageForEmptyUri(R.mipmap.ic_paye)
+                //.showImageOnFail(R.drawable.ic_thumbnail)
+                //.showImageForEmptyUri(R.drawable.ic_thumbnail)
                 .displayer(new RoundedBitmapDisplayer(1))
-                .displayer(new FadeInBitmapDisplayer(500))
-                .showImageOnLoading(R.mipmap.ic_paye)
+                .displayer(new FadeInBitmapDisplayer(100))
+                //.showImageOnLoading(R.drawable.ic_thumbnail)
                 .cacheInMemory(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY)
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
     }

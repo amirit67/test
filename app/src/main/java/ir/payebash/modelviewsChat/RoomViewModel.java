@@ -1,6 +1,11 @@
 package ir.payebash.modelviewsChat;
 
-public class RoomViewModel {
+import java.io.Serializable;
+
+public class RoomViewModel implements Serializable {
     public int Id;
-    public String Name;
+    public String name;
+    public String image ;
+    public String host ;
+    public String timeToJoin ;
 }
