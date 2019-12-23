@@ -1,128 +1,92 @@
 package ir.payebash.Activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.animation.AccelerateInterpolator;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.Scopes;
-import com.google.android.gms.common.api.Scope;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-import ir.payebash.Application;
 import ir.payebash.BuildConfig;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
-import ir.payebash.Models.PlusItem;
 import ir.payebash.Models.UserItem;
 import ir.payebash.R;
-import ir.payebash.asynktask.AsynctaskCheckPhoneNumber;
 import ir.payebash.chat.AsyncLoginTask;
-import ir.payebash.helpers.PrefsManager;
-import ir.payebash.helpers.User;
-import microsoft.aspnet.signalr.client.http.CookieCredentials;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
 
-public class Register2Activity extends BaseActivity implements View.OnClickListener, TextWatcher
-        , View.OnFocusChangeListener {
+public class Register2Activity extends Fragment implements View.OnClickListener, TextWatcher {
 
 
     private String registerUrl = BuildConfig.BaseUrl + "/account/register";
     private EditText etFullname, etUsername, etEmail, etPassword;
-    private TextInputLayout etName;
-    public TextView btRegister;
+    public TextView btRegister, txtError;
+    ImageView imgBack, imgName, imgUsername, imgEmail, imgPassword;
     private ProgressBar progressBar;
     private UserItem params;
     private DefaultHttpClient httpclient;
+    private View rootView = null;
 
     private void initViews() {
-        etName = findViewById(R.id.name_parent);
-        etUsername = findViewById(R.id.et_username);
-        etPassword = findViewById(R.id.et_password);
-        progressBar = findViewById(R.id.progressBar);
-        etFullname = findViewById(R.id.et_name);
-        etEmail = findViewById(R.id.et_email);
-        btRegister = findViewById(R.id.bt_register);
+        etFullname = rootView.findViewById(R.id.et_name);
+        etEmail = rootView.findViewById(R.id.et_email);
+        etUsername = rootView.findViewById(R.id.et_username);
+        etPassword = rootView.findViewById(R.id.et_password);
+        progressBar = rootView.findViewById(R.id.progressBar);
+        btRegister = rootView.findViewById(R.id.bt_register);
+        txtError = rootView.findViewById(R.id.txt_error);
+        imgBack = rootView.findViewById(R.id.img_back);
+        imgName = rootView.findViewById(R.id.img_name);
+        imgUsername = rootView.findViewById(R.id.img_username);
+        imgEmail = rootView.findViewById(R.id.img_email);
+        imgPassword = rootView.findViewById(R.id.img_password);
 
         etUsername.addTextChangedListener(this);
         etEmail.addTextChangedListener(this);
         etPassword.addTextChangedListener(this);
         etFullname.addTextChangedListener(this);
 
-        etFullname.setOnFocusChangeListener(this);
         /*etEmail.setOnFocusChangeListener(this);
         etPassword.setOnFocusChangeListener(this);
         etFullname.setOnFocusChangeListener(this);*/
 
         btRegister.setOnClickListener(this::onClick);
-        findViewById(R.id.sign_in_button).setOnClickListener(this);
+        rootView.findViewById(R.id.sign_in_button).setOnClickListener(this);
+        imgBack.setOnClickListener(this::onClick);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register2);
-        Application.activity = Register2Activity.this;
-        initViews();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.activity_register2, container, false);
+            initViews();
+        }
+
+        return rootView;
     }
 
     //Firebase_Auth
@@ -130,8 +94,22 @@ public class Register2Activity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.bt_register) {
-            UserInfo();
-        }
+            if (etFullname.getText().length() < 7) {
+                txtError.setText("نام کامل حداقل 7 حرف می باشد");
+                imgName.setBackgroundResource(R.drawable.ic_error);
+            } else if (etUsername.getText().length() < 5) {
+                txtError.setText("نام کاربری حداقل 5 حرف به زبان انگلیسی می باشد");
+                imgUsername.setBackgroundResource(R.drawable.ic_error);
+            } else if ((!etEmail.getText().toString().matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"))) {
+                txtError.setText("فرمت ایمیل صحیح نمی باشد");
+                imgEmail.setBackgroundResource(R.drawable.ic_error);
+            } else if (etPassword.getText().length() < 8) {
+                txtError.setText("رمز عبور حداقل 8 حرف می باشد");
+                imgPassword.setBackgroundResource(R.drawable.ic_error);
+            } else
+                UserInfo();
+        } else if (i == R.id.img_back)
+            getFragmentManager().popBackStack();
     }
 
     private void UserInfo() {
@@ -144,10 +122,10 @@ public class Register2Activity extends BaseActivity implements View.OnClickListe
             params.setEmail(etEmail.getText().toString().trim());
             params.setFullName(etFullname.getText().toString().trim());
             params.setPassword(etPassword.getText().toString().trim());
-            if (NetworkUtils.getConnectivity(Register2Activity.this) != false)
+            if (NetworkUtils.getConnectivity(getActivity()) != false)
                 new AsyncRegisterTask().execute();
             else
-                HSH.showtoast(Register2Activity.this, "خطا در اتصال به اینترنت");
+                HSH.showtoast(getActivity(), "خطا در اتصال به اینترنت");
         } catch (Exception e) {
         }
     }
@@ -163,10 +141,9 @@ public class Register2Activity extends BaseActivity implements View.OnClickListe
                     if (response.code() == 200) {
                         try {
                             HSH.editor(getString(R.string.UserId), response.body().string());
-                            HSH.editor(getString(R.string.IsAuthenticate), "true");
                             HSH.editor(getString(R.string.FullName), params.getFullName());
 
-                            new AsyncLoginTask(Register2Activity.this, progressBar, btRegister)
+                            new AsyncLoginTask(getActivity(), progressBar, btRegister)
                                     .execute(registerUrl, params.getUserName(), params.getPassword());
                         } catch (Exception e) {
                         }
@@ -179,7 +156,7 @@ public class Register2Activity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                HSH.showtoast(Register2Activity.this, "خطا در ارتباط با سرور");
+                HSH.showtoast(getActivity(), "خطا در ارتباط با سرور");
                 progressBar.setVisibility(View.GONE);
                 btRegister.setVisibility(View.VISIBLE);
             }
@@ -199,10 +176,32 @@ public class Register2Activity extends BaseActivity implements View.OnClickListe
     @Override
     public void afterTextChanged(Editable s) {
 
-        if (etFullname.getText().length() > 5 &&
-                etUsername.getText().length() > 4 &&
-                (etEmail.getText().toString().matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) &&
-                etPassword.getText().length() > 7) {
+        Drawable d = getContext().getResources().getDrawable( R.drawable.ic_check_circle);
+        if (etFullname.getText().length() > 6)
+            imgName.setBackgroundResource(R.drawable.ic_check_circle);
+        else
+            imgName.setBackgroundResource(0);
+
+        if (etUsername.getText().length() > 4)
+            imgUsername.setBackgroundResource(R.drawable.ic_check_circle);
+        else
+            imgUsername.setBackgroundResource(0);
+
+        if (etEmail.getText().toString().matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"))
+            imgEmail.setBackgroundResource(R.drawable.ic_check_circle);
+        else
+            imgEmail.setBackgroundResource(0);
+
+        if (etPassword.getText().length() > 7)
+            imgPassword.setBackgroundResource(R.drawable.ic_check_circle);
+        else
+            imgPassword.setBackgroundResource(0);
+
+        txtError.setText("");
+        if (etFullname.getText().length() > 0 &&
+                etUsername.getText().length() > 0 &&
+                etEmail.getText().length() > 0 &&
+                etPassword.getText().length() > 0) {
             btRegister.setEnabled(true);
             btRegister.setBackground(getResources().getDrawable(R.drawable.rounded_corners_solid_black));
         } else {
@@ -210,19 +209,6 @@ public class Register2Activity extends BaseActivity implements View.OnClickListe
             btRegister.setBackground(getResources().getDrawable(R.drawable.rounded_corners_solid_gray));
 
         }
-    }
-
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        if (v.getId() == R.id.et_name && hasFocus) {
-            etName.setHint("نام کامل (حداقل 8 حرف)");
-            etFullname.setHint("");
-        } else if (v.getId() == R.id.et_name){
-            etName.setHint("");
-            etFullname.setHint("نام کامل");
-        }
-
-
     }
 
 

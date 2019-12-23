@@ -30,6 +30,7 @@
         <activity
             android:name=".Activities.Login2Activity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:theme="@style/MyMaterialTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,13 +59,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-
+<!--
         <activity
             android:name=".Activities.Register2Activity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />-->
 
         <activity
             android:name=".Activities.IntroLoginActivity"

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:fillViewport="true"
+    android:orientation="vertical"
     android:layoutDirection="ltr">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +41,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView47" />
 
         <ImageView
-            android:id="@+id/imageView12"
+            android:id="@+id/img_back"
             android:layout_width="18dp"
             android:layout_height="0dp"
             android:layout_marginStart="24dp"
@@ -54,6 +55,8 @@
             android:layout_height="0dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/rounded_corners_top"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -61,341 +64,251 @@
             app:layout_constraintTop_toBottomOf="@+id/textView48"
             app:layout_constraintVertical_bias="1.0">
 
-            <View
-                android:id="@+id/guideline2"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="@+id/et_name_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/et_name_parent"
-                app:layout_constraintVertical_bias="0.7" />
-
-
-            <View
-                android:id="@+id/guideline3"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="@+id/et_username_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/et_username_parent"
-                app:layout_constraintVertical_bias="0.7" />
-
-            <View
-                android:id="@+id/guideline4"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="@+id/et_email_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/et_email_parent"
-                app:layout_constraintVertical_bias="0.7" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/et_name_parent"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/shadow_forgot_password"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/imageView14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_login_username" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/name_parent"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    app:hintTextAppearance="@style/active"
-                    app:hintEnabled="true"
-                    android:hint="نام کامل"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView14"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0">
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <View
+                        android:id="@+id/guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/et_name"
+                        app:layout_constraintVertical_bias="0.7" />
+
+
+                    <View
+                        android:id="@+id/guideline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_username"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/et_username"
+                        app:layout_constraintVertical_bias="0.7" />
+
+                    <View
+                        android:id="@+id/guideline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_email"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/et_email"
+                        app:layout_constraintVertical_bias="0.7" />
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:background="@color/white"
+                        android:background="@drawable/shadow_forgot_password"
+                        android:drawableRight="@drawable/ic_login_username"
+                        android:drawablePadding="@dimen/dp16"
                         android:fontFamily="@font/yekanlight"
                         android:gravity="right|center_vertical"
+                        android:hint="نام کامل"
                         android:inputType="text"
                         android:maxLength="20"
                         android:maxLines="1"
+                        android:nextFocusDown="@+id/et_username"
                         android:paddingTop="@dimen/dp8"
-                        android:paddingRight="@dimen/dp20"
+                        android:paddingRight="@dimen/dp40"
                         android:paddingBottom="@dimen/dp8"
                         android:textSize="@dimen/sp14"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                </com.google.android.material.textfield.TextInputLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/et_username_parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shadow_forgot_password"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/guideline2">
-
-                <ImageView
-                    android:id="@+id/imageView15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_login_username" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    app:hintTextAppearance="@style/active"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView15"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0">
-
-                    <com.google.android.material.textfield.TextInputEditText
+                    <EditText
                         android:id="@+id/et_username"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:background="@color/white"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shadow_forgot_password"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.-_"
+                        android:drawableRight="@drawable/ic_login_username"
+                        android:drawablePadding="@dimen/dp16"
                         android:fontFamily="@font/yekanlight"
                         android:gravity="right|center_vertical"
                         android:hint="نام کاربری"
                         android:inputType="text"
                         android:maxLength="20"
                         android:maxLines="1"
-                        android:paddingTop="@dimen/dp8"
-                        android:paddingRight="@dimen/dp20"
-                        android:paddingBottom="@dimen/dp8"
+                        android:nextFocusDown="@+id/et_email"
+                        android:paddingRight="@dimen/dp40"
                         android:textSize="@dimen/sp14"
-                        android:textStyle="bold" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/et_email_parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shadow_forgot_password"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/guideline3">
-
-                <ImageView
-                    android:id="@+id/imageView16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_mail" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    app:hintTextAppearance="@style/active"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView16"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0">
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/guideline2" />
 
                     <EditText
                         android:id="@+id/et_email"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
+                        android:background="@drawable/shadow_forgot_password"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.-_@"
+                        android:drawableRight="@drawable/ic_mail"
+                        android:drawablePadding="@dimen/dp16"
+                        android:fontFamily="@font/yekanlight"
                         android:gravity="right|center_vertical"
                         android:hint="ایمیل"
-                        android:inputType="textEmailAddress"
-                        android:maxLength="25"
+                        android:inputType="text"
+                        android:maxLength="20"
                         android:maxLines="1"
-                        android:paddingTop="@dimen/dp8"
-                        android:paddingRight="@dimen/dp20"
-                        android:paddingBottom="@dimen/dp8"
-                        android:fontFamily="@font/yekanlight"
+                        android:nextFocusDown="@+id/et_password"
+                        android:paddingRight="@dimen/dp40"
                         android:textSize="@dimen/sp14"
-                        android:textStyle="bold" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/et_password_parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shadow_forgot_password"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/guideline4">
-
-                <ImageView
-                    android:id="@+id/imageView17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_login_lock" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    app:hintTextAppearance="@style/active"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView17"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0">
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/guideline3" />
 
                     <EditText
                         android:id="@+id/et_password"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:hint="رمز عبور"
+                        android:background="@drawable/shadow_forgot_password"
+                        android:drawableRight="@drawable/ic_login_lock"
+                        android:drawablePadding="@dimen/dp16"
+                        android:fontFamily="@font/yekanlight"
                         android:gravity="right|center_vertical"
+                        android:hint="رمز عبور"
                         android:inputType="numberPassword"
                         android:maxLength="20"
                         android:maxLines="1"
-                        android:paddingTop="@dimen/dp8"
-                        android:paddingRight="@dimen/dp20"
-                        android:paddingBottom="@dimen/dp8"
-                        android:fontFamily="@font/yekanlight"
+                        android:paddingRight="@dimen/dp40"
                         android:textSize="@dimen/sp14"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/guideline4"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="#000000" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/bt_register"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/rounded_corners_solid_gray"
+                        android:enabled="false"
+                        android:fontFamily="@font/yekanblack"
+                        android:gravity="center"
+                        android:padding="@dimen/dp8"
+                        android:text="بزن بریم"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp18"
+                        app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/bt_register"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/rounded_corners_solid_gray"
-                android:gravity="center"
-                android:enabled="false"
-                android:padding="@dimen/dp8"
-                android:text="بزن بریم"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp18"
-                android:fontFamily="@font/yekanblack"
-                app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                    <TextView
+                        android:id="@+id/sign_in_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:drawableRight="@drawable/googleg_standard_color_18"
+                        android:drawablePadding="@dimen/dp8"
+                        android:text="ثبت نام با حساب گوگل"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp14"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/sign_in_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:text="ثبت نام با حساب گوگل"
-                android:drawableRight="@drawable/googleg_standard_color_18"
-                android:drawablePadding="@dimen/dp8"
-                android:textSize="@dimen/sp14"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                    <TextView
+                        android:id="@+id/txt_error"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FF8888"
+                        android:textSize="@dimen/sp12"
+                        app:layout_constraintBottom_toTopOf="@+id/bt_register"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_password"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:text="error" />
 
-            <TextView
-                android:id="@+id/txt_error"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/sp12"
-                android:textColor="#FF8888"
-                tools:text="error"
-                app:layout_constraintBottom_toTopOf="@+id/bt_register"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_password_parent"
-                app:layout_constraintVertical_bias="0.0" />
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:indeterminateTint="@color/blue"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/bt_register"
+                        app:layout_constraintEnd_toEndOf="@+id/bt_register"
+                        app:layout_constraintStart_toStartOf="@+id/bt_register"
+                        app:layout_constraintTop_toTopOf="@+id/bt_register"
+                        app:layout_constraintVertical_bias="1.0" />
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:indeterminateTint="@color/blue"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/bt_register"
-                app:layout_constraintEnd_toEndOf="@+id/bt_register"
-                app:layout_constraintStart_toStartOf="@+id/bt_register"
-                app:layout_constraintTop_toTopOf="@+id/bt_register"
-                app:layout_constraintVertical_bias="1.0" />
+                    <ImageView
+                        android:id="@+id/img_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_name"
+                        app:layout_constraintStart_toStartOf="@+id/et_name"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.5" />
+
+                    <ImageView
+                        android:id="@+id/img_username"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_username"
+                        app:layout_constraintStart_toStartOf="@+id/et_username"
+                        app:layout_constraintTop_toTopOf="@+id/guideline2"
+                        app:layout_constraintVertical_bias="0.5" />
+
+                    <ImageView
+                        android:id="@+id/img_email"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_email"
+                        app:layout_constraintStart_toStartOf="@+id/et_email"
+                        app:layout_constraintTop_toTopOf="@+id/guideline3"
+                        app:layout_constraintVertical_bias="0.5" />
+
+                    <ImageView
+                        android:id="@+id/img_password"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/et_password"
+                        app:layout_constraintStart_toStartOf="@+id/et_password"
+                        app:layout_constraintTop_toBottomOf="@+id/guideline4"
+                        app:layout_constraintVertical_bias="0.5" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+</LinearLayout>
 

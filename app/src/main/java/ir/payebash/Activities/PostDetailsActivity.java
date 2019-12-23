@@ -30,6 +30,8 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -44,6 +46,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -98,7 +101,8 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     //private EditText etComment;
     private ImageView imgProfile, btnShare, btnReport;
     private TextView txtFullname, txtEventTitle, txtEventDate, txtLocation ,
-    txtCategory , txtTimeToJoin , txtCost, txtStartDate, txtFollowes, txtDescription
+    txtCategory , txtTimeToJoin , txtCost, txtStartDate, txtFollowes, txtDescription,
+            txtUpgradeEvent
             /*, btnMobile, btnEdit, btnDelete, btnPay*/;
     private PayeItem fFeed;
     //private ImageButton /*btn_fav,*/ btnSendComment, back;
@@ -116,11 +120,14 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         txtCategory = findViewById(R.id.txt_category);
         txtLocation = findViewById(R.id.txt_location);
         txtTimeToJoin = findViewById(R.id.txt_time_to_join);
+        txtUpgradeEvent = findViewById(R.id.txt_upgrade_event);
         txtCost = findViewById(R.id.txt_cost);
         txtStartDate = findViewById(R.id.txt_startdate);
         txtFollowes = findViewById(R.id.txt_followers);
         txtDescription = findViewById(R.id.txt_description);
         btnReport = findViewById(R.id.btn_report);
+
+        txtUpgradeEvent.setOnClickListener(this::onClick);
         /*cpv = findViewById(R.id.cpv);
 
         btnPay = findViewById(R.id.btn_pay);
@@ -1253,8 +1260,52 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 } catch (Exception e) {
                 }
                 break;
+            case R.id.txt_upgrade_event:
+                showBottomsheetNavigation();
+                break;
 
         }
+    }
+
+
+    private void showBottomsheetNavigation() {
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_upgrade_event, null);
+        BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
+        dialog.setContentView(view);
+        BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+
+                switch (i) {
+
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        dialog.show();
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+                //setScrim(v);
+                dialog.show();
+            }
+        });
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        dialog.show();
+        //ConstraintLayout c1 = view.findViewById(R.id.constraintLayout1);
+
     }
 }
 

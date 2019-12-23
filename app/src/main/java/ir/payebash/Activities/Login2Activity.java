@@ -159,7 +159,7 @@ public class Login2Activity extends BaseActivity implements View.OnClickListener
         } else if (i == R.id.txt_forgot_password) {
             HSH.openFragment(this, new ForgotPasswordFragment());
         } else if (i == R.id.txt_register) {
-            startActivity(new Intent(this, Register2Activity.class));
+            HSH.openFragment(this, new Register2Activity());
         }
     }
 

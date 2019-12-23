@@ -678,6 +678,21 @@
                     app:srcCompat="@drawable/ic_report_event" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/txt_upgrade_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ارتقا رویداد"
+                android:textSize="@dimen/sp18"
+                android:textColor="@color/white"
+                android:fontFamily="@font/yekanbold"
+                android:padding="@dimen/dp8"
+                android:gravity="center"
+                android:layout_marginRight="@dimen/dp16"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginBottom="@dimen/dp16"
+                android:background="@drawable/rounded_corners_solid_blue"/>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -685,6 +700,8 @@
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
+        android:visibility="gone"
         android:background="@color/white">
 
         <ProgressBar

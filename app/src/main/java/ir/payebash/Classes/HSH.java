@@ -58,6 +58,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Activities.CategoriesFilterDialog;
+import ir.payebash.Activities.MainActivity;
+import ir.payebash.Activities.NoConnectioonActivity;
+import ir.payebash.Activities.SplashActivity;
 import ir.payebash.Adapters.CitiesAdapter;
 import ir.payebash.Application;
 import ir.payebash.Fragments.NotificationFragment;
@@ -435,6 +438,16 @@ public class HSH {
                 R.anim.slide_out_right);
         ftx.replace(R.id.frame, fragment, fragmentTag);
         ftx.commit();
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                try {
+                    ((InputMethodManager) activity.getSystemService("input_method")).hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+                } catch (Exception e) {
+                }
+            }
+        }, 500);
+
     }
 
     public static void display(final Context ctx, final View v) {

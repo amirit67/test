@@ -38,7 +38,10 @@ public class NetModule {
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
-                        fbToken = task.getResult().getToken();
+                        try {
+                            fbToken = task.getResult().getToken();
+                        } catch (Exception e) {
+                        }
                         return;
                     }
                 });
