@@ -169,23 +169,51 @@
                     android:layout_height="1dp"
                     android:background="@color/colorGray" />
 
-                <EditText
-                    android:id="@+id/et_password"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_corners_bottom"
-                    android:drawableRight="@drawable/ic_login_lock"
-                    android:drawablePadding="@dimen/dp16"
-                    android:fontFamily="@font/yekanlight"
-                    android:gravity="right|center_vertical"
-                    android:hint="رمز عبور"
-                    android:inputType="numberPassword"
-                    android:maxLines="1"
-                    android:padding="@dimen/dp16"
-                    android:textSize="@dimen/sp14"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layoutDirection="rtl"
+                        app:hintEnabled="false"
+                        app:passwordToggleDrawable="@drawable/password_toggle"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="#1169EE">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="@font/yekanlight"
+                            android:gravity="right|center_vertical"
+                            android:hint="رمز عبور"
+                            android:inputType="numberPassword"
+                            android:maxLines="1"
+                            android:padding="@dimen/dp16"
+                            android:textSize="@dimen/sp14"
+                            android:textStyle="bold" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/imageView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/dp16"
+                        app:srcCompat="@drawable/ic_login_lock" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

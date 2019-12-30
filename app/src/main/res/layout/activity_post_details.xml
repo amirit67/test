@@ -129,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="top"
-                android:background="@drawable/item_devider_vertical" />-->
+                android:background="@drawable/item_devider_vertical_green" />-->
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

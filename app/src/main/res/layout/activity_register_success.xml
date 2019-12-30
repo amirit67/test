@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/item_devider_vertical"
+    android:background="@drawable/item_devider_vertical_green"
     android:layout_gravity="center"
     android:layoutDirection="ltr">
 
@@ -71,7 +71,7 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/rounded_corners_solid_white"
         android:gravity="center"
-        android:padding="@dimen/dp8"
+        android:padding="12dp"
         android:text="خب میدونم"
         android:textColor="#30B202"
         android:textSize="@dimen/sp16"

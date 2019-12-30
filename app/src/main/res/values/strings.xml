@@ -137,6 +137,10 @@
 
     <string name="Skip">Skip</string>
 
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string-array name="google_glyph_strings">
 
         <item>M212.487,269.478l-97.944-97.434

@@ -184,28 +184,71 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/guideline3" />
 
-                    <EditText
-                        android:id="@+id/et_password"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/shadow_forgot_password"
-                        android:drawableRight="@drawable/ic_login_lock"
-                        android:drawablePadding="@dimen/dp16"
-                        android:fontFamily="@font/yekanlight"
-                        android:gravity="right|center_vertical"
-                        android:hint="رمز عبور"
-                        android:inputType="numberPassword"
-                        android:maxLength="20"
-                        android:maxLines="1"
-                        android:paddingRight="@dimen/dp40"
-                        android:textSize="@dimen/sp14"
-                        android:textStyle="bold"
+                    <LinearLayout
 
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/guideline4"
-                        app:passwordToggleEnabled="true"
-                        app:passwordToggleTint="#000000" />
+                        android:id="@+id/linearLayout9"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shadow_forgot_password"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@+id/guideline4">
+
+                        <ImageView
+                            android:id="@+id/img_password"
+                            android:layout_width="35dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                            android:scaleType="fitCenter"
+                            android:layout_marginStart="20dp"
+                            android:layout_weight="0.2" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layoutDirection="rtl"
+                            app:hintEnabled="false"
+                            app:passwordToggleDrawable="@drawable/password_toggle"
+                            app:passwordToggleEnabled="true"
+                            app:passwordToggleTint="#1169EE">
+
+                            <EditText
+                                android:id="@+id/et_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@android:color/transparent"
+                                android:drawableRight="@drawable/ic_login_lock"
+                                android:drawablePadding="@dimen/dp16"
+                                android:fontFamily="@font/yekanlight"
+                                android:gravity="right|center_vertical"
+                                android:hint="رمز عبور"
+                                android:inputType="numberPassword"
+                                android:maxLength="20"
+                                android:maxLines="1"
+                                android:padding="@dimen/dp16"
+                                android:paddingRight="@dimen/dp40"
+                                android:textSize="@dimen/sp14"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:passwordToggleEnabled="true"
+                                app:passwordToggleTint="#000000" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ImageView
+                            android:id="@+id/imageView14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="@dimen/dp16"
+                            app:srcCompat="@drawable/ic_login_lock" />
+
+                    </LinearLayout>
+
+
 
                     <TextView
                         android:id="@+id/bt_register"
@@ -248,8 +291,9 @@
                         android:textSize="@dimen/sp12"
                         app:layout_constraintBottom_toTopOf="@+id/bt_register"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.498"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/et_password"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout9"
                         app:layout_constraintVertical_bias="0.0"
                         tools:text="error" />
 
@@ -296,15 +340,6 @@
                         app:layout_constraintTop_toTopOf="@+id/guideline3"
                         app:layout_constraintVertical_bias="0.5" />
 
-                    <ImageView
-                        android:id="@+id/img_password"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="40dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/et_password"
-                        app:layout_constraintStart_toStartOf="@+id/et_password"
-                        app:layout_constraintTop_toBottomOf="@+id/guideline4"
-                        app:layout_constraintVertical_bias="0.5" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
 
