@@ -107,7 +107,7 @@ public class MyPayeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        rootView = inflater.inflate(R.layout.fragment_my_event, container, false);
         Application.getComponent().Inject(this);
         DeclareElements();
         bundle = getArguments();
@@ -151,10 +151,6 @@ public class MyPayeFragment extends Fragment {
                 params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
                 getPost.getData();
             });
-            swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                    android.R.color.holo_green_light,
-                    android.R.color.holo_orange_light,
-                    android.R.color.holo_red_light);
 
             setOnLoadMoreListener(() -> {
                 /*feed.add(null);

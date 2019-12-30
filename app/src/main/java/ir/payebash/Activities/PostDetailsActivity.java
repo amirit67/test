@@ -219,6 +219,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             try {
                 Cursor cr = Application.database.rawQuery("SELECT * from RecentVisit WHERE Id='" + fFeed.getPostId() + "'", null);
                 cr.moveToFirst();
+                cr.close();
                 /*if (cr.getString(cr.getColumnIndex("IsFavorite")).equals("true"))
                     btn_fav.setImageResource(R.drawable.ic_bookmark);
                 else

@@ -67,7 +67,7 @@ import retrofit2.Callback;
 
 public class PostRegisterActivity extends BaseActivity implements View.OnClickListener {
 
-    public ArrayList<CustomGallery> map = new ArrayList<CustomGallery>();
+    public ArrayList<CustomGallery> map = new ArrayList<>();
     String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     @Inject
     ImageLoader imageLoader;

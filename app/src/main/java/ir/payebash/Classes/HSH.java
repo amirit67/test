@@ -439,12 +439,10 @@ public class HSH {
         ftx.replace(R.id.frame, fragment, fragmentTag);
         ftx.commit();
 
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                try {
-                    ((InputMethodManager) activity.getSystemService("input_method")).hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-                } catch (Exception e) {
-                }
+        new Handler().postDelayed(() -> {
+            try {
+                ((InputMethodManager) activity.getSystemService("input_method")).hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+            } catch (Exception e) {
             }
         }, 500);
 

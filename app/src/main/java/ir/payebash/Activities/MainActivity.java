@@ -18,21 +18,16 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
-import ir.payebash.Fragments.ActivitiesFragment;
+import ir.payebash.Fragments.user.ActivitiesFragment;
 import ir.payebash.Fragments.HomeFragment;
 import ir.payebash.Fragments.MyPayeFragment;
-import ir.payebash.Fragments.NewAddressActivity;
-import ir.payebash.Fragments.NotificationFragment;
 import ir.payebash.Fragments.ProfileFragment;
 import ir.payebash.Fragments.RoomsFragment;
 import ir.payebash.Interfaces.ApiClient;
@@ -52,7 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public static LinearLayout ll_bottomNavigation;
     BottomNavigationView bottomNavigationView;
     private HomeFragment home_fragment = null;
-    private NewAddressActivity activities_fragment = null;
+    private ActivitiesFragment activities_fragment = null;
     private RoomsFragment roomsFragment = null;
     private ProfileFragment profile_fragment = null;
 
@@ -115,8 +110,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             bottomNavigationView = findViewById(R.id.bottom_navigation);
             ll_bottomNavigation = findViewById(R.id.linearLayout);
-            home_fragment = new HomeFragment();
-            openFragment(MainActivity.this, home_fragment);
+           // home_fragment = new HomeFragment();
+            activities_fragment = new ActivitiesFragment();
+            openFragment(MainActivity.this, activities_fragment);
             //Application.fra = home_fragment;
 
             bottomNavigationView.getMenu().findItem(R.id.action_home).setChecked(true);
@@ -140,7 +136,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     openFragment(MainActivity.this, roomsFragment);
                 } else if (menuItem.getItemId() == R.id.action_event) {
                     if (activities_fragment == null)
-                        activities_fragment = new NewAddressActivity();
+                        activities_fragment = new /*NewAddressActivity*/ActivitiesFragment();
                     openFragment(MainActivity.this, activities_fragment);
                 }
                 return false;

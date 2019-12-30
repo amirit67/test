@@ -41,7 +41,7 @@ public class CodePicker extends LinearLayout {
         final EditText et = new EditText(getContext());
         LayoutParams params = new LayoutParams(-2, -2);
         params.setMargins(4, 0, 4, 0);
-        Typeface tp = Typeface.createFromAsset(getContext().getAssets(), "iransansmedium.ttf");
+        Typeface tp = Typeface.createFromAsset(getContext().getAssets(), "yekanmedium.ttf");
         et.setId(id);
         et.setBackgroundResource(R.drawable.shadow_code_picker);
         et.setTextSize(20.0f);

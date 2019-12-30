@@ -105,6 +105,7 @@ public class Register2Activity extends Fragment implements View.OnClickListener,
                 imgEmail.setBackgroundResource(R.drawable.ic_error);
             } else if (etPassword.getText().length() < 8) {
                 txtError.setText("رمز عبور حداقل 8 حرف می باشد");
+                imgPassword.setVisibility(View.GONE);
                 imgPassword.setBackgroundResource(R.drawable.ic_error);
             } else
                 UserInfo();
@@ -176,7 +177,6 @@ public class Register2Activity extends Fragment implements View.OnClickListener,
     @Override
     public void afterTextChanged(Editable s) {
 
-        Drawable d = getContext().getResources().getDrawable( R.drawable.ic_check_circle);
         if (etFullname.getText().length() > 6)
             imgName.setBackgroundResource(R.drawable.ic_check_circle);
         else
@@ -192,10 +192,14 @@ public class Register2Activity extends Fragment implements View.OnClickListener,
         else
             imgEmail.setBackgroundResource(0);
 
-        if (etPassword.getText().length() > 7)
+        if (etPassword.getText().length() > 7) {
+            imgPassword.setVisibility(View.VISIBLE);
             imgPassword.setBackgroundResource(R.drawable.ic_check_circle);
-        else
+        }
+        else {
+            imgPassword.setVisibility(View.GONE);
             imgPassword.setBackgroundResource(0);
+        }
 
         txtError.setText("");
         if (etFullname.getText().length() > 0 &&
