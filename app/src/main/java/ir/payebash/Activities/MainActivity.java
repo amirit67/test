@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ import ir.payebash.Fragments.ProfileFragment;
 import ir.payebash.Fragments.RoomsFragment;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
+import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.Models.UserItem;
 import ir.payebash.R;
@@ -41,92 +43,54 @@ import retrofit2.Callback;
 
 import static ir.payebash.Classes.HSH.openFragment;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener, TitleMain/*, HideActionbar*/ {
+public class MainActivity extends BaseActivity implements View.OnClickListener, TitleMain, IWebservice.IBottomSheetNavigation/*, HideActionbar*/ {
 
     private int CREATEEVENT = 321;
     public static LinearLayout ll_bottomNavigation;
     BottomNavigationView bottomNavigationView;
     private HomeFragment home_fragment = null;
-    private ActivitiesFragment activities_fragment = null;
     private RoomsFragment roomsFragment = null;
-    private ProfileFragment profile_fragment = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        HSH.editor("UserId", "3428efaf-df16-4048-8732-d589772279ad");
-        HSH.editor("IsAuthenticate", "true");
-        if (!preferences.getString(getString(R.string.IsAuthenticate), "").equals("true")) {
+        if (preferences.getString(getString(R.string.UserId), "").equals("")
+        || preferences.getString(getString(R.string.UserName), "").equals("")) {
             startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
             finish();
         } else {
-           /* PackageManager pm = getPackageManager();
-            ComponentName componentName = new ComponentName(MainActivity.this, IncomingSms.class);
-            pm.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                    PackageManager.DONT_KILL_APP);*/
+            initViews();
             UpdateChecker();
             IsAuthenticate();
             Toolbar toolbar = findViewById(R.id.toolbar_top);
             setSupportActionBar(toolbar);
             setTitle("");
-            findViewById(R.id.btn_new_event).setOnClickListener(view -> {
-                showBottomsheetNavigation();
-                /*final SweetAlertDialog dialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
-                String s = preferences.getString("MobileTemp", "");
-                if (s.length() < 11) {
-                    dialog.setCustomImage(R.mipmap.mobile);
-                    dialog.setTitleText("احراز هویت");
-                    dialog.setContentText("برای ثبت رویداد لازم است ابتدا اطلاعات خود را ثبت نمایید");
-                    dialog.setConfirmText("باشه");
-                    dialog.setConfirmClickListener(sDialog -> {
-                        Intent i = new Intent(MainActivity.this, RegisterActivity.class);
-                        i.putExtra("Type", "Update");
-                        startActivityForResult(i, 132);
-                        sDialog.dismissWithAnimation();
-                    });
-                    HSH.dialog(dialog);
-                    dialog.show();
-                } else if (preferences.getString(getString(R.string.Telegram), "").length() < 5 &&
-                        preferences.getString(getString(R.string.Soroosh), "").length() < 5 && !dialog.isShowing()) {
-                    dialog.setCustomImage(R.mipmap.completed_info);
-                    dialog.setTitleText("تکمیل اطلاعات");
-                    dialog.setContentText("قبل از ثبت رویداد جدید پروفایل خود را تکمیل نمایید");
-                    dialog.setConfirmText("باشه");
-                    dialog.setConfirmClickListener(sDialog -> {
-                        Intent i = new Intent(MainActivity.this, EditProfileActivity.class);
-                        startActivityForResult(i, 132);
-                        sDialog.dismissWithAnimation();
-                    });
-                    HSH.dialog(dialog);
-                    dialog.show();
-                } else {
-                    Intent intent = new Intent(MainActivity.this, PostRegisterActivity.class);
-                    startActivityForResult(intent, CREATEEVENT);
-                }*/
-
-            });
+            findViewById(R.id.btn_new_event).setOnClickListener(view -> showBottomsheetCreateEvent());
 
             bottomNavigationView = findViewById(R.id.bottom_navigation);
             ll_bottomNavigation = findViewById(R.id.linearLayout);
            // home_fragment = new HomeFragment();
-            activities_fragment = new ActivitiesFragment();
-            openFragment(MainActivity.this, activities_fragment);
+            home_fragment = new HomeFragment();
+            openFragment(MainActivity.this, home_fragment);
             //Application.fra = home_fragment;
 
-            bottomNavigationView.getMenu().findItem(R.id.action_home).setChecked(true);
+            bottomNavigationView.getMenu().findItem(R.id.action_list).setChecked(true);
             bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
                 menuItem.setChecked(true);
                 if (menuItem.getItemId() == R.id.action_home) {
+
+                }
+                else if (menuItem.getItemId() == R.id.action_list) {
+                   /* if (profile_fragment == null)
+                        profile_fragment = new ProfileFragment();
+                    openFragment(MainActivity.this, profile_fragment);*/
                     if (home_fragment == null)
                         home_fragment = new HomeFragment();
                     openFragment(MainActivity.this, home_fragment);
-                }
-                else if (menuItem.getItemId() == R.id.action_profile) {
-                    if (profile_fragment == null)
-                        profile_fragment = new ProfileFragment();
-                    openFragment(MainActivity.this, profile_fragment);
+
                 } else if (menuItem.getItemId() == R.id.action_creat_event) {
                     Intent intent = new Intent(MainActivity.this, PostRegisterActivity.class);
                     startActivityForResult(intent, CREATEEVENT);
@@ -135,13 +99,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                         roomsFragment = new RoomsFragment();
                     openFragment(MainActivity.this, roomsFragment);
                 } else if (menuItem.getItemId() == R.id.action_event) {
-                    if (activities_fragment == null)
-                        activities_fragment = new /*NewAddressActivity*/ActivitiesFragment();
-                    openFragment(MainActivity.this, activities_fragment);
+
                 }
                 return false;
             });
         }
+    }
+
+    private void initViews() {
+
     }
 
     @Override
@@ -239,19 +205,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                                             }
                                         }, 2500);
                                     }
-                                    HSH.editor(getString(R.string.FullName), item.getFullName().trim().toLowerCase());
-                                    if (!item.getProfileImage().contains("https://"))
-                                        HSH.editor(getString(R.string.ProfileImage), getString(R.string.url) + "Images/Users/" + item.getProfileImage() + ".jpg");
-                                    else
-                                        HSH.editor(getString(R.string.ProfileImage), item.getProfileImage());
-                                    HSH.editor(getString(R.string.Instagram), item.getInstagram().trim().toLowerCase());
-                                    HSH.editor(getString(R.string.Telegram), item.getTelegram().trim().toLowerCase());
-                                    HSH.editor(getString(R.string.Soroosh), item.getSoroosh().trim().toLowerCase());
-                                    HSH.editor(getString(R.string.Gmail), item.getGmail().trim().toLowerCase());
-                        /*Cursor cr = Application.database.rawQuery("SELECT Id from RecentVisit WHERE data = '" + item.getMobile() + "'", null);
-                        if (cr.getCount() > 0 && item.getMobile().length() > 10) */
-                                    HSH.editor(getString(R.string.mobile), item.getMobile());
-                                    HSH.editor("MobileTemp", item.getMobileTemp());
 
                                     String s = item.getServicesIds().trim().toLowerCase();
                                     if (s.length() > 3 && !s.equals("null")) {
@@ -268,14 +221,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                                     }
                                 } catch (Exception e) {
                                 }
-                            else if (!preferences.getString(getString(R.string.UserId), "00000").equals("00000"))
-                                IsAuthenticate();
                         }
 
                         @Override
                         public void onFailure(Call<UserItem> call, Throwable t) {
-                            if (!preferences.getString(getString(R.string.UserId), "00000").equals("00000"))
-                                IsAuthenticate();
+                           // if (!preferences.getString(getString(R.string.UserId), "00000").equals("00000"))
+                                //IsAuthenticate();
                         }
                     });
                 });
@@ -372,6 +323,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
+
         HSH.setMainDrawableColor(ll_bottomNavigation, v);
         try {
             HSH._snackbar.dismiss();
@@ -399,11 +351,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         return super.onOptionsItemSelected(item);
     }*/
 
-    private void showBottomsheetNavigation() {
+    private void showBottomsheetCreateEvent() {
 
         View view = getLayoutInflater().inflate(R.layout.dialog_create_event_step_1, null);
         BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
         dialog.setContentView(view);
+        view.findViewById(R.id.tvContinue).
+                setOnClickListener(v -> {
+                    startActivity(new Intent(MainActivity.this, AaActivity.class));
+                });
         BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -437,5 +393,44 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         dialog.show();
         //ConstraintLayout c1 = view.findViewById(R.id.constraintLayout1);
 
+    }
+
+    @Override
+    public void showBottomSheet() {
+        View view = getLayoutInflater().inflate(R.layout.dialog_navigation, null);
+        BottomSheetDialog dialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetDialog);
+        dialog.setContentView(view);
+        BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+
+                switch (i) {
+
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        dialog.show();
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+                //setScrim(v);
+                dialog.show();
+            }
+        });
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        dialog.show();
+        //ConstraintLayout c1 = view.findViewById(R.id.constraintLayout1);
     }
 }

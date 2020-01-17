@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical"
+    android:fillViewport="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:clickable="true">
 
         <FrameLayout
             android:id="@+id/frameLayout2"
@@ -32,7 +34,7 @@
             app:layout_constraintGuide_percent="0.55" />
 
         <ir.payebash.utils.CodePicker
-            android:id="@+id/et_mobile"
+            android:id="@+id/code_picker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp14"
@@ -46,7 +48,7 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/et_mobile"
+            app:layout_constraintBottom_toTopOf="@+id/code_picker"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -62,7 +64,7 @@
             android:textColor="#B5B2B2"
             android:textSize="@dimen/sp14"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_mobile" />
+            app:layout_constraintTop_toBottomOf="@+id/code_picker" />
 
         <TextView
             android:id="@+id/bt_send"
@@ -99,4 +101,4 @@
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</ScrollView>

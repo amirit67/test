@@ -16,10 +16,13 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Application;
@@ -31,10 +34,14 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     ArrayList<MessageViewModel> messages;
     Context context;
+    @Inject
+    ImageLoader imageLoader;
+
 
     public MessageAdapter(Context context, ArrayList<MessageViewModel> messages) {
         this.context = context;
         this.messages = messages;
+        Application.getComponent().Inject(this);
     }
 
     @Override
@@ -77,15 +84,16 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Holder.setIsRecyclable(false);
 
             try {
-                byte[] decodedString = Base64.decode(messages.get(i).Avatar.replace("data:image/false;base64,", ""), Base64.DEFAULT);
-                Bitmap avatarBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                Holder.avatar.setImageBitmap(avatarBitmap);
-                Holder.from.setText(messages.get(i).Timestamp);
+                //byte[] decodedString = Base64.decode(messages.get(i).Avatar.replace("data:image/false;base64,", ""), Base64.DEFAULT);
+                //Bitmap avatarBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                //Holder.avatar.setImageBitmap(messages.get(i).Timestamp);
+                imageLoader.displayImage(messages.get(i).Avatar, Holder.avatar);
+                Holder.time.setText(messages.get(i).Timestamp);
+                Holder.user.setText(messages.get(i).From);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            //Holder.from.setText(messages.get(i).From);
             Holder.content.setText(messages.get(i).Content);
 
 
@@ -94,13 +102,14 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView avatar;
-        TextView from, content;
+        TextView time, content, user;
 
         ViewHolder(View v) {
             super(v);
             avatar = v.findViewById(R.id.imgMessageAvatar);
-            from = v.findViewById(R.id.txt_time);
+            time = v.findViewById(R.id.txt_time);
             content = v.findViewById(R.id.txtMessageContent);
+            user = v.findViewById(R.id.txtMessageUser);
         }
 
     }

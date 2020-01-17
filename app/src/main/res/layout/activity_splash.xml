@@ -7,7 +7,68 @@
     android:layoutDirection="ltr"
     tools:context=".Activities.SplashActivity">
 
+    <LinearLayout
+        android:id="@+id/no_connection_ll_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/placeImage"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_no_connection" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:textSize="@dimen/sp16"
+            android:text="@string/no_connection_title_string" />
+
+        <TextView
+            android:id="@+id/no_connection_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="@string/no_connection_desc_string"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/no_connection_retry"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_corners_solid_blue"
+            android:onClick="no_connection_retry_click"
+            android:text="@string/no_connection_retry_string"
+            android:textSize="@dimen/sp16"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="0dp" />
+
     <RelativeLayout
+        android:id="@+id/animatedSvgView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignBottom="@+id/linearLayout5"

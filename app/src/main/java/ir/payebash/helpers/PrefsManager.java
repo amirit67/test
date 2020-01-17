@@ -15,7 +15,7 @@ public class PrefsManager {
 
     public static CookieCredentials loadAuthCookie(Context context) {
         SharedPreferences prefs = context.getSharedPreferences("AuthCookie", Context.MODE_PRIVATE);
-        String cookie = prefs.getString("cookieCredentials", null);
+        String cookie = prefs.getString(/*"cookieCredentials"*/"Token", null);
 
         CookieCredentials cc = new CookieCredentials(cookie);
         return cookie == null ? null : cc;

@@ -1,77 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="right"
-    android:background="@drawable/dialog_background"
-    android:gravity="right"
-    android:layoutDirection="ltr">
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@drawable/rounded_corners_top"
+    android:gravity="bottom"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorGray"
-        android:padding="15dp"
-        android:text="گزارش"
-        android:textColor="#000"
-        android:textSize="@dimen/sp14" />
-
-
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/linearLayout10"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout"
-        android:layout_below="@+id/text"
-        android:layout_gravity="center_horizontal"
-        android:padding="8dp">
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:id="@+id/textView39"
+            android:layout_width="@dimen/dp100"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_corners_solid_gray" />
 
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView39"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/text"
-            android:gravity="right">
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="24dp">
 
             <ir.payebash.Moudle.CustomRadioButton
                 style="@style/radioButton"
+                android:layout_width="match_parent"
                 android:tag="1"
-                android:text="محتوای رویداد نامناسب است." />
+                android:text="محتوای نامناسب" />
 
             <ir.payebash.Moudle.CustomRadioButton
                 style="@style/radioButton"
+                android:layout_width="match_parent"
                 android:tag="2"
-                android:text="اطلاعات تماس رویداد نادرست است." />
+                android:text="اطلاعات دروغ" />
 
             <ir.payebash.Moudle.CustomRadioButton
                 style="@style/radioButton"
+                android:layout_width="match_parent"
                 android:tag="3"
-                android:text="اطلاعات رویداد گمراه کننده یا دروغ است." />
+                android:text="رویداد تکراری" />
 
             <ir.payebash.Moudle.CustomRadioButton
-                android:id="@+id/radioButton4"
                 style="@style/radioButton"
+                android:layout_width="match_parent"
                 android:tag="4"
-                android:text="رویداد اسپم است و چندین  بار پست شده است." />
+                android:text="دسته بندی اشتباه" />
 
             <ir.payebash.Moudle.CustomRadioButton
                 style="@style/radioButton"
+                android:layout_width="match_parent"
                 android:tag="5"
-                android:text="رویداد در دسته بندی نامربوط قرار گرفته است." />
+                android:text="محتوای مجرمانه" />
 
             <ir.payebash.Moudle.CustomRadioButton
                 style="@style/radioButton"
+                android:layout_width="match_parent"
                 android:tag="6"
-                android:text="رویداد جاری مشمول فهرست مصادیق محتوای مجرمانه می باشد" />
-
-            <ir.payebash.Moudle.CustomRadioButton
-                style="@style/radioButton"
-                android:tag="7"
-                android:text="دلایل دیگر..." />
+                android:text="دلایل دیگر" />
         </RadioGroup>
-    </ScrollView>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -80,7 +83,11 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_vertical"
         android:layout_margin="8dp"
-        android:orientation="horizontal">
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/txt_reject"
@@ -88,26 +95,26 @@
             android:layout_height="40dp"
             android:layout_below="@+id/radioGroup"
             android:layout_gravity="center_vertical"
-            android:layout_toLeftOf="@+id/txt_send"
             android:layout_toStartOf="@+id/txt_send"
+            android:layout_toLeftOf="@+id/txt_send"
             android:layout_weight="0.5"
             android:gravity="center"
             android:text="بی خیال"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/black"
             android:textSize="14sp" />
 
-        <ir.payebash.Moudle.CustomTextViewBold
+        <TextView
             android:id="@+id/txt_send"
             android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_below="@+id/radioGroup"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/radioGroup"
             android:layout_weight="0.5"
             android:gravity="center"
             android:text="ارسال"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/black"
             android:textSize="14sp" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

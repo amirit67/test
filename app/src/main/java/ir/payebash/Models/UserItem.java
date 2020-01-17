@@ -1,5 +1,7 @@
 package ir.payebash.Models;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 
 public class UserItem implements Serializable {
@@ -35,7 +37,7 @@ public class UserItem implements Serializable {
     }
 
     public String getServicesIds() {
-        return ServicesIds;
+        return (!TextUtils.isEmpty(ServicesIds) ? ServicesIds : "");
     }
 
     public String getIsAuthenticate() {

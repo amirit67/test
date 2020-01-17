@@ -11,21 +11,21 @@ public class CustomRadioButton extends androidx.appcompat.widget.AppCompatRadioB
     public CustomRadioButton(Context context) {
         super(context);
         if (FONT_NAME == null)
-            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "font/yekanmedium.ttf");
+            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "yekanmedium.ttf");
         this.setTypeface(FONT_NAME);
     }
 
     public CustomRadioButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         if (FONT_NAME == null)
-            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "font/yekanmedium.ttf");
+            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "yekanmedium.ttf");
         this.setTypeface(FONT_NAME);
     }
 
     public CustomRadioButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         if (FONT_NAME == null)
-            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "font/yekanmedium.ttf");
+            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "yekanmedium.ttf");
         this.setTypeface(FONT_NAME);
     }
 }

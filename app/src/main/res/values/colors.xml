@@ -7,6 +7,7 @@
 
     <color name="blue">#2B8CFF</color>
     <color name="navyblue">#004966</color>
+    <color name="lightblue">#D9E3ED</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
@@ -15,6 +16,11 @@
     <color name="gray1">#292929</color>
     <color name="gray2">#595959</color>
     <color name="gray">#BF000000</color>
+
+    <color name="gray_scale">#8affffff</color>
+    <color name="progress_primary">@color/white</color>
+    <color name="progress_secondary">@color/gray_scale</color>
+    <color name="progress_max_active">@color/white</color>
 
     <color name="google_red">#ef7f1a</color>
     <color name="google_blue">#5e5971</color>

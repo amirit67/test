@@ -31,11 +31,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="right"
-            android:maxLines="1"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
             android:ellipsize="end"
+            android:gravity="right"
+            android:maxLines="2"
             android:text="پایه ای بریم سینما؟"
             android:textColor="@color/black"
             android:textSize="14sp"
@@ -49,7 +49,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/yekanlight"
             android:gravity="right"
             android:text="رایگان"
@@ -65,7 +65,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
             android:drawableRight="@drawable/ic_location"
             android:drawablePadding="@dimen/dp4"
             android:ellipsize="end"
@@ -77,10 +78,12 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/img_content"
             app:layout_constraintEnd_toEndOf="@+id/txt_title"
-            app:layout_constraintStart_toEndOf="@+id/textView" />
+            app:layout_constraintStart_toEndOf="@+id/tv_number_followers"
+            app:layout_constraintTop_toBottomOf="@+id/txt_cost"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_number_followers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -96,9 +99,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/txt_location"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,20 +111,22 @@
             android:id="@+id/img_immadiate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/txt_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txt_title"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_immadiate" />
 
         <ImageView
             android:id="@+id/img_woman"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/txt_title"
             app:layout_constraintStart_toEndOf="@+id/img_immadiate"
             app:layout_constraintTop_toTopOf="@+id/txt_title"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_flower" />
 
 

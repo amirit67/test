@@ -15,7 +15,7 @@ public class NotifyData implements Serializable {
     public String imgUrl;
     public String type;
 
-    public NotifyData(String id, String title, String deadLine, String subject, int city, String cost, String tag, String imgUrl, String type) {
+    public NotifyData(String id, String title, String deadLine, String subject, int city, String cost,/* String tag,*/ String imgUrl, String type) {
 
         this.id = id;
         this.title = title;
@@ -23,7 +23,7 @@ public class NotifyData implements Serializable {
         this.subject = subject;
         this.city = city;
         this.cost = cost;
-        this.tag = tag;
+        //this.tag = tag;
         this.imgUrl = imgUrl;
         this.type = type;
     }

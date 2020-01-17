@@ -19,15 +19,21 @@ package ir.payebash.Interfaces;
 import java.util.List;
 import java.util.Map;
 
+import ir.payebash.BuildConfig;
+import ir.payebash.Models.BaseResponse;
 import ir.payebash.Models.CommentModel;
+import ir.payebash.Models.ForgotPasswordModel;
 import ir.payebash.Models.GoogleOuathItem;
 import ir.payebash.Models.NotifItem;
 import ir.payebash.Models.NotifyData;
-import ir.payebash.Models.event.EventModel;
-import ir.payebash.Models.PayeItem;
-import ir.payebash.Models.PlusItem;
+import ir.payebash.Models.googlePlus.PlusItem;
 import ir.payebash.Models.ProfileItem;
+import ir.payebash.Models.TkModel;
 import ir.payebash.Models.UserItem;
+import ir.payebash.Models.event.EventModel;
+import ir.payebash.Models.event.detail.EventDetailsModel;
+import ir.payebash.Models.event.story.StoryModel;
+import ir.payebash.Models.user.LoginModel;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -36,7 +42,6 @@ import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -46,17 +51,40 @@ import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public interface ApiInterface {
+
+    @POST("api/login")
+    Call<LoginModel> userLogin(@Body LoginModel data);
+
+    @GET("api/ForgotPasswordSendSms/{mobile}")
+    Call<BaseResponse> forgotPassword1(@Path("mobile") String mobile);
+
+    @POST("api/ForgotPasswordCheckSms")
+    Call<BaseResponse> forgotPassword2(@Body ForgotPasswordModel data);
+
+    @POST("api/ForgotPasswordSubmitPassword")
+    Call<BaseResponse> forgotPassword3(@Body ForgotPasswordModel data);
+
+    @POST("api/registeruser")
+        //insertuser
+    Call<LoginModel> inesrtUser(/*@Header ("Set-Cookie") String cookie, */@Body UserItem data);
+
+    @FormUrlEncoded
+    @POST(BuildConfig.getTkn)
+    Call<TkModel> getToken(@FieldMap Map<String, String> data);
+
     @FormUrlEncoded
     @POST("api/getposts")
-    Call<List<PayeItem>> getPosts(@FieldMap Map<String, String> data);
+    Call<List<EventModel>> getPosts(@FieldMap Map<String, String> data);
+
+    @GET("api/getStoryEvents/{cityCode}")
+    Call<List<StoryModel>> getStoryEvents(@Path("cityCode") String cityCode);
+
+    @GET("api/getmyevents")
+    Call<List<EventModel>> getMyEvents();
 
     @FormUrlEncoded
     @POST("api/getUncomingPosts")
-    Call<List<PayeItem>> getUncomingPosts(@FieldMap Map<String, String> data);
-
-    @POST("api/registeruser")
-    //insertuser
-    Call<ResponseBody> inesrtUser(@Header ("Set-Cookie") String cookie, @Body UserItem data);
+    Call<List<EventModel>> getUncomingPosts(@FieldMap Map<String, String> data);
 
     @FormUrlEncoded
     @POST("api/InsertPayment")
@@ -117,9 +145,8 @@ public interface ApiInterface {
     @GET("api/updateapp/")
     Call<ResponseBody> GetUpdate();
 
-    @FormUrlEncoded
-    @POST("api/getpostDetails/")
-    Call<EventModel> GetPostDetails(@FieldMap Map<String, String> data);
+    @GET("api/getpostDetails/{eventId}")
+    Call<EventDetailsModel> GetEventDetails(@Path("eventId") String eventId);
 
     @GET("api/getpostDetailsUpdate/{postId}")
     Call<ResponseBody> GetPostDetailsUpdate(@Path("postId") String postId);
@@ -131,9 +158,8 @@ public interface ApiInterface {
     @GET("api/Cancelpost/{postId}")
     Call<ResponseBody> CancelPost(@Path("postId") String postId);
 
-    @FormUrlEncoded
-    @POST("api/updateApplicants")
-    Call<ResponseBody> UpdateApplicants(@FieldMap Map<String, String> data);
+    @GET("api/updateApplicants/{postId}")
+    Call<ResponseBody> UpdateApplicants(@Path("postId") String postId);
 
     @FormUrlEncoded
     @POST("api/getprofiledetails")
@@ -168,7 +194,7 @@ public interface ApiInterface {
     @POST("api/GetUserVerificationViaGoogle")
     Call<UserItem> GetUserVerificationViaGoogle(@FieldMap Map<String, String> data);
 
-    @GET("plus/v1/people/me")
+    @GET("/v1/people/skills")
     Call<PlusItem> Plus(@Query("access_token") String searchString);
 
     @GET("/v1/people/me/?personFields=birthdays&fields=birthdays%2Fdate")

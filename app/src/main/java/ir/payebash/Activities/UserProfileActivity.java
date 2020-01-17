@@ -198,7 +198,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onFailure(Call<ProfileItem> call, Throwable t) {
                 pb.setVisibility(View.VISIBLE);
-                GetProfileInfo();
+                //GetProfileInfo();
             }
         });
     }
@@ -338,26 +338,18 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 TextView txt_reject = dialog.findViewById(R.id.txt_reject);
                 final RadioGroup radioGroup01 = dialog.findViewById(R.id.radioGroup);
 
-                radioGroup01.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        checkid = Integer.parseInt(dialog.findViewById(checkedId).getTag().toString());
-                    }
-                });
+                radioGroup01.setOnCheckedChangeListener((group, checkedId) -> checkid = Integer.parseInt(dialog.findViewById(checkedId).getTag().toString()));
 
-                txt_send.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (radioGroup01.getCheckedRadioButtonId() != -1) {
-                            if (NetworkUtils.getConnectivity(UserProfileActivity.this) != false) {
-                                Dialog dialog_wait = HSH.onProgress_Dialog(UserProfileActivity.this, "شکیبا باشید ...");
-                                SendingReportService(checkid, dialog_wait);
-                                dialog.dismiss();
-                            } else
-                                HSH.showtoast(UserProfileActivity.this, "خطا در اتصال به اینترنت");
+                txt_send.setOnClickListener(v12 -> {
+                    if (radioGroup01.getCheckedRadioButtonId() != -1) {
+                        if (NetworkUtils.getConnectivity(UserProfileActivity.this) != false) {
+                            Dialog dialog_wait = HSH.onProgress_Dialog(UserProfileActivity.this, "شکیبا باشید ...");
+                            SendingReportService(checkid, dialog_wait);
+                            dialog.dismiss();
                         } else
-                            HSH.showtoast(UserProfileActivity.this, "یک گزینه را انتخاب کنید.");
-                    }
+                            HSH.showtoast(UserProfileActivity.this, "خطا در اتصال به اینترنت");
+                    } else
+                        HSH.showtoast(UserProfileActivity.this, "یک گزینه را انتخاب کنید.");
                 });
 
                 txt_reject.setOnClickListener(v1 -> dialog.dismiss());

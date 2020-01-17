@@ -1,19 +1,13 @@
 package ir.payebash.Activities;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,38 +16,36 @@ import android.widget.Toast;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Application;
 import ir.payebash.BuildConfig;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
-import ir.payebash.Fragments.ForgotPasswordFragment;
+import ir.payebash.Fragments.loginRegister.ForgotPasswordFragment;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
-import ir.payebash.Models.PlusItem;
+import ir.payebash.Interfaces.IWebservice;
+import ir.payebash.Models.googlePlus.PlusItem;
 import ir.payebash.Models.UserItem;
+import ir.payebash.Models.user.LoginModel;
 import ir.payebash.R;
-import ir.payebash.asynktask.AsynctaskCheckPhoneNumber;
-import ir.payebash.chat.AsyncLoginTask;
+import ir.payebash.asynktask.AsynctaskLogin;
 import ir.payebash.helpers.PrefsManager;
 import ir.payebash.helpers.Utils;
 import microsoft.aspnet.signalr.client.http.CookieCredentials;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -67,6 +59,7 @@ public class Login2Activity extends BaseActivity implements View.OnClickListener
     private ProgressBar progressBar;
     private Map<String, String> params = new HashMap<>();
     //private FirebaseAuth mAuth;
+    private GoogleApiClient googleApiClient;
     private GoogleSignInClient mGoogleSignInClient;
 
     private void initViews() {
@@ -98,16 +91,37 @@ public class Login2Activity extends BaseActivity implements View.OnClickListener
         } else {
             Application.activity = Login2Activity.this;
             initViews();
+
+            String scope = "oauth2:" + "https://www.googleapis.com/auth/plus.login " +
+                    "https://www.googleapis.com/auth/plus.me " +
+                    "https://www.googleapis.com/auth/userinfo.email " +
+                    "https://www.googleapis.com/auth/userinfo.profile " +
+                    "https://www.googleapis.com/auth/user.birthday.read " +
+                    "https://www.googleapis.com/auth/user.phonenumbers.read"
+                    ;
+
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.CI))
+                    //.requestIdToken(getString(R.string.CI))
                     .requestEmail()
                     .requestProfile()
-                    .requestScopes(new Scope(Scopes.PLUS_ME), new Scope(Scopes.PLUS_LOGIN))
-                    .requestServerAuthCode(getString(R.string.CI))
+
+                    .requestScopes(new Scope(Scopes.PLUS_ME), new Scope("https://www.googleapis.com/auth/user.birthday.read")
+                    , new Scope("https://www.googleapis.com/auth/user.phonenumbers.read"))
+                    /*.requestServerAuthCode(getString(R.string.CI))*/
                     .build();
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-            mGoogleSignInClient.signOut();
+
+            googleApiClient=new GoogleApiClient.Builder(this)
+                    .enableAutoManage(Login2Activity.this, connectionResult -> {
+                       // connectionResult.
+                    })
+                    .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+                    .build();
+            //mGoogleSignInClient.signOut();
             //mAuth = FirebaseAuth.getInstance();
+
+            /*Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+            startActivityForResult(intent,RC_SIGN_IN);*/
         }
 
     }
@@ -115,6 +129,18 @@ public class Login2Activity extends BaseActivity implements View.OnClickListener
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==RC_SIGN_IN){
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            //handleSignInResult(result);
+            result.getSignInAccount();
+            if(result.isSuccess()){
+                //gotoProfile();
+            }else{
+                Toast.makeText(getApplicationContext(),"Sign in cancel",Toast.LENGTH_LONG).show();
+            }
+        }
+
         if (requestCode == 888) {
             if (data != null && resultCode == Activity.RESULT_OK) {
                 new GetaccessToken(Login2Activity.this).execute();
@@ -148,10 +174,41 @@ public class Login2Activity extends BaseActivity implements View.OnClickListener
             signIn();
         } else if (i == R.id.bt_login) {
             if (Utils.isOnline(this)) {
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
 
-                new AsyncLoginTask(this, progressBar, btLogin).execute(loginUrl, username, password);
+                LoginModel loginModel = new LoginModel();
+                loginModel.setUsername(etUsername.getText().toString());
+                loginModel.setPassword(etPassword.getText().toString());
+
+                progressBar.setVisibility(View.VISIBLE);
+                btLogin.setVisibility(View.GONE);
+
+                IWebservice.ILogin del = new IWebservice.ILogin() {
+                    @Override
+                    public void getResult(LoginModel user) throws Exception {
+                        progressBar.setVisibility(View.GONE);
+                        btLogin.setVisibility(View.VISIBLE);
+                        if(user.getStatusCode() == 200) {
+                            HSH.editor(getString(R.string.FullName), user.getFullName());
+                            HSH.editor(getString(R.string.UserName), user.getUsername());
+                            HSH.editor(getString(R.string.UserId), user.getUserId());
+                            HSH.editor(getString(R.string.ProfileImage), user.getProfileImage());
+                            HSH.editor(getString(R.string.Password), etPassword.getText().toString());
+                            HSH.editor("IsAuthenticate", "true");
+                            startActivity(new Intent(Login2Activity.this, MainActivity.class));
+                            finish();
+                        }
+                        else
+                            HSH.showtoast(Login2Activity.this, user.getMessage());
+                    }
+
+                    @Override
+                    public void getError(String error) throws Exception {
+                        HSH.showtoast(Login2Activity.this, error);
+                        progressBar.setVisibility(View.GONE);
+                        btLogin.setVisibility(View.VISIBLE);
+                    }
+                };
+                new AsynctaskLogin(this, loginModel, del).getData();
 
             } else {
                 Toast.makeText(this, "خطا در اتصال به اینترنت!", Toast.LENGTH_SHORT).show();
@@ -299,13 +356,13 @@ public class Login2Activity extends BaseActivity implements View.OnClickListener
         protected String doInBackground(Void... voids) {
             try {
                 try {
-                    //https://www.googleapis.com/plus/v1/people/me?access_token=accessToken
+                    //https://www.googleapis.com/plus/v1/people/me?access_token=ya29.Il-6B1YXJZvm6RRrt7dlshk_wu-wel0RU4HnhDedHVZzMY2cHSgI7uBEONQ0yh9I91ooHkKbAJ-567iZ8LvHvu0IrGfpAWXZc_ppzW4jaoCKcfJLsPGZBZa-GKqneQh7gg
                     String scope = "oauth2:" + "https://www.googleapis.com/auth/plus.login " +
-                            "https://www.googleapis.com/auth/plus.me ";
-                            /*"https://www.googleapis.com/auth/userinfo.email " +
+                            "https://www.googleapis.com/auth/plus.me " +
+                            "https://www.googleapis.com/auth/userinfo.email " +
                             "https://www.googleapis.com/auth/userinfo.profile " +
                             "https://www.googleapis.com/auth/user.birthday.read " +
-                            "https://www.googleapis.com/auth/user.phonenumbers.read"*/
+                            "https://www.googleapis.com/auth/user.phonenumbers.read"
                     ;
                     GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(context);
                     String accessToken = GoogleAuthUtil.getToken(context, account.getAccount(), scope, new Bundle());

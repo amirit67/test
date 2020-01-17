@@ -30,16 +30,12 @@ public class IntroLoginActivity extends BaseActivity implements View.OnClickList
         pm.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);*/
         try {
-            if (Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true")) {
-                startActivity(new Intent(IntroLoginActivity.this, MainActivity.class));
-                finish();
-            }
             setContentView(R.layout.activity_intro_login);
 
             TextView txt_guest = findViewById(R.id.txt_guest);
             txt_guest.setPaintFlags(txt_guest.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-            AnimatedSvgView svgView = findViewById(R.id.animated_svg_view);
+           /* AnimatedSvgView svgView = findViewById(R.id.animated_svg_view);
             svgView.start();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -48,7 +44,7 @@ public class IntroLoginActivity extends BaseActivity implements View.OnClickList
                     AnimatedSvgView svgView3 = findViewById(R.id.font_svg_view);
                     svgView3.start();
                 }
-            }, 1000);
+            }, 1000);*/
             findViewById(R.id.btn_login).setOnClickListener(this);
             findViewById(R.id.btn_register).setOnClickListener(this);
             findViewById(R.id.txt_guest).setOnClickListener(this);
@@ -69,7 +65,7 @@ public class IntroLoginActivity extends BaseActivity implements View.OnClickList
         HSH.editor("Materialintro", "True");
         switch (v.getId()) {
             case R.id.btn_login:
-                HSH.onOpenPage(IntroLoginActivity.this, LoginActivity.class);
+                HSH.onOpenPage(IntroLoginActivity.this, Login2Activity.class);
                /* new PermissionHandler().checkPermission(IntroLoginActivity.this, permissions, new PermissionHandler.OnPermissionResponse() {
                     @Override
                     public void onPermissionGranted() {
@@ -83,7 +79,7 @@ public class IntroLoginActivity extends BaseActivity implements View.OnClickList
                 });*/
                 break;
             case R.id.btn_register:
-                HSH.onOpenPage(IntroLoginActivity.this, RegisterActivity.class);
+                HSH.openFragment(this, new Register2Activity());
                 /*new PermissionHandler().checkPermission(IntroLoginActivity.this, permissions, new PermissionHandler.OnPermissionResponse() {
                     @Override
                     public void onPermissionGranted() {

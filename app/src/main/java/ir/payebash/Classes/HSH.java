@@ -5,12 +5,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -42,25 +40,28 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
 import com.mohamadamin.persianmaterialdatetimepicker.time.RadialPickerLayout;
 import com.mohamadamin.persianmaterialdatetimepicker.time.TimePickerDialog;
 import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Activities.CategoriesFilterDialog;
-import ir.payebash.Activities.MainActivity;
-import ir.payebash.Activities.NoConnectioonActivity;
-import ir.payebash.Activities.SplashActivity;
 import ir.payebash.Adapters.CitiesAdapter;
 import ir.payebash.Application;
 import ir.payebash.Fragments.NotificationFragment;
@@ -140,20 +141,6 @@ public class HSH {
         return ssbuilder;
     }
 
-    public static void setTypeFace2(ViewGroup viewGroup, Typeface typeface) {
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-            View view = viewGroup.getChildAt(i);
-            if (view instanceof TextView) {
-                //((TextView) view).setTypeface(Application.font);
-                ((TextView) view).setTextSize(13);
-                //((TextView) view).setSingleLine();
-            }
-            if (view instanceof ViewGroup) {
-                setTypeFace2(((ViewGroup) view), typeface);
-            }
-        }
-    }
-
     public static void onOpenPage(Context context, @SuppressWarnings("rawtypes") Class tow_class) {
         Intent intent = new Intent(context, tow_class);
         context.startActivity(intent);
@@ -214,10 +201,10 @@ public class HSH {
                                     @Override
                                     public void onTimeSet(RadialPickerLayout view, final int hourOfDay, final int minute) {
                                         String deadline = String.valueOf(year)
-                                                + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + String.valueOf(monthOfYear + 1) : monthOfYear + 1);
+                                                + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + (monthOfYear + 1) : monthOfYear + 1);
 
                                         String nowdate = (String.valueOf(now.getPersianYear())
-                                                + (String.valueOf(now.getPersianMonth() + 1).length() == 1 ? "0" + String.valueOf(now.getPersianMonth() + 1) : now.getPersianMonth() + 1));
+                                                + (String.valueOf(now.getPersianMonth() + 1).length() == 1 ? "0" + (now.getPersianMonth() + 1) : now.getPersianMonth() + 1));
 
                                         int diff = Integer.parseInt(deadline) - Integer.parseInt(nowdate);
                                         int day1 = dayOfMonth;
@@ -227,26 +214,26 @@ public class HSH {
                                                 if (day1 - day12 <= 0)
                                                     et.setText(toPersianNumber(
                                                             String.valueOf(year).substring(2, 4) + "/"
-                                                                    + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + String.valueOf(monthOfYear + 1) : monthOfYear + 1)
+                                                                    + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + (monthOfYear + 1) : monthOfYear + 1)
                                                                     + "/" +
-                                                                    (String.valueOf(dayOfMonth).length() == 1 ? "0" + String.valueOf(dayOfMonth) : dayOfMonth)
+                                                                    (String.valueOf(dayOfMonth).length() == 1 ? "0" + (dayOfMonth) : dayOfMonth)
                                                                     + " " +
-                                                                    (String.valueOf(hourOfDay).length() == 1 ? "0" + String.valueOf(hourOfDay) : hourOfDay)
+                                                                    (String.valueOf(hourOfDay).length() == 1 ? "0" + (hourOfDay) : hourOfDay)
                                                                     + ":" +
-                                                                    (String.valueOf(minute).length() == 1 ? "0" + String.valueOf(minute) : minute)));
+                                                                    (String.valueOf(minute).length() == 1 ? "0" + (minute) : minute)));
                                                 else
                                                     HSH.showtoast(ctx, "حداکثر زمان برای هم پا شدن یک ماه می باشد");
                                             } else if (diff == 0) {
                                                 if (day1 - day12 >= 0)
                                                     et.setText(toPersianNumber(
                                                             String.valueOf(year).substring(2, 4) + "/"
-                                                                    + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + String.valueOf(monthOfYear + 1) : monthOfYear + 1)
+                                                                    + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + (monthOfYear + 1) : monthOfYear + 1)
                                                                     + "/" +
-                                                                    (String.valueOf(dayOfMonth).length() == 1 ? "0" + String.valueOf(dayOfMonth) : dayOfMonth)
+                                                                    (String.valueOf(dayOfMonth).length() == 1 ? "0" + (dayOfMonth) : dayOfMonth)
                                                                     + " " +
-                                                                    (String.valueOf(hourOfDay).length() == 1 ? "0" + String.valueOf(hourOfDay) : hourOfDay)
+                                                                    (String.valueOf(hourOfDay).length() == 1 ? "0" + (hourOfDay) : hourOfDay)
                                                                     + ":" +
-                                                                    (String.valueOf(minute).length() == 1 ? "0" + String.valueOf(minute) : minute)));
+                                                                    (String.valueOf(minute).length() == 1 ? "0" + (minute) : minute)));
                                                 else
                                                     HSH.showtoast(ctx, "زمان وارد شده صحیح نمی باشد.");
                                             } else if (diff < 0)
@@ -256,13 +243,13 @@ public class HSH {
                                         } else
                                             et.setText(toPersianNumber(
                                                     String.valueOf(year).substring(2, 4) + "/"
-                                                            + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + String.valueOf(monthOfYear + 1) : monthOfYear + 1)
+                                                            + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + (monthOfYear + 1) : monthOfYear + 1)
                                                             + "/" +
-                                                            (String.valueOf(dayOfMonth).length() == 1 ? "0" + String.valueOf(dayOfMonth) : dayOfMonth)
+                                                            (String.valueOf(dayOfMonth).length() == 1 ? "0" + (dayOfMonth) : dayOfMonth)
                                                             + " " +
-                                                            (String.valueOf(hourOfDay).length() == 1 ? "0" + String.valueOf(hourOfDay) : hourOfDay)
+                                                            (String.valueOf(hourOfDay).length() == 1 ? "0" + (hourOfDay) : hourOfDay)
                                                             + ":" +
-                                                            (String.valueOf(minute).length() == 1 ? "0" + String.valueOf(minute) : minute)));
+                                                            (String.valueOf(minute).length() == 1 ? "0" + (minute) : minute)));
 
 
                                         Roozh jCal = new Roozh();
@@ -275,12 +262,7 @@ public class HSH {
                                 true
                         );
                         tpd.setThemeDark(false);
-                        tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialogInterface) {
-                                Log.d(TIMEPICKER, "Dialog was cancelled");
-                            }
-                        });
+                        tpd.setOnCancelListener(dialogInterface -> Log.d(TIMEPICKER, "Dialog was cancelled"));
                         tpd.show(((Activity) ctx).getFragmentManager(), TIMEPICKER);
                     }
                 },
@@ -549,4 +531,72 @@ public class HSH {
         HSH.dialog(dialog);
         dialog.show();
     }
+
+
+    //1 minute = 60 seconds
+//1 hour = 60 x 60 = 3600
+//1 day = 3600 x 24 = 86400
+    public static String printDifference(Date startDate, Date endDate) {
+        //milliseconds
+        long different = endDate.getTime() - startDate.getTime();
+
+        long days = TimeUnit.DAYS.convert(different, TimeUnit.MILLISECONDS);
+
+
+        if (days > 29)
+            return (days / 30 + " ماه");
+        else if (days > 6)
+            return (days / 7 + " هفته");
+        else if (days == 1)
+            return ("دیروز");
+        else if (days > 1)
+            return (days + " روز");
+        else if (TimeUnit.HOURS.convert(different, TimeUnit.MILLISECONDS) > 0)
+            return (days + " ساعت");
+        else if (TimeUnit.MINUTES.convert(different, TimeUnit.MILLISECONDS) > 0)
+            return (days + " دقیقه");
+        else if (TimeUnit.SECONDS.convert(different, TimeUnit.MILLISECONDS) > 0)
+            return (days + " لحظاتی");
+
+        return TimeUnit.DAYS.convert(different, TimeUnit.MILLISECONDS) + "";
+    }
+
+
+    public static String ecr(String input) {
+        // Simple encryption, not very strong!
+        //return Base64.encodeToString(input.getBytes(), Base64.DEFAULT);
+        try {
+
+            // Static getInstance method is called with hashing SHA
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+            // digest() method called
+            // to calculate message digest of an input
+            // and return array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            String hashtext = no.toString(16);
+
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+
+            return hashtext;
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (NoSuchAlgorithmException e) {
+            System.out.println("Exception thrown"
+                    + " for incorrect algorithm: " + e);
+
+            return null;
+        }
+
+    }
+
+
 }

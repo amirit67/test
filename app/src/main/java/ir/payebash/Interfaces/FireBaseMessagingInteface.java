@@ -18,7 +18,7 @@ package ir.payebash.Interfaces;
 
 import ir.payebash.Models.GoogleOuathItem;
 import ir.payebash.Models.NotifyData;
-import ir.payebash.Models.PlusItem;
+import ir.payebash.Models.googlePlus.PlusItem;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;

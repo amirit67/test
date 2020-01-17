@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="right"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/rounded_corners_top"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_setting"
+                style="@style/ProfileItem"
+                android:layout_width="0dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:text="تنظیمات"
+                app:layout_constraintEnd_toStartOf="@+id/imageView22"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView39" />
+
+            <TextView
+                android:id="@+id/tv_bookmark"
+                style="@style/ProfileItem"
+                android:layout_width="0dp"
+                android:text="نشان شده ها"
+                app:layout_constraintEnd_toEndOf="@+id/tv_setting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_setting" />
+
+            <TextView
+                android:id="@+id/tv_recent_visit"
+                style="@style/ProfileItem"
+                android:layout_width="0dp"
+                android:text="بازدیدهای اخیر"
+                app:layout_constraintEnd_toEndOf="@+id/tv_setting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_bookmark" />
+
+            <TextView
+                android:id="@+id/tv_transaction"
+                style="@style/ProfileItem"
+                android:layout_width="0dp"
+                android:text="تراکنش ها"
+                app:layout_constraintEnd_toEndOf="@+id/tv_setting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_recent_visit" />
+
+            <TextView
+                android:id="@+id/txt_advantage"
+                style="@style/ProfileItem"
+                android:layout_width="0dp"
+                android:text="نمایش بیشتر رویداد"
+                app:layout_constraintEnd_toEndOf="@+id/tv_setting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_transaction" />
+
+            <TextView
+                android:id="@+id/txt_rulls"
+                style="@style/ProfileItem"
+                android:layout_width="0dp"
+                android:text="حریم شخصی"
+                app:layout_constraintEnd_toEndOf="@+id/tv_setting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_advantage" />
+
+            <TextView
+                android:id="@+id/txt_support"
+                style="@style/ProfileItem"
+                android:layout_width="0dp"
+                android:text="پشتیبانی"
+                app:layout_constraintEnd_toEndOf="@+id/tv_setting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_rulls" />
+
+            <TextView
+                android:id="@+id/tv_rules"
+                style="@style/ProfileItem"
+                android:layout_width="0dp"
+                android:text="قوانین"
+                app:layout_constraintEnd_toEndOf="@+id/tv_setting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_support" />
+
+            <View
+                android:id="@+id/textView39"
+                android:layout_width="100dp"
+                android:layout_height="4dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_corners_solid_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_bookmark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_setting"
+                app:srcCompat="@drawable/ic_settings" />
+
+            <ImageView
+                android:id="@+id/imageView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/txt_advantage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_transaction"
+                app:layout_constraintTop_toTopOf="@+id/tv_transaction"
+                app:srcCompat="@drawable/ic_transaction" />
+
+            <ImageView
+                android:id="@+id/imageView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_rules"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_rules"
+                app:layout_constraintTop_toTopOf="@+id/tv_rules"
+                app:srcCompat="@drawable/ic_alert" />
+
+            <ImageView
+                android:id="@+id/imageView25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/tv_recent_visit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_bookmark"
+                app:layout_constraintTop_toTopOf="@+id/tv_bookmark"
+                app:srcCompat="@drawable/ic_bookmark_off" />
+
+            <ImageView
+                android:id="@+id/imageView26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/tv_transaction"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_recent_visit"
+                app:layout_constraintTop_toTopOf="@+id/tv_recent_visit"
+                app:srcCompat="@drawable/ic_eye" />
+
+            <ImageView
+                android:id="@+id/imageView27"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/txt_rulls"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_advantage"
+                app:layout_constraintTop_toTopOf="@+id/txt_advantage"
+                app:srcCompat="@drawable/ic_trending_up" />
+
+            <ImageView
+                android:id="@+id/imageView28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/tv_rules"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_support"
+                app:layout_constraintTop_toTopOf="@+id/txt_support"
+                app:srcCompat="@drawable/ic_headphones" />
+
+            <ImageView
+                android:id="@+id/imageView29"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/txt_support"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_rulls"
+                app:layout_constraintTop_toTopOf="@+id/txt_rulls"
+                app:srcCompat="@drawable/ic_privacy" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

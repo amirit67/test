@@ -1,36 +1,27 @@
 package ir.payebash.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ir.payebash.Activities.PostDetailsActivity;
-import ir.payebash.Application;
-import ir.payebash.Models.PayeItem;
-import ir.payebash.Models.event.ApplicantsItem;
+import ir.payebash.Models.event.detail.FollwoersItem;
 import ir.payebash.R;
-import ir.payebash.utils.roundedimageview.InsLoadingView;
 
 
 public class PersonAddedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int VIEW_TYPE_ITEM = 1;
     ImageLoader imageLoader;
-    private List<ApplicantsItem> feed = new ArrayList<>();
+    private List<FollwoersItem> feed = new ArrayList<>();
     private Context mContext;
 
     public PersonAddedAdapter(Context context, ImageLoader imageLoader) {
@@ -70,12 +61,12 @@ public class PersonAddedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                 try {
                     if (!feed.get(i).getProfileImage().contains("https:"))
-                        imageLoader.displayImage(mContext.getString(R.string.url) + "Images/Users/" + feed.get(i).getProfileImage() + ".jpg", Holder.iv_image);
+                        imageLoader.displayImage("http://paye.ariaapps.ir" + "/Images/Users/" + feed.get(i).getProfileImage() + ".jpg", Holder.iv_image);
                     else
                         imageLoader.displayImage(feed.get(i).getProfileImage(), Holder.iv_image);
 
                 } catch (Exception e) {
-                    Holder.iv_image.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.ic_paye));
+                    Holder.iv_image.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_add_event));
                 }
             } catch (Exception e) {
             }
@@ -87,7 +78,7 @@ public class PersonAddedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return (null != feed ? feed.size() < 4 ? feed.size() : 3 : 0);
     }
 
-    public void addItems(List<ApplicantsItem> posts) {
+    public void addItems(List<FollwoersItem> posts) {
         this.feed.addAll(posts);
         notifyDataSetChanged();
     }

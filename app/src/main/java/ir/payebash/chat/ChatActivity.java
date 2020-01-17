@@ -8,39 +8,38 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.Serializable;
-
+import ir.payebash.Activities.BaseActivity;
 import ir.payebash.Adapters.MessageAdapter;
 import ir.payebash.Classes.ItemDecorationAlbumColumns;
 import ir.payebash.R;
 import ir.payebash.helpers.Globals;
 import ir.payebash.helpers.User;
+import ir.payebash.modelviewsChat.MessageViewModel;
 import ir.payebash.modelviewsChat.RoomViewModel;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BaseActivity {
 
     // Used to receive messages from ChatService
     MyReceiver myReceiver;
 
-    TextView txtFullNameHost, txtRoomName, txtTimeToJoin;
-    ImageView imgEvent;
+    TextView txtFullNameHost, txtRoomName, txtTimeToJoin, tvFollwers;
+    ImageView imgOwner;
     // Chat Service
     ChatService chatService;
     boolean mBound = false;
 
-    MessageAdapter adapter;
+    private RecyclerView rv;
+    private MessageAdapter adapter;
+    private RoomViewModel roomViewModel;
+    int check = 0;
 
     @Override
     protected void onStart() {
@@ -75,19 +74,21 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(User.CurrentRoom);*/
         initViews();
 
-        RoomViewModel roomViewModel = (RoomViewModel) getIntent().getExtras().getSerializable("room");
+        roomViewModel = (RoomViewModel) getIntent().getExtras().getSerializable("room");
         txtFullNameHost.setText(roomViewModel.host);
         txtRoomName.setText(roomViewModel.name);
         txtTimeToJoin.setText(roomViewModel.timeToJoin);
+        tvFollwers.setText(roomViewModel.membersCount);
     }
 
     private void initViews() {
-        imgEvent = findViewById(R.id.img_event);
+        imgOwner = findViewById(R.id.img_owner);
         txtFullNameHost = findViewById(R.id.txt_fullname_host);
         txtRoomName = findViewById(R.id.txt_room_name);
         txtTimeToJoin = findViewById(R.id.txt_time_to_join);
+        tvFollwers = findViewById(R.id.tv_follwers);
         // Setup Grid View
-        RecyclerView rv = findViewById(R.id.gvMessages);
+        rv = findViewById(R.id.gvMessages);
         //gridView.setTranscriptMode(GridView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         rv.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -100,7 +101,7 @@ public class ChatActivity extends AppCompatActivity {
         EditText editText = findViewById(R.id.editMessage);
         ImageButton btnSend = findViewById(R.id.btnSend);
         btnSend.setOnClickListener(v -> {
-            chatService.Send(User.CurrentRoom, editText.getText().toString());
+            chatService.Send(roomViewModel.Id + "", editText.getText().toString(), adapter);
             editText.setText("");
         });
     }
@@ -158,6 +159,10 @@ public class ChatActivity extends AppCompatActivity {
             switch (intent.getAction()) {
                 case "notifyAdapter":
                     adapter.notifyDataSetChanged();
+                    if (check == 0 && Globals.Messages.size() > 0) {
+                        rv.smoothScrollToPosition(Globals.Messages.size() - 1);
+                        check++;
+                    }
                     break;
                 case "joinLobby":
                     User.CurrentRoom = "Lobby";

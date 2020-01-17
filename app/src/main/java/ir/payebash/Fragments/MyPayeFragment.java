@@ -29,11 +29,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import ir.payebash.Adapters.PayeAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
+import ir.payebash.Classes.ItemDecorationAlbumColumns;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.OnLoadMoreListener;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.Models.PayeItem;
+import ir.payebash.Models.event.EventModel;
 import ir.payebash.R;
+import ir.payebash.asynktask.AsynctaskGetMyEvents;
 import ir.payebash.asynktask.AsynctaskGetPost;
 
 
@@ -53,7 +56,7 @@ public class MyPayeFragment extends Fragment {
     private int visibleThreshold = 1, lastVisibleItem, totalItemCount = 0, Cnt = 0;
     private Bundle bundle = null;
     private IWebservice m;
-    private AsynctaskGetPost getPost;
+    private AsynctaskGetMyEvents getPost;
     private View rootView = null;
 
     public void FavoriteOrRecent(Activity ac, String state) {
@@ -116,12 +119,10 @@ public class MyPayeFragment extends Fragment {
             FavoriteOrRecent(getActivity(), bundle.getString("FavoriteOrRecent"));
         } else {
             ((TitleMain) getContext()).FragName("رویدادها");
-            params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
-            params.put(getString(R.string.Skip), String.valueOf(Cnt));
             pb.setVisibility(View.VISIBLE);
             m = new IWebservice() {
                 @Override
-                public void getResult(retrofit2.Response<List<PayeItem>> list) throws Exception {
+                public void getResult(retrofit2.Response<List<EventModel>> list) throws Exception {
                     try {
                         isLoading = false;
                         swipeContainer.setRefreshing(false);
@@ -138,8 +139,8 @@ public class MyPayeFragment extends Fragment {
                     pb.setVisibility(View.GONE);
                 }
             };
-            getPost = new AsynctaskGetPost(getActivity(),
-                    params,
+            getPost = new AsynctaskGetMyEvents(getActivity(),
+                    /*params,*/
                     m);
             getPost.getData();
             swipeContainer.setOnRefreshListener(() -> {
@@ -191,6 +192,7 @@ public class MyPayeFragment extends Fragment {
         rv = rootView.findViewById(R.id.rv_paye);
         rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
+        rv.addItemDecoration(new ItemDecorationAlbumColumns(getActivity(), ItemDecorationAlbumColumns.VERTICAL_LIST));
         rv.setLayoutManager(layoutManager);
         adapter = new PayeAdapter(getActivity(), params);
         rv.setAdapter(adapter);
@@ -204,8 +206,8 @@ public class MyPayeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 321 && null != data) {
-            getPost = new AsynctaskGetPost(getActivity(),
-                    params,
+            getPost = new AsynctaskGetMyEvents(getActivity(),
+                    /*params,*/
                     m);
         }
 

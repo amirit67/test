@@ -9,7 +9,7 @@
     <ir.payebash.utils.roundedimageview.RoundedImageView
         android:id="@+id/imgView"
         app:riv_corner_radius="10dp"
-        android:src="@mipmap/example"
+        app:srcCompat="@drawable/ic_intro"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"

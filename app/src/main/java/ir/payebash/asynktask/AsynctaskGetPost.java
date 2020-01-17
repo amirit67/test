@@ -15,6 +15,7 @@ import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Models.PayeItem;
+import ir.payebash.Models.event.EventModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -37,11 +38,11 @@ public class AsynctaskGetPost {
     }
 
     public void getData() {
-        Call<List<PayeItem>> call =
+        Call<List<EventModel>> call =
                 retrofit.create(ApiInterface.class).getPosts(params);
-        call.enqueue(new Callback<List<PayeItem>>() {
+        call.enqueue(new Callback<List<EventModel>>() {
             @Override
-            public void onResponse(Call<List<PayeItem>> call, retrofit2.Response<List<PayeItem>> response) {
+            public void onResponse(Call<List<EventModel>> call, retrofit2.Response<List<EventModel>> response) {
                 try {
                     if (response.code() == 200) {
                         delegate.getResult(response);
@@ -52,7 +53,7 @@ public class AsynctaskGetPost {
             }
 
             @Override
-            public void onFailure(Call<List<PayeItem>> call, Throwable t) {
+            public void onFailure(Call<List<EventModel>> call, Throwable t) {
                 if (NetworkUtils.getConnectivity(ac) != false)
                     getData();
                 else {

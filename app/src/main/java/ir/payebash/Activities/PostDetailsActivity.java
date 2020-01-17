@@ -6,29 +6,30 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.github.islamkhsh.CardSliderViewPager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -38,19 +39,16 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import javax.inject.Inject;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.moslem_deris.apps.zarinpal.PaymentBuilder;
@@ -58,20 +56,25 @@ import ir.moslem_deris.apps.zarinpal.enums.ZarinPalError;
 import ir.moslem_deris.apps.zarinpal.listeners.OnPaymentListener;
 import ir.moslem_deris.apps.zarinpal.models.Payment;
 import ir.payebash.Adapters.BannerAdapter;
+import ir.payebash.Adapters.FollowersAdapter;
 import ir.payebash.Adapters.PersonAddedAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
+import ir.payebash.Classes.ItemDecorationAlbumColumns;
 import ir.payebash.Classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
-import ir.payebash.Models.CommentModel;
+import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Models.NotifyData;
 import ir.payebash.Models.NotifyData.Message;
-import ir.payebash.Models.event.EventModel;
 import ir.payebash.Models.PayeItem;
+import ir.payebash.Models.event.EventModel;
+import ir.payebash.Models.event.detail.EventDetailsModel;
 import ir.payebash.R;
+import ir.payebash.asynktask.AsynctaskEventDetails;
 import ir.payebash.utils.RecyclerSnapHelper;
-import ir.payebash.utils.OverlapRecyclerViewDecoration;
+import ir.payebash.utils.reviewratings.BarLabels;
+import ir.payebash.utils.reviewratings.RatingReviews;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,6 +88,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     private static Double latitude, longitude;
     //com.google.android.gms.maps.MapView mMapView;
     private ConstraintLayout pB;
+    private ProgressBar pbTrustPercent;
     int checkid = 0;
     boolean isPush = false;
     @Inject
@@ -93,20 +97,20 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     DisplayImageOptions options;
     @Inject
     Retrofit retrofit;
-    private ConstraintLayout eventOrganizer;
+    private ConstraintLayout eventOrganizer, clImmadiate;
     private CollapsingToolbarLayout i;
-    private AppBarLayout appBar;
     //private LinearLayout ll_advertisdetails;
-    private Button /*btn_contactWays,*/ btnBeup;
+    private TextView /*btn_contactWays,*/ btnBeup;
     //private EditText etComment;
-    private ImageView imgProfile, btnShare, btnReport;
-    private TextView txtFullname, txtEventTitle, txtEventDate, txtLocation ,
-    txtCategory , txtTimeToJoin , txtCost, txtStartDate, txtFollowes, txtDescription,
-            txtUpgradeEvent
+    private ImageView imgProfile;
+    private TextView txtFullname, txtEventTitle, txtEventDate, txtLocation,
+            txtCategory, txtTimeToJoin, txtCost, txtStartDate, txtFollowes, txtDescription,
+            txtUpgradeEvent, tvWoman,
+            btnShare, btnReport, tvVote
             /*, btnMobile, btnEdit, btnDelete, btnPay*/;
-    private PayeItem fFeed;
+    private EventModel fFeed;
     //private ImageButton /*btn_fav,*/ btnSendComment, back;
-    private EventModel result;
+    private EventDetailsModel result;
     //private ProgressWheel cpv;
     private RecyclerView rvGroupFriends;
     //private RecyclerView rvComment;
@@ -119,6 +123,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         txtEventDate = findViewById(R.id.txt_event_date);
         txtCategory = findViewById(R.id.txt_category);
         txtLocation = findViewById(R.id.txt_location);
+        tvWoman = findViewById(R.id.tv_woman);
         txtTimeToJoin = findViewById(R.id.txt_time_to_join);
         txtUpgradeEvent = findViewById(R.id.txt_upgrade_event);
         txtCost = findViewById(R.id.txt_cost);
@@ -126,7 +131,9 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         txtFollowes = findViewById(R.id.txt_followers);
         txtDescription = findViewById(R.id.txt_description);
         btnReport = findViewById(R.id.btn_report);
-
+        findViewById(R.id.cs_rating).setOnClickListener(this::onClick);
+        tvVote = findViewById(R.id.tv_vote);
+        pbTrustPercent = findViewById(R.id.pb_trust_percent);
         txtUpgradeEvent.setOnClickListener(this::onClick);
         /*cpv = findViewById(R.id.cpv);
 
@@ -137,9 +144,11 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         //btn_fav = findViewById(R.id.btn_fav);*/
         btnShare = findViewById(R.id.btn_share);
         eventOrganizer = findViewById(R.id.cl_event_organizer);
+        clImmadiate = findViewById(R.id.cl_immadiate);
+        findViewById(R.id.img_back).setOnClickListener(this::onClick);
         //btn_contactWays = findViewById(R.id.btn_contactWays);
         /*btnSendComment = findViewById(R.id.btn_sendComment);
-        back = findViewById(R.id.img_back);
+
 
         btnPay.setOnClickListener(this);
         btnEdit.setOnClickListener(this);
@@ -154,14 +163,23 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         btnReport.setOnClickListener(this);
 
         //etComment = findViewById(R.id.et_comment);
-        appBar = findViewById(R.id.app_bar);
         txtFullname = findViewById(R.id.txt_fullname);
         imgProfile = findViewById(R.id.img_profile);
         //pager = findViewById(R.id.pager);
+        findViewById(R.id.group_friends).setOnClickListener(this::onClick);
         rvGroupFriends = findViewById(R.id.rv_group_friends);
+        rvGroupFriends.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(PostDetailsActivity.this);
+        rvGroupFriends.setLayoutManager(layoutManager);
+        PersonAddedAdapter adapter = new PersonAddedAdapter(PostDetailsActivity.this, imageLoader);
+        rvGroupFriends.setAdapter(adapter);
+        adapter.addItems(fFeed.getFollowers());
+
         btnBeup = findViewById(R.id.btn_beup);
         btnBeup.setOnClickListener(this);
+        checkUser();
         imgProfile.setOnClickListener(this);
+
 
         ImageView img = findViewById(R.id.imageView8);
         ObjectAnimator fadeOut = ObjectAnimator.ofFloat(img, "alpha", 1f, .1f);
@@ -187,22 +205,65 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         rvComment.setAdapter(adapter);*/
     }
 
+    private void checkUser() {
+        for (int i = 0; i < fFeed.getFollowers().size(); i++)
+            if (fFeed.getFollowers().get(i).getId().toLowerCase().equals(Application.preferences.getString(getString(R.string.UserId), "00000000-0000-0000-0000-00000000000000"))) {
+                if (fFeed.getFollowers().get(i).getState().equals("1")
+                        || fFeed.getFollowers().get(i).getState().equals("2")) {
+
+                    if (fFeed.getFollowers().get(i).getState().equals("1")) {
+                        btnBeup.setBackgroundResource(R.drawable.rounded_corners_solid_blue);
+                        btnBeup.setText(fFeed.getFollowers().get(i).getTitleState());
+                        btnBeup.setTextColor(Color.WHITE);
+                    } else {
+                        btnBeup.setBackgroundResource(R.drawable.rounded_corners_strok_black);
+                        btnBeup.setText(fFeed.getFollowers().get(i).getTitleState());
+                        btnBeup.setTextColor(Color.BLACK);
+                    }
+                    //findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
+                    //if (Commentfeed.size() == 0)
+                    //  GetCommentAsynkTask();
+                    btnBeup.setOnClickListener(v -> {
+                        final SweetAlertDialog dialog = new SweetAlertDialog(PostDetailsActivity.this, SweetAlertDialog.WARNING_TYPE);
+                        dialog.setTitleText("لغو همراهی");
+                        dialog.setContentText(getString(R.string.sure));
+                        dialog.setConfirmText("بله");
+                        dialog.setCancelText("فعلا نه");
+                        dialog.setConfirmClickListener(sDialog -> {
+                            UpdateApplicantAsynkTask();
+                            dialog.dismissWithAnimation();
+                        });
+                        dialog.setCancelClickListener(sweetAlertDialog -> dialog.dismissWithAnimation());
+                        dialog.setCancelable(true);
+                        dialog.show();
+                    });
+                } else if (fFeed.getFollowers().get(i).getState().equals("3") ||
+                        fFeed.getFollowers().get(i).getState().equals("4")) {
+                    btnBeup.setBackgroundResource(R.drawable.rounded_corners_solid_navyblue);
+                    btnBeup.setText(fFeed.getFollowers().get(i).getTitleState());
+                    btnBeup.setTextColor(Color.WHITE);
+                    btnBeup.setEnabled(false);
+                }
+            }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            setContentView(R.layout.activity_post_details2);
+            setContentView(R.layout.activity_event_details2);
             Application.getComponent().Inject(this);
             try {
-                fFeed = (PayeItem) getIntent().getExtras().getSerializable("feedItem");
+                fFeed = (EventModel) getIntent().getExtras().getSerializable("feedItem");
                 if (fFeed == null) {
                     Intent intent = getIntent();
                     Uri data = intent.getData();
-                    fFeed = new PayeItem();
+                    fFeed = new EventModel();
                     fFeed.setPostId(data.getEncodedPath().split("/")[3]);
                 }
             } catch (Exception e) {
-                fFeed = new PayeItem();
+                fFeed = new EventModel();
                 fFeed.setPostId(getIntent().getExtras().getString(getString(R.string.PostId)));
                 isPush = true;
             }
@@ -316,34 +377,33 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     public void AdvertisementDetails() {
-        Map<String, String> params = new HashMap<>();
-        params.put(getString(R.string.PostId), fFeed.getPostId());
-        Call<EventModel> call =
-                retrofit.create(ApiInterface.class).GetPostDetails(params);
-        call.enqueue(new Callback<EventModel>() {
+
+        IWebservice.IEventDetails del = new IWebservice.IEventDetails() {
             @Override
-            public void onResponse
-                    (Call<EventModel> call, retrofit2.Response<EventModel> response) {
+            public void getResult(EventDetailsModel event) throws Exception {
                 try {
                     pB.setVisibility(View.GONE);
-                    txtEventTitle.setText(fFeed.getTitle());
                     //ll_advertisdetails.setVisibility(View.VISIBLE);
-                    result = response.body();
+                    result = event;
                     //findViewById(R.id.lbl_is_woman).setVisibility(fFeed.IsWoman() == true ? View.VISIBLE : View.GONE);
                     getMap();
-                    txtFullname.setText(result.getUsername());
-                    imageLoader.displayImage(result.getProfileimage(), imgProfile, options);
                     try {
-                        if (fFeed.IsImmediate())
-                        {
-
-                        }
-                        txtEventDate.setText(result.getCreateDate());
-                        txtTimeToJoin.setText(result.getTimeToJoin());
+                        imageLoader.displayImage(result.getEventOwner().getProfileImage(), imgProfile, options);
+                        txtFullname.setText(result.getEventOwner().getUserName());
+                        tvWoman.setVisibility(fFeed.IsWoman() ? View.VISIBLE : View.GONE);
+                        clImmadiate.setVisibility(fFeed.IsImmediate() ? View.VISIBLE : View.GONE);
+                        txtEventTitle.setText(fFeed.getTitle());
                         txtCost.setText(result.getCost());
                         txtStartDate.setText(result.getStartDate());
                         txtFollowes.setText(result.getNumberFollowers());
                         txtDescription.setText(result.getDescription());
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+                        txtTimeToJoin.setText(HSH.printDifference(new Date(),
+                                simpleDateFormat.parse(result.getTimeToJoin().replace("T", " "))));
+                        txtEventDate.setText(HSH.printDifference(simpleDateFormat.parse(result.getCreateDate()
+                                .replace("T", " ")), new Date()) + " پیش");
+                        tvVote.setText(result.getEventOwner().getVote());
+                        pbTrustPercent.setProgress(result.getEventOwner().getTrustPercentage());
                         //List<PostDetailsModel> feed = new ArrayList<>();
                         //List<String> result2 = result.getBaseProperty();
 
@@ -365,35 +425,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                 txtLocation.setText("سراسر کشور");
                         }
 
-                        for (int i = 0; i < result.getApplicants().size(); i++) {
-                            try {
-                                TagLayout(result.getApplicants().get(i).getProfileImage(), i);
-                                if (result.getApplicants().get(i).getUserId().contains(Application.preferences.getString(getString(R.string.UserId), "00000000-0000-0000-0000-00000000000000"))) {
-                                    btnBeup.setBackgroundResource(R.drawable.rounded_corners_strok_black);
-                                    btnBeup.setTextColor(Color.BLACK);
-                                    btnBeup.setText("منصرف شدم");
-                                    findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
-                                    /*if (Commentfeed.size() == 0)
-                                        GetCommentAsynkTask();*/
-                                    btnBeup.setOnClickListener(v -> {
-                                        final SweetAlertDialog dialog = new SweetAlertDialog(PostDetailsActivity.this, SweetAlertDialog.WARNING_TYPE);
-                                        dialog.setTitleText("لغو همراهی");
-                                        dialog.setContentText(getString(R.string.sure));
-                                        dialog.setConfirmText("بله");
-                                        dialog.setCancelText("فعلا نه");
-                                        dialog.setConfirmClickListener(sDialog -> {
-                                            UpdateApplicantAsynkTask();
-                                            dialog.dismissWithAnimation();
-                                        });
-                                        dialog.setCancelClickListener(sweetAlertDialog -> dialog.dismissWithAnimation());
-                                        dialog.setCancelable(true);
-                                        HSH.dialog(dialog);
 
-                                    });
-                                }
-                            } catch (Exception e) {
-                            }
-                        }
                     } catch (Exception e) {
                     }
                     //cpv.setVisibility(View.GONE);
@@ -403,6 +435,9 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         String[] temp = result.getImages().split(",");
 
                         RecyclerView recyclerView = findViewById(R.id.recycler_banner);
+                        recyclerView.setHasFixedSize(true);
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(PostDetailsActivity.this, LinearLayoutManager.HORIZONTAL, true);
+                        recyclerView.setLayoutManager(layoutManager);
                         ScrollingPagerIndicator indicator = findViewById(R.id.indicator);
                         for (int i = 0; i < temp.length; i++) {
 
@@ -423,6 +458,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         indicator.setVisibleDotCount(3);
 
                     } catch (Exception e) {
+                        HSH.showtoast(PostDetailsActivity.this, e.getMessage());
                     }
                     ///////////////////////////////////////////////////////////////////////////
                     if (!fFeed.getTitle().contains("لغو")) {
@@ -454,7 +490,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
 
                 try {
                     if (null != getIntent().getExtras())
-                        if (result.getUserId().equals(Application.preferences.getString(getString(R.string.UserId), "0000"))) {
+                        if (result.getEventOwner().getId().equals(Application.preferences.getString(getString(R.string.UserId), "0000"))) {
 
                             /*HSH.vectorRight(PostDetailsActivity.this, btnEdit, R.drawable.ic_edit);
                             HSH.vectorRight(PostDetailsActivity.this, btnDelete, R.drawable.ic_delete);
@@ -485,7 +521,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                             ((TextView) findViewById(R.id.txt_description_state)).setTextColor(Color.parseColor(temp[2]));*/
                         } else {
                             try {
-                                if (result.getUserId().equals(Application.preferences.getString(getString(R.string.UserId), "0000"))) {
+                                if (result.getEventOwner().getId().equals(Application.preferences.getString(getString(R.string.UserId), "0000"))) {
                                     btnBeup.setVisibility(View.GONE);
                                     findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
                                     /*if (Commentfeed.size() == 0)
@@ -506,11 +542,11 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             }
 
             @Override
-            public void onFailure(Call<EventModel> call, Throwable t) {
-                //cpv.setVisibility(View.VISIBLE);
-                AdvertisementDetails();
+            public void getError(String error) throws Exception {
+
             }
-        });
+        };
+        new AsynctaskEventDetails(this, fFeed.getPostId(), del).getData();
     }
 
     private void registerDialog() {
@@ -540,11 +576,10 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     private void SendingReportService(final int checkid, final Dialog dialog_wait) {
 
         Map<String, String> params = new HashMap<>();
-        params.put(getString(R.string.ComplainantId), Application.preferences.getString(getString(R.string.UserId), "0"));
         params.put(getString(R.string.PostId), fFeed.getPostId());
         params.put("Type", String.valueOf(checkid));
         Call<ResponseBody> call =
-                ApiClient.getClient().create(ApiInterface.class).SendingReportService(params);
+                retrofit.create(ApiInterface.class).SendingReportService(params);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
@@ -565,7 +600,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         params.put(getString(R.string.PostId), fFeed.getPostId());
         params.put(getString(R.string.Status), String.valueOf(checkid));
         Call<ResponseBody> call =
-                ApiClient.getClient().create(ApiInterface.class).RemovePost(params);
+                retrofit.create(ApiInterface.class).RemovePost(params);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse
@@ -585,13 +620,13 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                     } catch (Exception e) {
                     }
-                } else
-                    DeletePostAsynkTask(loading);
+                } /*else
+                    DeletePostAsynkTask(loading);*/
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                DeletePostAsynkTask(loading);
+                //DeletePostAsynkTask(loading);
             }
         });
     }
@@ -599,7 +634,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     private void CancelPostAsynkTask(final SweetAlertDialog loading) {
         loading.show();
         Call<ResponseBody> call =
-                ApiClient.getClient().create(ApiInterface.class).CancelPost(fFeed.getPostId());
+                retrofit.create(ApiInterface.class).CancelPost(fFeed.getPostId());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse
@@ -644,79 +679,6 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 CancelPostAsynkTask(loading);
-            }
-        });
-    }
-
-    private void SendCommentAsynkTask(final String comment) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        Map<String, String> params = new HashMap<>();
-        params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
-        params.put(getString(R.string.UserName), Application.preferences.getString(getString(R.string.FullName), "0"));
-        params.put(getString(R.string.PostId), fFeed.getPostId());
-        params.put(getString(R.string.Comment), comment);
-        Call<CommentModel> call =
-                ApiClient.getClient().create(ApiInterface.class).InsertComment(params);
-        call.enqueue(new Callback<CommentModel>() {
-            @Override
-            public void onResponse
-                    (Call<CommentModel> call, retrofit2.Response<CommentModel> response) {
-                if (response.code() == 200) {
-                    NotifyData notifydata = notifyData();
-                    notifydata.title = String.format(getString(R.string.comment), "\"" + fFeed.getTitle() + "\"");
-                    notifydata.type = "Comment";
-                    Call<Message> call2 = ApiClient.getClient2().create(ApiInterface.class).sendMessage(new Message(result.getToken(), notifydata));
-                    call2.enqueue(new Callback<Message>() {
-                        @Override
-                        public void onResponse(Call<Message> call, Response<Message> response) {
-                        }
-
-                        @Override
-                        public void onFailure(Call<Message> call, Throwable t) {
-                        }
-                    });
-                    try {
-                        /*etComment.setText("");
-                        Commentfeed.add(response.body());
-                        adapter.notifyDataSetChanged();*/
-                    } catch (Exception e) {
-                    }
-                } else
-                    SendCommentAsynkTask(comment);
-            }
-
-            @Override
-            public void onFailure(Call<CommentModel> call, Throwable t) {
-                SendCommentAsynkTask(comment);
-            }
-        });
-    }
-
-    private void GetCommentAsynkTask() {
-        Call<List<CommentModel>> call =
-                ApiClient.getClient().create(ApiInterface.class).GetComments(fFeed.getPostId());
-        call.enqueue(new Callback<List<CommentModel>>() {
-            @Override
-            public void onResponse
-                    (Call<List<CommentModel>> call, retrofit2.Response<List<CommentModel>> response) {
-                if (response.code() == 200) {
-                    try {
-                        /*if (adapter.getItemCount() == 0) {
-                            for (CommentModel m : response.body())
-                                Commentfeed.add(m);
-                            adapter.notifyDataSetChanged();
-                            rvComment.scrollToPosition(adapter.getItemCount());
-                        }*/
-                    } catch (Exception e) {
-                    }
-                } else
-                    GetCommentAsynkTask();
-            }
-
-            @Override
-            public void onFailure(Call<List<CommentModel>> call, Throwable t) {
-                GetCommentAsynkTask();
             }
         });
     }
@@ -776,7 +738,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         params.put(getString(R.string.Amount), Application.preferences.getString("Feepayable", "1000"));
         params.put(getString(R.string.refID), refID);
         Call<ResponseBody> call =
-                ApiClient.getClient().create(ApiInterface.class).InsertPayment(params);
+                retrofit.create(ApiInterface.class).InsertPayment(params);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse
@@ -789,14 +751,11 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         dialog.setTitleText("تراکنش موفق")
                                 .setContentText("تراکنش شما با موفقیت انجام شد و رویداد شما بعد از بررسی منتشر خواهد شد.")
                                 .setConfirmText("باشه")
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                        Intent resultData = new Intent();
-                                        resultData.putExtra("data", "data");
-                                        setResult(Activity.RESULT_OK, resultData);
-                                        finish();
-                                    }
+                                .setConfirmClickListener(sweetAlertDialog -> {
+                                    Intent resultData = new Intent();
+                                    resultData.putExtra("data", "data");
+                                    setResult(Activity.RESULT_OK, resultData);
+                                    finish();
                                 })
                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                     } catch (Exception e) {
@@ -820,35 +779,31 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void UpdateApplicantAsynkTask() {
-        btnBeup.setBackgroundColor(Color.parseColor("#dbdbdb"));
-        Map<String, String> params = new HashMap<>();
-        params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
-        params.put(getString(R.string.PostId), fFeed.getPostId());
         Call<ResponseBody> call =
-                ApiClient.getClient().create(ApiInterface.class).UpdateApplicants(params);
+                retrofit.create(ApiInterface.class).UpdateApplicants(fFeed.getPostId());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse
                     (Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                findViewById(R.id.pb_update_applicant).setVisibility(View.GONE);
                 if (response.code() == 200) {
                     try {
                         String s = response.body().string();
-                        if (s.equals("true") && s.length() > 0) {
-                            //findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
-                            /*if (adapter.getItemCount() == 0)
+                        if (s.equals("true")) {
+                            /*findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
+                            if (adapter.getItemCount() == 0)
                                 GetCommentAsynkTask();*/
                             Cursor cr = Application.database.rawQuery("SELECT * from RecentVisit WHERE Id='" + fFeed.getPostId() + "'", null);
                             cr.moveToFirst();
-                            cr.close();
                             if (null == cr.getString(cr.getColumnIndex("IsBeup"))) {
                                 NotifyData notifydata = notifyData();
                                 notifydata.type = "Beup";
-                                Call<Message> call2 = ApiClient.getClient2().create(ApiInterface.class).sendMessage(new Message(result.getToken(), notifydata));
+                                Call<Message> call2 = ApiClient.getClient2().create(ApiInterface.class).sendMessage(new Message(result.getEventOwner().getToken(), notifydata));
                                 call2.enqueue(new Callback<Message>() {
                                     @Override
                                     public void onResponse(Call<Message> call, Response<Message> response) {
                                         String query = "Update RecentVisit set IsBeup = 'true' " +
-                                                "WHERE Id LIKE '%" + fFeed.getPostId() + "%' ";
+                                                "WHERE data LIKE '%" + fFeed.getPostId() + "%' ";
                                         Application.database.execSQL(query);
                                     }
 
@@ -857,62 +812,38 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                                     }
                                 });
                             }
-                            /*String query = "UPDATE RecentVisit SET " +
+                            String query = "UPDATE RecentVisit SET " +
                                     "IsWanted = 'true' " +
                                     "WHERE Id = '" + fFeed.getPostId() + "' ";
-                            Application.database.execSQL(query);*/
+                            Application.database.execSQL(query);
 
                             btnBeup.setBackgroundResource(R.drawable.rounded_corners_strok_black);
-                            btnBeup.setTextColor(Color.BLACK);
+                            btnBeup.setTextColor(Color.WHITE);
                             btnBeup.setText("منصرف شدم");
-                            //HSH.display(PostDetailsActivity.this, ti);
-                            //ti.addTagView(i);
-                            i.setOnClickListener(v -> {
-                                if (Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true"))
-                                    try {
-                                        Intent in = new Intent(PostDetailsActivity.this, UserProfileActivity.class);
-                                        in.putExtra("AdvertiserId", Application.preferences.getString(getString(R.string.UserId), "0"));
-                                        in.putExtra("profileimage", Application.preferences.getString("ProfileImage", "0"));
-                                        startActivity(in);
-                                    } catch (Exception e) {
-                                    }
-                                else
-                                    registerDialog();
-                            });
 
                         } else if (s.equals("false") && s.length() > 0) {
-                            /*String query = "UPDATE RecentVisit SET " +
+
+                            String query = "UPDATE RecentVisit SET " +
                                     "IsWanted = 'false' " +
                                     "WHERE Id = '" + fFeed.getPostId() + "' ";
-                            Application.database.execSQL(query);*/
-                           /* btnBeup.setBackgroundColor(Color.parseColor("#5bb85d"));
-                            btnBeup.setText("پایه ام");*/
-
-
-                            //jadid bardashtam
-                            //findViewById(R.id.ll_comments).setVisibility(View.GONE);
-                            HSH.hide(PostDetailsActivity.this, btnBeup);
-                            /*for (int i = 0; i < ti.getChildCount(); i++) {
-                                LinearLayout v = (LinearLayout) ti.getChildAt(i);
-                                for (int j = 0; j < v.getChildCount(); j++) {
-                                    CircleImageView img = (CircleImageView) v.getChildAt(j);
-                                    if (img.getTag().equals(Application.preferences.getString(getString(R.string.UserId), "0")))
-                                        img.setVisibility(View.GONE);
-                                }
-                            }*/
+                            Application.database.execSQL(query);
+                            /*btnBeup.setBackgroundResource(R.drawable.rounded_corners_solid_black);
+                            btnBeup.setTextColor(Color.WHITE);
+                            btnBeup.setText("پایه ام");
+                            findViewById(R.id.ll_comments).setVisibility(View.GONE);
+                            HSH.hide(PostDetailsActivity.this, btnBeup);*/
                         }
                     } catch (Exception e) {
                     }
-                } else
-                    UpdateApplicantAsynkTask();
+                }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                UpdateApplicantAsynkTask();
             }
         });
     }
+
 
     private NotifyData notifyData() {
         final PersianCalendar now = new PersianCalendar();
@@ -920,52 +851,13 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 fFeed.getPostId(),
                 String.format(getString(R.string.join), "\"" + fFeed.getTitle() + "\""),
                 String.valueOf(now.getPersianLongDate()),
-                fFeed.getSubject(),
+                result.getSubject(),
                 fFeed.getCity(),
                 fFeed.getCost(),
-                fFeed.getTag(),
+                /*fFeed.getTag(),*/
                 fFeed.getImages().split(",")[0],
                 "");
         return notifydata;
-    }
-
-    private void TagLayout(final String src, final int j) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    rvGroupFriends.setHasFixedSize(true);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(PostDetailsActivity.this, LinearLayoutManager.HORIZONTAL, true);
-                    rvGroupFriends.setLayoutManager(layoutManager);
-                    rvGroupFriends.addItemDecoration(new OverlapRecyclerViewDecoration(PostDetailsActivity.this, 0));
-                    PersonAddedAdapter adapterFriends = new PersonAddedAdapter(PostDetailsActivity.this, imageLoader);
-                    rvGroupFriends.setAdapter(adapterFriends);
-                    adapterFriends.addItems(result.getApplicants());
-
-                    /*ti.addTagView(i);
-                    i.setOnClickListener(v -> {
-                        if (Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true"))
-                            try {
-                                Intent in = new Intent(PostDetailsActivity.this, UserProfileActivity.class);
-                                in.putExtra("AdvertiserId", src.split("/")[0]);
-                                in.putExtra("PostId", fFeed.getPostId());
-                                if (src.split("/").length > 1) {
-                                    if (!src.split("/")[1].contains("https:"))
-                                        in.putExtra("profileimage", getString(R.string.url) + "Images/Users/" + src.split("/")[1] + ".jpg");
-                                    else
-                                        in.putExtra("profileimage", src.substring(37));
-                                }
-                                startActivity(in);
-                            } catch (Exception e) {
-                            }
-                        else
-                            registerDialog();
-                    });*/
-
-                } catch (Exception e) {
-                }
-            }
-        }, 100 * j);
     }
 
     @Override
@@ -1078,13 +970,14 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.btn_report:
-                dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog2.setContentView(R.layout.dialog_report_post);
-                TextView txt_send = dialog2.findViewById(R.id.txt_send);
-                TextView txt_reject2 = dialog2.findViewById(R.id.txt_reject);
-                final RadioGroup radioGroup001 = dialog2.findViewById(R.id.radioGroup);
+                View view = getLayoutInflater().inflate(R.layout.dialog_report_post, null);
+                BottomSheetDialog dialogReport = new BottomSheetDialog(this, R.style.BottomSheetDialog);
+                dialogReport.setContentView(view);
+                TextView txt_send = dialogReport.findViewById(R.id.txt_send);
+                TextView txt_reject2 = dialogReport.findViewById(R.id.txt_reject);
+                final RadioGroup radioGroup001 = dialogReport.findViewById(R.id.radioGroup);
 
-                radioGroup001.setOnCheckedChangeListener((group, checkedId) -> checkid = Integer.parseInt(dialog2.findViewById(checkedId).getTag().toString()));
+                radioGroup001.setOnCheckedChangeListener((group, checkedId) -> checkid = Integer.parseInt(dialogReport.findViewById(checkedId).getTag().toString()));
 
                 txt_send.setOnClickListener(v12 -> {
                     if (radioGroup001.getCheckedRadioButtonId() != -1) {
@@ -1099,14 +992,38 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         HSH.showtoast(PostDetailsActivity.this, "یک گزینه را انتخاب کنید.");
                 });
 
-                txt_reject2.setOnClickListener(new View.OnClickListener() {
+                txt_reject2.setOnClickListener(v14 -> dialogReport.dismiss());
+                BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
+                mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
                     @Override
-                    public void onClick(View v) {
-                        dialog2.dismiss();
+                    public void onStateChanged(@NonNull View view, int i) {
+
+                        switch (i) {
+
+                            case BottomSheetBehavior.STATE_HIDDEN:
+                                break;
+                            case BottomSheetBehavior.STATE_EXPANDED: {
+                                dialogReport.show();
+                            }
+                            break;
+                            case BottomSheetBehavior.STATE_COLLAPSED: {
+                            }
+                            break;
+                            case BottomSheetBehavior.STATE_DRAGGING:
+                                break;
+                            case BottomSheetBehavior.STATE_SETTLING:
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onSlide(@NonNull View view, float v) {
+                        //setScrim(v);
+                        dialogReport.show();
                     }
                 });
-                HSH.dialog(dialog2);
-                dialog2.show();
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                dialogReport.show();
                 break;
 
             case R.id.img_back:
@@ -1119,8 +1036,8 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     try {
                         Intent i = new Intent(PostDetailsActivity.this, UserProfileActivity.class);
                         i.putExtra("PostId", fFeed.getPostId());
-                        i.putExtra("AdvertiserId", result.getUserId());
-                        i.putExtra("profileimage", result.getProfileimage());
+                        i.putExtra("AdvertiserId", result.getEventOwner().getId());
+                        i.putExtra("profileimage", result.getEventOwner().getProfileImage());
                         startActivity(i);
                     } catch (Exception e) {
                     }
@@ -1129,124 +1046,13 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.btn_contactWays:
-                dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog2.setContentView(R.layout.dialog_contact_ways);
-                TextView txt_telegram = dialog2.findViewById(R.id.txt_telegram);
-                TextView txt_instagram = dialog2.findViewById(R.id.txt_instagram);
-                TextView txt_soroosh = dialog2.findViewById(R.id.txt_soroosh);
-                TextView txt_phone = dialog2.findViewById(R.id.txt_phone);
-                TextView txt_gmail = dialog2.findViewById(R.id.txt_gmail);
-
-                /*if (result.getPhoneNumber().length() > 10) {
-                    txt_phone.setVisibility(View.VISIBLE);
-                    txt_phone.setOnClickListener(view -> {
-                        try {
-                            Uri number = Uri.parse("tel:" + result.getPhoneNumber());
-                            final Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
-                            startActivity(callIntent);
-                        } catch (Exception e) {
-                        }
-                    });
-                }*/
-               /* if (result.getSoroosh().length() > 4) {
-                    txt_soroosh.setVisibility(View.VISIBLE);
-                    txt_soroosh.setOnClickListener(view -> {
-                        try {
-                            Uri uri = Uri.parse("https://sapp.ir/" + result.getSoroosh());
-                            Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
-                            likeIng.setPackage("mobi.mmdt.ott");
-                            try {
-                                startActivity(likeIng);
-                            } catch (ActivityNotFoundException e) {
-                                startActivity(new Intent(Intent.ACTION_VIEW,
-                                        Uri.parse("https://sapp.ir/" + result.getSoroosh())));
-                            }
-                        } catch (Exception e) {
-                        }
-                    });
-                }*/
-
-                /*if (result.getTelegram().length() > 4) {
-                    txt_telegram.setVisibility(View.VISIBLE);
-                    txt_telegram.setOnClickListener(view -> {
-                        try {
-                            Intent intent12 = new Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=" + result.getTelegram()));
-                            startActivity(intent12);
-                        } catch (Exception e) {
-                            startActivity(new Intent(Intent.ACTION_VIEW,
-                                    Uri.parse("https://web.telegram.org/#/im?p=@" + result.getTelegram())));
-                        }
-                    });
-                }*/
-
-               /* try {
-                    if (result.getInstagram().length() > 4) {
-                        txt_instagram.setVisibility(View.VISIBLE);
-                        txt_instagram.setOnClickListener(view -> {
-                            Uri uri = Uri.parse("https://instagram.com/_u/" + result.getInstagram());
-                            Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
-                            likeIng.setPackage("com.instagram.android");
-                            try {
-                                startActivity(likeIng);
-                            } catch (ActivityNotFoundException e) {
-                                startActivity(new Intent(Intent.ACTION_VIEW,
-                                        Uri.parse("https://instagram.com/" + result.getInstagram())));
-                            }
-                        });
-                    }
-
-                } catch (Exception e) {
-                }*/
-
-                if (result.getGmail().length() > 4) {
-                    txt_gmail.setVisibility(View.VISIBLE);
-                    txt_gmail.setOnClickListener(view -> {
-                        try {
-                            Intent intent1 = new Intent(Intent.ACTION_VIEW);
-                            Uri data = Uri.parse("mailto:" + result.getGmail());
-                            intent1.setData(data);
-                            startActivity(intent1);
-                        } catch (Exception e) {
-                        }
-                    });
-                }
-
-                if (Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true")) {
-                    HSH.dialog(dialog2);
-                    dialog2.show();
-                } else
-                    registerDialog();
-                break;
 
             case R.id.btn_beup:
-                try {
-                    if (Application.preferences.getString(getString(R.string.Telegram), "").length() > 4 ||
-                            Application.preferences.getString(getString(R.string.Soroosh), "").length() > 4 ||
-                            Application.preferences.getString(getString(R.string.Instagram), "").length() > 4) {
-                        if (NetworkUtils.getConnectivity(PostDetailsActivity.this) != false)
-                            UpdateApplicantAsynkTask();
-                        else
-                            HSH.showtoast(PostDetailsActivity.this, "خطا در اتصال به اینترنت");
-                    } else {
-                        dialog = new SweetAlertDialog(PostDetailsActivity.this, SweetAlertDialog.NORMAL_TYPE)
-                                .setTitleText("تکمیل اطلاعات")
-                                .setContentText("قبل از شرکت در رویداد اطلاعات خود را ثبت نمایید")
-                                .setConfirmText("باشه")
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sDialog) {
-                                        if (!Application.preferences.getString(getString(R.string.UserId), "").equals(""))
-                                            HSH.onOpenPage(PostDetailsActivity.this, EditProfileActivity.class);
-                                        else
-                                            HSH.onOpenPage(PostDetailsActivity.this, IntroLoginActivity.class);
-                                        sDialog.dismissWithAnimation();
-                                    }
-                                });
-                        HSH.dialog(dialog);
-                        dialog.show();
-                    }
-                } catch (Exception e) {
-                }
+                findViewById(R.id.pb_update_applicant).setVisibility(View.VISIBLE);
+                if (NetworkUtils.getConnectivity(PostDetailsActivity.this) != false)
+                    UpdateApplicantAsynkTask();
+                else
+                    HSH.showtoast(PostDetailsActivity.this, "خطا در اتصال به اینترنت");
                 break;
 
             case R.id.img_profile:
@@ -1254,26 +1060,148 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     final Bundle bundle = new Bundle();
                     Intent i = new Intent(PostDetailsActivity.this, ViewPagerActivity.class);
                     PayeItem item = new PayeItem();
-                    item.setImages(result.getProfileimage());
+                    item.setImages(result.getEventOwner().getProfileImage());
                     bundle.putSerializable("feed", item);
                     i.putExtras(bundle);
                     startActivity(i);
                 } catch (Exception e) {
                 }
                 break;
+
+            case R.id.group_friends:
+                showBottomsheetFollwoers();
+                break;
             case R.id.txt_upgrade_event:
                 showBottomsheetNavigation();
+                break;
+            case R.id.cs_rating:
+                showBottomsheetRating();
                 break;
 
         }
     }
-
 
     private void showBottomsheetNavigation() {
 
         View view = getLayoutInflater().inflate(R.layout.dialog_upgrade_event, null);
         BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
         dialog.setContentView(view);
+        BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+
+                switch (i) {
+
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        dialog.show();
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+                //setScrim(v);
+                dialog.show();
+            }
+        });
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        dialog.show();
+        //ConstraintLayout c1 = view.findViewById(R.id.constraintLayout1);
+
+    }
+
+    private void showBottomsheetFollwoers() {
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_friend_in_event, null);
+        BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
+        dialog.setContentView(view);
+
+        ConstraintLayout csFollowers = view.findViewById(R.id.cs_followers);
+
+        if (fFeed.getFollowers().size() > 0 &&
+                fFeed.getFollowers().get(0).getUserName().length() > 1) {
+            csFollowers.setVisibility(View.VISIBLE);
+            RecyclerView rv = view.findViewById(R.id.rv_followers);
+            rv.setHasFixedSize(true);
+            rv.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
+            rv.addItemDecoration(new ItemDecorationAlbumColumns(this, ItemDecorationAlbumColumns.VERTICAL_LIST));
+            FollowersAdapter adapter = new FollowersAdapter(PostDetailsActivity.this);
+            rv.setAdapter(adapter);
+            adapter.addItems(fFeed.getFollowers());
+        } else
+            view.findViewById(R.id.img_no_followers).setVisibility(View.VISIBLE);
+
+
+        BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+
+                switch (i) {
+
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        dialog.show();
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+                //setScrim(v);
+                dialog.show();
+            }
+        });
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        dialog.show();
+        //ConstraintLayout c1 = view.findViewById(R.id.constraintLayout1);
+
+    }
+
+    private void showBottomsheetRating() {
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_rating, null);
+        BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
+        dialog.setContentView(view);
+
+        RatingReviews ratingReviews = view.findViewById(R.id.rating_reviews);
+        int colors[] = new int[]{
+                Color.parseColor("#0e9d58"),
+                Color.parseColor("#bfd047"),
+                Color.parseColor("#ffc105"),
+                Color.parseColor("#ef7e14"),
+                Color.parseColor("#d36259")};
+
+        int raters[] = new int[]{
+                new Random().nextInt(100),
+                new Random().nextInt(100),
+                new Random().nextInt(100),
+                new Random().nextInt(100),
+                new Random().nextInt(100)
+        };
+        ratingReviews.createRatingBars(100, BarLabels.STYPE1, colors, raters);
+
+
         BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override

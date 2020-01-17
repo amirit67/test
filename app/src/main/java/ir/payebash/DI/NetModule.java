@@ -78,12 +78,9 @@ public class NetModule {
                     .header("Id",  "")
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .header("Authorization",
-                            "")
+                            "bearer " + Application.preferences.getString(Application.resources.getString(R.string.Token), "0000"))
                     .header(Application.resources.getString(R.string.UserId),
                             Application.preferences.getString(Application.resources.getString(R.string.UserId), "0000"))
-                    .header(Application.resources.getString(R.string.app_name_en),
-                            Application.resources.getString(R.string.Authorization)
-                                    + Application.resources.getString(R.string.b).toUpperCase())
                    /* .header("fbToken",
                             fbToken)*/
                     /*.header(BuildConfig.UserId,

@@ -1,57 +1,75 @@
 package ir.payebash.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.jaredrummler.android.widget.AnimatedSvgView;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
+import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Models.NotifItem;
+import ir.payebash.Models.TkModel;
 import ir.payebash.R;
+import ir.payebash.asynktask.GetTokenAsynkTask;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class SplashActivity extends Activity {
+import static com.jaredrummler.android.widget.AnimatedSvgView.STATE_FINISHED;
 
+public class SplashActivity extends AppCompatActivity {
+
+    private AnimatedSvgView svgView2, svgView3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        GetServices();
-        Transaction();
+
         AnimatedSvgView svgView = findViewById(R.id.animated_svg_view);
+        svgView2 = findViewById(R.id.line_svg_view);
+        svgView3 = findViewById(R.id.font_svg_view);
+
+        testNetwork();
         svgView.start();
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                AnimatedSvgView svgView2 = findViewById(R.id.line_svg_view);
-                svgView2.start();
-                AnimatedSvgView svgView3 = findViewById(R.id.font_svg_view);
-                svgView3.start();
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        if (NetworkUtils.getConnectivity(SplashActivity.this) != false) {
-                            HSH.onOpenPage(SplashActivity.this, MainActivity.class);
-                            finish();
-                        } else if (NetworkUtils.getConnectivity(SplashActivity.this) == false) {
-                            HSH.onOpenPage(SplashActivity.this, NoConnectioonActivity.class);
-                            finish();
-                        }
-                        //finish();
-                    }
-                }, 1500);
-            }
+        new Handler().postDelayed(() -> {
+            svgView2.start();
+            svgView3.start();
+           /* new Handler().postDelayed(() -> {
+                if (NetworkUtils.getConnectivity(SplashActivity.this) != false) {
+                    HSH.onOpenPage(SplashActivity.this, MainActivity.class);
+                    finish();
+                } else if (NetworkUtils.getConnectivity(SplashActivity.this) == false) {
+                    HSH.onOpenPage(SplashActivity.this, NoConnectioonActivity.class);
+                    finish();
+                }
+                //finish();
+            }, 1500);*/
         }, 1500);
+    }
+
+    public void no_connection_retry_click(View v) {
+        try {
+            testNetwork();
+            findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+            findViewById(R.id.no_connection_ll_main).setVisibility(View.GONE);
+            findViewById(R.id.animatedSvgView).setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+        }
     }
 
     private void GetServices() {
@@ -102,13 +120,12 @@ public class SplashActivity extends Activity {
                         }
                     } catch (Exception e) {
                     }
-                else
-                    GetServices();
+
             }
 
             @Override
             public void onFailure(Call<List<NotifItem>> call, Throwable t) {
-                GetServices();
+
             }
         });
     }
@@ -152,6 +169,61 @@ public class SplashActivity extends Activity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
             }
         });
+    }
+
+    private void testNetwork() {
+        try {
+            /*int min = 1000000;
+            int max = 9999999;
+            int random = new Random().nextInt((max - min) + 1) + min;*/
+
+            Map<String, String> params = new HashMap<>();
+            params.put(getString(R.string.client_id), Application.preferences.getString(getString(R.string.UserId), ""));
+            params.put(getString(R.string.client_secret), Application.preferences.getString(getString(R.string.UserName), ""));
+            params.put(getString(R.string.grant_type), getString(R.string.password).toLowerCase());
+            IWebservice.ITkModel del = new IWebservice.ITkModel() {
+                @Override
+                public void getResult(TkModel token) throws Exception {
+                    try {
+                        HSH.editor(getString(R.string.Token), token.getAccessToken());
+                        GetServices();
+                        Transaction();
+                        if (svgView3.getState() == STATE_FINISHED) {
+                            Transaction();
+                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                            finish();
+                        }
+                        else
+                            new Handler().postDelayed(() -> {
+                                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                                finish();
+                                Transaction();
+                            }, 2500);
+                    } catch (Exception e) {
+                        Transaction();
+                    }
+                }
+
+                @Override
+                public void getError(boolean error) throws Exception {
+                    if (!error) {
+                        try {
+                            findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
+                            findViewById(R.id.no_connection_ll_main).setVisibility(View.VISIBLE);
+                            findViewById(R.id.animatedSvgView).setVisibility(View.GONE);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Intent myIntent = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(myIntent);
+                        finish();
+                    }
+                }
+            };
+            new GetTokenAsynkTask(SplashActivity.this, del, params).GetData();
+        } catch (Exception e) {
+        }
     }
 
 }

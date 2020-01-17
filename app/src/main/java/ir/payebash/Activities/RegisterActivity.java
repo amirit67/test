@@ -34,7 +34,6 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.json.JSONObject;
@@ -45,7 +44,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Application;
@@ -53,7 +51,7 @@ import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
-import ir.payebash.Models.PlusItem;
+import ir.payebash.Models.googlePlus.PlusItem;
 import ir.payebash.R;
 import ir.payebash.asynktask.AsynctaskCheckPhoneNumber;
 import okhttp3.ResponseBody;
@@ -321,7 +319,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 ApiClient.getClient().create(ApiInterface.class).inesrtUser(params);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+            public void onResponse(Call<ResponseBody> call, retrofit2.EventModel<ResponseBody> response) {
                 loading.dismiss();
                 if (SigninType.equals("google") && response.code() == 200) {
                     try {

@@ -20,9 +20,12 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import javax.inject.Inject;
 
+import ir.payebash.Activities.MyEventDetailsActivity;
 import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Activities.ViewPagerActivity;
 import ir.payebash.Application;
@@ -38,6 +42,7 @@ import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.Fragments.SearchFragment;
 import ir.payebash.Holders.PayeHolder;
 import ir.payebash.Models.PayeItem;
+import ir.payebash.Models.event.EventModel;
 import ir.payebash.Moudle.CircleImageView;
 import ir.payebash.Moudle.TriangleLabelView;
 import ir.payebash.R;
@@ -46,21 +51,22 @@ import ir.payebash.utils.OverlapRecyclerViewDecoration;
 
 public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+    Date currentDate;
     private final int VIEW_TYPE_ITEM = 1;
-    //private final int VIEW_TYPE_LOADING = 2;
     @Inject
     ImageLoader imageLoader;
-    private List<PayeItem> feed = new ArrayList<>();
+    private List<EventModel> feed = new ArrayList<>();
     //public List<PayeItem> Tempfeed = new ArrayList<>();
     private Map<String, String> params;
     //private Map<Integer, LinearLayout> details = new HashMap<>();
     //private int s = 0;
-    private SearchFragment fragobj = null;
     private Context mContext;
 
     public PayeAdapter(Context context, Map<String, String> params) {
         this.mContext = context;
         this.params = params;
+        currentDate = new Date();
         Application.getComponent().Inject(this);
     }
 
@@ -98,10 +104,13 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 Holder.txtTitle.setText(feed.get(i).getTitle());
                 String city = mContext.getResources().getStringArray(R.array.Citys)[feed.get(i).getCity() - 2];
-                Holder.txtLoc.setText(feed.get(i).getCreateDate() + " در " + city.substring(city.indexOf("-") + 2));
+                Holder.txtLoc.setText(HSH.printDifference(simpleDateFormat.parse(feed.get(i).getCreateDate()
+                        .replace("T", " ")), currentDate) + " پیش در " + city.substring(city.indexOf("-") + 2));
                 Holder.txtCost.setText(feed.get(i).getCost());
                 Holder.imgWoman.setVisibility(feed.get(i).IsWoman() ? View.VISIBLE : View.GONE);
                 Holder.imgImmadiate.setVisibility(feed.get(i).IsImmediate() ? View.VISIBLE : View.GONE);
+                Holder.tvNumberFollowers.setText(feed.get(i).getNumberFollowers());
+
                 Holder.rv.setHasFixedSize(true);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, true);
                 Holder.rv.setLayoutManager(layoutManager);
@@ -109,7 +118,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 PersonAddedAdapter adapterFriends = new PersonAddedAdapter(mContext, imageLoader);
 
                 Holder.rv.setAdapter(adapterFriends);
-                //adapterFriends.addItems(new ArrayList<>(Arrays.asList(new String [] {"ba48-56177c7ba1a5", "ba48-56177c7ba1a5","ba48-56177c7ba1a5" })));
+                adapterFriends.addItems(feed.get(i).getFollowers());
 
                 imageLoader.displayImage(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + feed.get(i).getImages().split(",")[0] + ".jpg", Holder.imgContent, new ImageLoadingListener() {
                     @Override
@@ -129,58 +138,6 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public void onLoadingCancelled(String imageUri, View view) {
                     }
                 });
-               /*
-                Holder.txt_title.setText(feed.get(i).getTitle());
-                Holder.txt_deadline.setText(feed.get(i).getTimeToJoin());
-                HSH.vectorRight(mContext, Holder.txt_cost, R.drawable.ic_coins);
-                HSH.vectorRight(mContext, Holder.txt_deadline, R.drawable.ic_hourglass);
-
-                //s = 0;
-                *//*try {
-                    s = details.get(i).getChildCount();
-                } catch (Exception e) {
-                }*//*
-                if (*//*s == 0 && *//*feed.get(i).getTag().length() > 3) {
-                    String[] temp = feed.get(i).getTag().split("#");
-                    for (int j = 0; j < temp.length; j++) {
-                        if (!temp[j].equals(""))
-                            TagLayout(temp[j], Holder.mTagLayout, j, i);
-                    }
-                } *//*else if (s > 0) {
-                    LinearLayout v;
-                    v = details.get(i);
-                    ((TagLayout2) v.getParent()).removeViewAt(0);
-                    Holder.mTagLayout.addView(v);
-                }*//* else
-                    Holder.rl_tag.setVisibility(View.GONE);
-
-                if (Application.myAds == 1) {
-                    if (feed.get(i).IsImmediate()) {
-                        Holder.lbl_state.setVisibility(View.VISIBLE);
-                        Holder.lbl_state.setTriangleBackgroundColor(Color.parseColor("#C8FF0004"));
-                        Holder.lbl_state.setPrimaryText("فوری");
-                    } else
-                        Holder.lbl_state.setVisibility(feed.get(i).IsWoman() == true ? View.VISIBLE : View.GONE);
-                } else {
-                    Holder.lbl_state.setVisibility(View.VISIBLE);
-                    Holder.lbl_state.setPrimaryText(feed.get(i).getState().split("-")[0]);
-                    Holder.lbl_state.setTriangleBackgroundColor(Color.parseColor(feed.get(i).getState().split("-")[2]));
-                }
-
-
-                if (!feed.get(i).getImages().equals("null"))
-                    Holder.img_post.setOnClickListener(v -> {
-                        String s = feed.get(i).getImages().split(",")[0];
-                        if (!s.equals("")) {
-                            feed.get(i).setImages(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + s + ".jpg");
-                            final Bundle bundle = new Bundle();
-                            bundle.putSerializable("feed", feed.get(i));
-                            Intent in = new Intent(mContext, ViewPagerActivity.class);
-                            in.putExtras(bundle);
-                            mContext.startActivity(in);
-                            feed.get(i).setImages(s);
-                        }
-                    });*/
             } catch (Exception e) {
             }
         }
@@ -203,7 +160,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return (null != feed ? feed.size() : 0);
     }
 
-    public void addItems(List<PayeItem> posts) {
+    public void addItems(List<EventModel> posts) {
         this.feed.addAll(posts);
         notifyDataSetChanged();
     }
@@ -217,7 +174,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     public class Paye2Holder extends RecyclerView.ViewHolder {
-        public TextView txtTitle, txtLoc, txtCost;
+        public TextView txtTitle, txtLoc, txtCost, tvNumberFollowers;
         public RecyclerView rv;
         public ImageView imgContent, imgWoman, imgImmadiate;
 
@@ -226,6 +183,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.txtTitle = view.findViewById(R.id.txt_title);
             this.txtLoc = view.findViewById(R.id.txt_location);
             this.txtCost = view.findViewById(R.id.txt_cost);
+            this.tvNumberFollowers = view.findViewById(R.id.tv_number_followers);
             this.rv = view.findViewById(R.id.rv);
             this.imgContent = view.findViewById(R.id.img_content);
             this.imgWoman = view.findViewById(R.id.img_woman);

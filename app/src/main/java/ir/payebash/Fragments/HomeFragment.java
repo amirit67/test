@@ -35,27 +35,31 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import ir.payebash.Adapters.PayeAdapter;
 import ir.payebash.Adapters.StoryAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.ItemDecorationAlbumColumns;
+import ir.payebash.Fragments.user.ActivitiesFragment;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.OnLoadMoreListener;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
-import ir.payebash.Models.PayeItem;
+import ir.payebash.Models.event.EventModel;
+import ir.payebash.Models.event.story.StoryModel;
 import ir.payebash.R;
 import ir.payebash.asynktask.AsynctaskGetPost;
-import ir.payebash.utils.OverlapRecyclerViewDecoration;
+import ir.payebash.asynktask.AsynctaskStoryEvents;
 
 import static android.app.Activity.RESULT_OK;
+import static ir.payebash.Classes.HSH.openFragment;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener{
 
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
-
+    private ImageView imgRooms;
     AsynctaskGetPost getPost;
     IWebservice m;
     private RecyclerView rv;
@@ -77,6 +81,7 @@ public class HomeFragment extends Fragment {
     private OnLoadMoreListener mOnLoadMoreListener;
     private int visibleThreshold = 1, lastVisibleItem, totalItemCount = 0;
     private SearchFragment fragobj = null;
+    private ActivitiesFragment activitiesFragment = null;
     private View rootView = null;
 
     @Override
@@ -88,6 +93,7 @@ public class HomeFragment extends Fragment {
             DeclareElements();
             ac = getActivity();
             getEvents();
+            getStories();
 
             swipeContainer.setOnRefreshListener(() -> {
                 Cnt = 0;
@@ -143,13 +149,12 @@ public class HomeFragment extends Fragment {
         params.put(getString(R.string.Skip), String.valueOf(Cnt));
         m = new IWebservice() {
             @Override
-            public void getResult(retrofit2.Response<List<PayeItem>> list) throws Exception {
+            public void getResult(retrofit2.Response<List<EventModel>> list) throws Exception {
                 try {
                     isLoading = false;
                     swipeContainer.setRefreshing(false);
                     pb.setVisibility(View.GONE);
                     adapter.addItems(list.body());
-                    adapterStory.addItems(list.body());
                 } catch (Exception e) {
                 }
             }
@@ -166,6 +171,21 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void getStories() {
+        IWebservice.IStoriesEvents m = new IWebservice.IStoriesEvents() {
+            @Override
+            public void getResult(List<StoryModel> stories) throws Exception {
+                adapterStory.addItems(stories);
+            }
+
+            @Override
+            public void getError(String error) throws Exception {
+
+            }
+        };
+        new AsynctaskStoryEvents(getActivity(), m, "68").getData();
+
+    }
 
     @Override
     public void onActivityResult(int requestCode, final int resultCode, final Intent data) {
@@ -208,6 +228,8 @@ public class HomeFragment extends Fragment {
 
     public void DeclareElements() {
         //llSearch = rootView.findViewById(R.id.ll_search);
+        imgRooms = rootView.findViewById(R.id.img_rooms);
+        imgRooms.setOnClickListener(this);
         swipeContainer = rootView.findViewById(R.id.swipeContainer);
         pb = rootView.findViewById(R.id.pb);
         rv = rootView.findViewById(R.id.rv_paye);
@@ -348,4 +370,13 @@ public class HomeFragment extends Fragment {
         this.mOnLoadMoreListener = mOnLoadMoreListener;
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.img_rooms)
+        {
+            if (activitiesFragment == null)
+                activitiesFragment = new /*NewAddressActivity*/ActivitiesFragment();
+            openFragment(getActivity(), activitiesFragment);
+        }
+    }
 }

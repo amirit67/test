@@ -1,5 +1,6 @@
 package ir.payebash.Activities;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,8 +30,12 @@ import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
+import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Models.UserItem;
+import ir.payebash.Models.user.LoginModel;
 import ir.payebash.R;
+import ir.payebash.asynktask.AsynctaskLogin;
+import ir.payebash.asynktask.AsynctaskRegister;
 import ir.payebash.chat.AsyncLoginTask;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -40,13 +45,11 @@ import retrofit2.Callback;
 public class Register2Activity extends Fragment implements View.OnClickListener, TextWatcher {
 
 
-    private String registerUrl = BuildConfig.BaseUrl + "/account/register";
     private EditText etFullname, etUsername, etEmail, etPassword;
     public TextView btRegister, txtError;
     ImageView imgBack, imgName, imgUsername, imgEmail, imgPassword;
     private ProgressBar progressBar;
     private UserItem params;
-    private DefaultHttpClient httpclient;
     private View rootView = null;
 
     private void initViews() {
@@ -122,46 +125,44 @@ public class Register2Activity extends Fragment implements View.OnClickListener,
             params.setUserName(etUsername.getText().toString().trim());
             params.setEmail(etEmail.getText().toString().trim());
             params.setFullName(etFullname.getText().toString().trim());
-            params.setPassword(etPassword.getText().toString().trim());
+            params.setPassword(HSH.ecr(etPassword.getText().toString().trim()));
             if (NetworkUtils.getConnectivity(getActivity()) != false)
-                new AsyncRegisterTask().execute();
+                RegisterUser();
             else
                 HSH.showtoast(getActivity(), "خطا در اتصال به اینترنت");
         } catch (Exception e) {
         }
     }
 
-    private void RegisterUser(String token) {
+    private void RegisterUser() {
 
-        Call<ResponseBody> call =
-                ApiClient.getClient().create(ApiInterface.class).inesrtUser(token, params);
-        call.enqueue(new Callback<ResponseBody>() {
+        IWebservice.ILogin del = new IWebservice.ILogin() {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                try {
-                    if (response.code() == 200) {
-                        try {
-                            HSH.editor(getString(R.string.UserId), response.body().string());
-                            HSH.editor(getString(R.string.FullName), params.getFullName());
-
-                            new AsyncLoginTask(getActivity(), progressBar, btRegister)
-                                    .execute(registerUrl, params.getUserName(), params.getPassword());
-                        } catch (Exception e) {
-                        }
-                    } else {
-
-                    }
-                } catch (Exception e) {
+            public void getResult(LoginModel user) throws Exception {
+                progressBar.setVisibility(View.GONE);
+                btRegister.setVisibility(View.VISIBLE);
+                if(user.getStatusCode() == 200) {
+                    HSH.editor(getString(R.string.FullName), user.getFullName());
+                    HSH.editor(getString(R.string.UserName), user.getUsername());
+                    HSH.editor(getString(R.string.UserId), user.getUserId());
+                    HSH.editor(getString(R.string.ProfileImage), user.getProfileImage());
+                    HSH.editor(getString(R.string.Password), etPassword.getText().toString());
+                    HSH.editor("IsAuthenticate", "true");
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    getActivity().finish();
                 }
+                else
+                    txtError.setText(user.getMessage());
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                HSH.showtoast(getActivity(), "خطا در ارتباط با سرور");
+            public void getError(String error) throws Exception {
+                HSH.showtoast(getActivity(), error);
                 progressBar.setVisibility(View.GONE);
                 btRegister.setVisibility(View.VISIBLE);
             }
-        });
+        };
+        new AsynctaskRegister(getActivity(), params, del).getData();
     }
 
     @Override
@@ -213,59 +214,5 @@ public class Register2Activity extends Fragment implements View.OnClickListener,
             btRegister.setBackground(getResources().getDrawable(R.drawable.rounded_corners_solid_gray));
 
         }
-    }
-
-
-    public class AsyncRegisterTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            httpclient = new DefaultHttpClient();
-
-            try {
-                HttpGet httpPost = new HttpGet(registerUrl);
-                HttpResponse response = httpclient.execute(httpPost);
-                HttpEntity resEntity = response.getEntity();
-                String responseBody = EntityUtils.toString(resEntity);
-
-                // Get __RequestVerificationToken
-                String token = GetToken(responseBody);
-
-                return token;
-            } catch (Exception e) {
-            } finally {
-                httpclient.getConnectionManager().shutdown();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String cookieCredentials) {
-
-            params.set__RequestVerificationToken(cookieCredentials);
-            RegisterUser(cookieCredentials);
-        }
-    }
-
-
-    private String GetToken(String content) {
-        int startIndex = content.indexOf("__RequestVerificationToken");
-        int endIndex = content.indexOf("/>", startIndex);
-
-        if (startIndex == -1 || endIndex == -1) {
-            return null;
-        }
-
-        content = content.substring(startIndex, endIndex);
-
-        // Find Token
-        Pattern p = Pattern.compile("value=\"(\\S+)\"");
-        Matcher m = p.matcher(content);
-        if (m.find()) {
-            return m.group(1);
-        }
-        return null;
     }
 }

@@ -21,6 +21,7 @@ android {
         }
 
         buildConfigField "String", "BaseUrl", "\"http://192.168.1.200:1141\""
+        buildConfigField "String", "getTkn", "\"Token\""
     }
 
     buildTypes {
@@ -84,8 +85,8 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.22'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.22'
 
-    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+    implementation "android.arch.persistence.room:runtime:1.1.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.0"
 
     //page indicator
     implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.0.6"

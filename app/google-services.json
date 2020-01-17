@@ -1,76 +1,53 @@
 {
   "project_info": {
-    "project_number": "642093830131",
-    "firebase_url": "https://payebash-535e0.firebaseio.com",
-    "project_id": "payebash-535e0",
-    "storage_bucket": "payebash-535e0.appspot.com"
+    "project_number": "460182270490",
+    "firebase_url": "https://myprojects-2702b.firebaseio.com",
+    "project_id": "myprojects-2702b",
+    "storage_bucket": "myprojects-2702b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:642093830131:android:82350eb849b2c356",
+        "mobilesdk_app_id": "1:460182270490:android:82350eb849b2c356",
         "android_client_info": {
           "package_name": "ir.payebash"
         }
       },
       "oauth_client": [
         {
-          "client_id": "642093830131-iepq9us690euo5e1l1fhagn8n89fmf63.apps.googleusercontent.com",
+          "client_id": "460182270490-cdg6v6k9ihm7s63mptas0bv5al3jb1qq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ir.payebash",
+            "certificate_hash": "f4f981072d53e3716b7fca694e7777d852bf27bf"
+          }
+        },
+        {
+          "client_id": "460182270490-dl1t0dm8dd236aveqpstui8p99k0nt68.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ir.payebash",
+            "certificate_hash": "ff182acb234b70e6306e5dc5fb434850365e80d5"
+          }
+        },
+        {
+          "client_id": "460182270490-6bppepidn3l0ucflhkkqa8mkrrfh9jdj.apps.googleusercontent.com",
           "client_type": 3
-        },
-        {
-          "client_id": "642093830131-1te7evlr6itgtf7cm20j8hs5ds56tf2t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ir.payebash",
-            "certificate_hash": "d17fc2d9cd33da78381af99b590fe03fcd400d85"
-          }
-        },
-        {
-          "client_id": "642093830131-lfjs25bjg907fp8fu9juli03rdmvrsj2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ir.payebash",
-            "certificate_hash": "be051f4fcb0f43011034431bce3e1a7acfbc7061"
-          }
-        },
-        {
-          "client_id": "642093830131-7b4nah6lphjjd7l401icn0826cqp18tk.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ir.payebash",
-            "certificate_hash": "09161e8dbe00f7975a7f2c3c82507eb1d4aa64d8"
-          }
-        },
-        {
-          "client_id": "642093830131-jeto80639hpl3hj0lm7d82clcfr1mnm1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ir.payebash",
-            "certificate_hash": "449e68464ab192e9c8d5899d4cc45ea9706ce10a"
-          }
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAboXcnpuOuA0yz7pF0sPW3h31PK-6yX5A"
+          "current_key": "AIzaSyClGHA5oSe4kDCS7RNQzZAA_ewo-VDMULI"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "642093830131-iepq9us690euo5e1l1fhagn8n89fmf63.apps.googleusercontent.com",
+              "client_id": "460182270490-6bppepidn3l0ucflhkkqa8mkrrfh9jdj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

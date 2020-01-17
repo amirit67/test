@@ -47,9 +47,9 @@
                             android:id="@+id/rv_group_friends"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="@+id/img_event"
+                            app:layout_constraintBottom_toBottomOf="@+id/img_owner"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/img_event"
+                            app:layout_constraintTop_toTopOf="@+id/img_owner"
                             app:srcCompat="@drawable/ic_chevron_left_black" />
 
                         <TextView
@@ -60,8 +60,8 @@
                             android:text="میزبان"
                             android:textColor="#93A0AE"
                             android:textSize="10sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/img_event"
-                            app:layout_constraintEnd_toStartOf="@+id/img_event"
+                            app:layout_constraintBottom_toBottomOf="@+id/img_owner"
+                            app:layout_constraintEnd_toStartOf="@+id/img_owner"
                             app:layout_constraintTop_toBottomOf="@+id/txt_fullname_host" />
 
                         <TextView
@@ -73,11 +73,11 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/sp14"
                             app:layout_constraintBottom_toTopOf="@+id/textView11"
-                            app:layout_constraintEnd_toStartOf="@+id/img_event"
-                            app:layout_constraintTop_toTopOf="@+id/img_event" />
+                            app:layout_constraintEnd_toStartOf="@+id/img_owner"
+                            app:layout_constraintTop_toTopOf="@+id/img_owner" />
 
                         <ir.payebash.Moudle.CircleImageView
-                            android:id="@+id/img_event"
+                            android:id="@+id/img_owner"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginTop="12dp"
@@ -124,8 +124,9 @@
                                 android:paddingLeft="@dimen/dp6"
                                 android:paddingTop="@dimen/dp4"
                                 android:paddingRight="@dimen/dp6"
-                                android:text="20 روز"
+                                android:text="0 روز"
                                 android:textSize="@dimen/sp12"
+                                android:textColor="@color/black"
                                 app:layout_constraintBottom_toTopOf="@+id/textView30"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -133,7 +134,7 @@
 
                             <TextView
                                 android:id="@+id/textView30"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:background="#e7e7e7"
                                 android:fontFamily="@font/yekanlight"
@@ -141,24 +142,25 @@
                                 android:paddingLeft="@dimen/dp6"
                                 android:paddingRight="@dimen/dp6"
                                 android:paddingBottom="@dimen/dp4"
-                                android:text="مهلت"
+                                android:text="دیگه"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp12"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="@+id/txt_time_to_join"
+                                app:layout_constraintStart_toStartOf="@+id/txt_time_to_join"
                                 app:layout_constraintTop_toBottomOf="@+id/txt_time_to_join" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.cardview.widget.CardView>
 
                     <TextView
-                        android:id="@+id/textView15"
+                        android:id="@+id/tv_follwers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="32dp"
                         android:maxLines="1"
                         android:ellipsize="end"
-                        android:text="12 نفر ایه ان"
+                        tools:text="0 نفر پایه ان"
                         android:textSize="@dimen/sp14"
                         android:textColor="@color/white"
                         android:fontFamily="@font/yekanlight"
@@ -175,7 +177,7 @@
                         android:text="بیاید بریم کوهنوردی"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp18"
-                        app:layout_constraintBottom_toTopOf="@+id/textView15"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_follwers"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/cardView2"
                         app:layout_constraintTop_toTopOf="parent" />

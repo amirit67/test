@@ -16,17 +16,26 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import ir.payebash.Activities.MainActivity;
+import ir.payebash.Application;
+import ir.payebash.Fragments.MyPayeFragment;
+import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.R;
 
 public class ActivitiesFragment extends Fragment {
 
 
-    public ImageView nav;
+    @Inject
+    ImageLoader imageLoader;
+    public ImageView nav, imgProfile;
     public ViewPager pager;
     View rootView = null;
     private TabLayout tabHost;
@@ -39,6 +48,7 @@ public class ActivitiesFragment extends Fragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_activities, container, false);
             DeclareElements();
+
             tabHost = rootView.findViewById(R.id.materialTabHost);
             pager = rootView.findViewById(R.id.pager);
             pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -62,10 +72,7 @@ public class ActivitiesFragment extends Fragment {
             tabHost.getTabAt(1).setIcon(R.drawable.ic_history);
             tabHost.getTabAt(2).setIcon(R.drawable.ic_date_event);
 
-            nav.setOnClickListener(v ->
-            {
-                showBottomsheetNavigation();
-            });
+            nav.setOnClickListener(v ->((IWebservice.IBottomSheetNavigation) getContext()).showBottomSheet());
         }
         ((TitleMain) getContext()).FragName("رویدادها");
         return rootView;
@@ -73,13 +80,16 @@ public class ActivitiesFragment extends Fragment {
 
     private void DeclareElements() {
         //navigationView = rootView.findViewById(R.id.nav_view);
+        Application.getComponent().Inject(this);
         nav = rootView.findViewById(R.id.img_navigation);
+        imgProfile = rootView.findViewById(R.id.img_profile);
+        imageLoader.displayImage(Application.preferences.getString(getString(R.string.ProfileImage) , ""), imgProfile);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new /*EventsWantedFragment*/UserInfoFragment(), /*"رویدادهای درخواستی من"*/"");
-        adapter.addFragment(new /*UncomingEventsFragment*/UserInfoFragment(), ""/*"رویدادهایی که شرکت کردم"*/);
+        adapter.addFragment(new /*UncomingEventsFragment*/MyPayeFragment(), ""/*"رویدادهایی که شرکت کردم"*/);
         adapter.addFragment(new /*MyPayeFragment()*/UserInfoFragment(), ""/*"رویدادهای من"*/);
         viewPager.setAdapter(adapter);
     }
@@ -126,47 +136,5 @@ public class ActivitiesFragment extends Fragment {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
-    }
-
-
-
-    private void showBottomsheetNavigation() {
-
-        View view = getLayoutInflater().inflate(R.layout.dialog_create_event_step_1, null);
-        BottomSheetDialog dialog = new BottomSheetDialog(getActivity(), R.style.BottomSheetDialog);
-        dialog.setContentView(view);
-        BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
-        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View view, int i) {
-
-                switch (i) {
-
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        dialog.show();
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View view, float v) {
-                //setScrim(v);
-                dialog.show();
-            }
-        });
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        dialog.show();
-        //ConstraintLayout c1 = view.findViewById(R.id.constraintLayout1);
-
     }
 }

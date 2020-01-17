@@ -22,7 +22,7 @@
     <string name="location">محل سکونت : %1$s</string>
     <string name="host">میزبان : %1$s فعالیت</string>
     <string name="takePart">شرکت در : %1$s فعالیت</string>
-    <string name="join">یک نفر به برنامه %1$s ملحق شد</string>
+    <string name="join">یک نفر درخواست اضافه شدن به برنامه %1$s را داد</string>
     <string name="comment">یک نفر در مورد برنامه ی %1$s نظر داد</string>
     <string name="cancel">برنامه "%1$s" لغو گردید</string>
     <string name="searchHint">جستجو در «%1$s»«%2$s»</string>
@@ -119,12 +119,12 @@
     <string name="url2">paye.ariaapps.ir</string>
     <string name="Notifurl">https://fcm.googleapis.com</string>
     <string name="Notifurl2">https://iid.googleapis.com</string>
-    <string name="oauth">https://www.googleapis.com/</string>
+    <string name="oauth">https://people.googleapis.com/</string>
     <string name="Authorization">key=</string>
     <string name="auth">Authorization</string>
 
 
-    <string name="CI">642093830131-iepq9us690euo5e1l1fhagn8n89fmf63.apps.googleusercontent.com</string>
+    <string name="CI">1016650689068-bjoa1k0aa5ve5ht0v4bjtoichajbfutm.apps.googleusercontent.com</string>
     <string name="c">AAAAlX_GT_M:APA91bF7_NvhO3BLFLZ9NWDQ25_atG-ySR98Bh95ZHaM4GJuwYYFp1HK-wTze1U3-An</string>
     <string name="a">v0jTB5czup6MBcC4EYgpNNPX2sTIaTSbgGTKaIQ7zX27ZDMNo3e</string>
     <string name="b">Cgc8LKrP0nFybU12ko2Otf</string>
@@ -955,4 +955,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="password">password</string>
+    <string name="grant_type">grant_type</string>
+    <string name="client_secret">client_secret</string>
+    <string name="client_id">client_id</string>
+    <string name="Password">Password</string>
 </resources>

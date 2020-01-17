@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:isScrollContainer="true"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/fragment_home">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
     <com.pnikosis.materialishprogress.ProgressWheel
@@ -19,6 +18,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/swipeContainer"
+        app:layout_constraintTop_toTopOf="@+id/swipeContainer"
         wheel:matProg_barColor="#000"
         wheel:matProg_barWidth="1dp"
         wheel:matProg_fillRadius="true"
@@ -50,8 +50,5 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

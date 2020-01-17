@@ -28,6 +28,7 @@ import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.OnLoadMoreListener;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.Models.PayeItem;
+import ir.payebash.Models.event.EventModel;
 import ir.payebash.R;
 import ir.payebash.asynktask.AsynctaskUncomingGetPost;
 
@@ -75,7 +76,7 @@ public class UncomingEventsFragment extends Fragment {
             params.put(getString(R.string.Skip), String.valueOf(Cnt));
             m = new IWebservice() {
                 @Override
-                public void getResult(retrofit2.Response<List<PayeItem>> list) throws Exception {
+                public void getResult(retrofit2.Response<List<EventModel>> list) throws Exception {
                     try {
                         isLoading = false;
                         swipeContainer.setRefreshing(false);

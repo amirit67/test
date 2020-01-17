@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -34,20 +33,17 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
-import androidx.appcompat.app.AppCompatActivity;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
-import ir.payebash.Models.PlusItem;
+import ir.payebash.Models.googlePlus.PlusItem;
 import ir.payebash.Models.UserItem;
 import ir.payebash.R;
 import ir.payebash.asynktask.AsynctaskCheckPhoneNumber;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -238,7 +234,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ApiClient.getClient().create(ApiInterface.class).inesrtUser(params);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+            public void onResponse(Call<ResponseBody> call, retrofit2.EventModel<ResponseBody> response) {
                 progressBar.setVisibility(View.GONE);
                 v.setEnabled(true);
                 if (response.code() != 200 && response.code() != 500) {
@@ -508,7 +504,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ApiClient.getClient4().create(ApiInterface.class).OAuth2(token);
         call.enqueue(new Callback<GoogleOuathItem>() {
             @Override
-            public void onResponse(Call<GoogleOuathItem> call, retrofit2.Response<GoogleOuathItem> response) {
+            public void onResponse(Call<GoogleOuathItem> call, retrofit2.EventModel<GoogleOuathItem> response) {
                 if (response.code() == 200) {
                     GoogleOuathItem user = response.body();
                     if (user.getEmail_verified()) {
