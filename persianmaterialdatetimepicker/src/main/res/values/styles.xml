@@ -20,6 +20,7 @@
         <item name="android:textSize">@dimen/mdtp_time_label_size</item>
         <item name="android:textColor">@color/mdtp_numbers_text_color</item>
         <item name="android:fontFamily">@font/yekanmedium</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
     </style>
 
     <style name="mdtp_ampm_label">
@@ -28,6 +29,16 @@
         <item name="android:textColor">@color/mdtp_ampm_text_color</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/yekanmedium</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
+    </style>
+
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
+    </style>
+
+    <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
     <style name="mdtp_ActionButton">

@@ -22,9 +22,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ir.payebash.Activities.StoriesActivity;
+import ir.payebash.activities.StoriesActivity;
 import ir.payebash.Application;
-import ir.payebash.Models.event.story.StoryModel;
+import ir.payebash.models.event.story.StoryModel;
 import ir.payebash.R;
 import ir.payebash.utils.roundedimageview.InsLoadingView;
 

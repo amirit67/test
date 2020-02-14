@@ -29,7 +29,7 @@
         android:gravity="right"
         android:padding="8dp">
 
-        <ir.payebash.Moudle.CustomRadioButton
+        <ir.payebash.moudle.CustomRadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -41,7 +41,7 @@
             android:text="موفقیت امیز بود."
             android:textSize="@dimen/sp13" />
 
-        <ir.payebash.Moudle.CustomRadioButton
+        <ir.payebash.moudle.CustomRadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -53,7 +53,7 @@
             android:text="از طریق دیگری کار راه افتاد."
             android:textSize="@dimen/sp13" />
 
-        <ir.payebash.Moudle.CustomRadioButton
+        <ir.payebash.moudle.CustomRadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -65,7 +65,7 @@
             android:text="از خیرش گذشتم."
             android:textSize="@dimen/sp13" />
 
-        <ir.payebash.Moudle.CustomRadioButton
+        <ir.payebash.moudle.CustomRadioButton
             android:id="@+id/radioButton4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
             android:textColor="#fff"
             android:textSize="13sp" />
 
-        <ir.payebash.Moudle.CustomTextViewBold
+        <ir.payebash.moudle.CustomTextViewBold
             android:id="@+id/txt_delete"
             style="@style/dialog_blue_button"
             android:layout_width="0dp"

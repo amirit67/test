@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:layoutDirection="ltr"
     android:orientation="vertical"
-    tools:context=".Activities.UpdatePostActivity">
+    tools:context=".activities.UpdatePostActivity">
 
     <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar_top"
@@ -39,7 +39,7 @@
             android:background="@android:color/transparent"
             card_view:srcCompat="@drawable/ic_back" />
 
-        <ir.payebash.Moudle.CustomTextViewBold
+        <ir.payebash.moudle.CustomTextViewBold
             android:id="@+id/toolbar_title"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="wrap_content"
@@ -500,7 +500,7 @@
                     android:textColor="@drawable/press_button_text_red"
                     android:textSize="13sp" />
 
-                <ir.payebash.Moudle.ExpandableHeightGridView
+                <ir.payebash.moudle.ExpandableHeightGridView
                     android:id="@+id/gridview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

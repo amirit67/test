@@ -31,7 +31,7 @@ public class NotificationFragment extends Fragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_notification, container, false);
             btn_location = rootView.findViewById(R.id.btn_location);
-            btn_location.setOnClickListener(view -> HSH.selectLocation(getActivity(), 1, btn_location));
+            //btn_location.setOnClickListener(view -> HSH.selectLocation(getActivity(), 1, btn_location));
 
             adapter = new NotificationAdapter(getActivity());
             rv = rootView.findViewById(R.id.listView);

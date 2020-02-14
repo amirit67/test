@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="left|start"
     android:minWidth="13dp"
@@ -11,7 +11,7 @@
         android:layout_width="55dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/iransansmedium"
+        android:fontFamily="@font/yekanmedium"
         android:gravity="center"
         android:rotation="-180"
         android:textColor="#000000"
@@ -20,11 +20,11 @@
 
     <LinearLayout
         android:id="@+id/linear_bar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
-        android:background="@android:color/background_dark"
+        android:background="@color/colorGray"
         android:orientation="vertical" />
 
     <TextView
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/iransansmedium"
+        android:fontFamily="@font/yekanmedium"
         android:paddingStart="2dp"
         android:paddingLeft="2dp"
         android:textColor="#333333"

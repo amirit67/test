@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import ir.payebash.Application;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
-import ir.payebash.Models.TkModel;
+import ir.payebash.models.TkModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;

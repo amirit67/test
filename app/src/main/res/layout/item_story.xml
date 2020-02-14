@@ -10,8 +10,8 @@
 
     <ir.payebash.utils.roundedimageview.InsLoadingView
         android:id="@+id/img_story"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:gravity="center"
         android:layoutDirection="ltr"
         app:status="unclicked"
@@ -29,6 +29,8 @@
         android:fontFamily="@font/yekanregular"
         android:ellipsize="end"
         android:maxLines="1"
+        android:paddingLeft="@dimen/dp4"
+        android:paddingRight="@dimen/dp4"
         android:text="امیر خدابنده" />
 
 </LinearLayout>

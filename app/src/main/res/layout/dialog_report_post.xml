@@ -29,46 +29,73 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/rounded_corners_solid_gray" />
 
+        <TextView
+            android:id="@+id/tv_count8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/yekanblack"
+            android:text="گزارش مشکل آگهی"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp16"
+            android:layout_gravity="right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/yekanregular"
+            android:text="گزارش مشکل بلافاصله برای ما ارسال می شود.\nکارشناسان ما آن را بررسی می کنند."
+            android:textSize="@dimen/sp14"
+            android:layout_gravity="right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_count8" />
+
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView39"
+            android:layout_below="@+id/textView32"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="24dp">
+            android:layout_marginTop="16dp">
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 style="@style/radioButton"
                 android:layout_width="match_parent"
                 android:tag="1"
                 android:text="محتوای نامناسب" />
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 style="@style/radioButton"
                 android:layout_width="match_parent"
                 android:tag="2"
                 android:text="اطلاعات دروغ" />
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 style="@style/radioButton"
                 android:layout_width="match_parent"
                 android:tag="3"
                 android:text="رویداد تکراری" />
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 style="@style/radioButton"
                 android:layout_width="match_parent"
                 android:tag="4"
                 android:text="دسته بندی اشتباه" />
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 style="@style/radioButton"
                 android:layout_width="match_parent"
                 android:tag="5"
                 android:text="محتوای مجرمانه" />
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 style="@style/radioButton"
                 android:layout_width="match_parent"
                 android:tag="6"

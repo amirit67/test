@@ -20,7 +20,7 @@
         android:layout_marginRight="8dp">
 
 
-        <ir.payebash.Moudle.CircleImageView
+        <ir.payebash.moudle.CircleImageView
             android:id="@+id/img_event"
             android:layout_width="60dp"
             android:layout_height="60dp"

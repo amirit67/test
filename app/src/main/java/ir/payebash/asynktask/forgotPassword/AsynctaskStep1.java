@@ -1,15 +1,12 @@
 package ir.payebash.asynktask.forgotPassword;
 
 
-import android.app.Activity;
-
 import javax.inject.Inject;
 
 import ir.payebash.Application;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
-import ir.payebash.Models.BaseResponse;
-import ir.payebash.Models.user.LoginModel;
+import ir.payebash.models.BaseResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;

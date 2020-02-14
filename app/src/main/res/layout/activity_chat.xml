@@ -76,7 +76,7 @@
                             app:layout_constraintEnd_toStartOf="@+id/img_owner"
                             app:layout_constraintTop_toTopOf="@+id/img_owner" />
 
-                        <ir.payebash.Moudle.CircleImageView
+                        <ir.payebash.moudle.CircleImageView
                             android:id="@+id/img_owner"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
@@ -192,6 +192,7 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout11"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:descendantFocusability="beforeDescendants"
@@ -214,24 +215,24 @@
             android:layout_weight="1"></androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/editMessage"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_weight="1"
                 android:layout_margin="8dp"
-                android:drawableLeft="@drawable/ic_paperclip"
+                android:layout_weight="1"
                 android:background="@drawable/rounded_corners_strok_gray_full"
+                android:drawableLeft="@drawable/ic_paperclip"
                 android:hint="پیام شما"
-                android:textSize="@dimen/sp14"
-                android:textColor="#acacac"
                 android:paddingLeft="16dp"
-                android:paddingRight="10dp" />
+                android:paddingRight="10dp"
+                android:textColor="#acacac"
+                android:textSize="@dimen/sp14" />
 
             <ImageButton
                 android:id="@+id/btnSend"
@@ -239,13 +240,28 @@
                 android:layout_height="45dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_gravity="center"
                 android:background="#fff"
                 android:padding="6dp"
-                android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 android:text="Button"
                 app:srcCompat="@drawable/ic_send" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/app_bar"
+        app:matProg_barColor="#000"
+        app:matProg_barWidth="1dp"
+        app:matProg_fillRadius="true"
+        app:matProg_progressIndeterminate="true"
+        app:matProg_spinSpeed="0.75" />
 </androidx.constraintlayout.widget.ConstraintLayout>

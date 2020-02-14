@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:id="@+id/frame"
-    tools:context="ir.payebash.Activities.IntroLoginActivity">
+    tools:context="ir.payebash.activities.IntroLoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

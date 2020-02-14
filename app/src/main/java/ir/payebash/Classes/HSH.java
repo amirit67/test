@@ -16,11 +16,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Handler;
-import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,10 +31,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +44,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
-import com.mohamadamin.persianmaterialdatetimepicker.time.RadialPickerLayout;
 import com.mohamadamin.persianmaterialdatetimepicker.time.TimePickerDialog;
 import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 
@@ -61,14 +56,10 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import ir.payebash.Activities.CategoriesFilterDialog;
-import ir.payebash.Adapters.CitiesAdapter;
+import ir.payebash.Fragments.subject.CategoriesFilterActivity;
 import ir.payebash.Application;
-import ir.payebash.Fragments.NotificationFragment;
-import ir.payebash.Interfaces.IWebservice.setListenerCity;
-import ir.payebash.Models.CityItem;
-import ir.payebash.Moudle.Roozh;
-import ir.payebash.Moudle.Utils;
+import ir.payebash.moudle.Roozh;
+import ir.payebash.moudle.Utils;
 import ir.payebash.R;
 
 /**
@@ -82,11 +73,6 @@ public class HSH {
     private static String[] persianNumbers = new String[]{"۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"};
     private static String[] englishNumbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
-    public static void vectorTop(Context cn, TextView view, int a) {
-        Drawable drawable = AppCompatResources.getDrawable(cn, a);
-        view.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
-    }
-
     public static void vectorRight(Context cn, TextView view, int a) {
         Drawable drawable = AppCompatResources.getDrawable(cn, a);
         view.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
@@ -99,17 +85,6 @@ public class HSH {
             Application.editor.commit();
         } catch (Exception e) {
         }
-    }
-
-    public static void myCustomSnackbar(Snackbar snackbar) {
-        _snackbar = snackbar;
-        snackbar.setActionTextColor(Color.RED);
-        View sbView = snackbar.getView();
-        TextView textView = sbView.findViewById(R.id.snackbar_action);
-        textView.setGravity(Gravity.LEFT);
-        TextView textView2 = sbView.findViewById(R.id.snackbar_text);
-        textView.setTextColor(Color.YELLOW);
-        snackbar.show();
     }
 
     public static void dialog(Dialog dialog) {
@@ -188,147 +163,88 @@ public class HSH {
         toast.show();
     }
 
-    public static void setTimeDate(final Context ctx, final EditText et) {
+    public static String setTimeDate(final Context ctx, final TextView et) {
         //final Roozh cln = new Roozh();
         final PersianCalendar now = new PersianCalendar();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePickerDialog view, final int year, final int monthOfYear, final int dayOfMonth) {
+                (view, year, monthOfYear, dayOfMonth) -> {
 
-                        TimePickerDialog tpd = TimePickerDialog.newInstance(
-                                new TimePickerDialog.OnTimeSetListener() {
-                                    @Override
-                                    public void onTimeSet(RadialPickerLayout view, final int hourOfDay, final int minute) {
-                                        String deadline = String.valueOf(year)
-                                                + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + (monthOfYear + 1) : monthOfYear + 1);
+                    String deadline = String.valueOf(year)
+                            + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + (monthOfYear + 1) : monthOfYear + 1);
 
-                                        String nowdate = (String.valueOf(now.getPersianYear())
-                                                + (String.valueOf(now.getPersianMonth() + 1).length() == 1 ? "0" + (now.getPersianMonth() + 1) : now.getPersianMonth() + 1));
+                    String nowdate = (String.valueOf(now.getPersianYear())
+                            + (String.valueOf(now.getPersianMonth() + 1).length() == 1 ? "0" + (now.getPersianMonth() + 1) : now.getPersianMonth() + 1));
 
-                                        int diff = Integer.parseInt(deadline) - Integer.parseInt(nowdate);
-                                        int day1 = dayOfMonth;
-                                        int day12 = now.getPersianDay();
-                                        if (et.getId() == R.id.et_deadline) {
-                                            if (diff == 1) {
-                                                if (day1 - day12 <= 0)
-                                                    et.setText(toPersianNumber(
-                                                            String.valueOf(year).substring(2, 4) + "/"
-                                                                    + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + (monthOfYear + 1) : monthOfYear + 1)
-                                                                    + "/" +
-                                                                    (String.valueOf(dayOfMonth).length() == 1 ? "0" + (dayOfMonth) : dayOfMonth)
-                                                                    + " " +
-                                                                    (String.valueOf(hourOfDay).length() == 1 ? "0" + (hourOfDay) : hourOfDay)
-                                                                    + ":" +
-                                                                    (String.valueOf(minute).length() == 1 ? "0" + (minute) : minute)));
-                                                else
-                                                    HSH.showtoast(ctx, "حداکثر زمان برای هم پا شدن یک ماه می باشد");
-                                            } else if (diff == 0) {
-                                                if (day1 - day12 >= 0)
-                                                    et.setText(toPersianNumber(
-                                                            String.valueOf(year).substring(2, 4) + "/"
-                                                                    + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + (monthOfYear + 1) : monthOfYear + 1)
-                                                                    + "/" +
-                                                                    (String.valueOf(dayOfMonth).length() == 1 ? "0" + (dayOfMonth) : dayOfMonth)
-                                                                    + " " +
-                                                                    (String.valueOf(hourOfDay).length() == 1 ? "0" + (hourOfDay) : hourOfDay)
-                                                                    + ":" +
-                                                                    (String.valueOf(minute).length() == 1 ? "0" + (minute) : minute)));
-                                                else
-                                                    HSH.showtoast(ctx, "زمان وارد شده صحیح نمی باشد.");
-                                            } else if (diff < 0)
-                                                HSH.showtoast(ctx, "زمان وارد شده صحیح نمی باشد.");
-                                            else if (diff > 1)
-                                                HSH.showtoast(ctx, "حداکثر زمان برای هم پا شدن یک ماه می باشد");
-                                        } else
-                                            et.setText(toPersianNumber(
-                                                    String.valueOf(year).substring(2, 4) + "/"
-                                                            + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + (monthOfYear + 1) : monthOfYear + 1)
-                                                            + "/" +
-                                                            (String.valueOf(dayOfMonth).length() == 1 ? "0" + (dayOfMonth) : dayOfMonth)
-                                                            + " " +
-                                                            (String.valueOf(hourOfDay).length() == 1 ? "0" + (hourOfDay) : hourOfDay)
-                                                            + ":" +
-                                                            (String.valueOf(minute).length() == 1 ? "0" + (minute) : minute)));
+                    int diff = Integer.parseInt(deadline) - Integer.parseInt(nowdate);
+                    int day1 = dayOfMonth;
+                    int day12 = now.getPersianDay();
+                    if (et.getId() == R.id.et_deadline) {
+                        if (diff == 1) {
+                            if (day1 - day12 <= 0)
+                                et.setText(toPersianNumber(
+                                        String.valueOf(year).substring(2, 4) + "/"
+                                                + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + (monthOfYear + 1) : monthOfYear + 1)
+                                                + "/" +
+                                                (String.valueOf(dayOfMonth).length() == 1 ? "0" + (dayOfMonth) : dayOfMonth)));
+                            else
+                                HSH.showtoast(ctx, "حداکثر زمان برای هم پا شدن یک ماه می باشد");
+                        } else if (diff == 0) {
+                            if (day1 - day12 >= 0)
+                                et.setText(toPersianNumber(
+                                        String.valueOf(year).substring(2, 4) + "/"
+                                                + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + (monthOfYear + 1) : monthOfYear + 1)
+                                                + "/" +
+                                                (String.valueOf(dayOfMonth).length() == 1 ? "0" + (dayOfMonth) : dayOfMonth)));
+                            else
+                                HSH.showtoast(ctx, "زمان وارد شده صحیح نمی باشد.");
+                        } else if (diff < 0)
+                            HSH.showtoast(ctx, "زمان وارد شده صحیح نمی باشد.");
+                        else if (diff > 1)
+                            HSH.showtoast(ctx, "حداکثر زمان برای هم پا شدن یک ماه می باشد");
+                    } else
+                        et.setText(toPersianNumber(
+                                String.valueOf(year).substring(2, 4) + "/"
+                                        + (String.valueOf(monthOfYear + 1).length() == 1 ? "0" + (monthOfYear + 1) : monthOfYear + 1)
+                                        + "/" +
+                                        (String.valueOf(dayOfMonth).length() == 1 ? "0" + (dayOfMonth) : dayOfMonth)));
 
 
-                                        Roozh jCal = new Roozh();
-                                        jCal.PersianToGregorian(year, (monthOfYear + 1), dayOfMonth);
-                                        //HSH.showtoast(ctx, jCal.toString());
-                                    }
-                                },
-                                now.get(PersianCalendar.HOUR_OF_DAY),
-                                now.get(PersianCalendar.MINUTE),
-                                true
-                        );
-                        tpd.setThemeDark(false);
-                        tpd.setOnCancelListener(dialogInterface -> Log.d(TIMEPICKER, "Dialog was cancelled"));
-                        tpd.show(((Activity) ctx).getFragmentManager(), TIMEPICKER);
-                    }
+                    Roozh jCal = new Roozh();
+                    jCal.PersianToGregorian(year, (monthOfYear + 1), dayOfMonth);
+                    //HSH.showtoast(ctx, jCal.toString());
                 },
                 now.getPersianYear(),
                 now.getPersianMonth(),
                 now.getPersianDay()
         );
+        dpd.setMinDate(now);
         dpd.setThemeDark(false);
-        dpd.show(((Activity) ctx).getFragmentManager(), DATEPICKER);
+        dpd.show(((AppCompatActivity) ctx).getSupportFragmentManager(), DATEPICKER);
+
+        return et.getText().toString().trim();
     }
 
-    public static void selectLocation(final Context ctx, int type, final View v) {
-        final Dialog dialog = new Dialog(ctx);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_select_city);
-        dialog.setCancelable(true);
-        final LinearLayout ll_dialog = dialog.findViewById(R.id.ll_dialog);
-        final ListView lv_city = dialog.findViewById(R.id.lv_city);
-        final EditText txt_city = dialog.findViewById(R.id.txt_city);
+    public static String setTime(final Context ctx, final TextView et) {
 
-        final CitiesAdapter adapterCity = new CitiesAdapter(ctx, type, (new setListenerCity() {
+        final PersianCalendar now = new PersianCalendar();
+        TimePickerDialog tpd = TimePickerDialog.newInstance(
+                (view, hourOfDay, minute) -> et.setText(
+                        (String.valueOf(hourOfDay).length() == 1 ? "0" + (hourOfDay) : hourOfDay)
+                                + ":" +
+                                (String.valueOf(minute).length() == 1 ? "0" + (minute) : minute)),
+                now.get(PersianCalendar.HOUR_OF_DAY),
+                now.get(PersianCalendar.MINUTE),
+                true
+        );
+        tpd.setThemeDark(false);
+        tpd.setOnCancelListener(dialogInterface -> Log.d(TIMEPICKER, "Dialog was cancelled"));
+        tpd.show(((AppCompatActivity) ctx).getSupportFragmentManager(), DATEPICKER);
 
-            @Override
-            public void onItemCheck(CityItem item) {
-                if (v instanceof Button)
-                    ((Button) v).setText(item.getCityNameFa());
-                else if (v instanceof EditText)
-                    ((EditText) v).setText(item.getCityNameFa());
-                v.setTag(item.getId());
-                dialog.dismiss();
-                try {
-                    NotificationFragment.adapter.notifyDataSetChanged();
-                } catch (Exception e) {
-                }
-            }
-
-        }));
-        lv_city.setAdapter(adapterCity);
-
-        txt_city.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                adapterCity.filter(txt_city.getText().toString().trim());
-            }
-        });
-
-        dialog.show();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                display(ctx, ll_dialog);
-            }
-        }, 50);
+        return et.getText().toString().trim();
     }
 
     public static void selectSubject(Context ctx, View v) {
-        ((Activity) ctx).startActivityForResult(new Intent(ctx, CategoriesFilterDialog.class), 456);
+        ((Activity) ctx).startActivityForResult(new Intent(ctx, CategoriesFilterActivity.class), 456);
     }
 
     @SuppressLint("NewApi")
@@ -410,16 +326,20 @@ public class HSH {
         boolean fragmentPopped = fragmentManager
                 .popBackStackImmediate(fragmentTag, 0);
 
-        FragmentTransaction ftx = fragmentManager.beginTransaction();
+        try {
+            FragmentTransaction ftx = fragmentManager.beginTransaction();
 
-        if ((!fragmentPopped && fragmentManager.findFragmentByTag(fragmentTag) == null) || fragmentTag.contains("Search"))
-            ftx.addToBackStack(fragment.getClass().getSimpleName());
+            if ((!fragmentPopped && fragmentManager.findFragmentByTag(fragmentTag) == null) || fragmentTag.contains("Search"))
+                ftx.addToBackStack(fragment.getClass().getSimpleName());
 
-        ftx.setCustomAnimations(R.anim.slide_in_right,
-                R.anim.slide_out_left, R.anim.slide_in_left,
-                R.anim.slide_out_right);
-        ftx.replace(R.id.frame, fragment, fragmentTag);
-        ftx.commit();
+            ftx.setCustomAnimations(R.anim.slide_in_right,
+                    R.anim.slide_out_left, R.anim.slide_in_left,
+                    R.anim.slide_out_right);
+            ftx.replace(R.id.frame, fragment, fragmentTag);
+            ftx.commit();
+        } catch (Exception e) {
+            HSH.showtoast(activity, e.getMessage());
+        }
 
         new Handler().postDelayed(() -> {
             try {
@@ -514,7 +434,7 @@ public class HSH {
         final Dialog dialog = new Dialog(ac);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_rules);
-        final WebView webView = (WebView) dialog.findViewById(R.id.webView);
+        final WebView webView = dialog.findViewById(R.id.webView);
         webView.setHorizontalScrollBarEnabled(false);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setDefaultTextEncodingName("UTF-8");
@@ -539,24 +459,22 @@ public class HSH {
     public static String printDifference(Date startDate, Date endDate) {
         //milliseconds
         long different = endDate.getTime() - startDate.getTime();
-
         long days = TimeUnit.DAYS.convert(different, TimeUnit.MILLISECONDS);
 
-
-        if (days > 29)
-            return (days / 30 + " ماه");
-        else if (days > 6)
-            return (days / 7 + " هفته");
+        if (TimeUnit.SECONDS.convert(different, TimeUnit.MILLISECONDS) < 60)
+            return (TimeUnit.SECONDS.convert(different, TimeUnit.MILLISECONDS) + " لحظاتی");
+        else if (TimeUnit.MINUTES.convert(different, TimeUnit.MILLISECONDS) < 60)
+            return (TimeUnit.MINUTES.convert(different, TimeUnit.MILLISECONDS) + " دقیقه");
+        else if (TimeUnit.HOURS.convert(different, TimeUnit.MILLISECONDS) < 24)
+            return (TimeUnit.HOURS.convert(different, TimeUnit.MILLISECONDS) + " ساعت");
         else if (days == 1)
             return ("دیروز");
         else if (days > 1)
             return (days + " روز");
-        else if (TimeUnit.HOURS.convert(different, TimeUnit.MILLISECONDS) > 0)
-            return (days + " ساعت");
-        else if (TimeUnit.MINUTES.convert(different, TimeUnit.MILLISECONDS) > 0)
-            return (days + " دقیقه");
-        else if (TimeUnit.SECONDS.convert(different, TimeUnit.MILLISECONDS) > 0)
-            return (days + " لحظاتی");
+        else if (days > 6)
+            return (days / 7 + " هفته");
+        else if (days > 29)
+            return (days / 30 + " ماه");
 
         return TimeUnit.DAYS.convert(different, TimeUnit.MILLISECONDS) + "";
     }

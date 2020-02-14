@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -16,22 +17,23 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import ir.payebash.Activities.BaseActivity;
+import com.pnikosis.materialishprogress.ProgressWheel;
+
+import ir.payebash.activities.BaseActivity;
 import ir.payebash.Adapters.MessageAdapter;
 import ir.payebash.Classes.ItemDecorationAlbumColumns;
 import ir.payebash.R;
 import ir.payebash.helpers.Globals;
 import ir.payebash.helpers.User;
-import ir.payebash.modelviewsChat.MessageViewModel;
 import ir.payebash.modelviewsChat.RoomViewModel;
 
 public class ChatActivity extends BaseActivity {
 
     // Used to receive messages from ChatService
     MyReceiver myReceiver;
-
-    TextView txtFullNameHost, txtRoomName, txtTimeToJoin, tvFollwers;
-    ImageView imgOwner;
+    private ProgressWheel pb;
+    private TextView txtFullNameHost, txtRoomName, txtTimeToJoin, tvFollwers;
+    private ImageView imgOwner;
     // Chat Service
     ChatService chatService;
     boolean mBound = false;
@@ -88,6 +90,7 @@ public class ChatActivity extends BaseActivity {
         txtTimeToJoin = findViewById(R.id.txt_time_to_join);
         tvFollwers = findViewById(R.id.tv_follwers);
         // Setup Grid View
+        pb = findViewById(R.id.pb);
         rv = findViewById(R.id.gvMessages);
         //gridView.setTranscriptMode(GridView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         rv.setHasFixedSize(true);
@@ -159,6 +162,7 @@ public class ChatActivity extends BaseActivity {
             switch (intent.getAction()) {
                 case "notifyAdapter":
                     adapter.notifyDataSetChanged();
+                    pb.setVisibility(View.GONE);
                     if (check == 0 && Globals.Messages.size() > 0) {
                         rv.smoothScrollToPosition(Globals.Messages.size() - 1);
                         check++;

@@ -45,8 +45,7 @@ import ir.payebash.Classes.HSH;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.OnLoadMoreListener;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
-import ir.payebash.Models.PayeItem;
-import ir.payebash.Models.event.EventModel;
+import ir.payebash.models.event.EventModel;
 import ir.payebash.R;
 import ir.payebash.asynktask.AsynctaskGetPost;
 
@@ -94,18 +93,18 @@ public class SearchFragment extends Fragment {
         }
         m = new IWebservice() {
             @Override
-            public void getResult(retrofit2.Response<List<EventModel>> list) throws Exception {
+            public void getResult(List<EventModel> list) throws Exception {
                 try {
                     isLoading = false;
                     swipeContainer.setRefreshing(false);
                     pb.setVisibility(View.GONE);
-                    adapter.addItems(list.body());
+                    adapter.addItems(list);
                 } catch (Exception e) {
                 }
             }
 
             @Override
-            public void getError() throws Exception {
+            public void getError(String s) throws Exception {
                 HSH.showtoast(ac, "خطا در اتصال به اینترنت");
                 swipeContainer.setRefreshing(false);
                 pb.setVisibility(View.GONE);
@@ -117,7 +116,6 @@ public class SearchFragment extends Fragment {
         swipeContainer.setOnRefreshListener(() -> {
             Cnt = 0;
             //params.clear();
-            Application.myAds = 1;
             adapter.ClearFeed();
             params.put(getString(R.string.Skip), String.valueOf(Cnt));
             getPost.getData();
@@ -158,7 +156,6 @@ public class SearchFragment extends Fragment {
         });
 
         ((TitleMain) getContext()).FragName("جستجو");
-        Application.myAds = 1;
         ll_search.setVisibility(View.VISIBLE);
         return rootView;
     }
@@ -210,7 +207,9 @@ public class SearchFragment extends Fragment {
         rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
-        adapter = new PayeAdapter(getActivity(),params);
+        adapter = new PayeAdapter(getActivity(), eventModel -> {
+
+        });
         rv.setAdapter(adapter);
 
         ImageView mic = rootView.findViewById(R.id.mic);
@@ -281,7 +280,7 @@ public class SearchFragment extends Fragment {
                 Button btn_submit = dialog_filter.findViewById(R.id.btn_submit);
                 btn_categories.setOnClickListener(v -> HSH.selectSubject(getActivity(), btn_categories));
 
-                btn_location.setOnClickListener(v -> HSH.selectLocation(getActivity(), 0, btn_location));
+                //btn_location.setOnClickListener(v -> HSH.selectLocation(getActivity(), 0, btn_location));
                 btn_cancel.setOnClickListener(v -> {
                     //et_search.setHint(String.format(getString(R.string.searchHint), "همه رویدادها", "سراسر کشور"));
                     params.remove(getString(R.string.SubjectCode));

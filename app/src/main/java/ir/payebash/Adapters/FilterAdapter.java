@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ir.payebash.Models.FilterFeedItem;
+import ir.payebash.models.FilterFeedItem;
 import ir.payebash.R;
 
 
@@ -26,13 +26,11 @@ public class FilterAdapter extends BaseAdapter {
             this.feed = feed;
         } catch (Exception e) {
         }
-
     }
 
     @Override
     public int getCount() {
 
-        // Set the total list item count
         try {
             return feed.size();
         } catch (Exception e) {
@@ -61,20 +59,17 @@ public class FilterAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-
-        // Inflate the item layout and set the views
         try {
             View listItem = convertView;
             final int pos = position;
             if (listItem == null) {
                 listItem = layoutInflater.inflate(R.layout.item_filter, null);
             }
-            // Initialize the views in the layout
-            final TextView tvTitle = (TextView) listItem.findViewById(R.id.title);
+            final TextView tvTitle = listItem.findViewById(R.id.title);
             tvTitle.setText(feed.get(pos).getName());
 
             if (feed.get(pos).getHasChild().equals("true"))
-                tvTitle.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.leftarrow, 0, 0, 0);
+                tvTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_chevron_left, 0, 0, 0);
             else
                 tvTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             return listItem;

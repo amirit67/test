@@ -32,7 +32,7 @@ public class ApiClient {
     public static final String BASE_URL =
             Application.preferences.getString(
                     Application.resources.getString(R.string.baseUrl),
-                    BuildConfig.BaseUrl
+                    "http://developers.parsijoo.ir/"
             );
     private static Retrofit retrofit = null;
     private static Retrofit retrofit2 = null;
@@ -50,8 +50,8 @@ public class ApiClient {
                         .header(Application.resources.getString(R.string.app_name_en),
                                 Application.resources.getString(R.string.Authorization)
                                         + Application.resources.getString(R.string.b).toUpperCase())
-                        .header(String.valueOf(Application.myAds),
-                                String.valueOf(Application.myAds));
+                .header("api-key",
+                        Application.resources.getString(R.string.pr3ijo));
                 Request request = requestBuilder.build();
                 return chain.proceed(request);
             });

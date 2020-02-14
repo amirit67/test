@@ -27,8 +27,7 @@ import ir.payebash.Classes.NetworkUtils;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.OnLoadMoreListener;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
-import ir.payebash.Models.PayeItem;
-import ir.payebash.Models.event.EventModel;
+import ir.payebash.models.event.EventModel;
 import ir.payebash.R;
 import ir.payebash.asynktask.AsynctaskUncomingGetPost;
 
@@ -57,7 +56,6 @@ public class UncomingEventsFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && null != adapter) {
-            Application.myAds = 1;
             adapter.notifyDataSetChanged();
         } else {
             // nothing to do
@@ -76,18 +74,18 @@ public class UncomingEventsFragment extends Fragment {
             params.put(getString(R.string.Skip), String.valueOf(Cnt));
             m = new IWebservice() {
                 @Override
-                public void getResult(retrofit2.Response<List<EventModel>> list) throws Exception {
+                public void getResult(List<EventModel> list) throws Exception {
                     try {
                         isLoading = false;
                         swipeContainer.setRefreshing(false);
                         pb.setVisibility(View.GONE);
-                        adapter.addItems(list.body());
+                        adapter.addItems(list);
                     } catch (Exception e) {
                     }
                 }
 
                 @Override
-                public void getError() throws Exception {
+                public void getError(String s) throws Exception {
                     HSH.showtoast(ac, "خطا در اتصال به اینترنت");
                     swipeContainer.setRefreshing(false);
                     pb.setVisibility(View.GONE);
@@ -102,7 +100,6 @@ public class UncomingEventsFragment extends Fragment {
                 if (NetworkUtils.getConnectivity(getActivity()) != false) {
                     Cnt = 0;
                     params.clear();
-                    Application.myAds = 1;
                     adapter.ClearFeed();
                     params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
                     params.put(getString(R.string.Skip), String.valueOf(Cnt));
@@ -157,7 +154,9 @@ public class UncomingEventsFragment extends Fragment {
         rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
-        adapter = new PayeAdapter(getActivity(), params);
+        adapter = new PayeAdapter(getActivity(), eventModel -> {
+
+        });
         rv.setAdapter(adapter);
     }
 

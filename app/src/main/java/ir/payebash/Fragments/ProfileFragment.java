@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,22 +36,21 @@ import javax.inject.Inject;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.FileProvider;
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import ir.payebash.Activities.AboutUsActivity;
-import ir.payebash.Activities.EditProfileActivity;
-import ir.payebash.Activities.LoginActivity;
-import ir.payebash.Activities.RegisterActivity;
-import ir.payebash.Activities.ViewPagerActivity;
-import ir.payebash.Activities.WelcomeActivity;
+import ir.payebash.activities.AboutUsActivity;
+import ir.payebash.activities.EditProfileActivity;
+import ir.payebash.activities.LoginActivity;
+import ir.payebash.Fragments.registerUser.RegisterActivity;
+import ir.payebash.activities.ViewPagerActivity;
+import ir.payebash.activities.WelcomeActivity;
 import ir.payebash.Application;
 import ir.payebash.Classes.BaseFragment;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.NetworkUtils;
 import ir.payebash.Classes.PermissionHandler;
-import ir.payebash.DI.ImageLoaderMoudle;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
-import ir.payebash.Models.PayeItem;
+import ir.payebash.models.PayeItem;
 import ir.payebash.R;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -248,11 +246,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 FavoriteOrRecent("Wanted");
                 break;*/
             case R.id.txt_history:
-                Application.myAds = 1;
                 FavoriteOrRecent("History");
                 break;
             case R.id.txt_favorite:
-                Application.myAds = 1;
                 FavoriteOrRecent("Favorite");
                 break;
             case R.id.txt_rulls:

@@ -17,27 +17,23 @@ limitations under the License.
 package ir.payebash.Fragments;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import javax.inject.Inject;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import ir.payebash.Activities.ViewPagerActivity;
+import ir.payebash.activities.ViewPagerActivity;
 import ir.payebash.Application;
 import ir.payebash.DI.MainComponent;
-import ir.payebash.Models.PayeItem;
+import ir.payebash.models.PayeItem;
 import ir.payebash.R;
 
 

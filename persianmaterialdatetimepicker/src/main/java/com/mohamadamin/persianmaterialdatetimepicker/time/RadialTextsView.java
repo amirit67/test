@@ -77,9 +77,11 @@ public class RadialTextsView extends View {
     ObjectAnimator mDisappearAnimator;
     ObjectAnimator mReappearAnimator;
     private InvalidateUpdateListener mInvalidateUpdateListener;
+    private Context ctx;
 
     public RadialTextsView(Context context) {
         super(context);
+        ctx = context;
         mIsInitialized = false;
     }
 
@@ -93,10 +95,12 @@ public class RadialTextsView extends View {
         // Set up the paint.
         int numbersTextColor = res.getColor(R.color.mdtp_numbers_text_color);
         mPaint.setColor(numbersTextColor);
-        String typefaceFamily = res.getString(R.string.mdtp_radial_numbers_typeface);
-        mTypefaceLight = Typeface.create(typefaceFamily, Typeface.NORMAL);
-        String typefaceFamilyRegular = res.getString(R.string.mdtp_sans_serif);
-        mTypefaceRegular = Typeface.create(typefaceFamilyRegular, Typeface.NORMAL);
+        //String typefaceFamily = res.getString(R.string.mdtp_radial_numbers_typeface);
+        mTypefaceLight = Typeface.createFromAsset(
+                ctx.getAssets(), String.format("yekanmedium.ttf",Typeface.NORMAL));
+        //String typefaceFamilyRegular = res.getString(R.string.mdtp_sans_serif);
+        mTypefaceRegular = Typeface.createFromAsset(
+                ctx.getAssets(), String.format("yekanmedium.ttf",Typeface.NORMAL));
         mPaint.setAntiAlias(true);
         mPaint.setTextAlign(Align.CENTER);
 

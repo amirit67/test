@@ -15,7 +15,7 @@
         android:background="@color/colorPrimary"
         android:gravity="right">
 
-        <ir.payebash.Moudle.CustomTextViewBold
+        <ir.payebash.moudle.CustomTextViewBold
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

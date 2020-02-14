@@ -1,7 +1,6 @@
 package ir.payebash.chat;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
@@ -25,7 +24,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import ir.payebash.Activities.MainActivity;
+import ir.payebash.activities.MainActivity;
 import ir.payebash.helpers.PrefsManager;
 import ir.payebash.helpers.User;
 import microsoft.aspnet.signalr.client.http.CookieCredentials;

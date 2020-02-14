@@ -4,7 +4,7 @@
     android:layout_width="25dp"
     android:layout_height="25dp">
 
-    <ir.payebash.Moudle.CircleImageView
+    <ir.payebash.moudle.CircleImageView
         android:id="@+id/iv_image"
         android:layout_width="25dp"
         android:layout_height="25dp"

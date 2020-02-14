@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -31,6 +33,11 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import ir.payebash.Classes.HSH;
 import ir.payebash.R;
 import ir.payebash.utils.roundedimageview.GpsUtils;
 
@@ -51,7 +58,6 @@ public class NewAddressActivity extends Fragment {
 
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_new_address, container, false);
-
 
             mMapView = rootView.findViewById(R.id.map);
             mMapView.onCreate(savedInstanceState);
@@ -102,7 +108,8 @@ public class NewAddressActivity extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mMapView.onResume();
+        if (null != mMapView)
+            mMapView.onResume();
         //presenter.takeView(this);
     }
 
@@ -185,6 +192,24 @@ public class NewAddressActivity extends Fragment {
                                     //googleMap.addMarker(new MarkerOptions().position(latLng).title("Start"));
                                     CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15).build();
                                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                                    Geocoder geoCoder = new Geocoder(getActivity(), Locale.getDefault());
+                                    try {
+                                        List<Address> addresses = geoCoder.getFromLocation(latitude, longitude, 1);
+
+                                        String add = "";
+                                        if (addresses.size() > 0) {
+
+                                            add += addresses.get(0).toString();
+                                        }
+
+                                        HSH.showtoast(getActivity(), add);
+                                        HSH.showtoast(getActivity(), add);
+                                        HSH.showtoast(getActivity(), add);
+
+                                    } catch (IOException e1) {
+                                        e1.printStackTrace();
+                                    }
                                 } else
                                     MyLocation();
                             } catch (Exception e) {
@@ -202,5 +227,5 @@ public class NewAddressActivity extends Fragment {
 
         void onPermissionDenied();
     }
-        
+
 }

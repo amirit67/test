@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="ltr"
-    tools:context=".Activities.SplashActivity">
+    tools:context=".activities.SplashActivity">
 
     <LinearLayout
         android:id="@+id/no_connection_ll_main"
@@ -59,6 +59,7 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
+        android:indeterminateTint="@color/black"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -94,7 +95,7 @@
                 app:animatedSvgImageSizeX="600"
                 app:animatedSvgImageSizeY="600"
                 app:animatedSvgTraceTime="1500"
-                app:animatedSvgTraceTimePerGlyph="3000" />
+                app:animatedSvgTraceTimePerGlyph="1500" />
 
             <com.jaredrummler.android.widget.AnimatedSvgView
                 android:id="@+id/line_svg_view"

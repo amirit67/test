@@ -28,7 +28,6 @@ public class Application extends android.app.Application {
     public static SQLiteDatabase database;
     public static SharedPreferences preferences;
     public static SharedPreferences.Editor editor;
-    public static int myAds = 42907631;
     public static Resources resources;
     public static Activity activity;
     private static MainComponent component;

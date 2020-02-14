@@ -14,7 +14,7 @@
         android:layout_alignTop="@+id/txt1"
         android:background="@drawable/item_devider_horizontal" />
 
-    <ir.payebash.Moudle.CircleImageView
+    <ir.payebash.moudle.CircleImageView
         android:id="@+id/img_profile"
         android:layout_width="@dimen/dp40"
         android:layout_height="@dimen/dp40"

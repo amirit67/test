@@ -6,15 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -23,23 +22,24 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ir.payebash.Activities.MainActivity;
 import ir.payebash.Application;
 import ir.payebash.Fragments.MyPayeFragment;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
+import ir.payebash.models.user.UserInfoModel;
 import ir.payebash.R;
 
-public class ActivitiesFragment extends Fragment {
+public class ActivitiesFragment extends Fragment implements IWebservice.IUserInfo{
 
 
     @Inject
     ImageLoader imageLoader;
-    public ImageView nav, imgProfile;
+    private TextView tvUsername, tvName, tvAboutMe;
+    public ImageView nav, imgProfile, imgAuth;
     public ViewPager pager;
     View rootView = null;
     private TabLayout tabHost;
-    //private NavigationView navigationView;
+    private RelativeLayout pb;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,47 +51,55 @@ public class ActivitiesFragment extends Fragment {
 
             tabHost = rootView.findViewById(R.id.materialTabHost);
             pager = rootView.findViewById(R.id.pager);
-            pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                }
-
-                @Override
-                public void onPageSelected(int position) {
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-
-                }
-            });
-            setupViewPager(pager);
             tabHost.setupWithViewPager(pager);
+            setupViewPager(pager);
             pager.setCurrentItem(2);
             tabHost.getTabAt(0).setIcon(R.drawable.ic_login_username);
             tabHost.getTabAt(1).setIcon(R.drawable.ic_history);
             tabHost.getTabAt(2).setIcon(R.drawable.ic_date_event);
-
-            nav.setOnClickListener(v ->((IWebservice.IBottomSheetNavigation) getContext()).showBottomSheet());
+            nav.setOnClickListener(v -> ((IWebservice.IBottomSheetNavigation) getActivity()).showBottomSheetNavigation());
         }
         ((TitleMain) getContext()).FragName("رویدادها");
         return rootView;
     }
 
+
+
     private void DeclareElements() {
-        //navigationView = rootView.findViewById(R.id.nav_view);
         Application.getComponent().Inject(this);
+        pb = rootView.findViewById(R.id.progressBar);
+        tvUsername = rootView.findViewById(R.id.tv_username);
+        tvName = rootView.findViewById(R.id.tv_fullname);
+        tvAboutMe = rootView.findViewById(R.id.tv_about_me);
         nav = rootView.findViewById(R.id.img_navigation);
         imgProfile = rootView.findViewById(R.id.img_profile);
-        imageLoader.displayImage(Application.preferences.getString(getString(R.string.ProfileImage) , ""), imgProfile);
+        imgAuth = rootView.findViewById(R.id.img_auth);
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager(ViewPager viewPager/*, UserInfoModel userInfoModel*/) {
+
+        UserInfoFragment userInfoFragment = new UserInfoFragment();
+        UserInfoFragment userInfoFragment2 = new UserInfoFragment();
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new /*EventsWantedFragment*/UserInfoFragment(), /*"رویدادهای درخواستی من"*/"");
+        adapter.addFragment(userInfoFragment, /*"رویدادهای درخواستی من"*/"");
         adapter.addFragment(new /*UncomingEventsFragment*/MyPayeFragment(), ""/*"رویدادهایی که شرکت کردم"*/);
-        adapter.addFragment(new /*MyPayeFragment()*/UserInfoFragment(), ""/*"رویدادهای من"*/);
+        adapter.addFragment(userInfoFragment2, ""/*"رویدادهای من"*/);
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void getResult(UserInfoModel userInfoModel) throws Exception {
+        imageLoader.displayImage(userInfoModel.getEventOwner().getProfileImage(), imgProfile);
+        tvUsername.setText(userInfoModel.getEventOwner().getUserName());
+        tvName.setText(userInfoModel.getEventOwner().getName());
+        tvAboutMe.setText(userInfoModel.getEventOwner().getAboutMe());
+        imgAuth.setVisibility(userInfoModel.getEventOwner().getVerifiedAccount() ? View.VISIBLE : View.GONE);
+        pb.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void getError(String error) throws Exception {
+
     }
 
 

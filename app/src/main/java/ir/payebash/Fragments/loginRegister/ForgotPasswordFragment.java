@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import ir.payebash.Classes.HSH;
 import ir.payebash.Interfaces.IWebservice;
-import ir.payebash.Models.BaseResponse;
+import ir.payebash.models.BaseResponse;
 import ir.payebash.R;
 import ir.payebash.asynktask.forgotPassword.AsynctaskStep1;
 

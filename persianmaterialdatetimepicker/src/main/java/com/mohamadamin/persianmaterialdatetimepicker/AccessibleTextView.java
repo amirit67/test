@@ -17,6 +17,7 @@
 package com.mohamadamin.persianmaterialdatetimepicker;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -27,9 +28,12 @@ import android.widget.TextView;
  * Fake Button class, used so TextViews can announce themselves as Buttons, for accessibility.
  */
 public class AccessibleTextView extends TextView {
-
+    public Typeface FONT_NAME;
     public AccessibleTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        if (FONT_NAME == null)
+            FONT_NAME = Typeface.createFromAsset(context.getAssets(), "yekanbold.ttf");
+        this.setTypeface(FONT_NAME);
     }
 
     @Override

@@ -75,7 +75,6 @@ public class NetModule {
         httpClient.addInterceptor(chain -> {
             Request original = chain.request();
             Request.Builder requestBuilder = original.newBuilder()
-                    .header("Id",  "")
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .header("Authorization",
                             "bearer " + Application.preferences.getString(Application.resources.getString(R.string.Token), "0000"))
@@ -90,7 +89,7 @@ public class NetModule {
             return chain.proceed(request);
         });
         return httpClient
-                .cache(cache)
+                //.cache(cache)
                 .retryOnConnectionFailure(true)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)

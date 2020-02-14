@@ -10,8 +10,7 @@ import ir.payebash.Classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
-import ir.payebash.Models.PayeItem;
-import ir.payebash.Models.event.EventModel;
+import ir.payebash.models.event.EventModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -37,9 +36,9 @@ public class AsynctaskUncomingGetPost {
             public void onResponse(Call<List<EventModel>> call, retrofit2.Response<List<EventModel>> response) {
                 try {
                     if (response.code() == 200) {
-                        delegate.getResult(response);
+                        delegate.getResult(response.body());
                     } else
-                        getData();
+                        delegate.getError(response.errorBody().string());
                 } catch (Exception e) {
                 }
             }
@@ -50,7 +49,7 @@ public class AsynctaskUncomingGetPost {
                     getData();
                 else {
                     try {
-                        delegate.getError();
+                        delegate.getError(t.getLocalizedMessage());
                     } catch (Exception e) {
                     }
                 }

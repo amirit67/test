@@ -124,8 +124,8 @@ public abstract class MonthView extends View {
     // affects the padding on the sides of this view
     protected int mEdgePadding = 0;
 
-    private String mDayOfWeekTypeface;
-    private String mMonthTitleTypeface;
+    //private String mDayOfWeekTypeface;
+    //private String mMonthTitleTypeface;
 
     protected Paint mMonthNumPaint;
     protected Paint mMonthTitlePaint;
@@ -197,8 +197,8 @@ public abstract class MonthView extends View {
         mDayLabelCalendar = new PersianCalendar();
         mPersianCalendar = new PersianCalendar();
 
-        mDayOfWeekTypeface = res.getString(R.string.mdtp_day_of_week_label_typeface);
-        mMonthTitleTypeface = res.getString(R.string.mdtp_sans_serif);
+        //mDayOfWeekTypeface = res.getString(R.string.mdtp_day_of_week_label_typeface);
+        //mMonthTitleTypeface = res.getString(R.string.mdtp_sans_serif);
 
         boolean darkTheme = mController != null && mController.isThemeDark();
         if(darkTheme) {
@@ -291,7 +291,8 @@ public abstract class MonthView extends View {
         mMonthTitlePaint.setFakeBoldText(true);
         mMonthTitlePaint.setAntiAlias(true);
         mMonthTitlePaint.setTextSize(MONTH_LABEL_TEXT_SIZE);
-        mMonthTitlePaint.setTypeface(Typeface.create(mMonthTitleTypeface, Typeface.BOLD));
+        mMonthTitlePaint.setTypeface(Typeface.createFromAsset(
+                getContext().getAssets(), String.format("yekanmedium.ttf", Typeface.BOLD)));
         mMonthTitlePaint.setColor(mDayTextColor);
         mMonthTitlePaint.setTextAlign(Align.CENTER);
         mMonthTitlePaint.setStyle(Style.FILL);
@@ -308,7 +309,7 @@ public abstract class MonthView extends View {
         mMonthDayLabelPaint.setAntiAlias(true);
         mMonthDayLabelPaint.setTextSize(MONTH_DAY_LABEL_TEXT_SIZE);
         mMonthDayLabelPaint.setColor(mMonthDayTextColor);
-        mMonthDayLabelPaint.setTypeface(TypefaceHelper.get(getContext(),"yekanmedium"));
+        mMonthDayLabelPaint.setTypeface(TypefaceHelper.get(getContext(),"yekanmedium.ttf"));
         mMonthDayLabelPaint.setStyle(Style.FILL);
         mMonthDayLabelPaint.setTextAlign(Align.CENTER);
         mMonthDayLabelPaint.setFakeBoldText(true);

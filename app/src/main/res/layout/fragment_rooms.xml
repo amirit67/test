@@ -8,14 +8,15 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ir.payebash.Fragments.HomeFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
+   <!-- <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners_top"
         android:elevation="0dp"
+        android:visibility="gone"
         android:gravity="center_vertical">
-        <!--"@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
@@ -26,7 +27,6 @@
             app:titleEnabled="false"
             android:nestedScrollingEnabled="true"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
-            <!---->
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
@@ -112,30 +112,17 @@
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout17"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:fillViewport="true"
         android:isScrollContainer="true"
-        android:background="@color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-        <com.pnikosis.materialishprogress.ProgressWheel
-            android:id="@+id/pb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/swipeContainer"
-            app:matProg_barColor="#000"
-            app:matProg_barWidth="1dp"
-            app:matProg_fillRadius="true"
-            app:matProg_progressIndeterminate="true"
-            app:matProg_spinSpeed="0.75" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeContainer"
@@ -167,7 +154,20 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
+        <com.pnikosis.materialishprogress.ProgressWheel
+            android:id="@+id/pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/swipeContainer"
+            app:layout_constraintTop_toTopOf="@+id/swipeContainer"
+            app:matProg_barColor="#000"
+            app:matProg_barWidth="1dp"
+            app:matProg_fillRadius="true"
+            app:matProg_progressIndeterminate="true"
+            app:matProg_spinSpeed="0.75" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

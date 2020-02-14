@@ -35,28 +35,28 @@
             android:layout_below="@+id/text"
             android:gravity="right">
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 style="@style/radioButton"
                 android:tag="1"
                 android:text="ارائه محتوای نامناسب و خلاف قوانین" />
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 style="@style/radioButton"
                 android:tag="2"
                 android:text="ارائه محتوای اسپم" />
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 style="@style/radioButton"
                 android:tag="3"
                 android:text="ارائه اطلاعات کذب و ناصحیح" />
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 android:id="@+id/radioButton4"
                 style="@style/radioButton"
                 android:tag="4"
                 android:text="ایجاد مزاحمت" />
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 style="@style/radioButton"
                 android:tag="7"
                 android:text="دلایل دیگر..." />
@@ -87,7 +87,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="14sp" />
 
-        <ir.payebash.Moudle.CustomTextViewBold
+        <ir.payebash.moudle.CustomTextViewBold
             android:id="@+id/txt_send"
             android:layout_width="0dp"
             android:layout_height="40dp"

@@ -1,38 +1,86 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_filter"
-    android:layout_width="300dp"
-    android:layout_height="400dp"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:layout_margin="5dp"
-    android:background="@drawable/dialog_background"
     android:fitsSystemWindows="true"
     android:gravity="center"
     android:layoutDirection="ltr"
     android:orientation="vertical"
+    android:layout_marginTop="@dimen/dp16"
+    android:background="@drawable/rounded_corners_top"
     android:transitionName="transition">
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:background="@android:color/black"
-        android:gravity="right">
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="موضوع رویداد"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp14"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:gravity="right"
-            android:paddingRight="16dp"
-            android:text="انتخاب دسته بندی"
-            android:textColor="@android:color/white" />
-    </androidx.appcompat.widget.Toolbar>
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView31"
+        app:layout_constraintEnd_toStartOf="@+id/textView17"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView17"
+        app:srcCompat="@drawable/ic_close" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/yekanlight"
+        android:gravity="right"
+        android:text="رویدادتون تو چه زمینه ای است؟"
+        android:textColor="#979696"
+        android:textSize="@dimen/sp12"
+        app:layout_constraintEnd_toEndOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <EditText
+        android:id="@+id/et_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rounded_corners_strok_black"
+        android:drawableRight="@drawable/ic_search_edittext"
+        android:drawablePadding="@dimen/dp16"
+        android:gravity="right"
+        android:hint="جستجوی شهر"
+        android:inputType="text"
+        android:padding="12dp"
+        android:textSize="@dimen/sp16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+    <FrameLayout
         android:id="@+id/layoutFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:orientation="horizontal" />
-</LinearLayout>
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_category" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

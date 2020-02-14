@@ -17,31 +17,31 @@
         android:background="@drawable/rounded_corners_elevation_white">
 
         <TextView
-            android:id="@+id/textView70"
+            android:id="@+id/tv_following_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100"
-            android:textSize="@dimen/sp14"
+            android:text="0"
+            android:textSize="@dimen/sp16"
             android:textColor="@color/black"
             android:fontFamily="@font/yekanbold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView71"
-            app:layout_constraintEnd_toStartOf="@+id/textView71"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_followers_count"
+            app:layout_constraintEnd_toStartOf="@+id/tv_followers_count"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView74"
-            app:layout_constraintTop_toTopOf="@+id/textView71" />
+            app:layout_constraintStart_toEndOf="@+id/tv_events_count"
+            app:layout_constraintTop_toTopOf="@+id/tv_followers_count" />
 
         <TextView
-            android:id="@+id/textView71"
+            android:id="@+id/tv_followers_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/yekanbold"
-            android:text="100"
+            android:text="0"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/sp16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView70"
+            app:layout_constraintStart_toEndOf="@+id/tv_following_count"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -49,14 +49,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/yekanlight"
+            android:fontFamily="@font/yekanregular"
             android:text="دنبال کننده"
             android:textColor="@color/black"
             android:textSize="@dimen/sp14"
-            app:layout_constraintEnd_toEndOf="@+id/textView71"
+            app:layout_constraintEnd_toEndOf="@+id/tv_followers_count"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/textView71"
-            app:layout_constraintTop_toBottomOf="@+id/textView71" />
+            app:layout_constraintStart_toStartOf="@+id/tv_followers_count"
+            app:layout_constraintTop_toBottomOf="@+id/tv_followers_count" />
 
         <TextView
             android:id="@+id/textView73"
@@ -65,26 +65,26 @@
             android:text="دنبال شونده"
             android:textColor="@color/black"
             android:textSize="@dimen/sp14"
-            android:fontFamily="@font/yekanlight"
+            android:fontFamily="@font/yekanregular"
             app:layout_constraintBottom_toBottomOf="@+id/textView72"
-            app:layout_constraintEnd_toEndOf="@+id/textView70"
+            app:layout_constraintEnd_toEndOf="@+id/tv_following_count"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/textView70"
+            app:layout_constraintStart_toStartOf="@+id/tv_following_count"
             app:layout_constraintTop_toTopOf="@+id/textView72" />
 
         <TextView
-            android:id="@+id/textView74"
+            android:id="@+id/tv_events_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100"
-            android:textSize="@dimen/sp14"
+            android:text="0"
+            android:textSize="@dimen/sp16"
             android:textColor="@color/black"
             android:fontFamily="@font/yekanbold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView70"
-            app:layout_constraintEnd_toStartOf="@+id/textView70"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_following_count"
+            app:layout_constraintEnd_toStartOf="@+id/tv_following_count"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView70" />
+            app:layout_constraintTop_toTopOf="@+id/tv_following_count" />
 
         <TextView
             android:id="@+id/textView75"
@@ -93,11 +93,11 @@
             android:text="رویداد"
             android:textColor="@color/black"
             android:textSize="@dimen/sp14"
-            android:fontFamily="@font/yekanlight"
+            android:fontFamily="@font/yekanregular"
             app:layout_constraintBottom_toBottomOf="@+id/textView73"
-            app:layout_constraintEnd_toEndOf="@+id/textView74"
+            app:layout_constraintEnd_toEndOf="@+id/tv_events_count"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/textView74"
+            app:layout_constraintStart_toStartOf="@+id/tv_events_count"
             app:layout_constraintTop_toTopOf="@+id/textView73" />
 
         <View
@@ -112,56 +112,78 @@
             app:layout_constraintTop_toBottomOf="@+id/textView72" />
 
 
-        <TextView
-            android:id="@+id/textView26"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cs_rating"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="اعتماد به"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintBottom_toTopOf="@+id/textView27"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView76" />
-
-        <TextView
-            android:id="@+id/textView27"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/yekanlight"
-            android:text="امیر خدابنده"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp12"
-            app:layout_constraintEnd_toEndOf="@+id/textView26"
-            app:layout_constraintTop_toBottomOf="@+id/textView26" />
-
-        <ProgressBar
-            android:id="@+id/progressBar4"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="0dp"
-            android:layout_height="3dp"
-            android:layout_marginTop="16dp"
-            android:progress="50"
-            android:progressDrawable="@drawable/blue_progress"
-            app:layout_constraintEnd_toEndOf="@+id/textView27"
-            app:layout_constraintStart_toStartOf="@+id/textView29"
-            app:layout_constraintTop_toBottomOf="@+id/textView27" />
-
-        <TextView
-            android:id="@+id/textView29"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/yekanlight"
-            android:text="798 رای (72%)"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp12"
-            app:layout_constraintBottom_toBottomOf="@+id/textView27"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView27" />
+            app:layout_constraintTop_toBottomOf="@+id/textView76">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView26"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView26"
+                app:srcCompat="@drawable/ic_rating_info" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="اعتماد به"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintBottom_toTopOf="@+id/textView27"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/yekanlight"
+                android:text="امیر خدابنده"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp12"
+                app:layout_constraintEnd_toEndOf="@+id/textView26"
+                app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+            <ProgressBar
+                android:id="@+id/pb_trust_percent"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:progress="50"
+                android:progressDrawable="@drawable/blue_progress"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textView27"
+                app:layout_constraintStart_toStartOf="@+id/tv_vote"
+                app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+            <TextView
+                android:id="@+id/tv_vote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/yekanlight"
+                android:text="0 رای (0%)"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp12"
+                app:layout_constraintBottom_toBottomOf="@+id/textView27"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView27" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <TextView
@@ -175,7 +197,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/sp16"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBar4" />
+            app:layout_constraintTop_toBottomOf="@+id/cs_rating" />
 
         <TextView
             android:id="@+id/textView78"
@@ -183,7 +205,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            android:fontFamily="@font/yekanlight"
+            android:fontFamily="@font/yekanregular"
             android:lineSpacingMultiplier="1.2"
             android:textColor="@color/black"
             android:textSize="@dimen/sp14"

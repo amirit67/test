@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layoutDirection="ltr"
     android:orientation="vertical"
-    tools:context=".Activities.PostRegisterActivity">
+    tools:context=".activities.PostRegisterActivity">
 
     <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar_top"
@@ -364,7 +364,7 @@
                     android:textColor="@drawable/press_button_text_red"
                     android:textSize="@dimen/sp14" />
 
-                <ir.payebash.Moudle.ExpandableHeightGridView
+                <ir.payebash.moudle.ExpandableHeightGridView
                     android:id="@+id/gridview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

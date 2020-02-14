@@ -9,35 +9,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.pnikosis.materialishprogress.ProgressWheel;
-
-import org.json.JSONArray;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.inject.Inject;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.pnikosis.materialishprogress.ProgressWheel;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import ir.payebash.activities.PostDetailsActivity;
 import ir.payebash.Adapters.PayeAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.ItemDecorationAlbumColumns;
 import ir.payebash.Interfaces.IWebservice;
-import ir.payebash.Interfaces.IWebservice.OnLoadMoreListener;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
-import ir.payebash.Models.PayeItem;
-import ir.payebash.Models.event.EventModel;
+import ir.payebash.models.event.EventModel;
 import ir.payebash.R;
-import ir.payebash.asynktask.AsynctaskGetMyEvents;
-import ir.payebash.asynktask.AsynctaskGetPost;
+import ir.payebash.asynktask.user.AsynctaskGetMyEvents;
 
 
 public class MyPayeFragment extends Fragment {
@@ -45,15 +38,11 @@ public class MyPayeFragment extends Fragment {
     @Inject
     ImageLoader imageLoader;
     private RecyclerView rv;
-    private boolean isLoading;
-    private Map<String, String> params = new HashMap<>();
     /* private TextView txt_myads, txt_wanted;*/
     private SwipeRefreshLayout swipeContainer;
     private ProgressWheel pb;
     private PayeAdapter adapter;
     private LinearLayoutManager layoutManager;
-    private OnLoadMoreListener mOnLoadMoreListener;
-    private int visibleThreshold = 1, lastVisibleItem, totalItemCount = 0, Cnt = 0;
     private Bundle bundle = null;
     private IWebservice m;
     private AsynctaskGetMyEvents getPost;
@@ -94,10 +83,10 @@ public class MyPayeFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            if (null == bundle)
+           /* if (null == bundle)
                 Application.myAds = 42907631;
             else
-                Application.myAds = 1;
+                Application.myAds = 1;*/
             try {
                 adapter.notifyDataSetChanged();
             } catch (Exception e) {
@@ -110,78 +99,53 @@ public class MyPayeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_my_event, container, false);
-        Application.getComponent().Inject(this);
-        DeclareElements();
-        bundle = getArguments();
-        if (null != bundle) {
-            swipeContainer.setEnabled(false);
-            FavoriteOrRecent(getActivity(), bundle.getString("FavoriteOrRecent"));
-        } else {
-            ((TitleMain) getContext()).FragName("رویدادها");
-            pb.setVisibility(View.VISIBLE);
-            m = new IWebservice() {
-                @Override
-                public void getResult(retrofit2.Response<List<EventModel>> list) throws Exception {
-                    try {
-                        isLoading = false;
-                        swipeContainer.setRefreshing(false);
-                        pb.setVisibility(View.GONE);
-                        adapter.addItems(list.body());
-                    } catch (Exception e) {
-                    }
+
+        try {
+            if (rootView != null) {
+                ViewGroup parent = (ViewGroup) rootView.getParent();
+                if (parent != null) {
+                    parent.removeView(rootView);
                 }
+            }
+        } catch (Exception e) {
+        }
 
-                @Override
-                public void getError() throws Exception {
-                    HSH.showtoast(getActivity(), "خطا در اتصال به اینترنت");
-                    swipeContainer.setRefreshing(false);
-                    pb.setVisibility(View.GONE);
-                }
-            };
-            getPost = new AsynctaskGetMyEvents(getActivity(),
-                    /*params,*/
-                    m);
-            getPost.getData();
-            swipeContainer.setOnRefreshListener(() -> {
-                Cnt = 0;
-                params.clear();
-                Application.myAds = 42907631;
-                adapter.ClearFeed();
-                params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
-                getPost.getData();
-            });
-
-            setOnLoadMoreListener(() -> {
-                /*feed.add(null);
-                adapter.notifyItemInserted(feed.size() - 1);*/
-                swipeContainer.setRefreshing(true);
-                if (HSH.isNetworkConnection(getActivity())) {
-                    Cnt++;
-                    params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                    getPost.getData();
-                }
-            });
-
-            rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-                    if (dy > 0) //check for scroll down
-                    {
-                        totalItemCount = layoutManager.getItemCount();
-                        lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-
-                        if (!isLoading && adapter.getItemCount() > 19 && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-                            if (mOnLoadMoreListener != null) {
-                                mOnLoadMoreListener.onLoadMore();
-                            }
-                            isLoading = true;
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_my_event, container, false);
+            Application.getComponent().Inject(this);
+            DeclareElements();
+            bundle = getArguments();
+            if (null != bundle) {
+                swipeContainer.setEnabled(false);
+                FavoriteOrRecent(getActivity(), bundle.getString("FavoriteOrRecent"));
+            } else {
+                ((TitleMain) getContext()).FragName("رویدادها");
+                pb.setVisibility(View.VISIBLE);
+                m = new IWebservice() {
+                    @Override
+                    public void getResult(List<EventModel> list) throws Exception {
+                        try {
+                            swipeContainer.setRefreshing(false);
+                            pb.setVisibility(View.GONE);
+                            adapter.addItems(list);
+                        } catch (Exception e) {
                         }
                     }
-                }
-            });
+
+                    @Override
+                    public void getError(String s) throws Exception {
+                        HSH.showtoast(getActivity(), "خطا در اتصال به اینترنت");
+                        swipeContainer.setRefreshing(false);
+                        pb.setVisibility(View.GONE);
+                    }
+                };
+                getPost = new AsynctaskGetMyEvents(getActivity(), m);
+                getPost.getData();
+                swipeContainer.setOnRefreshListener(() -> {
+                    adapter.ClearFeed();
+                    getPost.getData();
+                });
+            }
         }
         return rootView;
     }
@@ -194,21 +158,20 @@ public class MyPayeFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         rv.addItemDecoration(new ItemDecorationAlbumColumns(getActivity(), ItemDecorationAlbumColumns.VERTICAL_LIST));
         rv.setLayoutManager(layoutManager);
-        adapter = new PayeAdapter(getActivity(), params);
+        adapter = new PayeAdapter(getActivity(), eventModel -> {
+            Intent intent;
+            intent = new Intent(getActivity(), PostDetailsActivity.class);
+            intent.putExtra("feedItem", eventModel);
+            getActivity().startActivity(intent);
+        });
         rv.setAdapter(adapter);
-    }
-
-    public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
-        this.mOnLoadMoreListener = mOnLoadMoreListener;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 321 && null != data) {
-            getPost = new AsynctaskGetMyEvents(getActivity(),
-                    /*params,*/
-                    m);
+            getPost = new AsynctaskGetMyEvents(getActivity(), m);
         }
 
     }

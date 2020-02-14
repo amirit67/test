@@ -19,8 +19,8 @@ import java.util.Map;
 import java.util.Random;
 
 import androidx.core.app.NotificationCompat;
-import ir.payebash.Activities.MainActivity;
-import ir.payebash.Activities.PostDetailsActivity;
+import ir.payebash.activities.MainActivity;
+import ir.payebash.activities.PostDetailsActivity;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Interfaces.ApiClient;

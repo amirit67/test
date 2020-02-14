@@ -12,17 +12,29 @@
     android:layoutDirection="ltr"
     android:orientation="vertical">
 
+    <View
+        android:id="@+id/textView"
+        android:layout_width="@dimen/dp100"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_corners_solid_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:id="@+id/textView28"
+        android:id="@+id/tv_count8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/yekanblack"
         android:text="رای اعتماد"
         android:textColor="@color/black"
         android:textSize="@dimen/sp16"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -35,7 +47,7 @@
         android:text="امنیت شما برای ما مهم است"
         android:textSize="@dimen/sp14"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_count8" />
 
     <View
         android:id="@+id/textView33"
@@ -57,7 +69,7 @@
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/tv_rate"
         app:layout_constraintTop_toBottomOf="@+id/textView15"
         bar:animation="true"
         bar:max_value="100"
@@ -70,7 +82,7 @@
         bar:width="12dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -94,18 +106,17 @@
         android:backgroundTint="#0f9d58"
         android:numStars="5"
         android:progressTint="#0f9d58"
-        android:rating="4"
-        android:stepSize="1"
+        android:rating="1"
+        android:stepSize="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_rate" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:drawablePadding="4dp"
-        android:text="756, 800"
+        android:text="0"
         android:textColor="#333333"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/ratingBar"

@@ -11,11 +11,9 @@ import androidx.fragment.app.Fragment;
 
 import ir.payebash.Classes.HSH;
 import ir.payebash.Interfaces.IWebservice;
-import ir.payebash.Models.BaseResponse;
-import ir.payebash.Models.ForgotPasswordModel;
+import ir.payebash.models.BaseResponse;
+import ir.payebash.models.ForgotPasswordModel;
 import ir.payebash.R;
-import ir.payebash.asynktask.forgotPassword.AsynctaskStep1;
-import ir.payebash.asynktask.forgotPassword.AsynctaskStep2;
 import ir.payebash.asynktask.forgotPassword.AsynctaskStep3;
 
 public class SubmitPasswordFragment extends Fragment implements View.OnClickListener {

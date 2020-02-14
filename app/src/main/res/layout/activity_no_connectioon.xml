@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:layoutDirection="ltr"
-    tools:context=".Activities.NoConnectioonActivity">
+    tools:context=".activities.NoConnectioonActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"

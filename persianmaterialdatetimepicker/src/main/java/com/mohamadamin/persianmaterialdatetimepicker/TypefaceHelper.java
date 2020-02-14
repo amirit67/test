@@ -30,7 +30,7 @@ public class TypefaceHelper {
         synchronized (cache) {
             if (!cache.containsKey(name)) {
                 Typeface t = Typeface.createFromAsset(
-                        c.getAssets(), String.format("fonts/%s.ttf", name));
+                        c.getAssets(), String.format("yekanmedium.ttf", name));
                 cache.put(name, t);
                 return t;
             }

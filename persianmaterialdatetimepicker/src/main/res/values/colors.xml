@@ -17,6 +17,7 @@
 <resources>
 
     <color name="mdtp_white">#ffffff</color>
+    <color name="mdtp_black">#000000</color>
     <color name="mdtp_background_color">@color/mdtp_white</color>
     <color name="mdtp_circle_background">@color/mdtp_background_color</color>
     <color name="mdtp_circle_color">#f5f5f5</color>
@@ -27,9 +28,9 @@
     <color name="mdtp_numbers_text_color">#ff212121</color>
 
     <color name="mdtp_transparent_black">#7f000000</color>
-    <color name="mdtp_accent_color">#009688</color>
+    <color name="mdtp_accent_color">#2B8CFF</color>
     <color name="mdtp_accent_color_focused">#76ffffff</color>
-    <color name="mdtp_accent_color_dark">#00796b</color>
+    <color name="mdtp_accent_color_dark">#2B8CFF</color>
     <color name="mdtp_date_picker_text_normal">#ff212121</color>
     <color name="mdtp_date_picker_text_highlighted">@color/mdtp_date_picker_text_normal</color>
     <color name="mdtp_date_picker_text_disabled">#ccc</color>

@@ -2,22 +2,34 @@ package ir.payebash.Interfaces;
 
 import java.util.List;
 
-import ir.payebash.Models.BaseResponse;
-import ir.payebash.Models.CityItem;
-import ir.payebash.Models.TkModel;
-import ir.payebash.Models.event.EventModel;
-import ir.payebash.Models.event.detail.EventDetailsModel;
-import ir.payebash.Models.event.story.StoryModel;
-import ir.payebash.Models.user.LoginModel;
+import ir.payebash.models.BaseResponse;
+import ir.payebash.models.CityItem;
+import ir.payebash.models.FilterFeedItem;
+import ir.payebash.models.RequestItem;
+import ir.payebash.models.TkModel;
+import ir.payebash.models.contacts.ContactItem;
+import ir.payebash.models.contacts.FollowItem;
+import ir.payebash.models.event.EventModel;
+import ir.payebash.models.event.detail.EventDetailsModel;
+import ir.payebash.models.event.story.StoryModel;
+import ir.payebash.models.login.LoginModel;
+import ir.payebash.models.parsijoo.ParsijooItem;
+import ir.payebash.models.user.UserInfoModel;
 
 /**
  * Created by ZAMAN on 3/17/2018.
  */
 
 public interface IWebservice {
-    void getResult(retrofit2.Response<List<EventModel>> list) throws Exception;
+    void getResult(List<EventModel> list) throws Exception;
 
-    void getError() throws Exception;
+    void getError(String s) throws Exception;
+
+    interface IAddress {
+        void getResult(ParsijooItem s) throws Exception;
+
+        void getError(String error) throws Exception;
+    }
 
     interface ITkModel {
         void getResult(TkModel s) throws Exception;
@@ -37,26 +49,59 @@ public interface IWebservice {
         void getError(String error) throws Exception;
     }
 
-    interface OnLoadMoreListener {
+    interface IRequestJoin {
+        void getResult(List<RequestItem> requestItem) throws Exception;
 
+        void getError(String error) throws Exception;
+    }
+
+    interface IUserInfo {
+        void getResult(UserInfoModel userInfoModel) throws Exception;
+
+        void getError(String error) throws Exception;
+    }
+
+    interface ICheckContacts {
+        void getResult(List<ContactItem> contactItems) throws Exception;
+
+        void getError(String error) throws Exception;
+    }
+
+    interface IFollow {
+        void getResult(FollowItem contactItems) throws Exception;
+
+        void getError(String error) throws Exception;
+    }
+
+
+    interface OnLoadMoreListener {
         void onLoadMore();
     }
 
     interface setListenerCity {
-
         void onItemCheck(CityItem item);
     }
 
+    interface IsetListenerSubject {
+        void onItemCheck(FilterFeedItem item);
+    }
+
+    interface IsetListenerCity {
+        void onItemCheck(CityItem item);
+    }
+
+    interface IFilterListenerCity {
+        void onSearch(String s);
+    }
+
     interface TitleMain {
-        public void FragName(String name);
+        void FragName(String name);
     }
 
     interface IBottomSheetNavigation {
-        public void showBottomSheet();
-    }
+        void showBottomSheetNavigation();
 
-    interface HideActionbar {
-        void IsHide(boolean ishide);
+        void showBottomSheetRating(UserInfoModel result);
     }
 
     interface IEventDetails {

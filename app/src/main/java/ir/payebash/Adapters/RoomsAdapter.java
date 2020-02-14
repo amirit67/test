@@ -1,42 +1,25 @@
 package ir.payebash.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
-import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Application;
-import ir.payebash.Classes.HSH;
-import ir.payebash.Fragments.SearchFragment;
-import ir.payebash.Models.PayeItem;
 import ir.payebash.R;
 import ir.payebash.helpers.Globals;
 import ir.payebash.modelviewsChat.RoomViewModel;
-import ir.payebash.utils.OverlapRecyclerViewDecoration;
 
 
 public class RoomsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

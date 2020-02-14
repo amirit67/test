@@ -21,11 +21,11 @@ package ir.payebash.utils.reviewratings;
 public class BarLabels {
 
     public static final String STYPE1[] = new String[]{
-            "5★ ",
-            "4★ ",
-            "3★ ",
-            "2★ ",
-            "1★ "};
+            "۵★ ",
+            "۴★ ",
+            "۳★ ",
+            "۲★ ",
+            "۱★ "};
 
     public static final String STYPE2[] = new String[]{
             "  ⛧⛧⛧⛧⛧",

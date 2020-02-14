@@ -13,7 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import ir.payebash.Models.event.detail.FollwoersItem;
+import ir.payebash.models.general.FollwoersItem;
 import ir.payebash.R;
 
 
@@ -75,11 +75,12 @@ public class PersonAddedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return (null != feed ? feed.size() < 4 ? feed.size() : 3 : 0);
+        return (null != feed ? feed.size() < 4 ? feed.size() : 3 : 1);
     }
 
-    public void addItems(List<FollwoersItem> posts) {
-        this.feed.addAll(posts);
+    public void addItems(List<FollwoersItem> events) {
+        if (null != events)
+            this.feed.addAll(events);
         notifyDataSetChanged();
     }
 

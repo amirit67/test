@@ -22,6 +22,8 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import android.util.Log;
@@ -37,6 +39,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.mohamadamin.persianmaterialdatetimepicker.HapticFeedbackController;
 import com.mohamadamin.persianmaterialdatetimepicker.R;
 import com.mohamadamin.persianmaterialdatetimepicker.TypefaceHelper;
@@ -50,7 +55,7 @@ import java.util.Locale;
 /**
  * Dialog to set a time.
  */
-public class TimePickerDialog extends DialogFragment implements OnValueSelectedListener{
+public class TimePickerDialog extends BottomSheetDialogFragment implements OnValueSelectedListener{
     private static final String TAG = "TimePickerDialog";
 
     private static final String KEY_HOUR_OF_DAY = "hour_of_day";
@@ -219,8 +224,17 @@ public class TimePickerDialog extends DialogFragment implements OnValueSelectedL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-
+        //getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        getDialog().setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                BottomSheetDialog d = (BottomSheetDialog) dialog;
+                View bottomSheetInternal = d.findViewById(R.id.design_bottom_sheet);
+                bottomSheetInternal.setBackgroundResource(R.drawable.rounded_corners_top);
+                BottomSheetBehavior.from(bottomSheetInternal).setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
         View view = inflater.inflate(R.layout.mdtp_time_picker_dialog, null);
         KeyboardListener keyboardListener = new KeyboardListener();
         view.findViewById(R.id.time_picker_dialog).setOnKeyListener(keyboardListener);
@@ -246,7 +260,7 @@ public class TimePickerDialog extends DialogFragment implements OnValueSelectedL
 
         mHapticFeedbackController = new HapticFeedbackController(getActivity());
 
-        mTimePicker = (RadialPickerLayout) view.findViewById(R.id.time_picker);
+        mTimePicker = view.findViewById(R.id.time_picker);
         mTimePicker.setOnValueSelectedListener(this);
         mTimePicker.setOnKeyListener(keyboardListener);
         mTimePicker.initialize(getActivity(), mHapticFeedbackController, mInitialHourOfDay,
@@ -386,7 +400,7 @@ public class TimePickerDialog extends DialogFragment implements OnValueSelectedL
         //view.findViewById(R.id.line).setBackgroundColor(mThemeDark? darkLine : line);
         //mOkButton.setTextColor(mThemeDark? darkDoneTextColor : doneTextColor);
         mTimePicker.setBackgroundColor(mThemeDark? lightGray : circleBackground);
-        view.findViewById(R.id.time_picker_dialog).setBackgroundColor(mThemeDark ? darkBackgroundColor : backgroundColor);
+        //view.findViewById(R.id.time_picker_dialog).setBackgroundColor(mThemeDark ? darkBackgroundColor : backgroundColor);
         //mOkButton.setBackgroundResource(mThemeDark? darkDoneBackground : doneBackground);
         return view;
     }
@@ -535,8 +549,8 @@ public class TimePickerDialog extends DialogFragment implements OnValueSelectedL
 
         int hourColor = (index == HOUR_INDEX)? mSelectedColor : mUnselectedColor;
         int minuteColor = (index == MINUTE_INDEX)? mSelectedColor : mUnselectedColor;
-        mHourView.setTextColor(hourColor);
-        mMinuteView.setTextColor(minuteColor);
+        mHourView.setTextColor(Color.BLACK);
+        mMinuteView.setTextColor(Color.BLACK);
 
         ObjectAnimator pulseAnimator = Utils.getPulseAnimator(labelToAnimate, 0.85f, 1.1f);
         if (delayLabelAnimate) {

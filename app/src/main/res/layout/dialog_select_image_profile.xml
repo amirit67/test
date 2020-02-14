@@ -59,7 +59,7 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/sp16" />
 
-        <ir.payebash.Moudle.CircleImageView
+        <ir.payebash.moudle.CircleImageView
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:layout_gravity="center"
@@ -111,7 +111,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 android:id="@+id/rb1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                 android:buttonTint="@color/colorAccent"
                 android:text="دوربین" />
 
-            <ir.payebash.Moudle.CustomRadioButton
+            <ir.payebash.moudle.CustomRadioButton
                 android:id="@+id/rb2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

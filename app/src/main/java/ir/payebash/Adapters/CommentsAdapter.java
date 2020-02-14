@@ -16,7 +16,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import ir.payebash.Holders.CommentRowHolder;
-import ir.payebash.Models.CommentModel;
+import ir.payebash.models.CommentModel;
 import ir.payebash.R;
 
 

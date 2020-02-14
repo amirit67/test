@@ -14,7 +14,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.ArrayList;
 
-import ir.payebash.Models.CustomGallery;
+import ir.payebash.models.CustomGallery;
 import ir.payebash.R;
 
 public class GalleryAdapter extends BaseAdapter {

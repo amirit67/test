@@ -1,142 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="eventItem"
+            type="ir.payebash.models.event.EventModel" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/rounded_corners_elevation_white">
+        android:layout_height="wrap_content">
 
-
-        <ir.payebash.utils.roundedimageview.RoundedImageView
-            android:id="@+id/img_content"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_margin="@dimen/dp8"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_thumbnail"
-            app:riv_corner_radius="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/txt_title"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:gravity="right"
-            android:maxLines="2"
-            android:text="پایه ای بریم سینما؟"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/txt_cost"
-            app:layout_constraintEnd_toStartOf="@+id/img_content"
-            app:layout_constraintStart_toEndOf="@+id/img_woman"
-            app:layout_constraintTop_toTopOf="@+id/img_content" />
-
-        <TextView
-            android:id="@+id/txt_cost"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/yekanlight"
-            android:gravity="right"
-            android:text="رایگان"
-            android:textColor="#969393"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/txt_title"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_title" />
-
-        <TextView
-            android:id="@+id/txt_location"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="4dp"
-            android:drawableRight="@drawable/ic_location"
-            android:drawablePadding="@dimen/dp4"
-            android:ellipsize="end"
-            android:fontFamily="@font/yekanlight"
-            android:gravity="right|center_vertical"
-            android:maxLines="1"
-            android:text="کرج"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_content"
-            app:layout_constraintEnd_toEndOf="@+id/txt_title"
-            app:layout_constraintStart_toEndOf="@+id/tv_number_followers"
-            app:layout_constraintTop_toBottomOf="@+id/txt_cost"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/tv_number_followers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/yekanlight"
-            android:text="0 نفر پایه"
-            android:textColor="@color/black"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_location"
-            app:layout_constraintStart_toEndOf="@+id/rv"
-            app:layout_constraintTop_toTopOf="@+id/txt_location"
-            app:layout_constraintVertical_bias="0.5" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="12dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_location"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txt_location" />
-
-        <ImageView
-            android:id="@+id/img_immadiate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txt_title"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_immadiate" />
-
-        <ImageView
-            android:id="@+id/img_woman"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_title"
-            app:layout_constraintStart_toEndOf="@+id/img_immadiate"
-            app:layout_constraintTop_toTopOf="@+id/txt_title"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_flower" />
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/rounded_corners_elevation_white">
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ir.payebash.utils.roundedimageview.RoundedImageView
+                android:id="@+id/img_content"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_margin="@dimen/dp8"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_corner_radius="10dp"
+                app:srcCompat="@drawable/ic_thumbnail" />
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:maxLines="2"
+                android:text="@{eventItem.title}"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/txt_cost"
+                app:layout_constraintEnd_toStartOf="@+id/img_content"
+                app:layout_constraintStart_toEndOf="@+id/img_woman"
+                app:layout_constraintTop_toTopOf="@+id/img_content" />
+
+            <TextView
+                android:id="@+id/txt_cost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/yekanlight"
+                android:gravity="right"
+                android:text="@{eventItem.cost}"
+                android:textColor="#969393"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/txt_title"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title" />
+
+            <TextView
+                android:id="@+id/txt_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:drawableRight="@drawable/ic_location"
+                android:drawablePadding="@dimen/dp4"
+                android:ellipsize="end"
+                android:fontFamily="@font/yekanlight"
+                android:gravity="right|center_vertical"
+                android:maxLines="1"
+                android:text="کرج"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/img_content"
+                app:layout_constraintEnd_toEndOf="@+id/txt_title"
+                app:layout_constraintStart_toEndOf="@+id/tv_number_followers"
+                app:layout_constraintTop_toBottomOf="@+id/txt_cost"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/tv_number_followers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/yekanlight"
+                android:text="@{eventItem.numberFollowers}"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_location"
+                app:layout_constraintStart_toEndOf="@+id/rv"
+                app:layout_constraintTop_toTopOf="@+id/txt_location"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txt_location" />
+
+            <ImageView
+                android:id="@+id/img_immadiate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+
+                app:layout_constraintBottom_toBottomOf="@+id/txt_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txt_title"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_immadiate" />
+
+            <ImageView
+                android:id="@+id/img_woman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:visibility='@{eventItem.isWoman ? View.GONE : View.VISIBLE}'
+                app:layout_constraintBottom_toBottomOf="@+id/txt_title"
+                app:layout_constraintStart_toEndOf="@+id/img_immadiate"
+                app:layout_constraintTop_toTopOf="@+id/txt_title"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_flower" />
 
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+    </RelativeLayout>
+</layout>
 
-</RelativeLayout>
 
 
 

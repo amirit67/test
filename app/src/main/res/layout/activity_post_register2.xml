@@ -1,332 +1,343 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
     android:layoutDirection="ltr"
     android:orientation="vertical"
     android:fillViewport="true"
-    tools:context=".Activities.PostRegisterActivity">
+    tools:context=".activities.PostRegisterActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:background="@drawable/rounded_corners_top">
-
-
-        <TextView
-            android:id="@+id/textView47"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:text="ایجاد رویداد"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp16"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView48"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="پایه باش برای شما آرزوهای خوبی دارد"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp12"
-            app:layout_constraintEnd_toEndOf="@+id/textView47"
-            app:layout_constraintTop_toBottomOf="@+id/textView47" />
-
-        <ImageView
-            android:id="@+id/imageView12"
-            android:layout_width="18dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView47"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView47"
-            app:srcCompat="@drawable/ic_chevron_left_black" />
-
-        <EditText
-            android:id="@+id/editText7"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:background="@color/white"
-            android:fontFamily="@font/yekanblack"
-            android:gravity="center"
-            android:hint="نام رویداد"
-            android:maxLength="50"
-            android:maxLines="2"
-            android:paddingLeft="24dp"
-            android:paddingTop="@dimen/dp20"
-            android:paddingRight="24dp"
-            android:paddingBottom="@dimen/dp48"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView48" />
-
-        <TextView
-            android:id="@+id/textView40"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:gravity="center"
-            android:text="فقط کافیه اینجارو لمس کنی"
-            android:textColor="#d0d0d0"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintBottom_toBottomOf="@+id/editText7"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/editText7" />
-
-        <View
-            android:id="@+id/view3"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="#ececec"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText7" />
-
-        <TextView
-            android:id="@+id/textView42"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:text="توضیحات"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view3" />
-
-        <EditText
-            android:id="@+id/editText8"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:background="@color/white"
-            android:gravity="top|right"
-            android:hint="اینجارو لمس کنید"
-            android:lineSpacingMultiplier="1.2"
-            android:lines="5"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView42" />
-
-        <View
-            android:id="@+id/view5"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:background="#ececec"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText8" />
-
-        <TextView
-            android:id="@+id/textView43"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:text="تصاویر رویداد"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view5" />
-
-        <ir.payebash.utils.SwitchButton
-            android:id="@+id/switch1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView45"
-            app:layout_constraintEnd_toStartOf="@+id/textView45"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView45"
-            app:sb_background="#eaeaea"
-            app:sb_border_width="1dp"
-            app:sb_checked="false"
-            app:sb_checked_color="@color/black"
-            app:sb_checkline_color="#00ffffff"
-            app:sb_show_indicator="false" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_images"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView43" />
-
-        <TextView
-            android:id="@+id/textView36"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="#ececec"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_images" />
-
-        <TextView
-            android:id="@+id/textView41"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="16dp"
-            android:text="چند نفر بیان ؟"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintBottom_toTopOf="@+id/textView44"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView36" />
-
-        <EditText
-            android:id="@+id/editText9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:background="@color/white"
-            android:hint="مثال 5 نفر"
-            android:maxLength="10"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp16"
-            app:layout_constraintBottom_toBottomOf="@+id/textView41"
-            app:layout_constraintEnd_toStartOf="@+id/textView41"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView41" />
-
-        <TextView
-            android:id="@+id/textView44"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="#ececec"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView41" />
-
-        <TextView
-            android:id="@+id/textView45"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:text="ویژه بانوان"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView55" />
-
-        <TextView
-            android:id="@+id/textView46"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:background="#ececec"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView45" />
-
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/press_button_stroke_gray"
-            android:drawableLeft="@drawable/ic_date_event"
-            android:focusable="false"
-            android:hint="تاریخ مهلت"
-            android:padding="@dimen/dp16"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@+id/editText5"
-            app:layout_constraintTop_toBottomOf="@+id/textView44" />
-
-        <EditText
-            android:id="@+id/editText5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/press_button_stroke_gray"
-            android:drawableLeft="@drawable/ic_date_event"
-            android:focusable="false"
-            android:hint="تاریخ پایان"
-            android:padding="@dimen/dp16"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintBottom_toBottomOf="@+id/editText4"
-            app:layout_constraintEnd_toStartOf="@+id/editText4"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editText4" />
-
-        <TextView
-            android:id="@+id/textView55"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="16dp"
-            android:text="هزینه"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText4" />
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView46">
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:background="@drawable/rounded_corners_top">
+
 
             <TextView
-                android:id="@+id/textView80"
+                android:id="@+id/textView47"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:text="ایجاد رویداد"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp16"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView48"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="پایه باش برای شما آرزوهای خوبی دارد"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp12"
+                app:layout_constraintEnd_toEndOf="@+id/textView47"
+                app:layout_constraintTop_toBottomOf="@+id/textView47" />
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="18dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView47"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView47"
+                app:srcCompat="@drawable/ic_chevron_left_black" />
+
+            <EditText
+                android:id="@+id/editText7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:fontFamily="@font/yekanblack"
+                android:gravity="center"
+                android:hint="نام رویداد"
+                android:maxLength="50"
+                android:maxLines="2"
+                android:paddingLeft="24dp"
+                android:paddingTop="@dimen/dp20"
+                android:paddingRight="24dp"
+                android:paddingBottom="@dimen/dp48"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView48" />
+
+            <TextView
+                android:id="@+id/textView40"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="فقط کافیه اینجارو لمس کنی"
+                android:textColor="#d0d0d0"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintBottom_toBottomOf="@+id/editText7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/editText7" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="#ececec"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText7" />
+
+            <TextView
+                android:id="@+id/textView42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:text="توضیحات"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+            <EditText
+                android:id="@+id/editText8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/rounded_corners_solid_gray"
-                android:gravity="center"
-                android:padding="12dp"
-                android:text="ثبت رویداد"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp18"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@color/white"
+                android:gravity="top|right"
+                android:hint="اینجارو لمس کنید"
+                android:lineSpacingMultiplier="1.2"
+                android:minHeight="120dp"
+                android:maxLines="10"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/textView42" />
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#ececec"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText8" />
+
+            <TextView
+                android:id="@+id/textView43"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:text="تصاویر رویداد"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+            <ir.payebash.utils.SwitchButton
+                android:id="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView45"
+                app:layout_constraintEnd_toStartOf="@+id/textView45"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView45"
+                app:sb_background="#eaeaea"
+                app:sb_border_width="1dp"
+                app:sb_checked="false"
+                app:sb_checked_color="@color/black"
+                app:sb_checkline_color="#00ffffff"
+                app:sb_show_indicator="false" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:overScrollMode="never"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView43" />
+
+            <TextView
+                android:id="@+id/textView36"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#ececec"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_images" />
+
+            <TextView
+                android:id="@+id/textView41"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="چند نفر بیان ؟"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintBottom_toTopOf="@+id/textView44"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+            <EditText
+                android:id="@+id/editText9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:background="@color/white"
+                android:hint="مثال 5 نفر"
+                android:maxLength="10"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp16"
+                app:layout_constraintBottom_toBottomOf="@+id/textView41"
+                app:layout_constraintEnd_toStartOf="@+id/textView41"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView41" />
+
+            <TextView
+                android:id="@+id/textView44"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#ececec"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView41" />
+
+            <TextView
+                android:id="@+id/textView45"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:text="ویژه بانوان"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView55" />
+
+            <TextView
+                android:id="@+id/textView46"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:background="#ececec"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView45" />
+
+            <EditText
+                android:id="@+id/editText4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/press_button_stroke_gray"
+                android:drawableLeft="@drawable/ic_date_event"
+                android:focusable="false"
+                android:hint="تاریخ مهلت"
+                android:padding="@dimen/dp16"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/editText5"
+                app:layout_constraintTop_toBottomOf="@+id/textView44" />
+
+            <EditText
+                android:id="@+id/editText5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/press_button_stroke_gray"
+                android:drawableLeft="@drawable/ic_date_event"
+                android:focusable="false"
+                android:hint="تاریخ پایان"
+                android:padding="@dimen/dp16"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintBottom_toBottomOf="@+id/editText4"
+                app:layout_constraintEnd_toStartOf="@+id/editText4"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/editText4" />
+
+            <TextView
+                android:id="@+id/textView55"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="هزینه"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText4" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView46">
+
+                <TextView
+                    android:id="@+id/bt_register"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_corners_solid_gray"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="ثبت رویداد"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp18"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    </ScrollView>
+
+</FrameLayout>
+
 

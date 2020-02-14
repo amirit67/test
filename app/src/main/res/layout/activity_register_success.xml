@@ -26,12 +26,12 @@
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/content"
-        app:layout_constraintStart_toStartOf="@+id/content"
-        app:layout_constraintTop_toBottomOf="@+id/content" />
+        app:layout_constraintEnd_toEndOf="@+id/ripple"
+        app:layout_constraintStart_toStartOf="@+id/ripple"
+        app:layout_constraintTop_toBottomOf="@+id/ripple" />
 
     <ir.payebash.utils.RippleBackground
-        android:id="@+id/content"
+        android:id="@+id/ripple"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView51" />
 
     <TextView
-        android:id="@+id/textView53"
+        android:id="@+id/tv_go"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -91,7 +91,7 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView53" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_go" />
 
     <ImageView
         android:id="@+id/imageView13"

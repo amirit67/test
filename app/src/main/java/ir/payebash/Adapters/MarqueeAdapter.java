@@ -1,18 +1,16 @@
 package ir.payebash.Adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import ir.payebash.Models.MarqueeObject;
+import ir.payebash.models.MarqueeObject;
 import ir.payebash.R;
 
 public class MarqueeAdapter extends

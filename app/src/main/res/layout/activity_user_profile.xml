@@ -8,7 +8,7 @@
     android:background="@android:color/white"
     android:layoutDirection="ltr"
     android:orientation="vertical"
-    tools:context=".Activities.MainActivity">
+    tools:context=".activities.MainActivity">
 
     <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar_top"
@@ -25,7 +25,7 @@
             android:background="@android:color/transparent"
             card_view:srcCompat="@drawable/ic_back" />
 
-        <ir.payebash.Moudle.CustomTextViewBold
+        <ir.payebash.moudle.CustomTextViewBold
             android:id="@+id/txt_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ir.payebash.Moudle.CircleImageView
+            <ir.payebash.moudle.CircleImageView
                 android:id="@+id/img_profile"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp100"
@@ -85,7 +85,7 @@
                 android:layout_gravity="center"
                 android:src="@mipmap/ic_paye" />
 
-            <ir.payebash.Moudle.CustomTextViewBold
+            <ir.payebash.moudle.CustomTextViewBold
                 android:id="@+id/btn_vote"
                 android:layout_width="@dimen/dp140"
                 android:layout_height="wrap_content"
@@ -187,7 +187,7 @@
                     android:textSize="@dimen/sp13"
                     android:visibility="gone" />
 
-                <ir.payebash.Moudle.TagLayout
+                <ir.payebash.moudle.TagLayout
                     android:id="@+id/mTagLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -195,7 +195,7 @@
                     android:tag="Favorites">
 
 
-                </ir.payebash.Moudle.TagLayout>
+                </ir.payebash.moudle.TagLayout>
             </LinearLayout>
 
             <TextView

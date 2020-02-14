@@ -19,21 +19,30 @@ package ir.payebash.Interfaces;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import ir.payebash.BuildConfig;
-import ir.payebash.Models.BaseResponse;
-import ir.payebash.Models.CommentModel;
-import ir.payebash.Models.ForgotPasswordModel;
-import ir.payebash.Models.GoogleOuathItem;
-import ir.payebash.Models.NotifItem;
-import ir.payebash.Models.NotifyData;
-import ir.payebash.Models.googlePlus.PlusItem;
-import ir.payebash.Models.ProfileItem;
-import ir.payebash.Models.TkModel;
-import ir.payebash.Models.UserItem;
-import ir.payebash.Models.event.EventModel;
-import ir.payebash.Models.event.detail.EventDetailsModel;
-import ir.payebash.Models.event.story.StoryModel;
-import ir.payebash.Models.user.LoginModel;
+import ir.payebash.models.BaseResponse;
+import ir.payebash.models.CommentModel;
+import ir.payebash.models.ForgotPasswordModel;
+import ir.payebash.models.GoogleOuathItem;
+import ir.payebash.models.InputPostDetailsParamsModel;
+import ir.payebash.models.MobileItem;
+import ir.payebash.models.NotifItem;
+import ir.payebash.models.NotifyData;
+import ir.payebash.models.RequestItem;
+import ir.payebash.models.contacts.ContactItem;
+import ir.payebash.models.contacts.FollowItem;
+import ir.payebash.models.event.detail.RequestStateItem;
+import ir.payebash.models.googlePlus.PlusItem;
+import ir.payebash.models.ProfileItem;
+import ir.payebash.models.TkModel;
+import ir.payebash.models.UserItem;
+import ir.payebash.models.event.EventModel;
+import ir.payebash.models.event.detail.EventDetailsModel;
+import ir.payebash.models.event.story.StoryModel;
+import ir.payebash.models.login.LoginModel;
+import ir.payebash.models.parsijoo.ParsijooItem;
+import ir.payebash.models.user.UserInfoModel;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -74,7 +83,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/getposts")
-    Call<List<EventModel>> getPosts(@FieldMap Map<String, String> data);
+    Observable<List<EventModel>> getPosts(@FieldMap Map<String, String> data);
 
     @GET("api/getStoryEvents/{cityCode}")
     Call<List<StoryModel>> getStoryEvents(@Path("cityCode") String cityCode);
@@ -82,9 +91,15 @@ public interface ApiInterface {
     @GET("api/getmyevents")
     Call<List<EventModel>> getMyEvents();
 
+    @GET("api/getUserInformation")
+    Call<UserInfoModel> getUserInformation();
+
     @FormUrlEncoded
     @POST("api/getUncomingPosts")
     Call<List<EventModel>> getUncomingPosts(@FieldMap Map<String, String> data);
+
+    @GET("api/getRequestToJoin/{userId}")
+    Call<List<RequestItem>> getRequestToJoin(@Path("userId") String userId);
 
     @FormUrlEncoded
     @POST("api/InsertPayment")
@@ -104,6 +119,12 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("api/GetUserVerification")
     Call<UserItem> checkPhoneNumber(@FieldMap Map<String, String> data);
+
+    @POST("api/checkcontacts")
+    Call<List<ContactItem>> checkContacts(@Body MobileItem data);
+
+    @GET("api/following/{followingId}")
+    Call<FollowItem> following(@Path("followingId") String followingId);
 
     @FormUrlEncoded
     @POST("api/InsertVote")
@@ -145,8 +166,8 @@ public interface ApiInterface {
     @GET("api/updateapp/")
     Call<ResponseBody> GetUpdate();
 
-    @GET("api/getpostDetails/{eventId}")
-    Call<EventDetailsModel> GetEventDetails(@Path("eventId") String eventId);
+    @POST("api/getpostDetails")
+    Call<EventDetailsModel> GetEventDetails(@Body InputPostDetailsParamsModel data);
 
     @GET("api/getpostDetailsUpdate/{postId}")
     Call<ResponseBody> GetPostDetailsUpdate(@Path("postId") String postId);
@@ -159,7 +180,7 @@ public interface ApiInterface {
     Call<ResponseBody> CancelPost(@Path("postId") String postId);
 
     @GET("api/updateApplicants/{postId}")
-    Call<ResponseBody> UpdateApplicants(@Path("postId") String postId);
+    Call<RequestStateItem> UpdateApplicants(@Path("postId") String postId);
 
     @FormUrlEncoded
     @POST("api/getprofiledetails")
@@ -199,6 +220,9 @@ public interface ApiInterface {
 
     @GET("/v1/people/me/?personFields=birthdays&fields=birthdays%2Fdate")
     Call<PlusItem> birthDay(@Query("access_token") String searchString);
+
+    @GET("web-service/v1/map/?type=address")
+    Call<ParsijooItem> getAddress(@Query("x") String x, @Query("y") String y);
 
     //https://accounts.google.com/o/oauth2/revoke?token=
 }

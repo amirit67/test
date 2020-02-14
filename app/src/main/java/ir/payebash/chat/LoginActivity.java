@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import ir.payebash.Activities.MainActivity;
+import ir.payebash.activities.MainActivity;
 import ir.payebash.BuildConfig;
 import ir.payebash.R;
 import ir.payebash.helpers.PrefsManager;

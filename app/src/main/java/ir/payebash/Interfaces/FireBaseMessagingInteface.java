@@ -16,9 +16,9 @@ limitations under the License.
 
 package ir.payebash.Interfaces;
 
-import ir.payebash.Models.GoogleOuathItem;
-import ir.payebash.Models.NotifyData;
-import ir.payebash.Models.googlePlus.PlusItem;
+import ir.payebash.models.GoogleOuathItem;
+import ir.payebash.models.NotifyData;
+import ir.payebash.models.googlePlus.PlusItem;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;

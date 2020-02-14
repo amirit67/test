@@ -36,17 +36,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import ir.payebash.activities.PostDetailsActivity;
 import ir.payebash.Adapters.PayeAdapter;
 import ir.payebash.Adapters.StoryAdapter;
 import ir.payebash.Application;
 import ir.payebash.Classes.HSH;
 import ir.payebash.Classes.ItemDecorationAlbumColumns;
-import ir.payebash.Fragments.user.ActivitiesFragment;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.OnLoadMoreListener;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
-import ir.payebash.Models.event.EventModel;
-import ir.payebash.Models.event.story.StoryModel;
+import ir.payebash.models.event.EventModel;
+import ir.payebash.models.event.story.StoryModel;
 import ir.payebash.R;
 import ir.payebash.asynktask.AsynctaskGetPost;
 import ir.payebash.asynktask.AsynctaskStoryEvents;
@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
-    private ImageView imgRooms;
+    private ImageView imgRooms, imgContact;
     AsynctaskGetPost getPost;
     IWebservice m;
     private RecyclerView rv;
@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private OnLoadMoreListener mOnLoadMoreListener;
     private int visibleThreshold = 1, lastVisibleItem, totalItemCount = 0;
     private SearchFragment fragobj = null;
-    private ActivitiesFragment activitiesFragment = null;
+    private ContactsFragment contactsFragment;
     private View rootView = null;
 
     @Override
@@ -98,7 +98,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             swipeContainer.setOnRefreshListener(() -> {
                 Cnt = 0;
                 params.clear();
-                Application.myAds = 1;
                 adapter.ClearFeed();
                 params.put(getString(R.string.Skip), String.valueOf(Cnt));
                 getPost.getData();
@@ -139,7 +138,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             });
         }
         ((TitleMain) getContext()).FragName("خانه");
-        Application.myAds = 1;
         //llSearch.setVisibility(View.VISIBLE);
         return rootView;
     }
@@ -149,18 +147,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         params.put(getString(R.string.Skip), String.valueOf(Cnt));
         m = new IWebservice() {
             @Override
-            public void getResult(retrofit2.Response<List<EventModel>> list) throws Exception {
+            public void getResult(List<EventModel> list) throws Exception {
                 try {
                     isLoading = false;
                     swipeContainer.setRefreshing(false);
                     pb.setVisibility(View.GONE);
-                    adapter.addItems(list.body());
+                    adapter.addItems(list);
                 } catch (Exception e) {
                 }
             }
 
             @Override
-            public void getError() throws Exception {
+            public void getError(String s) throws Exception {
                 HSH.showtoast(ac, "خطا در اتصال به اینترنت");
                 swipeContainer.setRefreshing(false);
                 pb.setVisibility(View.GONE);
@@ -172,6 +170,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     }
 
     private void getStories() {
+
         IWebservice.IStoriesEvents m = new IWebservice.IStoriesEvents() {
             @Override
             public void getResult(List<StoryModel> stories) throws Exception {
@@ -183,8 +182,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             }
         };
-        new AsynctaskStoryEvents(getActivity(), m, "68").getData();
-
+        new AsynctaskStoryEvents(m).getData();
     }
 
     @Override
@@ -229,7 +227,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void DeclareElements() {
         //llSearch = rootView.findViewById(R.id.ll_search);
         imgRooms = rootView.findViewById(R.id.img_rooms);
+        imgContact = rootView.findViewById(R.id.img_contact);
         imgRooms.setOnClickListener(this);
+        imgContact.setOnClickListener(this);
         swipeContainer = rootView.findViewById(R.id.swipeContainer);
         pb = rootView.findViewById(R.id.pb);
         rv = rootView.findViewById(R.id.rv_paye);
@@ -237,7 +237,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
         rv.addItemDecoration(new ItemDecorationAlbumColumns(getActivity(), ItemDecorationAlbumColumns.VERTICAL_LIST));
-        adapter = new PayeAdapter(getActivity(), params);
+        adapter = new PayeAdapter(getActivity(), eventModel -> {
+            Intent intent;
+            intent = new Intent(getActivity(), PostDetailsActivity.class);
+            intent.putExtra("feedItem", eventModel);
+            getActivity().startActivity(intent);
+        });
         rv.setAdapter(adapter);
 
         rvStory = rootView.findViewById(R.id.rv_story);
@@ -322,7 +327,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 Button btn_submit = dialogFilter.findViewById(R.id.btn_submit);
                 btnCategories.setOnClickListener(v -> HSH.selectSubject(getActivity(), btnCategories));
 
-                btnLocation.setOnClickListener(v -> HSH.selectLocation(getActivity(), 0, btnLocation));
+                //btnLocation.setOnClickListener(v -> HSH.selectLocation(getActivity(), 0, btnLocation));
                 btn_cancel.setOnClickListener(v -> {
                     etSearch.setHint(String.format(getString(R.string.searchHint), "همه رویدادها", "سراسر کشور"));
                     params.remove(getString(R.string.SubjectCode));
@@ -372,11 +377,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.img_rooms)
+        if(v.getId() == R.id.img_contact)
         {
-            if (activitiesFragment == null)
-                activitiesFragment = new /*NewAddressActivity*/ActivitiesFragment();
-            openFragment(getActivity(), activitiesFragment);
+            if (contactsFragment == null)
+                contactsFragment = new /*NewAddressActivity*/ContactsFragment();
+            openFragment(getActivity(), contactsFragment);
         }
     }
 }

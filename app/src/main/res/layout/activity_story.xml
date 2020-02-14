@@ -59,7 +59,7 @@
                 app:layout_constraintStart_toEndOf="@+id/rv_group_friends"
                 app:layout_constraintTop_toTopOf="@+id/img_profile" />
 
-            <ir.payebash.Moudle.CircleImageView
+            <ir.payebash.moudle.CircleImageView
                 android:id="@+id/img_profile"
                 android:layout_width="36dp"
                 android:layout_height="36dp"

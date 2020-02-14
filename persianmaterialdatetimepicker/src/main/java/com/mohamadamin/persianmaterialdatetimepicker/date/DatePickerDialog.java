@@ -21,6 +21,8 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
@@ -37,6 +39,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.mohamadamin.persianmaterialdatetimepicker.HapticFeedbackController;
 import com.mohamadamin.persianmaterialdatetimepicker.R;
 import com.mohamadamin.persianmaterialdatetimepicker.TypefaceHelper;
@@ -51,7 +56,7 @@ import java.util.HashSet;
 /**
  * Dialog allowing users to select a date.
  */
-public class DatePickerDialog extends DialogFragment implements
+public class DatePickerDialog extends BottomSheetDialogFragment implements
         OnClickListener, DatePickerController {
 
     private static final String TAG = "DatePickerDialog";
@@ -153,7 +158,7 @@ public class DatePickerDialog extends DialogFragment implements
      * @param dayOfMonth The initial day of the dialog.
      */
     public static DatePickerDialog newInstance(OnDateSetListener callBack, int year,
-            int monthOfYear, 
+            int monthOfYear,
             int dayOfMonth) {
         DatePickerDialog ret = new DatePickerDialog();
         ret.initialize(callBack, year, monthOfYear, dayOfMonth);
@@ -210,16 +215,25 @@ public class DatePickerDialog extends DialogFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        //getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        getDialog().setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                BottomSheetDialog d = (BottomSheetDialog) dialog;
+                View bottomSheetInternal = d.findViewById(R.id.design_bottom_sheet);
+                bottomSheetInternal.setBackgroundResource(R.drawable.rounded_corners_top);
+                BottomSheetBehavior.from(bottomSheetInternal).setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
 
         View view = inflater.inflate(R.layout.mdtp_date_picker_dialog, null);
 
-        //mDayOfWeekView = (TextView) view.findViewById(R.id.date_picker_header);
-        mMonthAndDayView = (LinearLayout) view.findViewById(R.id.date_picker_month_and_day);
+        mMonthAndDayView = view.findViewById(R.id.date_picker_month_and_day);
         mMonthAndDayView.setOnClickListener(this);
-        mSelectedMonthTextView = (TextView) view.findViewById(R.id.date_picker_month);
-        mSelectedDayTextView = (TextView) view.findViewById(R.id.date_picker_day);
-        mYearView = (TextView) view.findViewById(R.id.date_picker_year);
+        mSelectedMonthTextView = view.findViewById(R.id.date_picker_month);
+        mSelectedDayTextView = view.findViewById(R.id.date_picker_day);
+        mYearView = view.findViewById(R.id.date_picker_year);
         mYearView.setOnClickListener(this);
 
         int listPosition = -1;
@@ -249,10 +263,10 @@ public class DatePickerDialog extends DialogFragment implements
         mYearPickerDescription = res.getString(R.string.mdtp_year_picker_description);
         mSelectYear = res.getString(R.string.mdtp_select_year);
 
-        int bgColorResource = mThemeDark ? R.color.mdtp_date_picker_view_animator_dark_theme : R.color.mdtp_date_picker_view_animator;
-        view.setBackgroundColor(activity.getResources().getColor(bgColorResource));
+        //int bgColorResource = mThemeDark ? R.color.mdtp_date_picker_view_animator_dark_theme : R.color.mdtp_date_picker_view_animator;
+        //view.setBackgroundColor(activity.getResources().getColor(bgColorResource));
 
-        mAnimator = (AccessibleDateAnimator) view.findViewById(R.id.animator);
+        mAnimator = view.findViewById(R.id.animator);
         mAnimator.addView(mDayPickerView);
         mAnimator.addView(mYearPickerView);
         mAnimator.setDateMillis(mPersianCalendar.getTimeInMillis());
@@ -265,7 +279,7 @@ public class DatePickerDialog extends DialogFragment implements
         animation2.setDuration(ANIMATION_DURATION);
         mAnimator.setOutAnimation(animation2);
 
-        Button okButton = (Button) view.findViewById(R.id.ok);
+        Button okButton = view.findViewById(R.id.ok);
         okButton.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -278,9 +292,9 @@ public class DatePickerDialog extends DialogFragment implements
                 dismiss();
             }
         });
-        okButton.setTypeface(TypefaceHelper.get(activity,"yekanmedium"));
+        okButton.setTypeface(TypefaceHelper.get(activity,"yekanmedium.ttf"));
 
-        Button cancelButton = (Button) view.findViewById(R.id.cancel);
+        Button cancelButton = view.findViewById(R.id.cancel);
         cancelButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -288,7 +302,7 @@ public class DatePickerDialog extends DialogFragment implements
                 getDialog().cancel();
             }
         });
-        cancelButton.setTypeface(TypefaceHelper.get(activity,"yekanmedium"));
+        cancelButton.setTypeface(TypefaceHelper.get(activity,"yekanmedium.ttf"));
         cancelButton.setVisibility(isCancelable() ? View.VISIBLE : View.GONE);
 
         updateDisplay(false);

@@ -6,8 +6,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
-import ir.payebash.Moudle.CircleImageView;
-import ir.payebash.Moudle.TriangleLabelView;
+import ir.payebash.moudle.CircleImageView;
+import ir.payebash.moudle.TriangleLabelView;
 import ir.payebash.R;
 
 public class PayeHolder extends RecyclerView.ViewHolder {

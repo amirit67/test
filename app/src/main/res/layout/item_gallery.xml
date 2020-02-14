@@ -17,7 +17,7 @@
                 android:id="@+id/imgQueue"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                app:riv_corner_radius="10dp"
+                app:riv_corner_radius="8dp"
                 android:contentDescription="@string/app_name"
                 android:padding="1dp"
                 android:scaleType="centerCrop" />

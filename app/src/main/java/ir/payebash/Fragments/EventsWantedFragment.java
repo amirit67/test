@@ -8,14 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
-import org.json.JSONArray;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import ir.payebash.Adapters.PayeAdapter;
 import ir.payebash.Application;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
-import ir.payebash.Models.PayeItem;
 import ir.payebash.R;
 
 
@@ -71,7 +65,6 @@ public class EventsWantedFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && null != adapter) {
-            Application.myAds = 1;
             FavoriteOrRecent(getActivity());
         } else {
             // nothing to do
@@ -81,7 +74,6 @@ public class EventsWantedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Application.myAds = 1;
         FavoriteOrRecent(getActivity());
     }
 
@@ -102,7 +94,9 @@ public class EventsWantedFragment extends Fragment {
         rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
-        adapter = new PayeAdapter(getActivity(), params);
+        adapter = new PayeAdapter(getActivity(), eventModel -> {
+
+        });
         rv.setAdapter(adapter);
     }
 }

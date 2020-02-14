@@ -1,37 +1,24 @@
 package ir.payebash.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
-import ir.payebash.Activities.PostDetailsActivity;
 import ir.payebash.Application;
-import ir.payebash.Fragments.SearchFragment;
-import ir.payebash.Models.CustomGallery;
-import ir.payebash.Models.PayeItem;
+import ir.payebash.models.CustomGallery;
 import ir.payebash.R;
-import ir.payebash.utils.OverlapRecyclerViewDecoration;
 
 
 public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

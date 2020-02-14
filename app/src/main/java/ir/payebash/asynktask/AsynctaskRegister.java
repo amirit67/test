@@ -2,21 +2,15 @@ package ir.payebash.asynktask;
 
 
 import android.app.Activity;
-import android.content.Intent;
-import android.view.View;
 
 import javax.inject.Inject;
 
-import ir.payebash.Activities.MainActivity;
-import ir.payebash.Activities.Register2Activity;
 import ir.payebash.Application;
-import ir.payebash.Classes.HSH;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
-import ir.payebash.Models.UserItem;
-import ir.payebash.Models.user.LoginModel;
-import ir.payebash.R;
+import ir.payebash.models.UserItem;
+import ir.payebash.models.login.LoginModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -45,10 +39,10 @@ public class AsynctaskRegister {
             @Override
             public void onResponse(Call<LoginModel> call, retrofit2.Response<LoginModel> response) {
                 try {
-                    if (response.code() == 200) {
+                    if (response.body().getStatusCode() == 200) {
                         delegate.getResult(response.body());
                     } else
-                        delegate.getError(response.errorBody().string());
+                        delegate.getError(response.body().getMessage());
                 } catch (Exception e) {
                 }
             }

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import ir.payebash.Activities.MainActivity;
+import ir.payebash.activities.MainActivity;
 import ir.payebash.helpers.PrefsManager;
 import ir.payebash.helpers.User;
 import microsoft.aspnet.signalr.client.http.CookieCredentials;

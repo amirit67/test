@@ -1,23 +1,20 @@
 package ir.payebash.Fragments.user;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import ir.payebash.Adapters.RoomsAdapter;
 import ir.payebash.Adapters.userInfo.userInfoAdapter;
-import ir.payebash.Classes.ItemDecorationAlbumColumns;
+import ir.payebash.Interfaces.IWebservice;
+import ir.payebash.models.user.UserInfoModel;
 import ir.payebash.R;
-import ir.payebash.chat.ChatActivity;
-import ir.payebash.modelviewsChat.RoomViewModel;
+import ir.payebash.asynktask.user.AsynctaskGetUserInfo;
 
 public class UserInfoFragment extends Fragment {
 
@@ -28,22 +25,52 @@ public class UserInfoFragment extends Fragment {
     View rootView = null;
 
     public void DeclareElements() {
-        adapter = new userInfoAdapter(getActivity());
         rv = rootView.findViewById(R.id.rv_user_info);
         rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layoutManager);
-        rv.setAdapter(adapter);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        try {
+            if (rootView != null) {
+                ViewGroup parent = (ViewGroup) rootView.getParent();
+                if (parent != null) {
+                    parent.removeView(rootView);
+                }
+            }
+        } catch (Exception e) {
+        }
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_user_info, container, false);
             DeclareElements();
+            getUserInfo();
         }
         return rootView;
     }
+
+
+    private void getUserInfo() {
+
+        IWebservice.IUserInfo del = new IWebservice.IUserInfo() {
+            @Override
+            public void getResult(UserInfoModel userInfoModel) throws Exception {
+
+                ((IWebservice.IUserInfo) getParentFragment()).getResult(userInfoModel);
+
+                adapter = new userInfoAdapter(getActivity(), userInfoModel);
+                rv.setAdapter(adapter);
+            }
+
+            @Override
+            public void getError(String error) throws Exception {
+
+            }
+        };
+        new AsynctaskGetUserInfo(del).getData();
+    }
+
 }

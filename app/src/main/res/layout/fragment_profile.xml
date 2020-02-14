@@ -37,7 +37,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignRight="@+id/txt_name">
 
-                <ir.payebash.Moudle.CircleImageView
+                <ir.payebash.moudle.CircleImageView
                     android:id="@+id/img_profile"
                     android:layout_width="110dp"
                     android:layout_height="110dp"

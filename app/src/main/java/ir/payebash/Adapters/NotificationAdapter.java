@@ -12,10 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +25,8 @@ import ir.payebash.Classes.HSH;
 import ir.payebash.Fragments.NotificationFragment;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
-import ir.payebash.Models.CategoryItem;
-import ir.payebash.Models.NotifyData;
+import ir.payebash.models.CategoryItem;
+import ir.payebash.models.NotifyData;
 import ir.payebash.R;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -131,7 +128,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                             .setConfirmText("باشه")
                             .setConfirmClickListener(sDialog -> {
                                 dialog.dismiss();
-                                HSH.selectLocation(context, 1, NotificationFragment.btn_location);
+                               // HSH.selectLocation(context, 1, NotificationFragment.btn_location);
                             });
                     HSH.dialog(dialog);
                 }
