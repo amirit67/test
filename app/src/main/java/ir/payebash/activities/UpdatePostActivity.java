@@ -49,12 +49,12 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import ir.payebash.Adapters.GalleryAdapter;
+import ir.payebash.adapters.GalleryAdapter;
 import ir.payebash.Application;
-import ir.payebash.Classes.BaseActivity;
-import ir.payebash.Classes.HSH;
-import ir.payebash.Classes.NetworkUtils;
-import ir.payebash.Classes.PermissionHandler;
+import ir.payebash.classes.BaseActivity;
+import ir.payebash.classes.HSH;
+import ir.payebash.classes.NetworkUtils;
+import ir.payebash.classes.PermissionHandler;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.models.CustomGallery;
@@ -282,7 +282,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
     private void UploadData() {
         Map<String, RequestBody> params2 = new HashMap<>();
         for (String key : params.keySet())
-            params2.put(key, RequestBody.create(okhttp3.MultipartBody.FORM, HSH.toEnglishNumber(params.get(key))));
+            params2.put(key, RequestBody.create(MultipartBody.FORM, HSH.toEnglishNumber(params.get(key))));
 
         Call<ResponseBody> call2 =
                 ApiClient.getClient().create(ApiInterface.class).saveRequest(params2);

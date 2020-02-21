@@ -27,9 +27,9 @@ import javax.inject.Inject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ir.payebash.Application;
-import ir.payebash.Classes.HSH;
-import ir.payebash.Classes.NetworkUtils;
-import ir.payebash.DI.MainComponent;
+import ir.payebash.classes.HSH;
+import ir.payebash.classes.NetworkUtils;
+import ir.payebash.di.MainComponent;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.models.PayeItem;

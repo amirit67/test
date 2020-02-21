@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ir.payebash.Application;
-import ir.payebash.Classes.HSH;
-import ir.payebash.Classes.NetworkUtils;
+import ir.payebash.classes.HSH;
+import ir.payebash.classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.R;

@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import ir.payebash.activities.BaseActivity;
-import ir.payebash.Adapters.MessageAdapter;
-import ir.payebash.Classes.ItemDecorationAlbumColumns;
+import ir.payebash.adapters.MessageAdapter;
+import ir.payebash.classes.ItemDecorationAlbumColumns;
 import ir.payebash.R;
 import ir.payebash.helpers.Globals;
 import ir.payebash.helpers.User;

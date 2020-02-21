@@ -46,12 +46,12 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import ir.payebash.Adapters.GalleryAdapter;
+import ir.payebash.adapters.GalleryAdapter;
 import ir.payebash.Application;
-import ir.payebash.Classes.BaseActivity;
-import ir.payebash.Classes.HSH;
-import ir.payebash.Classes.NetworkUtils;
-import ir.payebash.Classes.PermissionHandler;
+import ir.payebash.classes.BaseActivity;
+import ir.payebash.classes.HSH;
+import ir.payebash.classes.NetworkUtils;
+import ir.payebash.classes.PermissionHandler;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.models.CustomGallery;
@@ -90,7 +90,7 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_register);
+        setContentView(R.layout.activity_post_register3);
         Application.getComponent().Inject(this);
         dialog = HSH.onProgress_Dialog(PostRegisterActivity.this, "لطفا منتظر بمانید ...");
         jCal = new Roozh();
@@ -168,7 +168,7 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
     private void UploadData() {
         Map<String, RequestBody> params2 = new HashMap<>();
         for (String key : DataParams.keySet())
-            params2.put(key, RequestBody.create(okhttp3.MultipartBody.FORM, HSH.toEnglishNumber(DataParams.get(key))));
+            params2.put(key, RequestBody.create(MultipartBody.FORM, HSH.toEnglishNumber(DataParams.get(key))));
 
         Call<ResponseBody> call2 =
                 ApiClient.getClient().create(ApiInterface.class).saveRequest(params2);
@@ -319,7 +319,7 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     Intent intent = new Intent(Intent.ACTION_PICK,
-                                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                     startActivityForResult
                                             (Intent.createChooser
                                                     (intent, HSH.setTypeFace(PostRegisterActivity.this, "انتخاب عکس")), 1);

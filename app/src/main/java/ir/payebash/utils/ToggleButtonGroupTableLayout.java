@@ -1,4 +1,4 @@
-package ir.payebash.utils.roundedimageview;
+package ir.payebash.utils;
 
 import android.content.Context;
 import android.util.AttributeSet;

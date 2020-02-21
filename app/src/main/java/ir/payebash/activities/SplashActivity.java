@@ -24,12 +24,17 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import ir.payebash.Application;
-import ir.payebash.Classes.HSH;
+import ir.payebash.classes.HSH;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.models.NotifItem;
 import ir.payebash.models.TkModel;
+import ir.payebash.models.event.EventModel;
 import ir.payebash.models.parsijoo.ParsijooItem;
 import ir.payebash.R;
 import ir.payebash.asynktask.AsynctaskGeoCoding;
@@ -69,11 +74,11 @@ public class SplashActivity extends AppCompatActivity {
                 Toast.makeText(this, "برای نمایش موقعیت روی نقشه نیاز دسترسی به GPS می باشد", Toast.LENGTH_LONG).show();
         });
 
-        svgView.start();
-        new Handler().postDelayed(() -> {
+        /*svgView.start();*/
+        /*new Handler().postDelayed(() -> {
             svgView2.start();
             svgView3.start();
-           /* new Handler().postDelayed(() -> {
+           *//* new Handler().postDelayed(() -> {
                 if (NetworkUtils.getConnectivity(SplashActivity.this) != false) {
                     HSH.onOpenPage(SplashActivity.this, MainActivity.class);
                     finish();
@@ -82,8 +87,10 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 }
                 //finish();
-            }, 1500);*/
-        }, 1500);
+            }, 1500);*//*
+        }, 1500);*/
+
+        GetServices();
     }
 
     public void no_connection_retry_click(View v) {
@@ -97,41 +104,51 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void GetServices() {
-        Call<List<NotifItem>> call =
+        Observable<List<NotifItem>> call =
                 retrofit.create(ApiInterface.class).GetServices();
-        call.enqueue(new Callback<List<NotifItem>>() {
-            @Override
-            public void onResponse(Call<List<NotifItem>> call, retrofit2.Response<List<NotifItem>> response) {
-                if (response.code() == 200)
-                    try {
-                        List<NotifItem> result = response.body();
-
-                        String query;
-                        for (int i = 0; i < result.size(); i++) {
-                            query = "replace INTO categories ";
-                            query += "(id,parentId,hasChild,name,description,imageUrl,addedFeild,isCommercial,sort,state)" +
-                                    "VALUES('" + result.get(i).getId() + "'," +
-                                    "'" + result.get(i).getParentId() + "'," +
-                                    "'" + result.get(i).getHasChild() + "'," +
-                                    "'" + result.get(i).getName() + "'," +
-                                    "'" + result.get(i).getDescription() + "'," +
-                                    "'" + result.get(i).getImageUrl() + "'," +
-                                    "'" + result.get(i).getAddedFeild() + "'," +
-                                    "'" + result.get(i).getIsCommercial() + "'," +
-                                    "'" + result.get(i).getSort() + "'," +
-                                    "'" + result.get(i).getState() + "')";
-                            Application.database.execSQL(query);
-                        }
-                    } catch (Exception e) {
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new io.reactivex.Observer<List<NotifItem>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
                     }
 
-            }
+                    @Override
+                    public void onNext(List<NotifItem> response) {
+                        try {
+                            try {
+                                List<NotifItem> result = response;
 
-            @Override
-            public void onFailure(Call<List<NotifItem>> call, Throwable t) {
+                                String query;
+                                for (int i = 0; i < result.size(); i++) {
+                                    query = "replace INTO categories ";
+                                    query += "(id,parentId,hasChild,name,description,imageUrl,addedFeild,isCommercial,sort,state)" +
+                                            "VALUES('" + result.get(i).getId() + "'," +
+                                            "'" + result.get(i).getParentId() + "'," +
+                                            "'" + result.get(i).getHasChild() + "'," +
+                                            "'" + result.get(i).getName() + "'," +
+                                            "'" + result.get(i).getDescription() + "'," +
+                                            "'" + result.get(i).getImageUrl() + "'," +
+                                            "'" + result.get(i).getAddedFeild() + "'," +
+                                            "'" + result.get(i).getIsCommercial() + "'," +
+                                            "'" + result.get(i).getSort() + "'," +
+                                            "'" + result.get(i).getState() + "')";
+                                    Application.database.execSQL(query);
+                                }
+                            } catch (Exception e) {
+                            }
+                        } catch (Exception e) {
+                        }
+                    }
 
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
     private void Transaction() {
@@ -190,7 +207,6 @@ public class SplashActivity extends AppCompatActivity {
                 public void getResult(TkModel token) throws Exception {
                     try {
                         HSH.editor(getString(R.string.Token), token.getAccessToken());
-                        GetServices();
                         Transaction();
                         if (svgView3.getState() == STATE_FINISHED) {
                             Transaction();
@@ -228,7 +244,6 @@ public class SplashActivity extends AppCompatActivity {
         } catch (Exception e) {
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

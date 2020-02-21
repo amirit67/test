@@ -6,21 +6,15 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-
-import java.io.File;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import dagger.android.AndroidInjector;
-import dagger.android.DaggerApplication;
-import ir.payebash.Classes.DataBaseHelper;
-import ir.payebash.DI.AppModule;
-import ir.payebash.DI.DaggerMainComponent;
-import ir.payebash.DI.ImageLoaderMoudle;
-import ir.payebash.DI.MainComponent;
-import ir.payebash.DI.NetModule;
+import ir.payebash.classes.DataBaseHelper;
+import ir.payebash.di.AppModule;
+import ir.payebash.di.DaggerMainComponent;
+import ir.payebash.di.ImageLoaderMoudle;
+import ir.payebash.di.MainComponent;
+import ir.payebash.di.NetModule;
 
 public class Application extends android.app.Application {
 

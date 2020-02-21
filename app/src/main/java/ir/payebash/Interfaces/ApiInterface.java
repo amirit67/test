@@ -47,6 +47,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -89,7 +90,7 @@ public interface ApiInterface {
     Call<List<StoryModel>> getStoryEvents(@Path("cityCode") String cityCode);
 
     @GET("api/getmyevents")
-    Call<List<EventModel>> getMyEvents();
+    Observable<Response<List<EventModel>>> getMyEvents();
 
     @GET("api/getUserInformation")
     Call<UserInfoModel> getUserInformation();
@@ -146,7 +147,7 @@ public interface ApiInterface {
     Call<ResponseBody> GetMyServices(@Path("UserId") String UserId);
 
     @GET("api/getServices/")
-    Call<List<NotifItem>> GetServices();
+    Observable<List<NotifItem>> GetServices();
 
     @POST("/fcm/send")
     Call<NotifyData.Message> sendMessage(@Body NotifyData.Message message);

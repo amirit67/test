@@ -47,10 +47,10 @@ import ir.moslem_deris.apps.zarinpal.PaymentBuilder;
 import ir.moslem_deris.apps.zarinpal.enums.ZarinPalError;
 import ir.moslem_deris.apps.zarinpal.listeners.OnPaymentListener;
 import ir.moslem_deris.apps.zarinpal.models.Payment;
-import ir.payebash.Adapters.BannerAdapter;
+import ir.payebash.adapters.BannerAdapter;
 import ir.payebash.Application;
-import ir.payebash.Classes.HSH;
-import ir.payebash.Classes.NetworkUtils;
+import ir.payebash.classes.HSH;
+import ir.payebash.classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
@@ -277,7 +277,7 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                     try {
                         imageLoader.displayImage(result.getEventOwner().getProfileImage(), imgProfile, options);
                         txtFullname.setText(result.getEventOwner().getUserName());
-                        tvWoman.setVisibility(result.isIsWoman()? View.VISIBLE : View.GONE);
+                        tvWoman.setVisibility(result.getIsWoman()? View.VISIBLE : View.GONE);
                         //clImmadiate.setVisibility(fFeed.IsImmediate() ? View.VISIBLE : View.GONE);
                         txtEventTitle.setText(fFeed.getTitle());
                         txtEventDate.setText(result.getCreateDate());

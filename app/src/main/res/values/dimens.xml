@@ -32,4 +32,9 @@
     <dimen name="dp320">320dp</dimen>
     <dimen name="dp400">400dp</dimen>
 
+
+    <dimen name="medium">16dp</dimen>
+    <dimen name="small">8dp</dimen>
+    <dimen name="very_small">4dp</dimen>
+
 </resources>

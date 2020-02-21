@@ -8,7 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ir.payebash.Application;
-import ir.payebash.Classes.NetworkUtils;
+import ir.payebash.classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.models.RequestItem;

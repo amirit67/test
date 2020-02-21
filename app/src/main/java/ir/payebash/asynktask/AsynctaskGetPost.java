@@ -2,15 +2,7 @@ package ir.payebash.asynktask;
 
 
 import android.app.Activity;
-import android.view.View;
 
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,14 +15,10 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import ir.payebash.Application;
-import ir.payebash.Classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.R;
 import ir.payebash.models.event.EventModel;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
 
 public class AsynctaskGetPost {
@@ -40,6 +28,7 @@ public class AsynctaskGetPost {
     IWebservice delegate;
     private Activity ac;
     private Map<String, String> params;
+    private ApiInterface call;
 
     public AsynctaskGetPost(Activity ac,
                             Map<String, String> params,
@@ -48,14 +37,12 @@ public class AsynctaskGetPost {
         this.params = params;
         this.delegate = delegate;
         Application.getComponent().Inject(this);
+        call = retrofit.create(ApiInterface.class);
     }
 
     public void getData() {
         params.put("", Application.preferences.getString("stateCode", ""));
-
-        Observable<List<EventModel>> call =
-                retrofit.create(ApiInterface.class).getPosts(params);
-        call.subscribeOn(Schedulers.io())
+        call.getPosts(params).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(events -> {
                     //Collections.sort(notes, (n1, n2) -> n2.getCity() - n1.getCity());
@@ -90,8 +77,6 @@ public class AsynctaskGetPost {
                     public void onComplete() {
                     }
                 });
-
-
     }
 }
 

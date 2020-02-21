@@ -26,9 +26,9 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import ir.payebash.Adapters.BannerAdapter;
+import ir.payebash.adapters.BannerAdapter;
 import ir.payebash.Application;
-import ir.payebash.Classes.HSH;
+import ir.payebash.classes.HSH;
 import ir.payebash.models.event.story.StoryModel;
 import ir.payebash.R;
 import ir.payebash.utils.RecyclerSnapHelper;

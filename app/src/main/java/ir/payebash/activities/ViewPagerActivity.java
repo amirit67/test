@@ -36,10 +36,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import ir.payebash.Classes.BaseFragmentActivity;
-import ir.payebash.Classes.HSH;
-import ir.payebash.Classes.PermissionHandler;
-import ir.payebash.Fragments.ViewPagerFragment;
+import ir.payebash.classes.BaseFragmentActivity;
+import ir.payebash.classes.HSH;
+import ir.payebash.classes.PermissionHandler;
+import ir.payebash.fragments.ViewPagerFragment;
 import ir.payebash.models.PayeItem;
 import ir.payebash.R;
 

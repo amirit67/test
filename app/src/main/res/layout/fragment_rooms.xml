@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layoutDirection="ltr"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ir.payebash.Fragments.HomeFragment">
+    tools:context="ir.payebash.fragments.HomeFragment">
 
    <!-- <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"

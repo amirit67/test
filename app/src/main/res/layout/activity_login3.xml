@@ -48,7 +48,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/txt_forgot_password"
+                android:id="@+id/txtForgotPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="48dp"
@@ -74,7 +74,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout8" />
 
             <TextView
-                android:id="@+id/txt_register"
+                android:id="@+id/txtRegister"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -97,7 +97,7 @@
                 app:srcCompat="@drawable/ic_user_login" />
 
             <TextView
-                android:id="@+id/bt_login"
+                android:id="@+id/btLogin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -112,7 +112,7 @@
                 android:text="ورود"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/txt_register"
+                app:layout_constraintBottom_toTopOf="@+id/txtRegister"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
@@ -125,10 +125,10 @@
                 android:layout_height="40dp"
                 android:indeterminateTint="@color/blue"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/bt_login"
-                app:layout_constraintEnd_toEndOf="@+id/bt_login"
-                app:layout_constraintStart_toStartOf="@+id/bt_login"
-                app:layout_constraintTop_toTopOf="@+id/bt_login"
+                app:layout_constraintBottom_toBottomOf="@+id/btLogin"
+                app:layout_constraintEnd_toEndOf="@+id/btLogin"
+                app:layout_constraintStart_toStartOf="@+id/btLogin"
+                app:layout_constraintTop_toTopOf="@+id/btLogin"
                 app:layout_constraintVertical_bias="1.0" />
 
             <LinearLayout
@@ -146,7 +146,7 @@
                 app:layout_constraintVertical_bias="0.57">
 
                 <EditText
-                    android:id="@+id/et_username"
+                    android:id="@+id/etUsername"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -189,7 +189,7 @@
                         app:passwordToggleTint="#1169EE">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_password"
+                            android:id="@+id/etPassword"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@android:color/transparent"

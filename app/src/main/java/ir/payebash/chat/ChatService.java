@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
-import ir.payebash.Adapters.MessageAdapter;
+import ir.payebash.adapters.MessageAdapter;
 import ir.payebash.Application;
 import ir.payebash.BuildConfig;
 import ir.payebash.R;
@@ -23,14 +23,11 @@ import ir.payebash.helpers.PrefsManager;
 import ir.payebash.helpers.User;
 import ir.payebash.modelviewsChat.MessageViewModel;
 import ir.payebash.modelviewsChat.RoomViewModel;
-import microsoft.aspnet.signalr.client.Action;
 import microsoft.aspnet.signalr.client.Platform;
 import microsoft.aspnet.signalr.client.SignalRFuture;
 import microsoft.aspnet.signalr.client.http.android.AndroidPlatformComponent;
 import microsoft.aspnet.signalr.client.hubs.HubConnection;
 import microsoft.aspnet.signalr.client.hubs.HubProxy;
-import microsoft.aspnet.signalr.client.hubs.SubscriptionHandler1;
-import microsoft.aspnet.signalr.client.hubs.SubscriptionHandler2;
 import microsoft.aspnet.signalr.client.transport.ClientTransport;
 import microsoft.aspnet.signalr.client.transport.ServerSentEventsTransport;
 

@@ -5,7 +5,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import ir.payebash.Classes.FormatHelper;
+import ir.payebash.classes.FormatHelper;
 
 public class CustomTextViewBold extends TextView {
     public static Typeface FONT_NAME;

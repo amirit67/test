@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import ir.payebash.Application;
-import ir.payebash.Classes.HSH;
+import ir.payebash.classes.HSH;
 import ir.payebash.R;
 
 

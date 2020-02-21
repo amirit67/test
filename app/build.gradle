@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -20,7 +22,7 @@ android {
             }
         }
 
-        buildConfigField "String", "BaseUrl", "\"http://192.168.1.200:1141\""
+        buildConfigField "String", "BaseUrl", "\"http://paye.ariaapps.ir\""
         buildConfigField "String", "getTkn", "\"Token\""
     }
 
@@ -118,6 +120,9 @@ dependencies {
     implementation project(path: ':persianmaterialdatetimepicker')
     implementation project(':signalr-client-sdk')
     implementation project(':signalr-client-sdk-android-release')
+    compile "androidx.core:core-ktx:+"
+    compile "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 apply plugin: 'com.google.gms.google-services'
@@ -132,4 +137,5 @@ allprojects {
 
 repositories {
     maven { url 'https://jitpack.io' }
+    mavenCentral()
 }

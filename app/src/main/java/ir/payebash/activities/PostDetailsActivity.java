@@ -56,13 +56,14 @@ import ir.moslem_deris.apps.zarinpal.PaymentBuilder;
 import ir.moslem_deris.apps.zarinpal.enums.ZarinPalError;
 import ir.moslem_deris.apps.zarinpal.listeners.OnPaymentListener;
 import ir.moslem_deris.apps.zarinpal.models.Payment;
-import ir.payebash.Adapters.BannerAdapter;
-import ir.payebash.Adapters.FollowersAdapter;
-import ir.payebash.Adapters.PersonAddedAdapter;
+import ir.payebash.Constants;
+import ir.payebash.adapters.BannerAdapter;
+import ir.payebash.adapters.FollowersAdapter;
+import ir.payebash.adapters.PersonAddedAdapter;
 import ir.payebash.Application;
-import ir.payebash.Classes.HSH;
-import ir.payebash.Classes.ItemDecorationAlbumColumns;
-import ir.payebash.Classes.NetworkUtils;
+import ir.payebash.classes.HSH;
+import ir.payebash.classes.ItemDecorationAlbumColumns;
+import ir.payebash.classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
@@ -101,7 +102,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     DisplayImageOptions options;
     @Inject
     Retrofit retrofit;
-    private ConstraintLayout eventOrganizer, clImmadiate;
+    private ConstraintLayout eventOrganizer;
     private CollapsingToolbarLayout i;
     //private LinearLayout ll_advertisdetails;
     private TextView /*btn_contactWays,*/ btnBeup;
@@ -141,7 +142,6 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         //btn_fav = findViewById(R.id.btn_fav);*/
         btnShare = findViewById(R.id.btn_share);
         eventOrganizer = findViewById(R.id.cl_event_organizer);
-        clImmadiate = findViewById(R.id.cl_immadiate);
         findViewById(R.id.img_back).setOnClickListener(this::onClick);
         //btn_contactWays = findViewById(R.id.btn_contactWays);
         /*btnSendComment = findViewById(R.id.btn_sendComment);
@@ -198,16 +198,16 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             String state = result.getRequestState().getState();
 
             btnBeup.setText(result.getRequestState().getTitleState());
-            btnBeup.setTextColor(state.equals("1") ? Color.WHITE
-                    : state.equals("2") ? Color.BLACK : Color.WHITE);
+            btnBeup.setTextColor(state.equals(Constants.WATING_STATE) ? Color.WHITE
+                    : state.equals(Constants.ACCEPT_STATE) ? Color.BLACK : Color.WHITE);
 
-            btnBeup.setBackgroundResource(state.equals("1") ? R.drawable.rounded_corners_solid_blue
-                    : state.equals("2") ? R.drawable.rounded_corners_strok_black :
-                    state.equals("3") ? R.drawable.rounded_corners_solid_red :
+            btnBeup.setBackgroundResource(state.equals(Constants.WATING_STATE) ? R.drawable.rounded_corners_solid_blue
+                    : state.equals(Constants.ACCEPT_STATE) ? R.drawable.rounded_corners_strok_black :
+                    state.equals(Constants.REJECT_STATE) ? R.drawable.rounded_corners_solid_red :
                             R.drawable.rounded_corners_solid_navyblue);
 
-            if (result.getRequestState().getState().equals("3") ||
-                    result.getRequestState().getState().equals("4"))
+            if (result.getRequestState().getState().equals(Constants.REJECT_STATE) ||
+                    result.getRequestState().getState().equals(Constants.CANCEL_STATE))
                 btnBeup.setEnabled(false);
             //findViewById(R.id.ll_comments).setVisibility(View.VISIBLE);
             //if (Commentfeed.size() == 0)
@@ -227,7 +227,6 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 dialog.show();
             });
         }
-
     }
 
     private void checkFollowers() {
@@ -263,13 +262,6 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
             Application.getComponent().Inject(this);
 
             DeclareElements();
-
-            /*mMapView = findViewById(R.id.map);
-            mMapView.onCreate(savedInstanceState);*/
-
-            /*float heightDp = (float) (getResources().getDisplayMetrics().heightPixels / 2);
-            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) appBar.getLayoutParams();
-            lp.height = (int) heightDp;*/
             AdvertisementDetails();
             try {
                 Cursor cr = Application.database.rawQuery("SELECT * from RecentVisit WHERE Id='" + fFeed.getPostId() + "'", null);
@@ -544,7 +536,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 retrofit.create(ApiInterface.class).SendingReportService(params);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 dialog_wait.dismiss();
                 HSH.showtoast(PostDetailsActivity.this, "گزارش شما با موفقیت ثبت گردید");
             }
@@ -566,7 +558,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse
-                    (Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    (Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.code() == 200) {
                     try {
                         DeletePost();
@@ -600,7 +592,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse
-                    (Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    (Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 if (response.code() == 200)
                     try {
@@ -704,7 +696,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse
-                    (Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    (Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.code() == 200) {
                     try {
                         String query = "Update RecentVisit set IsSuccessed = 'true' " +
@@ -746,7 +738,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
         call.enqueue(new Callback<RequestStateItem>() {
             @Override
             public void onResponse
-                    (Call<RequestStateItem> call, retrofit2.Response<RequestStateItem> response) {
+                    (Call<RequestStateItem> call, Response<RequestStateItem> response) {
                 findViewById(R.id.pb_update_applicant).setVisibility(View.GONE);
                 if (response.code() == 200) {
                     try {

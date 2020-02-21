@@ -8,13 +8,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import ir.payebash.Classes.HSH;
-import ir.payebash.Fragments.HomeFragment;
-import ir.payebash.Fragments.registerUser.RegisterActivity;
+import ir.payebash.classes.HSH;
+import ir.payebash.fragments.HomeFragment;
+import ir.payebash.fragments.registerUser.RegisterActivity;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.R;
 
-import static ir.payebash.Classes.HSH.openFragment;
+import static ir.payebash.classes.HSH.openFragment;
 
 public class GuestActivity extends AppCompatActivity implements IWebservice.TitleMain {
 
