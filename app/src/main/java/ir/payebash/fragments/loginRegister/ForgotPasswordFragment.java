@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.R;
-import ir.payebash.asynktask.forgotPassword.AsynctaskStep1;
+import ir.payebash.remote.forgotPassword.AsynctaskStep1;
 import ir.payebash.classes.HSH;
 import ir.payebash.models.BaseResponse;
 

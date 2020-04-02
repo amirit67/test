@@ -17,4 +17,17 @@
         <!--<item name="android:navigationBarColor">@color/colorPrimaryDark</item>-->
     </style>
 
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
+    </style>
+
+    <style name="Widget.AppTheme.BottomSheet" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:windowIsFloating">false</item> <!-- This is important -->
+        <item name="android:statusBarColor">@android:color/transparent</item> <!-- And then this will be needed -->
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:colorBackground">@color/white</item>
+    </style>
+
 </resources>

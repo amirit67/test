@@ -8,54 +8,43 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import androidx.databinding.DataBindingUtil.setContentView
-
 import com.google.android.gms.auth.GoogleAuthException
 import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.UserRecoverableAuthException
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.Scope
-
-import java.io.IOException
-import java.util.HashMap
-
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Predicate
 import ir.payebash.Application
+import ir.payebash.BuildConfig
+import ir.payebash.Interfaces.ApiClient
+import ir.payebash.Interfaces.ApiInterface
+import ir.payebash.Interfaces.IWebservice
+import ir.payebash.R
 import ir.payebash.classes.HSH
 import ir.payebash.classes.NetworkUtils
 import ir.payebash.fragments.loginRegister.ForgotPasswordFragment
 import ir.payebash.fragments.registerUser.Register2Activity
-import ir.payebash.Interfaces.ApiClient
-import ir.payebash.Interfaces.ApiInterface
-import ir.payebash.Interfaces.IWebservice
-import ir.payebash.models.TkModel
-import ir.payebash.models.googlePlus.PlusItem
-import ir.payebash.models.UserItem
-import ir.payebash.models.login.LoginModel
-import ir.payebash.R
-import ir.payebash.asynktask.AsynctaskLogin
-import ir.payebash.asynktask.GetTokenAsynkTask
 import ir.payebash.helpers.PrefsManager
 import ir.payebash.helpers.Utils
+import ir.payebash.models.TkModel
+import ir.payebash.models.UserItem
+import ir.payebash.models.googlePlus.PlusItem
+import ir.payebash.models.login.LoginModel
+import ir.payebash.remote.AsynctaskLogin
+import ir.payebash.remote.GetTokenAsynkTask
 import kotlinx.android.synthetic.main.activity_login3.*
-import microsoft.aspnet.signalr.client.http.CookieCredentials
 import retrofit2.Call
 import retrofit2.Callback
+import java.io.IOException
+import java.util.*
 
 
 class Login2Activity : BaseActivity(), View.OnClickListener, TextWatcher {
@@ -253,7 +242,7 @@ class Login2Activity : BaseActivity(), View.OnClickListener, TextWatcher {
                 HSH.editor(getString(R.string.mobile), params[getString(R.string.mobile)])
                 HSH.editor(getString(R.string.FullName), user!!.getdisplayName())
                 if (!user.getImage().getUrl().contains("https://"))
-                    HSH.editor(getString(R.string.ProfileImage), getString(R.string.url) + "Images/Users/" + user.getImage().getUrl() + ".jpg")
+                    HSH.editor(getString(R.string.ProfileImage), BuildConfig.BaseUrl + "/Images/Users/" + user.getImage().getUrl() + ".jpg")
                 else
                     HSH.editor(getString(R.string.ProfileImage), user.getImage().getUrl())
                 HSH.editor(getString(R.string.ServicesIds), "")
@@ -328,7 +317,7 @@ class Login2Activity : BaseActivity(), View.OnClickListener, TextWatcher {
                                 HSH.editor(getString(R.string.mobile), params[getString(R.string.mobile)])
                                 HSH.editor(getString(R.string.FullName), user.fullName)
                                 if (!user.profileImage.contains("https://"))
-                                    HSH.editor(getString(R.string.ProfileImage), getString(R.string.url) + "Images/Users/" + user.profileImage + ".jpg")
+                                    HSH.editor(getString(R.string.ProfileImage), BuildConfig.BaseUrl + "/Images/Users/" + user.profileImage + ".jpg")
                                 else
                                     HSH.editor(getString(R.string.ProfileImage), user.profileImage)
                                 HSH.editor(getString(R.string.ServicesIds), user.servicesIds.trim { it <= ' ' })

@@ -29,16 +29,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ir.payebash.Application;
-import ir.payebash.classes.HSH;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
+import ir.payebash.R;
+import ir.payebash.classes.HSH;
+import ir.payebash.fragments.place.SelectProvinceActivity;
+import ir.payebash.models.CityItem;
 import ir.payebash.models.NotifItem;
 import ir.payebash.models.TkModel;
-import ir.payebash.models.event.EventModel;
 import ir.payebash.models.parsijoo.ParsijooItem;
-import ir.payebash.R;
-import ir.payebash.asynktask.AsynctaskGeoCoding;
-import ir.payebash.asynktask.GetTokenAsynkTask;
+import ir.payebash.remote.AsynctaskGeoCoding;
+import ir.payebash.remote.GetTokenAsynkTask;
 import ir.payebash.utils.roundedimageview.GpsUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -66,19 +67,24 @@ public class SplashActivity extends AppCompatActivity {
         svgView2 = findViewById(R.id.line_svg_view);
         svgView3 = findViewById(R.id.font_svg_view);
 
-        new GpsUtils(this).turnGPSOn(isGPSEnable -> {
-            // turn on GPS
-            if (isGPSEnable)
-                ActivityCompat.requestPermissions(this, permissions, 123);
-            else
-                Toast.makeText(this, "برای نمایش موقعیت روی نقشه نیاز دسترسی به GPS می باشد", Toast.LENGTH_LONG).show();
-        });
+        if (!Application.preferences.getBoolean("isFirstRun", false))
+            new GpsUtils(this).turnGPSOn(isGPSEnable -> {
+                // turn on GPS
+                if (isGPSEnable)
+                    ActivityCompat.requestPermissions(this, permissions, 123);
+                else {//Toast.makeText(this, "برای نمایش موقعیت روی نقشه نیاز دسترسی به GPS می باشد", Toast.LENGTH_LONG).show();
+                    startActivityForResult(new Intent(this, SelectProvinceActivity.class), 100);
+                }
+            });
+        else
+            GetToken();
 
-        /*svgView.start();*/
-        /*new Handler().postDelayed(() -> {
+
+        svgView.start();
+        new Handler().postDelayed(() -> {
             svgView2.start();
             svgView3.start();
-           *//* new Handler().postDelayed(() -> {
+            /*new Handler().postDelayed(() -> {
                 if (NetworkUtils.getConnectivity(SplashActivity.this) != false) {
                     HSH.onOpenPage(SplashActivity.this, MainActivity.class);
                     finish();
@@ -87,8 +93,8 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 }
                 //finish();
-            }, 1500);*//*
-        }, 1500);*/
+            }, 1500);*/
+        }, 1500);
 
         GetServices();
     }
@@ -249,8 +255,21 @@ public class SplashActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 100) {
+            if (requestCode == 123) {
                 ActivityCompat.requestPermissions(this, permissions, 123);
+            }
+        }
+
+        if (requestCode == 100) {
+            if (resultCode == Activity.RESULT_OK) {
+                final Bundle bn = data.getExtras();
+                CityItem event = (CityItem) bn.getSerializable(getString(R.string.CategoryId));
+                Application.editor.putBoolean("isFirstRun", true);
+                Application.editor.apply();
+                Application.editor.commit();
+
+                HSH.editor("state", event.getCityNameFa());
+                HSH.editor("stateCode", event.getParentCode() + "");
             }
         }
     }
@@ -267,7 +286,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void MyLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        //if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        {
             {
                 FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
                 mFusedLocationClient.getLastLocation()
@@ -277,14 +297,13 @@ public class SplashActivity extends AppCompatActivity {
                                     double latitude = command.getLatitude();
                                     double longitude = command.getLongitude();
                                     GetProvince(String.valueOf(longitude), String.valueOf(latitude));
-
                                 } else
                                     MyLocation();
                             } catch (Exception e) {
+
                             }
                         })
                         .addOnFailureListener(this, e -> {
-
                         });
             }
         }
@@ -294,6 +313,8 @@ public class SplashActivity extends AppCompatActivity {
         new AsynctaskGeoCoding(new IWebservice.IAddress() {
             @Override
             public void getResult(ParsijooItem s) throws Exception {
+                //state البرز
+                //countryکرج
                 HSH.editor("state", s.getResult().getCounty());
                 Cursor cr = Application.database.rawQuery("SELECT * from cities WHERE Name like '%" + s.getResult().getState() + "%' and ParentCode is null", null);
                 if (cr.moveToFirst())

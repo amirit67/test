@@ -38,6 +38,7 @@ import javax.inject.Inject;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Application;
+import ir.payebash.BuildConfig;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
@@ -354,7 +355,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                     try {
                         String s = response.body().string();
                         if (!s.contains("https://"))
-                            HSH.editor(getString(R.string.ProfileImage), getString(R.string.url) + "Images/Users/" + s + ".jpg");
+                            HSH.editor(getString(R.string.ProfileImage), BuildConfig.BaseUrl + "/Images/Users/" + s + ".jpg");
                         else
                             HSH.editor(getString(R.string.ProfileImage), s);
                         HSH.showtoast(getActivity(), "با موفقیت بروزرسانی گردید");

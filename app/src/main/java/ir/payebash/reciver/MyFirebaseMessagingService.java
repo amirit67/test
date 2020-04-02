@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.Random;
 
 import androidx.core.app.NotificationCompat;
+
+import ir.payebash.BuildConfig;
 import ir.payebash.activities.MainActivity;
 import ir.payebash.activities.PostDetailsActivity;
 import ir.payebash.Application;
@@ -117,7 +119,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Random randomGenerator = new Random();
         final int randomInt = randomGenerator.nextInt(100);
 
-        Call<ResponseBody> call = ApiClient.getClient().create(ApiInterface.class).fetchImage(getString(R.string.url) + "Images/payebash/Thumbnail/" + data.get("imgUrl") + ".jpg");
+        Call<ResponseBody> call = ApiClient.getClient().create(ApiInterface.class).fetchImage(BuildConfig.BaseUrl + "/Images/payebash/Thumbnail/" + data.get("imgUrl") + ".jpg");
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

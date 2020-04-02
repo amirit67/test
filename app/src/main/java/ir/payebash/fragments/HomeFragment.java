@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import ir.payebash.Application;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.OnLoadMoreListener;
@@ -44,19 +50,19 @@ import ir.payebash.R;
 import ir.payebash.activities.PostDetailsActivity;
 import ir.payebash.adapters.PayeAdapter;
 import ir.payebash.adapters.StoryAdapter;
-import ir.payebash.asynktask.AsynctaskGetPost;
-import ir.payebash.asynktask.AsynctaskStoryEvents;
+import ir.payebash.remote.AsynctaskGetPost;
+import ir.payebash.remote.AsynctaskStoryEvents;
 import ir.payebash.classes.HSH;
 import ir.payebash.classes.ItemDecorationAlbumColumns;
 import ir.payebash.models.event.EventModel;
 import ir.payebash.models.event.story.StoryModel;
+import ir.payebash.remote.repository.RemoteRepository;
 
 import static android.app.Activity.RESULT_OK;
 import static ir.payebash.classes.HSH.openFragment;
 
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
-
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private ImageView imgRooms, imgContact;
@@ -82,6 +88,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private int visibleThreshold = 1, lastVisibleItem, totalItemCount = 0;
     private SearchFragment fragobj = null;
     private ContactsFragment contactsFragment;
+    private RemoteRepository remoteRepository ;
     private View rootView = null;
 
     @Override
@@ -90,17 +97,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
+            remoteRepository = new RemoteRepository();
             DeclareElements();
             ac = getActivity();
             getEvents();
             getStories();
 
             swipeContainer.setOnRefreshListener(() -> {
+                adapter.setCurrentDate();
                 Cnt = 0;
                 params.clear();
                 adapter.ClearFeed();
                 params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                getPost.getData();
+                getEvents();
                 etSearch.setHint(
                         String.format(getString(R.string.searchHint),
                                 "همه رویدادها",
@@ -114,7 +123,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 if (HSH.isNetworkConnection(getActivity())) {
                     Cnt++;
                     params.put(getString(R.string.Skip), String.valueOf(Cnt));
-                    getPost.getData();
+                    getEvents();
                 }
             });
 
@@ -144,28 +153,39 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     private void getEvents() {
-        params.put(getString(R.string.Skip), String.valueOf(Cnt));
-        m = new IWebservice() {
-            @Override
-            public void getResult(List<EventModel> list) throws Exception {
-                try {
-                    isLoading = false;
-                    swipeContainer.setRefreshing(false);
-                    pb.setVisibility(View.GONE);
-                    adapter.addItems(list);
-                } catch (Exception e) {
-                }
-            }
 
-            @Override
-            public void getError(String s) throws Exception {
-                HSH.showtoast(ac, "خطا در اتصال به اینترنت");
-                swipeContainer.setRefreshing(false);
-                pb.setVisibility(View.GONE);
-            }
-        };
-        getPost = new AsynctaskGetPost(getActivity(), params, m);
-        getPost.getData();
+        params.put(getString(R.string.Skip), String.valueOf(Cnt));
+        params.put("", Application.preferences.getString("stateCode", ""));
+
+        remoteRepository.getAllEvents(params)
+                .subscribeWith(new DisposableObserver<List<EventModel>>() {
+                    @Override
+                    public void onNext(List<EventModel> value) {
+                        try {
+                            isLoading = false;
+                            swipeContainer.setRefreshing(false);
+                            pb.setVisibility(View.GONE);
+                            adapter.addItems(value);
+
+                            if (layoutManager.getItemCount() > 19)
+                                layoutManager.scrollToPosition(layoutManager.findLastVisibleItemPosition() + 1);
+                        } catch (Exception e) {
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        Log.e("onError",throwable.toString());
+                        HSH.showtoast(ac, "خطا در اتصال به اینترنت");
+                        swipeContainer.setRefreshing(false);
+                        pb.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.e("onComplete","onComplete");
+                    }
+                });
 
     }
 
@@ -335,7 +355,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     adapter.ClearFeed();
                     swipeContainer.setRefreshing(true);
                     //TransToSearchFrag();
-                    getPost.getData();
+                    getEvents();
                     dialogFilter.dismiss();
                 });
                 btn_submit.setOnClickListener(v -> {

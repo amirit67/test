@@ -103,14 +103,11 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
         adapter.notifyDataSetChanged();
         adapter.addAll(map);
         gv.setAdapter(adapter);
-        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                map.remove(position);
-                adapter.notifyDataSetChanged();
-                adapter.addAll(map);
-                gv.setAdapter(adapter);
-            }
+        gv.setOnItemClickListener((parent, view, position, id) -> {
+            map.remove(position);
+            adapter.notifyDataSetChanged();
+            adapter.addAll(map);
+            gv.setAdapter(adapter);
         });
 
         btn_register.setOnClickListener(this);
@@ -170,7 +167,7 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
         for (String key : DataParams.keySet())
             params2.put(key, RequestBody.create(MultipartBody.FORM, HSH.toEnglishNumber(DataParams.get(key))));
 
-        Call<ResponseBody> call2 =
+        /*Call<ResponseBody> call2 =
                 ApiClient.getClient().create(ApiInterface.class).saveRequest(params2);
         call2.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -205,7 +202,7 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
                 } catch (Exception e) {
                 }
             }
-        });
+        });*/
     }
 
     private void DeclareElements() {
@@ -254,16 +251,16 @@ public class PostRegisterActivity extends BaseActivity implements View.OnClickLi
         switch (v.getId()) {
 
             case R.id.et_deadline: {
-                HSH.setTimeDate(PostRegisterActivity.this, et_deadline);
+                //HSH.setTimeDate(PostRegisterActivity.this, et_deadline);
                 break;
             }
             case R.id.btn_calender: {
-                HSH.setTimeDate(PostRegisterActivity.this, etTime_start);
+                //HSH.setTimeDate(PostRegisterActivity.this, etTime_start);
                 break;
             }
 
             case R.id.btn_calender2: {
-                HSH.setTimeDate(PostRegisterActivity.this, etTime_finish);
+                //HSH.setTimeDate(PostRegisterActivity.this, etTime_finish);
                 break;
             }
 

@@ -1,41 +1,35 @@
-package ir.payebash.asynktask;
+package ir.payebash.remote;
 
 
-import android.app.Activity;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import ir.payebash.Application;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
-import ir.payebash.models.login.LoginModel;
+import ir.payebash.models.event.story.StoryModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-public class AsynctaskLogin {
+public class AsynctaskStoryEvents {
 
     @Inject
     Retrofit retrofit;
-    IWebservice.ILogin delegate;
-    private Activity ac;
-    private LoginModel params;
+    IWebservice.IStoriesEvents delegate;
 
-    public AsynctaskLogin(Activity ac,
-                          LoginModel params,
-                          IWebservice.ILogin delegate) {
-        this.ac = ac;
-        this.params = params;
+    public AsynctaskStoryEvents(IWebservice.IStoriesEvents delegate) {
         this.delegate = delegate;
         Application.getComponent().Inject(this);
     }
 
     public void getData() {
-        Call<LoginModel> call =
-                retrofit.create(ApiInterface.class).userLogin(params);
-        call.enqueue(new Callback<LoginModel>() {
+        Call<List<StoryModel>> call =
+                retrofit.create(ApiInterface.class).getStoryEvents(Application.preferences.getString("stateCode", ""));
+        call.enqueue(new Callback<List<StoryModel>>() {
             @Override
-            public void onResponse(Call<LoginModel> call, retrofit2.Response<LoginModel> response) {
+            public void onResponse(Call<List<StoryModel>> call, retrofit2.Response<List<StoryModel>> response) {
                 try {
                     if (response.code() == 200) {
                         delegate.getResult(response.body());
@@ -46,7 +40,7 @@ public class AsynctaskLogin {
             }
 
             @Override
-            public void onFailure(Call<LoginModel> call, Throwable t) {
+            public void onFailure(Call<List<StoryModel>> call, Throwable t) {
                 try {
                     delegate.getError(t.getLocalizedMessage());
                 } catch (Exception e) {

@@ -32,6 +32,7 @@ import ir.payebash.models.NotifyData;
 import ir.payebash.models.RequestItem;
 import ir.payebash.models.contacts.ContactItem;
 import ir.payebash.models.contacts.FollowItem;
+import ir.payebash.models.event.RegisterEventResponseModel;
 import ir.payebash.models.event.detail.RequestStateItem;
 import ir.payebash.models.googlePlus.PlusItem;
 import ir.payebash.models.ProfileItem;
@@ -162,7 +163,7 @@ public interface ApiInterface {
 
     @Multipart
     @POST("api/insertpost")
-    Call<ResponseBody> saveRequest(@PartMap Map<String, RequestBody> params);
+    Observable<RegisterEventResponseModel> saveRequest(@Part MultipartBody.Part[] surveyImage, @PartMap Map<String, RequestBody> params);
 
     @GET("api/updateapp/")
     Call<ResponseBody> GetUpdate();

@@ -148,7 +148,7 @@ public class NetModule {
 
     @Provides
     @Singleton
-    ApiInterface provideApiInterface(@Named("BaseUrl")  Retrofit retrofit) {
+    ApiInterface provideApiInterface(/*@Named("BaseUrl")  */Retrofit retrofit) {
         return retrofit.create(ApiInterface.class);
     }
 

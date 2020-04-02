@@ -46,7 +46,7 @@ import ir.payebash.Interfaces.IWebservice.OnLoadMoreListener;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.R;
 import ir.payebash.adapters.PayeAdapter;
-import ir.payebash.asynktask.AsynctaskGetPost;
+import ir.payebash.remote.AsynctaskGetPost;
 import ir.payebash.classes.HSH;
 import ir.payebash.models.event.EventModel;
 

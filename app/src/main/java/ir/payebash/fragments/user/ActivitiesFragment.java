@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -26,49 +26,52 @@ import ir.payebash.Application;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.R;
+import ir.payebash.adapters.userInfo.userInfoAdapter;
+import ir.payebash.databinding.FragmentActivitiesBinding;
 import ir.payebash.models.user.UserInfoModel;
+import ir.payebash.remote.user.AsynctaskGetUserInfo;
 
 public class ActivitiesFragment extends Fragment implements IWebservice.IUserInfo {
 
 
     @Inject
     ImageLoader imageLoader;
-    private TextView tvUsername, tvName, tvAboutMe;
     public ImageView nav, imgProfile, imgAuth;
     public ViewPager pager;
     View rootView = null;
     private TabLayout tabHost;
     private RelativeLayout pb;
+    MyPayeFragment myPayeFragment = null;
+    UserInfoFragment userInfoFragment = null;
+    UserInfoFragment userInfoFragment2 = null;
+    FragmentActivitiesBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if (rootView == null) {
-            rootView = inflater.inflate(R.layout.fragment_activities, container, false);
-            DeclareElements();
+        binding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_activities, container, false);
+        rootView = binding.getRoot();
+        DeclareElements();
+        getUserInfo();
+        tabHost = rootView.findViewById(R.id.materialTabHost);
+        pager = rootView.findViewById(R.id.pager);
+        tabHost.setupWithViewPager(pager);
+        setupViewPager(pager);
+        pager.setCurrentItem(pager.getAdapter().getCount() - 1);
+        //tabHost.getTabAt(0).setIcon(R.drawable.ic_login_username);
+        //tabHost.getTabAt(1).setIcon(R.drawable.ic_history);
+        tabHost.getTabAt(0).setIcon(R.drawable.ic_date_event);
+        nav.setOnClickListener(v -> ((IWebservice.IBottomSheetNavigation) getActivity()).showBottomSheetNavigation());
 
-            tabHost = rootView.findViewById(R.id.materialTabHost);
-            pager = rootView.findViewById(R.id.pager);
-            tabHost.setupWithViewPager(pager);
-            setupViewPager(pager);
-            pager.setCurrentItem(2);
-            tabHost.getTabAt(0).setIcon(R.drawable.ic_login_username);
-            tabHost.getTabAt(1).setIcon(R.drawable.ic_history);
-            tabHost.getTabAt(2).setIcon(R.drawable.ic_date_event);
-            nav.setOnClickListener(v -> ((IWebservice.IBottomSheetNavigation) getActivity()).showBottomSheetNavigation());
-        }
         ((TitleMain) getContext()).FragName("رویدادها");
         return rootView;
     }
 
-
     private void DeclareElements() {
         Application.getComponent().Inject(this);
         pb = rootView.findViewById(R.id.progressBar);
-        tvUsername = rootView.findViewById(R.id.tv_username);
-        tvName = rootView.findViewById(R.id.tv_fullname);
-        tvAboutMe = rootView.findViewById(R.id.tv_about_me);
         nav = rootView.findViewById(R.id.img_navigation);
         imgProfile = rootView.findViewById(R.id.img_profile);
         imgAuth = rootView.findViewById(R.id.img_auth);
@@ -76,30 +79,47 @@ public class ActivitiesFragment extends Fragment implements IWebservice.IUserInf
 
     private void setupViewPager(ViewPager viewPager/*, UserInfoModel userInfoModel*/) {
 
-        UserInfoFragment userInfoFragment = new UserInfoFragment();
-        UserInfoFragment userInfoFragment2 = new UserInfoFragment();
+        if (myPayeFragment == null)
+            myPayeFragment = new MyPayeFragment();
+        if (userInfoFragment == null)
+            userInfoFragment = new UserInfoFragment();
+        if (userInfoFragment2 == null)
+            userInfoFragment2 = new UserInfoFragment();
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(userInfoFragment, /*"رویدادهای درخواستی من"*/"");
-        adapter.addFragment(new /*UncomingEventsFragment*/MyPayeFragment(), ""/*"رویدادهایی که شرکت کردم"*/);
+        adapter.addFragment( /*UncomingEventsFragment*/myPayeFragment, ""/*"رویدادهایی که شرکت کردم"*/);
         adapter.addFragment(userInfoFragment2, ""/*"رویدادهای من"*/);
         viewPager.setAdapter(adapter);
     }
 
     @Override
     public void getResult(UserInfoModel userInfoModel) throws Exception {
+        binding.setUserInfoItem(userInfoModel);
         imageLoader.displayImage(userInfoModel.getEventOwner().getProfileImage(), imgProfile);
-        tvUsername.setText(userInfoModel.getEventOwner().getUserName());
-        tvName.setText(userInfoModel.getEventOwner().getName());
-        tvAboutMe.setText(userInfoModel.getEventOwner().getAboutMe());
-        imgAuth.setVisibility(userInfoModel.getEventOwner().getVerifiedAccount() ? View.VISIBLE : View.GONE);
         pb.setVisibility(View.GONE);
     }
 
     @Override
     public void getError(String error) throws Exception {
-
     }
 
+    private void getUserInfo() {
+
+        IWebservice.IUserInfo del = new IWebservice.IUserInfo() {
+            @Override
+            public void getResult(UserInfoModel userInfoModel) throws Exception {
+                binding.setUserInfoItem(userInfoModel);
+                imageLoader.displayImage(userInfoModel.getEventOwner().getProfileImage(), imgProfile);
+                pb.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void getError(String error) throws Exception {
+
+            }
+        };
+        new AsynctaskGetUserInfo(del).getData();
+    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

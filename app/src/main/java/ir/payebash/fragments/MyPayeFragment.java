@@ -24,7 +24,7 @@ import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.R;
 import ir.payebash.activities.PostDetailsActivity;
 import ir.payebash.adapters.PayeAdapter;
-import ir.payebash.asynktask.user.AsynctaskGetMyEvents;
+import ir.payebash.remote.user.AsynctaskGetMyEvents;
 import ir.payebash.classes.HSH;
 import ir.payebash.classes.ItemDecorationAlbumColumns;
 import ir.payebash.models.event.EventModel;

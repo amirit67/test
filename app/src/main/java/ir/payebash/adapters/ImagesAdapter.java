@@ -58,12 +58,17 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 Holder = (ImageHolder) holder;
                 Holder.setIsRecyclable(false);
 
-                if (i == 0)
+                if (i == 0) {
                     Holder.imgQueue.setBackgroundResource(R.drawable.ic_add_image);
+                    Holder.imgQueueMultiSelected.setVisibility(View.GONE);
+                }
                 else if (feed.size() > (i - 1))
                     imageLoader.displayImage("file://" + feed.get(i - 1).sdcardPath, ((ImageHolder) holder).imgQueue, options);
-                else
+                else{
                     Holder.imgQueue.setBackgroundResource(R.drawable.ic_default_image);
+                    Holder.imgQueueMultiSelected.setVisibility(View.GONE);
+                }
+
 
                 holder.itemView.setOnClickListener(v ->
                         iGetImage.getImage(i));
@@ -92,6 +97,9 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         void getImage(int position);
     }
 
+    public List<CustomGallery> getData() {
+        return feed;
+    }
 
     public class ImageHolder extends RecyclerView.ViewHolder {
         ImageView imgQueue;

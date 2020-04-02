@@ -20,7 +20,7 @@ import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.R;
 import ir.payebash.adapters.RequestAdapter;
-import ir.payebash.asynktask.AsynctaskRequestToJoin;
+import ir.payebash.remote.AsynctaskRequestToJoin;
 import ir.payebash.classes.HSH;
 import ir.payebash.classes.ItemDecorationAlbumColumns;
 import ir.payebash.models.RequestItem;
@@ -37,6 +37,18 @@ public class RequestFragment extends Fragment implements View.OnClickListener {
     private Activity ac;
     private LinearLayoutManager layoutManager;
     private View rootView = null;
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (rootView != null) {
+            ViewGroup parent = (ViewGroup) rootView.getParent();
+            if (parent != null) {
+                parent.removeView(rootView);
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

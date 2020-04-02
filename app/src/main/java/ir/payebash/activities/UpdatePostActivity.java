@@ -49,6 +49,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import ir.payebash.BuildConfig;
 import ir.payebash.adapters.GalleryAdapter;
 import ir.payebash.Application;
 import ir.payebash.classes.BaseActivity;
@@ -196,7 +197,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
                             for (int i = 0; i < Images.length; i++) {
                                 if (!Images[i].trim().equals("")) {
                                     CustomGallery item = new CustomGallery();
-                                    item.sdcardPath = getString(R.string.url) + "Images/payebash/Thumbnail/" + Images[i] + ".jpg";
+                                    item.sdcardPath = BuildConfig.BaseUrl + "/Images/payebash/Thumbnail/" + Images[i] + ".jpg";
                                     map.add(item);
                                 }
                             }
@@ -284,7 +285,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
         for (String key : params.keySet())
             params2.put(key, RequestBody.create(MultipartBody.FORM, HSH.toEnglishNumber(params.get(key))));
 
-        Call<ResponseBody> call2 =
+        /*Call<ResponseBody> call2 =
                 ApiClient.getClient().create(ApiInterface.class).saveRequest(params2);
         call2.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -315,7 +316,7 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
                 } catch (Exception e) {
                 }
             }
-        });
+        });*/
     }
 
     @Override
@@ -369,16 +370,16 @@ public class UpdatePostActivity extends BaseActivity implements View.OnClickList
         switch (v.getId()) {
 
             case R.id.et_deadline: {
-                HSH.setTimeDate(UpdatePostActivity.this, etDeadline);
+                HSH.setTimeDate(UpdatePostActivity.this, etDeadline, "");
                 break;
             }
             case R.id.btn_calender: {
-                HSH.setTimeDate(UpdatePostActivity.this, etTimeStart);
+                HSH.setTimeDate(UpdatePostActivity.this, etTimeStart, "");
                 break;
             }
 
             case R.id.btn_calender2: {
-                HSH.setTimeDate(UpdatePostActivity.this, etTimeFinish);
+                HSH.setTimeDate(UpdatePostActivity.this, etTimeFinish, "");
                 break;
             }
 

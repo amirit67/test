@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.R;
 import ir.payebash.activities.MainActivity;
-import ir.payebash.asynktask.AsynctaskRegister;
+import ir.payebash.remote.AsynctaskRegister;
 import ir.payebash.classes.HSH;
 import ir.payebash.classes.NetworkUtils;
 import ir.payebash.models.UserItem;

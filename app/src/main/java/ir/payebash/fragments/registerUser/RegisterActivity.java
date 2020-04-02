@@ -48,11 +48,12 @@ import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.payebash.Application;
+import ir.payebash.BuildConfig;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.R;
 import ir.payebash.activities.BaseActivity;
-import ir.payebash.asynktask.AsynctaskCheckPhoneNumber;
+import ir.payebash.remote.AsynctaskCheckPhoneNumber;
 import ir.payebash.classes.HSH;
 import ir.payebash.classes.NetworkUtils;
 import ir.payebash.models.googlePlus.PlusItem;
@@ -492,7 +493,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 HSH.editor(getString(R.string.mobile), params.get(getString(R.string.mobile)));
                 HSH.editor(getString(R.string.FullName), user.getdisplayName());
                 if (!user.getImage().getUrl().contains("https://"))
-                    HSH.editor(getString(R.string.ProfileImage), getString(R.string.url) + "Images/Users/" + user.getImage().getUrl() + ".jpg");
+                    HSH.editor(getString(R.string.ProfileImage), BuildConfig.BaseUrl + "/Images/Users/" + user.getImage().getUrl() + ".jpg");
                 else
                     HSH.editor(getString(R.string.ProfileImage), user.getImage().getUrl());
                 HSH.editor(getString(R.string.ServicesIds), "");

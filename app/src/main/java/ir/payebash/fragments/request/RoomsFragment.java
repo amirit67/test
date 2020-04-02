@@ -44,6 +44,18 @@ public class RoomsFragment extends Fragment {
     private Context context;
     private View rootView = null;
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (rootView != null) {
+            ViewGroup parent = (ViewGroup) rootView.getParent();
+            if (parent != null) {
+                parent.removeView(rootView);
+            }
+        }
+    }
+
     @Override
     public void onStart() {
         super.onStart();

@@ -1,37 +1,41 @@
-package ir.payebash.asynktask.forgotPassword;
+package ir.payebash.remote;
 
+
+import android.app.Activity;
 
 import javax.inject.Inject;
 
 import ir.payebash.Application;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
-import ir.payebash.models.BaseResponse;
-import ir.payebash.models.ForgotPasswordModel;
+import ir.payebash.models.login.LoginModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-public class AsynctaskStep3 {
+public class AsynctaskLogin {
 
     @Inject
     Retrofit retrofit;
-    IWebservice.IForgotPassword delegate;
-    private ForgotPasswordModel params;
+    IWebservice.ILogin delegate;
+    private Activity ac;
+    private LoginModel params;
 
-    public AsynctaskStep3(ForgotPasswordModel params,
-                          IWebservice.IForgotPassword delegate) {
+    public AsynctaskLogin(Activity ac,
+                          LoginModel params,
+                          IWebservice.ILogin delegate) {
+        this.ac = ac;
         this.params = params;
         this.delegate = delegate;
         Application.getComponent().Inject(this);
     }
 
     public void getData() {
-        Call<BaseResponse> call =
-                retrofit.create(ApiInterface.class).forgotPassword3(params);
-        call.enqueue(new Callback<BaseResponse>() {
+        Call<LoginModel> call =
+                retrofit.create(ApiInterface.class).userLogin(params);
+        call.enqueue(new Callback<LoginModel>() {
             @Override
-            public void onResponse(Call<BaseResponse> call, retrofit2.Response<BaseResponse> response) {
+            public void onResponse(Call<LoginModel> call, retrofit2.Response<LoginModel> response) {
                 try {
                     if (response.code() == 200) {
                         delegate.getResult(response.body());
@@ -42,7 +46,7 @@ public class AsynctaskStep3 {
             }
 
             @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
+            public void onFailure(Call<LoginModel> call, Throwable t) {
                 try {
                     delegate.getError(t.getLocalizedMessage());
                 } catch (Exception e) {

@@ -6,17 +6,17 @@
     android:layoutDirection="ltr">
 
     <FrameLayout
-        android:layout_width="75dp"
-        android:layout_height="75dp">
+        android:layout_width="95dp"
+        android:layout_height="95dp">
 
         <FrameLayout
-            android:layout_width="75dp"
-            android:layout_height="75dp">
+            android:layout_width="95dp"
+            android:layout_height="95dp">
 
             <ir.payebash.utils.roundedimageview.RoundedImageView
                 android:id="@+id/imgQueue"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
                 app:riv_corner_radius="8dp"
                 android:contentDescription="@string/app_name"
                 android:padding="1dp"
@@ -31,7 +31,8 @@
             android:contentDescription="@string/app_name"
             android:gravity="center"
             android:scaleType="center"
-            android:visibility="gone" />
+            android:layout_margin="@dimen/dp6"
+            app:srcCompat="@drawable/ic_remove"/>
     </FrameLayout>
 
 </RelativeLayout>

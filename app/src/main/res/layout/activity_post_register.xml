@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <!--<import type="java.lang.String"/>
+        <import type="ir.payebash.classes.HSH"/>-->
 
         <variable
             name="itemEventRegister"
             type="ir.payebash.models.event.detail.EventDetailsModel" />
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:custom="http://schemas.android.com/tools"
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,9 +29,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/rounded_corners_top"
                 android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:background="@drawable/rounded_corners_top">
+                android:focusableInTouchMode="true">
 
 
                 <TextView
@@ -58,7 +59,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView47" />
 
                 <ImageView
-                    android:id="@+id/imageView12"
+                    android:id="@+id/img_back"
                     android:layout_width="18dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="24dp"
@@ -68,7 +69,7 @@
                     app:srcCompat="@drawable/ic_chevron_left_black" />
 
                 <EditText
-                    android:id="@+id/editText7"
+                    android:id="@+id/et_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -76,13 +77,13 @@
                     android:fontFamily="@font/yekanblack"
                     android:gravity="center"
                     android:hint="نام رویداد"
-                    android:text="@={itemEventRegister.title}"
                     android:maxLength="50"
                     android:maxLines="2"
                     android:paddingLeft="24dp"
                     android:paddingTop="@dimen/dp20"
                     android:paddingRight="24dp"
                     android:paddingBottom="@dimen/dp48"
+                    android:text="@={itemEventRegister.title}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -99,9 +100,9 @@
                     android:text="فقط کافیه اینجارو لمس کنی"
                     android:textColor="#d0d0d0"
                     android:textSize="@dimen/sp14"
-                    app:layout_constraintBottom_toBottomOf="@+id/editText7"
+                    app:layout_constraintBottom_toBottomOf="@+id/et_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/editText7" />
+                    app:layout_constraintStart_toStartOf="@+id/et_title" />
 
                 <View
                     android:id="@+id/view3"
@@ -110,38 +111,41 @@
                     android:background="#ececec"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editText7" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_title" />
 
                 <TextView
                     android:id="@+id/textView42"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="24dp"
                     android:text="توضیحات"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp14"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view3" />
 
                 <EditText
-                    android:id="@+id/editText8"
+                    android:id="@+id/et_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@color/white"
+                    android:padding="@dimen/dp16"
                     android:gravity="top|right"
                     android:hint="اینجارو لمس کنید"
-                    android:text="@={itemEventRegister.description}"
-                    android:lineSpacingMultiplier="1.2"
-                    android:minHeight="120dp"
-                    android:maxLines="10"
                     android:inputType="textMultiLine"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLines="8"
+                    android:minHeight="120dp"
+                    android:background="@drawable/press_button_stroke_gray"
+                    android:text="@={itemEventRegister.description}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp14"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView42" />
 
@@ -153,17 +157,18 @@
                     android:background="#ececec"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editText8" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_description" />
 
                 <TextView
                     android:id="@+id/textView43"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="24dp"
                     android:text="تصاویر رویداد"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp14"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view5" />
 
@@ -196,7 +201,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView43" />
 
-                <TextView
+                <View
                     android:id="@+id/textView36"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
@@ -210,83 +215,99 @@
                     android:id="@+id/textView41"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="16dp"
                     android:text="چند نفر بیان ؟"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp14"
-                    app:layout_constraintBottom_toTopOf="@+id/textView44"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
                 <EditText
-                    android:id="@+id/editText9"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/et_number_people"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:background="@color/white"
-                    android:hint="مثال 5 نفر"
-                    android:text="@={itemEventRegister.numberFollowers}"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/press_button_stroke_gray"
+                    android:drawableLeft="@drawable/ic_comunity"
+                    android:padding="@dimen/dp16"
+                    android:gravity="center"
+                    android:hint="مثال : 5 نفر"
                     android:maxLength="10"
+                    android:maxLines="1"
+                    android:text="@={itemEventRegister.numberFollowers}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp16"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView41"
-                    app:layout_constraintEnd_toStartOf="@+id/textView41"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintEnd_toEndOf="@+id/textView41"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView41" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
-                <TextView
+                <View
                     android:id="@+id/textView44"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:background="#ececec"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView41" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_number_people" />
 
                 <TextView
                     android:id="@+id/textView45"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="32dp"
                     android:layout_marginEnd="24dp"
                     android:text="ویژه بانوان"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp14"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView55" />
-
-                <TextView
-                    android:id="@+id/textView46"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="16dp"
-                    android:background="#ececec"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView45" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_cost" />
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/et_cost"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/press_button_stroke_gray"
+                    android:drawableLeft="@drawable/ic_date_event"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:hint="مبلغ را وارد نمایید"
+                    android:padding="@dimen/dp16"
+                    android:gravity="center"
+                    android:text="@={itemEventRegister.cost}"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ts_cost" />
+
+                <TextView
+                    android:id="@+id/tv_time_to_join"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/press_button_stroke_gray"
                     android:drawableLeft="@drawable/ic_date_event"
                     android:focusable="false"
-                    android:hint="تاریخ مهلت"
+                    android:gravity="center"
+                    android:hint="تا کی وقت داریم ؟"
                     android:padding="@dimen/dp16"
+                    android:text="@={itemEventRegister.timeToJoin}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp14"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toEndOf="@+id/editText5"
-                    app:layout_constraintTop_toBottomOf="@+id/textView44" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView70" />
 
                 <EditText
                     android:id="@+id/editText5"
@@ -301,46 +322,67 @@
                     android:padding="@dimen/dp16"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp14"
-                    app:layout_constraintBottom_toBottomOf="@+id/editText4"
-                    app:layout_constraintEnd_toStartOf="@+id/editText4"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_time_to_join"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_time_to_join"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/editText4" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_time_to_join" />
 
                 <ir.payebash.utils.toggleSwitch.ToggleSwitch
-                    android:id="@+id/textView55"
+                    android:id="@+id/ts_cost"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="24dp"
+                    app:borderRadius="5dp"
+                    app:borderWidth="1dp"
+                    app:checkedBackgroundColor="@color/black"
+                    app:checkedTextColor="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView56"
-                    custom:textToggleLeft="رایگان"
-                    custom:textToggleRight="پولی" />
+                    app:separatorVisible="false"
+                    app:textToggleLeft="پولی"
+                    app:textToggleRight="رایگان"
+                    app:textToggleCenter="توافقی"
+                    app:toggleHeight="50dp"
+                    app:uncheckedBackgroundColor="@color/white"
+                    app:uncheckedTextColor="@color/black" />
+
+
+                <View
+                    android:id="@+id/textView46"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="24dp"
+                    android:background="#ececec"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_time_to_join" />
 
                 <TextView
                     android:id="@+id/textView56"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="16dp"
                     android:text="هزینه"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp14"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editText4" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView46" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="32dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView46">
+                    app:layout_constraintTop_toBottomOf="@+id/textView45">
 
                     <TextView
                         android:id="@+id/bt_register"
@@ -350,7 +392,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="24dp"
                         android:layout_marginBottom="16dp"
-                        android:background="@drawable/rounded_corners_solid_gray"
+                        android:background="@drawable/rounded_corners_solid_blue"
                         android:gravity="center"
                         android:padding="12dp"
                         android:text="ثبت رویداد"
@@ -361,6 +403,19 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textView70"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="مهلت پیوستن"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp14"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView44" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

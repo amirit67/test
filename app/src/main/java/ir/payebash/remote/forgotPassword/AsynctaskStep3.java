@@ -1,4 +1,4 @@
-package ir.payebash.asynktask.forgotPassword;
+package ir.payebash.remote.forgotPassword;
 
 
 import javax.inject.Inject;
@@ -12,14 +12,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-public class AsynctaskStep2 {
+public class AsynctaskStep3 {
 
     @Inject
     Retrofit retrofit;
     IWebservice.IForgotPassword delegate;
     private ForgotPasswordModel params;
 
-    public AsynctaskStep2(ForgotPasswordModel params,
+    public AsynctaskStep3(ForgotPasswordModel params,
                           IWebservice.IForgotPassword delegate) {
         this.params = params;
         this.delegate = delegate;
@@ -28,7 +28,7 @@ public class AsynctaskStep2 {
 
     public void getData() {
         Call<BaseResponse> call =
-                retrofit.create(ApiInterface.class).forgotPassword2(params);
+                retrofit.create(ApiInterface.class).forgotPassword3(params);
         call.enqueue(new Callback<BaseResponse>() {
             @Override
             public void onResponse(Call<BaseResponse> call, retrofit2.Response<BaseResponse> response) {

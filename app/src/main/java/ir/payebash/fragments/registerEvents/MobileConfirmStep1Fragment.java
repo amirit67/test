@@ -12,16 +12,16 @@ import androidx.fragment.app.Fragment;
 
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.R;
-import ir.payebash.asynktask.forgotPassword.AsynctaskStep1;
 import ir.payebash.classes.HSH;
 import ir.payebash.fragments.loginRegister.ValidationCodeFragment;
 import ir.payebash.models.BaseResponse;
-import ir.payebash.models.event.detail.EventDetailsModel;
+import ir.payebash.remote.forgotPassword.AsynctaskStep1;
 
 public class MobileConfirmStep1Fragment extends Fragment implements View.OnClickListener {
 
     private TextView btSend;
     private EditText etMobile;
+    public static MobileConfirmStep1Fragment fragment = null;
     private View rootView = null;
 
     public void initViews() {
@@ -30,8 +30,9 @@ public class MobileConfirmStep1Fragment extends Fragment implements View.OnClick
         etMobile = rootView.findViewById(R.id.et_mobile);
     }
 
-    public static MobileConfirmStep1Fragment newInstance(EventDetailsModel eventDetailsModel) {
-        MobileConfirmStep1Fragment fragment = new MobileConfirmStep1Fragment();
+    public static MobileConfirmStep1Fragment newInstance() {
+        if (fragment == null)
+            fragment = new MobileConfirmStep1Fragment();
       /*  Bundle args = new Bundle();
         args.putString(ARG_PARAM1, categoryId);
         args.putString(ARG_PARAM2, categoryTitle);

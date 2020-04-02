@@ -56,17 +56,19 @@ import ir.moslem_deris.apps.zarinpal.PaymentBuilder;
 import ir.moslem_deris.apps.zarinpal.enums.ZarinPalError;
 import ir.moslem_deris.apps.zarinpal.listeners.OnPaymentListener;
 import ir.moslem_deris.apps.zarinpal.models.Payment;
-import ir.payebash.Constants;
-import ir.payebash.adapters.BannerAdapter;
-import ir.payebash.adapters.FollowersAdapter;
-import ir.payebash.adapters.PersonAddedAdapter;
 import ir.payebash.Application;
-import ir.payebash.classes.HSH;
-import ir.payebash.classes.ItemDecorationAlbumColumns;
-import ir.payebash.classes.NetworkUtils;
+import ir.payebash.BuildConfig;
+import ir.payebash.Constants;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
+import ir.payebash.R;
+import ir.payebash.adapters.BannerAdapter;
+import ir.payebash.adapters.FollowersAdapter;
+import ir.payebash.adapters.PersonAddedAdapter;
+import ir.payebash.classes.HSH;
+import ir.payebash.classes.ItemDecorationAlbumColumns;
+import ir.payebash.classes.NetworkUtils;
 import ir.payebash.databinding.ActivityEventDetails2Binding;
 import ir.payebash.models.InputPostDetailsParamsModel;
 import ir.payebash.models.NotifyData;
@@ -75,9 +77,9 @@ import ir.payebash.models.PayeItem;
 import ir.payebash.models.event.EventModel;
 import ir.payebash.models.event.detail.EventDetailsModel;
 import ir.payebash.models.event.detail.RequestStateItem;
-import ir.payebash.R;
-import ir.payebash.asynktask.AsynctaskEventDetails;
+import ir.payebash.remote.AsynctaskEventDetails;
 import ir.payebash.utils.RecyclerSnapHelper;
+import ir.payebash.utils.hashtaghelper.HashTagHelper;
 import ir.payebash.utils.reviewratings.BarLabels;
 import ir.payebash.utils.reviewratings.RatingReviews;
 import okhttp3.ResponseBody;
@@ -374,6 +376,11 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     checkUserState();
                     checkFollowers();
                     getMap();
+                    HashTagHelper mTextHashTagHelper = HashTagHelper.Creator.create(getResources().getColor(R.color.colorPrimary), hashTag -> {
+
+                    });
+                    mTextHashTagHelper.handle(findViewById(R.id.txt_description));
+                    //List<String> allHashTags = mTextHashTagHelper.getAllHashTags(true);
                     try {
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
                         txtTimeToJoin.setText(HSH.printDifference(new Date(),
@@ -396,8 +403,8 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                         ScrollingPagerIndicator indicator = findViewById(R.id.indicator);
                         for (int i = 0; i < temp.length; i++) {
 
-                            temp[i] = (getString(R.string.image) + temp[i] + ".jpg");
-                            banners.add(getString(R.string.image) + temp[i] + ".jpg");
+                            temp[i] = BuildConfig.BaseUrl + (getString(R.string.image) + temp[i] + ".jpg");
+                            banners.add(BuildConfig.BaseUrl + getString(R.string.image) + temp[i] + ".jpg");
                             //CardSliderViewPager cardSliderViewPager = findViewById(R.id.pager);
                             //cardSliderViewPager.setAdapter(new BannerAdapter(banners, imageLoader));
                         }
@@ -415,7 +422,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     } catch (Exception e) {
                     }
                     ///////////////////////////////////////////////////////////////////////////
-                    if (!fFeed.getTitle().contains("لغو")) {
+                    if (result.getRequestState().getState().equals(Constants.ACCEPT_STATE)) {
                         try {
                             Cursor cr = Application.database.rawQuery("SELECT Id from RecentVisit WHERE Id='" + fFeed.getPostId() + "'", null);
                             if (cr.getCount() == 0) {
@@ -912,7 +919,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.btn_share:
                 try {
-                    String shareBody = getString(R.string.url) + "getwebpostdetails/index/" + fFeed.getPostId();
+                    String shareBody = BuildConfig.BaseUrl + "/getwebpostdetails/index/" + fFeed.getPostId();
                     Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                     sharingIntent.setType("text/plain");
                     sharingIntent.putExtra(Intent.EXTRA_SUBJECT, fFeed.getTitle() + "\n" + "را در پایه باش ببین");

@@ -47,6 +47,7 @@ import ir.moslem_deris.apps.zarinpal.PaymentBuilder;
 import ir.moslem_deris.apps.zarinpal.enums.ZarinPalError;
 import ir.moslem_deris.apps.zarinpal.listeners.OnPaymentListener;
 import ir.moslem_deris.apps.zarinpal.models.Payment;
+import ir.payebash.BuildConfig;
 import ir.payebash.adapters.BannerAdapter;
 import ir.payebash.Application;
 import ir.payebash.classes.HSH;
@@ -677,7 +678,7 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
 
             case R.id.btn_share:
                 try {
-                    String shareBody = getString(R.string.url) + "getwebpostdetails/index/" + fFeed.getPostId();
+                    String shareBody = BuildConfig.BaseUrl + "getwebpostdetails/index/" + fFeed.getPostId();
                     Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                     sharingIntent.setType("text/plain");
                     sharingIntent.putExtra(Intent.EXTRA_SUBJECT, fFeed.getTitle() + "\n" + "را در پایه باش ببین");

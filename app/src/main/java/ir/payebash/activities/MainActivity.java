@@ -386,6 +386,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         View view = getLayoutInflater().inflate(R.layout.dialog_navigation, null);
         BottomSheetDialog dialog = new BottomSheetDialog(MainActivity.this, R.style.BottomSheetDialog);
         dialog.setContentView(view);
+
+        dialog.findViewById(R.id.tv_recent_visit).setOnClickListener(v -> {
+            MyPayeFragment fra = new MyPayeFragment();
+            Bundle bnd = new Bundle();
+            bnd.putString("FavoriteOrRecent", "History");
+            fra.setArguments(bnd);
+            fragmentStack.replace(fra);
+        });
+
         BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override

@@ -15,6 +15,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import ir.payebash.BuildConfig;
 import ir.payebash.holders.CommentRowHolder;
 import ir.payebash.models.CommentModel;
 import ir.payebash.R;
@@ -43,7 +45,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentRowHolder> {
     @Override
     public void onBindViewHolder(CommentRowHolder feedListRowHolder, final int i) {
         if (!feedItemList.get(i).getImage().contains("https:"))
-            imageLoader.displayImage(mContext.getString(R.string.url) + "Images/Users/" + feedItemList.get(i).getImage() + ".jpg", feedListRowHolder.img);
+            imageLoader.displayImage(BuildConfig.BaseUrl + "/Images/Users/" + feedItemList.get(i).getImage() + ".jpg", feedListRowHolder.img);
         else
             imageLoader.displayImage(feedItemList.get(i).getImage(), feedListRowHolder.img);
         Spannable spannable = new SpannableString(feedItemList.get(i).getName() + " : " + feedItemList.get(i).getDescription());

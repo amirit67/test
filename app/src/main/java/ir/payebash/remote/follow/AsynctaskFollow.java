@@ -1,4 +1,4 @@
-package ir.payebash.asynktask.follow;
+package ir.payebash.remote.follow;
 
 
 import javax.inject.Inject;

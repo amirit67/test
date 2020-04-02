@@ -45,22 +45,6 @@ public class BaseActivity extends AppCompatActivity {
     public Uri uri;
     public FragmentManager _frgManager;
     public Context mContext;
-    public String[] permissions2 = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA,
-            /* Manifest.permission.RECEIVE_SMS,*/
-    };
-    String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.READ_CALL_LOG,
-            Manifest.permission.PROCESS_OUTGOING_CALLS,
-            Manifest.permission.CAMERA
-    };
-    String[] permissions3 = {Manifest.permission.READ_CALL_LOG,
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.PROCESS_OUTGOING_CALLS,
-            Manifest.permission.CALL_PHONE,
-            Manifest.permission.WRITE_CALL_LOG
-    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,15 +71,6 @@ public class BaseActivity extends AppCompatActivity {
             }
         });*/
     }
-
-    public void setError(LinearLayout childlinearlayout, TextView txt_title, String text) {
-        txt_title.setText("");
-        childlinearlayout.setBackgroundColor(Color.argb(100, 255, 128, 128));
-        Spannable spannable = new SpannableString(text);
-        spannable.setSpan(new ForegroundColorSpan(Color.RED), 0, text.indexOf("\n"), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        txt_title.setText(spannable, TextView.BufferType.SPANNABLE);
-    }
-
     /*public void addFragment_in_fragment(Fragment frg, int containerId, boolean addToBackStack) {
         FragmentTransaction ft = this._frgManager.beginTransaction().setCustomAnimations(R.anim.fade_in,
                 R.anim.fade_out, R.anim.fade_in,
@@ -139,47 +114,4 @@ public class BaseActivity extends AppCompatActivity {
         } catch (Exception e) {
         }
     }
-
-    public Uri SelectImage() {
-        try {
-            File dir = new File(Environment.getExternalStoragePublicDirectory("Investam/Images").getPath());
-            if (!dir.exists())
-                dir.mkdirs();
-            final SweetAlertDialog dialog = new SweetAlertDialog(mContext, SweetAlertDialog.NORMAL_TYPE);
-            dialog.setTitleText("ارسال عکس به کارشناس");
-            dialog.setContentText("در صورت درخواست کارشناس مورد نظر، برای ارسال عکس، از این گزینه استفاده کنید.");
-            dialog.setConfirmText("دوربین");
-            dialog.setCancelText("انتخاب از گالری");
-            dialog.setConfirmClickListener((SweetAlertDialog sDialog) ->
-            {
-                try {
-                    Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File file = new File(Environment.getExternalStoragePublicDirectory("Investam/Images"), "file" + String.valueOf(System.currentTimeMillis() + ".jpg"));
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-                        uri = Uri.fromFile(file);
-                    else
-                        uri = FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".provider", file);
-                    camIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                    camIntent.putExtra("return-data", true);
-                    ((Activity) mContext).startActivityForResult(camIntent, 0);
-                    dialog.dismiss();
-                } catch (Exception e) {
-                }
-            });
-            dialog.setCancelClickListener((SweetAlertDialog sweetAlertDialog) ->
-            {
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                ((Activity) mContext).startActivityForResult
-                        (Intent.createChooser
-                                (intent, "ارسال تصویر به کارشناس"), 1);
-                dialog.dismiss();
-            });
-            dialog.setCancelable(true);
-            HSH.dialog(dialog);
-        } catch (Exception e) {
-        }
-        return uri;
-    }
-
 }

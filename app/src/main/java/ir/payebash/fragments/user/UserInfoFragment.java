@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.R;
 import ir.payebash.adapters.userInfo.userInfoAdapter;
-import ir.payebash.asynktask.user.AsynctaskGetUserInfo;
+import ir.payebash.remote.user.AsynctaskGetUserInfo;
 import ir.payebash.models.user.UserInfoModel;
 
 public class UserInfoFragment extends Fragment {
@@ -35,15 +35,6 @@ public class UserInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        try {
-            if (rootView != null) {
-                ViewGroup parent = (ViewGroup) rootView.getParent();
-                if (parent != null) {
-                    parent.removeView(rootView);
-                }
-            }
-        } catch (Exception e) {
-        }
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_user_info, container, false);
             DeclareElements();
@@ -71,5 +62,16 @@ public class UserInfoFragment extends Fragment {
             }
         };
         new AsynctaskGetUserInfo(del).getData();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (rootView != null) {
+            ViewGroup parent = (ViewGroup) rootView.getParent();
+            if (parent != null) {
+                parent.removeView(rootView);
+            }
+        }
     }
 }

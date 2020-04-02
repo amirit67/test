@@ -22,6 +22,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import ir.payebash.BuildConfig;
 import ir.payebash.activities.StoriesActivity;
 import ir.payebash.Application;
 import ir.payebash.models.event.story.StoryModel;
@@ -75,7 +76,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 Holder.setIsRecyclable(false);
                 Holder.imgStory.setStatus(expandState.get(i) ? InsLoadingView.Status.CLICKED : InsLoadingView.Status.UNCLICKED);
                 Holder.txtName.setText(feed.get(i).getTitle());
-                imageLoader.displayImage(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + feed.get(i).getImages().split(",")[0] + ".jpg", Holder.imgStory, new ImageLoadingListener() {
+                imageLoader.displayImage(BuildConfig.BaseUrl + "/Images/payebash/Thumbnail/" + feed.get(i).getImages().split(",")[0] + ".jpg", Holder.imgStory, new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                     }

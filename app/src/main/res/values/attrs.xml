@@ -243,21 +243,42 @@
 
 
 
-    <declare-styleable name="ToggleSwitchOptions">
-        <attr name="toggleWidth"        format="dimension"/>
+    <declare-styleable name="BaseToggleSwitch">
 
-        <attr name="textToggleCenter"   format="string" localization="suggested" />
-        <attr name="textToggleLeft"     format="string" localization="suggested" />
-        <attr name="textToggleRight"    format="string" localization="suggested" />
+        <!-- Android Attributes -->
 
-        <attr name="activeBgColor"      format="color"/>
-        <attr name="activeTextColor"    format="color"/>
-        <attr name="inactiveBgColor"    format="color"/>
-        <attr name="inactiveTextColor"  format="color"/>
-        <attr name="separatorColor"     format="color"/>
-
-        <attr name="cornerRadius"       format="dimension"/>
-
+        <attr name="android:enabled"/>
+        <attr name="android:entries"/>
         <attr name="android:textSize"/>
+        <attr name="android:layout_height"/>
+        <attr name="android:layout_width"/>
+
+        <!-- Custom Attributes-->
+
+        <attr name="checkedBackgroundColor"      format="color"/>
+        <attr name="checkedBorderColor"          format="color"/>
+        <attr name="checkedTextColor"            format="color"/>
+
+        <attr name="borderWidth"                format="dimension"/>
+        <attr name="borderRadius"               format="dimension"/>
+
+        <attr name="elevation"                  format="dimension"/>
+
+        <attr name="uncheckedBackgroundColor"    format="color"/>
+        <attr name="uncheckedBorderColor"        format="color"/>
+        <attr name="uncheckedTextColor"          format="color"/>
+
+        <attr name="separatorColor"             format="color"/>
+        <attr name="separatorVisible"           format="boolean"/>
+
+        <attr name="textToggleCenter"           format="string" localization="suggested" />
+        <attr name="textToggleLeft"             format="string" localization="suggested" />
+        <attr name="textToggleRight"            format="string" localization="suggested" />
+
+        <attr name="toggleMargin"               format="dimension"/>
+
+        <attr name="toggleHeight"               format="dimension"/>
+        <attr name="toggleWidth"                format="dimension"/>
+
     </declare-styleable>
 </resources>

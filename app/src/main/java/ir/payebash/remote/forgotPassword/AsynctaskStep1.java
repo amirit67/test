@@ -1,4 +1,4 @@
-package ir.payebash.asynktask.forgotPassword;
+package ir.payebash.remote.forgotPassword;
 
 
 import javax.inject.Inject;

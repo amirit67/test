@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="برای ثبت رویداد شماره شماره خود را تایید کنید"
+        android:text="برای ثبت رویداد، شماره خود را تایید کنید"
         android:textColor="@color/white"
         android:textSize="@dimen/sp14"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,27 +73,13 @@
         android:background="@drawable/rounded_corners_solid_navyblue"
         android:gravity="center"
         android:padding="12dp"
-        android:text="بعدی"
+        android:text="ارسال کد تایید به شماره موبایل"
         android:textColor="@color/white"
         android:textSize="@dimen/sp16"
         app:layout_constraintEnd_toEndOf="@+id/et_mobile"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/et_mobile"
         app:layout_constraintTop_toBottomOf="@+id/et_mobile" />
-
-    <TextView
-        android:id="@+id/textView54"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="انصراف"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp14"
-        android:textStyle="bold"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_send" />
 
     <EditText
         android:id="@+id/et_mobile"

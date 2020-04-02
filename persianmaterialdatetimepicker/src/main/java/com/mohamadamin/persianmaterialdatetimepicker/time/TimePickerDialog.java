@@ -90,7 +90,7 @@ public class TimePickerDialog extends BottomSheetDialogFragment implements OnVal
     private TextView mHourSpaceView;
     private TextView mMinuteView;
     private TextView mMinuteSpaceView;
-    private TextView mAmPmTextView;
+    private TextView mAmPmTextView, tvTitle;
     private View mAmPmHitspace;
     private RadialPickerLayout mTimePicker;
 
@@ -105,6 +105,7 @@ public class TimePickerDialog extends BottomSheetDialogFragment implements OnVal
     private boolean mIs24HourMode;
     private String mTitle;
     private boolean mThemeDark;
+    private String title;
 
     // For hardware IME input.
     private char mPlaceholderText;
@@ -148,16 +149,17 @@ public class TimePickerDialog extends BottomSheetDialogFragment implements OnVal
      **/
 
     public static TimePickerDialog newInstance(OnTimeSetListener callback,
-            int hourOfDay, int minute, boolean is24HourMode) {
+            int hourOfDay, int minute, boolean is24HourMode, String mTitle) {
         TimePickerDialog ret = new TimePickerDialog();
-        ret.initialize(callback, hourOfDay, minute, is24HourMode);
+        ret.initialize(callback, hourOfDay, minute, is24HourMode, mTitle);
+
         return ret;
     }
 
     public void initialize(OnTimeSetListener callback,
-            int hourOfDay, int minute, boolean is24HourMode) {
+            int hourOfDay, int minute, boolean is24HourMode, String title) {
         mCallback = callback;
-
+        this.title = title;
         mInitialHourOfDay = hourOfDay;
         mInitialMinute = minute;
         mIs24HourMode = is24HourMode;
@@ -254,6 +256,8 @@ public class TimePickerDialog extends BottomSheetDialogFragment implements OnVal
         mMinuteView = (TextView) view.findViewById(R.id.minutes);
         mMinuteView.setOnKeyListener(keyboardListener);
         mAmPmTextView = (TextView) view.findViewById(R.id.ampm_label);
+        tvTitle = (TextView) view.findViewById(R.id.tv_title);
+        tvTitle.setText(title);
         mAmPmTextView.setOnKeyListener(keyboardListener);
         mAmText = "قبل‌ازظهر";
         mPmText = "بعدازظهر";

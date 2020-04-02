@@ -26,7 +26,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mdtp_selected_calendar_layout_height"
+        android:layout_height="170dp"
         android:orientation="vertical" >
 
         <include layout="@layout/mdtp_date_picker_selected_date" />

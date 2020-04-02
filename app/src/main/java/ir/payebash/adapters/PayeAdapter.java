@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import javax.inject.Inject;
 
 import ir.payebash.Application;
+import ir.payebash.BuildConfig;
 import ir.payebash.classes.HSH;
 import ir.payebash.models.event.EventModel;
 import ir.payebash.R;
@@ -80,7 +81,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Holder.bind(obj);
 
                 Holder.txtLoc.setText(HSH.printDifference(simpleDateFormat.parse(feed.get(i).getCreateDate()
-                        .replace("T", " ")), currentDate) + feed.get(i).getCity());
+                        .replace("T", " ")), currentDate) + " پیش در " + feed.get(i).getCity());
 
                 Holder.rv.setHasFixedSize(true);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, true);
@@ -91,7 +92,7 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Holder.rv.setAdapter(adapterFriends);
                 adapterFriends.addItems(feed.get(i).getFollowers());
 
-                imageLoader.displayImage(mContext.getString(R.string.url) + "Images/payebash/Thumbnail/" + feed.get(i).getImages().split(",")[0] + ".jpg", Holder.imgContent, new ImageLoadingListener() {
+                imageLoader.displayImage(BuildConfig.BaseUrl + "/Images/payebash/Thumbnail/" + feed.get(i).getImages().split(",")[0] + ".jpg", Holder.imgContent, new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                     }
@@ -129,7 +130,11 @@ public class PayeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void addItems(List<EventModel> posts) {
         this.feed.addAll(posts);
-        notifyDataSetChanged();
+        notifyItemRangeChanged(feed.size() - posts.size() - 1, posts.size());
+    }
+
+    public void setCurrentDate() {
+        currentDate = new Date();
     }
 
     public void ClearFeed() {

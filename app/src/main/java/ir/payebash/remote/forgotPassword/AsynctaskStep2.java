@@ -1,35 +1,37 @@
-package ir.payebash.asynktask;
+package ir.payebash.remote.forgotPassword;
 
-
-import java.util.List;
 
 import javax.inject.Inject;
 
 import ir.payebash.Application;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
-import ir.payebash.models.event.story.StoryModel;
+import ir.payebash.models.BaseResponse;
+import ir.payebash.models.ForgotPasswordModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-public class AsynctaskStoryEvents {
+public class AsynctaskStep2 {
 
     @Inject
     Retrofit retrofit;
-    IWebservice.IStoriesEvents delegate;
+    IWebservice.IForgotPassword delegate;
+    private ForgotPasswordModel params;
 
-    public AsynctaskStoryEvents(IWebservice.IStoriesEvents delegate) {
+    public AsynctaskStep2(ForgotPasswordModel params,
+                          IWebservice.IForgotPassword delegate) {
+        this.params = params;
         this.delegate = delegate;
         Application.getComponent().Inject(this);
     }
 
     public void getData() {
-        Call<List<StoryModel>> call =
-                retrofit.create(ApiInterface.class).getStoryEvents(Application.preferences.getString("stateCode", ""));
-        call.enqueue(new Callback<List<StoryModel>>() {
+        Call<BaseResponse> call =
+                retrofit.create(ApiInterface.class).forgotPassword2(params);
+        call.enqueue(new Callback<BaseResponse>() {
             @Override
-            public void onResponse(Call<List<StoryModel>> call, retrofit2.Response<List<StoryModel>> response) {
+            public void onResponse(Call<BaseResponse> call, retrofit2.Response<BaseResponse> response) {
                 try {
                     if (response.code() == 200) {
                         delegate.getResult(response.body());
@@ -40,7 +42,7 @@ public class AsynctaskStoryEvents {
             }
 
             @Override
-            public void onFailure(Call<List<StoryModel>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
                 try {
                     delegate.getError(t.getLocalizedMessage());
                 } catch (Exception e) {

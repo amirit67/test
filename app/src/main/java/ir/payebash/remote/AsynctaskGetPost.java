@@ -1,4 +1,4 @@
-package ir.payebash.asynktask;
+package ir.payebash.remote;
 
 
 import android.app.Activity;
@@ -8,17 +8,16 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import ir.payebash.Application;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.R;
 import ir.payebash.models.event.EventModel;
+import ir.payebash.remote.repository.RemoteRepository;
 import retrofit2.Retrofit;
 
 public class AsynctaskGetPost {
@@ -41,9 +40,11 @@ public class AsynctaskGetPost {
     }
 
     public void getData() {
+
         params.put("", Application.preferences.getString("stateCode", ""));
-        call.getPosts(params).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+
+        RemoteRepository remoteRepository = new RemoteRepository();
+        remoteRepository.getAllEvents(params)
                 .map(events -> {
                     //Collections.sort(notes, (n1, n2) -> n2.getCity() - n1.getCity());
                     for (int i = 0; i < events.size(); i++)
@@ -76,7 +77,8 @@ public class AsynctaskGetPost {
                     @Override
                     public void onComplete() {
                     }
-                });
+        });
+
     }
 }
 

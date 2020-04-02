@@ -94,7 +94,9 @@ public class DatePickerDialog extends BottomSheetDialogFragment implements
 
     private AccessibleDateAnimator mAnimator;
 
+    private String title;
     //private TextView mDayOfWeekView;
+    private TextView tvTitle;
     private LinearLayout mMonthAndDayView;
     private TextView mSelectedMonthTextView;
     private TextView mSelectedDayTextView;
@@ -159,16 +161,17 @@ public class DatePickerDialog extends BottomSheetDialogFragment implements
      */
     public static DatePickerDialog newInstance(OnDateSetListener callBack, int year,
             int monthOfYear,
-            int dayOfMonth) {
+            int dayOfMonth, String title) {
         DatePickerDialog ret = new DatePickerDialog();
-        ret.initialize(callBack, year, monthOfYear, dayOfMonth);
+        ret.initialize(callBack, year, monthOfYear, dayOfMonth, title);
         return ret;
     }
 
-    public void initialize(OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
+    public void initialize(OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth, String title) {
         mCallBack = callBack;
         mPersianCalendar.setPersianDate(year, monthOfYear, dayOfMonth);
         mThemeDark = false;
+        this.title = title;
     }
 
     @Override
@@ -235,6 +238,8 @@ public class DatePickerDialog extends BottomSheetDialogFragment implements
         mSelectedDayTextView = view.findViewById(R.id.date_picker_day);
         mYearView = view.findViewById(R.id.date_picker_year);
         mYearView.setOnClickListener(this);
+        tvTitle = view.findViewById(R.id.tv_title);
+        tvTitle.setText(title);
 
         int listPosition = -1;
         int listPositionOffset = 0;

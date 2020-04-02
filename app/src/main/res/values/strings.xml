@@ -115,9 +115,7 @@
     <string name="next">بعدی</string>
     <string name="skip">قبلی</string>
     <string name="start">ورود</string>
-    <string name="image">http://paye.ariaapps.ir/Images/payebash/</string>
-    <string name="url">http://paye.ariaapps.ir/</string>
-    <string name="url2">paye.ariaapps.ir</string>
+    <string name="image">/Images/payebash/</string>
     <string name="Notifurl">https://fcm.googleapis.com</string>
     <string name="Notifurl2">https://iid.googleapis.com</string>
     <string name="oauth">https://people.googleapis.com/</string>

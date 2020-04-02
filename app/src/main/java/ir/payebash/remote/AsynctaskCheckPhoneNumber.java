@@ -1,4 +1,4 @@
-package ir.payebash.asynktask;
+package ir.payebash.remote;
 
 
 import android.app.Activity;
@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 
 import java.util.Map;
 
+import ir.payebash.BuildConfig;
 import ir.payebash.activities.MainActivity;
 import ir.payebash.Application;
 import ir.payebash.classes.HSH;
@@ -52,7 +53,7 @@ public class AsynctaskCheckPhoneNumber {
                             HSH.editor(ac.getString(R.string.mobile), params.get(ac.getString(R.string.mobile)));
                             HSH.editor(ac.getString(R.string.FullName), user.getFullName());
                             if (!user.getProfileImage().contains("https://"))
-                                HSH.editor(ac.getString(R.string.ProfileImage), ac.getString(R.string.url) + "Images/Users/" + user.getProfileImage() + ".jpg");
+                                HSH.editor(ac.getString(R.string.ProfileImage), BuildConfig.BaseUrl + "/Images/Users/" + user.getProfileImage() + ".jpg");
                             else
                                 HSH.editor(ac.getString(R.string.ProfileImage), user.getProfileImage());
                             //HSH.editor(ac.getString(R.string.ServicesIds), user.getServicesIds().trim());

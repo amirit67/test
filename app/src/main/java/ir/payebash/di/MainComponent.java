@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import ir.payebash.activities.MyEventDetailsActivity;
 import ir.payebash.activities.PostDetailsActivity;
+import ir.payebash.activities.PostRegister2Activity;
 import ir.payebash.activities.PostRegisterActivity;
 import ir.payebash.activities.SplashActivity;
 import ir.payebash.activities.StoriesActivity;
@@ -27,20 +28,21 @@ import ir.payebash.fragments.SearchFragment;
 import ir.payebash.fragments.SlideShowFragment;
 import ir.payebash.fragments.UncomingEventsFragment;
 import ir.payebash.fragments.user.ActivitiesFragment;
-import ir.payebash.asynktask.follow.AsynctaskCheckContacts;
-import ir.payebash.asynktask.AsynctaskEventDetails;
-import ir.payebash.asynktask.follow.AsynctaskFollow;
-import ir.payebash.asynktask.user.AsynctaskGetMyEvents;
-import ir.payebash.asynktask.AsynctaskGetPost;
-import ir.payebash.asynktask.AsynctaskLogin;
-import ir.payebash.asynktask.AsynctaskRegister;
-import ir.payebash.asynktask.AsynctaskRequestToJoin;
-import ir.payebash.asynktask.AsynctaskStoryEvents;
-import ir.payebash.asynktask.GetTokenAsynkTask;
-import ir.payebash.asynktask.forgotPassword.AsynctaskStep1;
-import ir.payebash.asynktask.forgotPassword.AsynctaskStep2;
-import ir.payebash.asynktask.forgotPassword.AsynctaskStep3;
-import ir.payebash.asynktask.user.AsynctaskGetUserInfo;
+import ir.payebash.remote.follow.AsynctaskCheckContacts;
+import ir.payebash.remote.AsynctaskEventDetails;
+import ir.payebash.remote.follow.AsynctaskFollow;
+import ir.payebash.remote.repository.RemoteRepository;
+import ir.payebash.remote.user.AsynctaskGetMyEvents;
+import ir.payebash.remote.AsynctaskGetPost;
+import ir.payebash.remote.AsynctaskLogin;
+import ir.payebash.remote.AsynctaskRegister;
+import ir.payebash.remote.AsynctaskRequestToJoin;
+import ir.payebash.remote.AsynctaskStoryEvents;
+import ir.payebash.remote.GetTokenAsynkTask;
+import ir.payebash.remote.forgotPassword.AsynctaskStep1;
+import ir.payebash.remote.forgotPassword.AsynctaskStep2;
+import ir.payebash.remote.forgotPassword.AsynctaskStep3;
+import ir.payebash.remote.user.AsynctaskGetUserInfo;
 
 /**
  * Created by KingStar on 3/2/2018.
@@ -49,6 +51,11 @@ import ir.payebash.asynktask.user.AsynctaskGetUserInfo;
 @MainScope
 @Component(modules = {AppModule.class, ImageLoaderMoudle.class, NetModule.class})
 public interface MainComponent {
+
+
+    void Inject(PostRegister2Activity remoteRepository);
+
+    void Inject(RemoteRepository remoteRepository);
 
     //Fragments
     void Inject(AsynctaskGetPost getPost);
