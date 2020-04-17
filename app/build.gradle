@@ -114,7 +114,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'*/
     implementation 'com.github.IslamKhSh:CardSlider:0.4'
 
-    implementation files('libs/ZarinPal-Android-0.1.0.jar')
+    implementation files('libs/bouncycastle-java5-136-1.0.0')
+    //implementation files('libs/ZarinPal-Android-0.1.0.jar')
     implementation 'com.jaredrummler:animated-svg-view:1.0.5'
     implementation project(path: ':cropper')
     implementation project(path: ':library')
@@ -124,6 +125,8 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.65'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -22,6 +22,7 @@ import ir.payebash.Application;
 import ir.payebash.Interfaces.IWebservice;
 import ir.payebash.Interfaces.IWebservice.TitleMain;
 import ir.payebash.R;
+import ir.payebash.activities.MyEventDetailsActivity;
 import ir.payebash.activities.PostDetailsActivity;
 import ir.payebash.adapters.PayeAdapter;
 import ir.payebash.remote.user.AsynctaskGetMyEvents;
@@ -133,7 +134,7 @@ public class MyPayeFragment extends Fragment {
                         pb.setVisibility(View.GONE);
                     }
                 };
-                getPost = new AsynctaskGetMyEvents(getActivity(), m);
+                //getPost = new AsynctaskGetMyEvents(getActivity(), m);
                 getPost.getData();
                 swipeContainer.setOnRefreshListener(() -> {
                     adapter.ClearFeed();
@@ -154,7 +155,7 @@ public class MyPayeFragment extends Fragment {
         rv.setLayoutManager(layoutManager);
         adapter = new PayeAdapter(getActivity(), eventModel -> {
             Intent intent;
-            intent = new Intent(getActivity(), PostDetailsActivity.class);
+            intent = new Intent(getActivity(), MyEventDetailsActivity.class);
             intent.putExtra("feedItem", eventModel);
             getActivity().startActivity(intent);
         });
@@ -165,7 +166,7 @@ public class MyPayeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 321 && null != data) {
-            getPost = new AsynctaskGetMyEvents(getActivity(), m);
+            //getPost = new AsynctaskGetMyEvents(getActivity(), m);
         }
 
     }

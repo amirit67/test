@@ -61,7 +61,7 @@ public class UserInfoFragment extends Fragment {
 
             }
         };
-        new AsynctaskGetUserInfo(del).getData();
+        //new AsynctaskGetUserInfo(del).getData();
     }
 
     @Override

@@ -173,7 +173,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.UpdatePostActivity"
+            android:name=".activities.UpdateEventActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
@@ -262,7 +262,7 @@
             android:theme="@style/MyMaterialTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
 
-        <activity android:name="ir.moslem_deris.apps.zarinpal.PaymentActivity" />
+        <!--<activity android:name="ir.moslem_deris.apps.zarinpal.PaymentActivity" />-->
     </application>
 
 </manifest>

@@ -33,6 +33,7 @@ import ir.payebash.models.RequestItem;
 import ir.payebash.models.contacts.ContactItem;
 import ir.payebash.models.contacts.FollowItem;
 import ir.payebash.models.event.RegisterEventResponseModel;
+import ir.payebash.models.event.detail.EventOwnerItem;
 import ir.payebash.models.event.detail.RequestStateItem;
 import ir.payebash.models.googlePlus.PlusItem;
 import ir.payebash.models.ProfileItem;
@@ -90,11 +91,11 @@ public interface ApiInterface {
     @GET("api/getStoryEvents/{cityCode}")
     Call<List<StoryModel>> getStoryEvents(@Path("cityCode") String cityCode);
 
-    @GET("api/getmyevents")
-    Observable<Response<List<EventModel>>> getMyEvents();
+    @GET("api/getmyevents/{userId}")
+    Observable<Response<List<EventModel>>> getMyEvents(@Path("userId") String userId);
 
-    @GET("api/getUserInformation")
-    Call<UserInfoModel> getUserInformation();
+    @GET("api/getUserInformation/{userId}")
+    Call<UserInfoModel> getUserInformation(@Path("userId") String userId);
 
     @FormUrlEncoded
     @POST("api/getUncomingPosts")
@@ -114,9 +115,8 @@ public interface ApiInterface {
     @GET("api/GetPostComments/{PostId}")
     Call<List<CommentModel>> GetComments(@Path("PostId") String UserId);
 
-    @FormUrlEncoded
     @POST("api/UpdateProfile")
-    Call<ResponseBody> UpdateProfile(@FieldMap Map<String, String> data);
+    Call<ResponseBody>  UpdateProfile(@Body EventOwnerItem data);
 
     @FormUrlEncoded
     @POST("api/GetUserVerification")
@@ -155,7 +155,7 @@ public interface ApiInterface {
 
     @Multipart
     @POST("api/InsertProfilePic")
-    Call<ResponseBody> saveProfileAccount(@Part("UserId") RequestBody requestBody, @Part MultipartBody.Part filePart);
+    Call<ResponseBody> saveProfileAccount(@Part MultipartBody.Part filePart);
 
     @Multipart
     @POST("api/InsertImageEvent")

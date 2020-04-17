@@ -1,100 +1,84 @@
 package ir.payebash.activities;
 
+import android.Manifest;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.DataBindingUtil;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
-import ir.payebash.Application;
-import ir.payebash.classes.HSH;
-import ir.payebash.classes.NetworkUtils;
-import ir.payebash.Interfaces.ApiClient;
-import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.R;
+import ir.payebash.classes.BaseFragment;
+import ir.payebash.classes.HSH;
+import ir.payebash.databinding.FragmentEditProfileBinding;
+import ir.payebash.models.user.UserInfoModel;
+import ir.payebash.remote.repository.RemoteRepository;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends BaseFragment {
 
-    private Map<String, String> params = new HashMap<>();
-    private LinearLayout llMainn;
-    private ImageButton imgBack;
-    private SwitchCompat compatSwitch;
-    private EditText etAbout;
-    private EditText etFavorites, etTelegram, etInstagram, etSoroosh, etGmail;
-    private ProgressWheel cpv;
-    private ProgressBar pb;
-    private Button btnProfileUpdate;
-    private ScrollView sv;
+    private static final String ARG_PARAM1 = "param1";
+    private UserInfoModel userInfoModel;
+    public static EditProfileActivity fragment = null;
+    String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private View rootView = null;
 
-    private void assignViews() {
-        llMainn = findViewById(R.id.ll_main);
-        imgBack = findViewById(R.id.img_back);
-        compatSwitch = findViewById(R.id.compatSwitch);
-        etAbout = findViewById(R.id.et_about);
-        etFavorites = findViewById(R.id.et_favorites);
-        etTelegram = findViewById(R.id.et_telegram);
-        etInstagram = findViewById(R.id.et_insta);
-        etSoroosh = findViewById(R.id.et_soroosh);
-        etGmail = findViewById(R.id.et_gmail);
-        cpv = findViewById(R.id.cpv);
-        pb = findViewById(R.id.pb);
-        sv = findViewById(R.id.sv);
-        btnProfileUpdate = findViewById(R.id.btn_profile_update);
-        imgBack.setOnClickListener(view -> finish());
+    public static EditProfileActivity newInstance(UserInfoModel userInfoModel) {
+        if (fragment == null)
+            fragment = new EditProfileActivity();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_PARAM1, userInfoModel);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
-        assignViews();
-        imgBack.setOnClickListener(v -> finish());
-        if (NetworkUtils.getConnectivity(EditProfileActivity.this) != false)
-            getProfileInfo();
-        else
-            HSH.showtoast(EditProfileActivity.this, "خطا در اتصال به اینترنت");
-
-        btnProfileUpdate.setOnClickListener(v -> {
-            if (etTelegram.getText().toString().trim().length() > 4 ||
-                    etSoroosh.getText().toString().trim().length() > 4 ||
-                    etInstagram.getText().toString().trim().length() > 4) {
-                pb.setVisibility(View.VISIBLE);
-                btnProfileUpdate.setEnabled(false);
-                btnProfileUpdate.setText("");
-                params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
-                params.put(getString(R.string.AboutMe), etAbout.getText().toString().trim());
-                params.put(getString(R.string.Favorites), etFavorites.getText().toString().trim());
-                params.put(getString(R.string.Telegram), etTelegram.getText().toString().trim());
-                params.put(getString(R.string.Instagram), etInstagram.getText().toString().trim());
-                params.put(getString(R.string.Soroosh), etSoroosh.getText().toString().trim());
-                params.put(getString(R.string.Gmail), etGmail.getText().toString().trim());
-                params.put(getString(R.string.IsShowMobile), String.valueOf(compatSwitch.isChecked()));
-                if (NetworkUtils.getConnectivity(EditProfileActivity.this) != false)
-                    SendUserInfo();
-                else
-                    HSH.showtoast(EditProfileActivity.this, "خطا در اتصال به اینترنت");
-            } else {
-                HSH.showtoast(EditProfileActivity.this, "لطفا راه های ارتباطی خود را تکمیل نمایید");
-            }
-        });
+        if (getArguments() != null) {
+            userInfoModel = (UserInfoModel) getArguments().getSerializable(ARG_PARAM1);
+        }
     }
 
-    private void getProfileInfo() {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        if (rootView == null) {
+            FragmentEditProfileBinding binding = DataBindingUtil.inflate(
+                    inflater, R.layout.fragment_edit_profile, container, false);
+            rootView = binding.getRoot();
+            binding.setUserInfo(userInfoModel);
+            rootView.findViewById(R.id.img_close).setOnClickListener(v -> getFragmentManager().popBackStack());
+            rootView.findViewById(R.id.img_update).setOnClickListener(v -> SendUserInfo());
+        }
+        return rootView;
+    }
+
+    @BindingAdapter("android:src")
+    public static void setImageUrl(ImageView view, String url) {
+        ImageLoader.getInstance().displayImage(url, view);
+    }
+    /*private void getProfileInfo() {
         Map<String, String> params = new HashMap<>();
         params.put(getString(R.string.VoterUserId), Application.preferences.getString(getString(R.string.UserId), "0"));
         Call<ResponseBody> call =
@@ -123,49 +107,28 @@ public class EditProfileActivity extends AppCompatActivity {
                 getProfileInfo();
             }
         });
-    }
+    }*/
 
     private void SendUserInfo() {
         Call<ResponseBody> call =
-                ApiClient.getClient().create(ApiInterface.class).UpdateProfile(params);
+                new RemoteRepository().UpdateProfile(userInfoModel.getEventOwner());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                if (response.code() == 200) {
-                    HSH.editor(getString(R.string.Telegram), params.get(getString(R.string.Telegram)));
-                    HSH.editor(getString(R.string.Instagram), params.get(getString(R.string.Instagram)));
-                    HSH.editor(getString(R.string.Soroosh), params.get(getString(R.string.Soroosh)));
-                    HSH.editor(getString(R.string.Gmail), params.get(getString(R.string.Gmail)));
-                    HSH.showtoast(EditProfileActivity.this, "اطلاعات شما ثبت گردید");
-                    finish();
-                } else
-                    SendUserInfo();
+                try {
+                    if (response.code() == 200) {
+                        HSH.showtoast(getActivity(), "اطلاعات شما ثبت گردید");
+                        getFragmentManager().popBackStack();
+                    } else
+                        HSH.showtoast(getActivity(), response.errorBody().string());
+                } catch (IOException e) {
+                }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                SendUserInfo();
+
             }
         });
-    }
-
-    private void setMainInfo(JSONObject obj) {
-        int a = llMainn.getChildCount();
-        for (int i = 0; i < a; i++) {
-            if (llMainn.getChildAt(i) instanceof EditText) {
-                try {
-                    View v = llMainn.getChildAt(i);
-                    String s = obj.getString(v.getTag().toString()).trim();
-                    ((EditText) v).setText(s.toLowerCase().equals("null") ? "" : s);
-                } catch (Exception e) {
-                }
-            } else if (llMainn.getChildAt(i) instanceof Button) {
-                try {
-                    View v = llMainn.getChildAt(i);
-                    compatSwitch.setChecked(obj.getBoolean(v.getTag().toString()));
-                } catch (Exception e) {
-                }
-            }
-        }
     }
 }

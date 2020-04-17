@@ -8,19 +8,28 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.github.islamkhsh.CardSliderViewPager;
 import com.google.android.gms.common.ConnectionResult;
@@ -35,33 +44,51 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import ir.moslem_deris.apps.zarinpal.PaymentBuilder;
+/*import ir.moslem_deris.apps.zarinpal.PaymentBuilder;
 import ir.moslem_deris.apps.zarinpal.enums.ZarinPalError;
 import ir.moslem_deris.apps.zarinpal.listeners.OnPaymentListener;
-import ir.moslem_deris.apps.zarinpal.models.Payment;
+import ir.moslem_deris.apps.zarinpal.models.Payment;*/
 import ir.payebash.BuildConfig;
+import ir.payebash.Constants;
 import ir.payebash.adapters.BannerAdapter;
 import ir.payebash.Application;
+import ir.payebash.adapters.FollowersAdapter;
+import ir.payebash.adapters.PersonAddedAdapter;
+import ir.payebash.classes.BaseFragment;
 import ir.payebash.classes.HSH;
+import ir.payebash.classes.ItemDecorationAlbumColumns;
 import ir.payebash.classes.NetworkUtils;
 import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
 import ir.payebash.Interfaces.IWebservice;
+import ir.payebash.databinding.ActivityEventDetails2Binding;
+import ir.payebash.databinding.ActivityMyEventDetailsBinding;
+import ir.payebash.databinding.ActivityUpdateEventBinding;
+import ir.payebash.models.InputPostDetailsParamsModel;
 import ir.payebash.models.NotifyData;
 import ir.payebash.models.NotifyData.Message;
 import ir.payebash.models.PayeItem;
 import ir.payebash.models.event.EventModel;
 import ir.payebash.models.event.detail.EventDetailsModel;
 import ir.payebash.R;
+import ir.payebash.models.event.detail.RequestStateItem;
+import ir.payebash.remote.AsynctaskEventDetails;
+import ir.payebash.utils.FragmentStack;
 import ir.payebash.utils.RecyclerSnapHelper;
+import ir.payebash.utils.hashtaghelper.HashTagHelper;
+import ir.payebash.utils.reviewratings.BarLabels;
+import ir.payebash.utils.reviewratings.RatingReviews;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,8 +97,10 @@ import retrofit2.Retrofit;
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
 
 
-public class MyEventDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class MyEventDetailsActivity extends BaseFragment implements View.OnClickListener {
 
+    private static Double latitude, longitude;
+    //com.google.android.gms.maps.MapView mMapView;
     private ConstraintLayout pB;
     int checkid = 0;
     boolean isPush = false;
@@ -81,38 +110,85 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
     DisplayImageOptions options;
     @Inject
     Retrofit retrofit;
-    private ConstraintLayout eventOrganizer, clImmadiate;
     private CollapsingToolbarLayout i;
+    //private LinearLayout ll_advertisdetails;
+    //private EditText etComment;
     private ImageView imgProfile;
-    private TextView txtFullname, txtEventTitle, txtEventDate, txtLocation ,
-    txtCategory , txtTimeToJoin , txtCost, txtStartDate, txtFollowes, txtDescription,
-            txtUpgradeEvent, tvWoman ;
+    private TextView txtEventDate, txtTimeToJoin,
+            txtUpgradeEvent,
+            btnShare, btnEdit
+            /*, btnMobile, btnEdit, btnDelete, btnPay*/;
     private EventModel fFeed;
+    //private ImageButton /*btn_fav,*/ btnSendComment, back;
     private EventDetailsModel result;
+    //private ProgressWheel cpv;
+    private RecyclerView rvGroupFriends;
+    private View followerView = null;
+    private BottomSheetDialog dialogFollower = null;
+    //private RecyclerView rvComment;
+    //private CommentsAdapter adapter;
+    // private List<CommentModel> Commentfeed = new ArrayList<>();
+    private View rootView = null;
+    private ActivityMyEventDetailsBinding binding;
+    public static MyEventDetailsActivity fragment = null;
+    private static final String ARG_PARAM1 = "param1";
+
+    public static MyEventDetailsActivity newInstance(EventModel eventDetailsModel) {
+        if (fragment == null)
+            fragment = new MyEventDetailsActivity();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_PARAM1, eventDetailsModel);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            //eventDetailsModel = (EventDetailsModel) getArguments().getSerializable(ARG_PARAM1);
+            fFeed = (EventModel) getArguments().getSerializable(ARG_PARAM1);
+        }
+    }
 
     private void DeclareElements() {
-        pB = findViewById(R.id.progressBar);
-        txtEventTitle = findViewById(R.id.txt_event_title);
-        txtEventDate = findViewById(R.id.txt_event_date);
-        txtCategory = findViewById(R.id.txt_category);
-        txtLocation = findViewById(R.id.txt_location);
-        txtTimeToJoin = findViewById(R.id.txt_time_to_join);
-        txtUpgradeEvent = findViewById(R.id.txt_upgrade_event);
-        txtCost = findViewById(R.id.txt_cost);
-        txtStartDate = findViewById(R.id.txt_startdate);
-        txtFollowes = findViewById(R.id.txt_followers);
-        txtDescription = findViewById(R.id.txt_description);
-        tvWoman = findViewById(R.id.tv_woman);
+        pB = rootView.findViewById(R.id.progressBar);
+        txtEventDate = rootView.findViewById(R.id.txt_event_date);
+        txtTimeToJoin = rootView.findViewById(R.id.txt_time_to_join);
+        txtUpgradeEvent = rootView.findViewById(R.id.txt_upgrade_event);
         txtUpgradeEvent.setOnClickListener(this::onClick);
-        eventOrganizer = findViewById(R.id.cl_event_organizer);
-        eventOrganizer.setOnClickListener(this);
-        clImmadiate = findViewById(R.id.cl_immadiate);
+        /*cpv = rootView.findViewById(R.id.cpv);
 
-        txtFullname = findViewById(R.id.txt_fullname);
-        imgProfile = findViewById(R.id.img_profile);
-        imgProfile.setOnClickListener(this);
+        btnPay = rootView.findViewById(R.id.btn_pay);
+        btnEdit = rootView.findViewById(R.id.btn_edit);
+        btnDelete = rootView.findViewById(R.id.btn_delete);
+        btnMobile = rootView.findViewById(R.id.btn_mobile);
+        //btn_fav = rootView.findViewById(R.id.btn_fav);*/
+        btnEdit = rootView.findViewById(R.id.btn_edit);
+        btnShare = rootView.findViewById(R.id.btn_share);
+        rootView.findViewById(R.id.img_back).setOnClickListener(this::onClick);
+        //btn_contactWays = rootView.findViewById(R.id.btn_contactWays);
+        /*btnSendComment = rootView.findViewById(R.id.btn_sendComment);
 
-        ImageView img = findViewById(R.id.imageView8);
+
+        btnPay.setOnClickListener(getActivity());
+        btnDelete.setOnClickListener(getActivity());
+        btnMobile.setOnClickListener(getActivity());
+        //btn_fav.setOnClickListener(getActivity());*/
+        btnEdit.setOnClickListener(this::onClick);
+        btnShare.setOnClickListener(this::onClick);
+        //btn_contactWays.setOnClickListener(getActivity());
+        /*btnSendComment.setOnClickListener(getActivity());
+        back.setOnClickListener(getActivity());*/
+
+        //etComment = rootView.findViewById(R.id.et_comment);
+        imgProfile = rootView.findViewById(R.id.img_profile);
+        //pager = rootView.findViewById(R.id.pager);
+        rootView.findViewById(R.id.group_friends).setOnClickListener(this::onClick);
+
+        imgProfile.setOnClickListener(this::onClick);
+
+        ImageView img = rootView.findViewById(R.id.imageView8);
         ObjectAnimator fadeOut = ObjectAnimator.ofFloat(img, "alpha", 1f, .1f);
         fadeOut.setDuration(1000);
         ObjectAnimator fadeIn = ObjectAnimator.ofFloat(img, "alpha", .1f, 1f);
@@ -128,42 +204,49 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
         });
         mAnimationSet.start();
 
-        /*rvComment = findViewById(R.id.rv_comment);
+        /*rvComment = rootView.findViewById(R.id.rv_comment);
         rvComment.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(PostDetailsActivity.this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvComment.setLayoutManager(layoutManager);
-        adapter = new CommentsAdapter(PostDetailsActivity.this, Commentfeed, imageLoader);
+        adapter = new CommentsAdapter(getActivity(), Commentfeed, imageLoader);
         rvComment.setAdapter(adapter);*/
     }
 
+    private void checkFollowers() {
+        rvGroupFriends = rootView.findViewById(R.id.rv_group_friends);
+        rvGroupFriends.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        rvGroupFriends.setLayoutManager(layoutManager);
+        PersonAddedAdapter adapter = new PersonAddedAdapter(getActivity(), imageLoader);
+        rvGroupFriends.setAdapter(adapter);
+        adapter.addItems(fFeed.getFollowers());
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         try {
-            setContentView(R.layout.activity_my_event_details);
-            Application.getComponent().Inject(this);
             try {
-                fFeed = (EventModel) getIntent().getExtras().getSerializable("feedItem");
+
                 if (fFeed == null) {
-                    Intent intent = getIntent();
+                    Intent intent = getActivity().getIntent();
                     Uri data = intent.getData();
                     fFeed = new EventModel();
                     fFeed.setPostId(data.getEncodedPath().split("/")[3]);
                 }
             } catch (Exception e) {
                 fFeed = new EventModel();
-                fFeed.setPostId(getIntent().getExtras().getString(getString(R.string.PostId)));
+                fFeed.setPostId(getActivity().getIntent().getExtras().getString(getString(R.string.PostId)));
                 isPush = true;
             }
 
+            binding = DataBindingUtil.inflate(
+                    inflater, R.layout.activity_my_event_details, container, false);
+            rootView = binding.getRoot();
+            binding.setEvent(fFeed);
+            Application.getComponent().Inject(this);
+
             DeclareElements();
-
-            /*mMapView = findViewById(R.id.map);
-            mMapView.onCreate(savedInstanceState);*/
-
-            /*float heightDp = (float) (getResources().getDisplayMetrics().heightPixels / 2);
-            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) appBar.getLayoutParams();
-            lp.height = (int) heightDp;*/
             AdvertisementDetails();
             try {
                 Cursor cr = Application.database.rawQuery("SELECT * from RecentVisit WHERE Id='" + fFeed.getPostId() + "'", null);
@@ -176,10 +259,11 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
             } catch (Exception e) {
             }
 
-            i = findViewById(R.id.toolbar_layout);
+            i = rootView.findViewById(R.id.toolbar_layout);
             i.setTitle("");
         } catch (Exception e) {
         }
+        return rootView;
     }
 
     @Override
@@ -188,15 +272,15 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
         if (requestCode == 321 && null != data) {
             Intent resultData = new Intent();
             resultData.putExtra("data", "data");
-            setResult(Activity.RESULT_OK, resultData);
-            finish();
+            getActivity().setResult(Activity.RESULT_OK, resultData);
+            getFragmentManager().popBackStack();
         }
         if (requestCode == 123 && null != data)
             AdvertisementDetails();
     }
 
     private void getMap() {
-        switch (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MyEventDetailsActivity.this)) {
+        switch (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getActivity())) {
             case ConnectionResult.SUCCESS:
 
                 try {
@@ -206,7 +290,7 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                         longitude = Double.parseDouble(result.getLongitude());
                         mMapView.onResume();*/
                         try {
-                            MapsInitializer.initialize(MyEventDetailsActivity.this);
+                            MapsInitializer.initialize(getActivity());
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -271,33 +355,21 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
             public void getResult(EventDetailsModel event) throws Exception {
                 try {
                     pB.setVisibility(View.GONE);
-                    //ll_advertisdetails.setVisibility(View.VISIBLE);
                     result = event;
-                    //findViewById(R.id.lbl_is_woman).setVisibility(fFeed.IsWoman() == true ? View.VISIBLE : View.GONE);
+                    binding.setEventDetails(result);
+                    checkFollowers();
                     getMap();
-                    try {
-                        imageLoader.displayImage(result.getEventOwner().getProfileImage(), imgProfile, options);
-                        txtFullname.setText(result.getEventOwner().getUserName());
-                        tvWoman.setVisibility(result.getIsWoman()? View.VISIBLE : View.GONE);
-                        //clImmadiate.setVisibility(fFeed.IsImmediate() ? View.VISIBLE : View.GONE);
-                        txtEventTitle.setText(fFeed.getTitle());
-                        txtEventDate.setText(result.getCreateDate());
-                        txtTimeToJoin.setText(result.getTimeToJoin());
-                        txtCost.setText(result.getCost());
-                        txtStartDate.setText(result.getStartDate());
-                        txtFollowes.setText(result.getNumberFollowers());
-                        txtDescription.setText(result.getDescription());
-                        //List<PostDetailsModel> feed = new ArrayList<>();
-                        //List<String> result2 = result.getBaseProperty();
+                    HashTagHelper mTextHashTagHelper = HashTagHelper.Creator.create(getResources().getColor(R.color.colorPrimary), hashTag -> {
 
-                        Cursor cr = null;
-                        //PostDetailsModel item = null;
-                        try {
-                            cr = Application.database.rawQuery("SELECT name from categories where id = '" + result.getSubject() + "' ", null);
-                            cr.moveToFirst();
-                            txtCategory.setText(cr.getString(cr.getColumnIndex("name")));
-                        } catch (Exception e) {
-                        }
+                    });
+                    mTextHashTagHelper.handle(rootView.findViewById(R.id.txt_description));
+                    //List<String> allHashTags = mTextHashTagHelper.getAllHashTags(true);
+                    try {
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+                        txtTimeToJoin.setText(HSH.printDifference(new Date(),
+                                simpleDateFormat.parse(result.getTimeToJoin().replace("T", " "))));
+                        txtEventDate.setText(HSH.printDifference(simpleDateFormat.parse(result.getCreateDate()
+                                .replace("T", " ")), new Date()) + " پیش");
 
                     } catch (Exception e) {
                     }
@@ -307,17 +379,20 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                         ArrayList<String> banners = new ArrayList<>();
                         String[] temp = result.getImages().split(",");
 
-                        RecyclerView recyclerView = findViewById(R.id.recycler_banner);
-                        ScrollingPagerIndicator indicator = findViewById(R.id.indicator);
+                        RecyclerView recyclerView = rootView.findViewById(R.id.recycler_banner);
+                        recyclerView.setHasFixedSize(true);
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true);
+                        recyclerView.setLayoutManager(layoutManager);
+                        ScrollingPagerIndicator indicator = rootView.findViewById(R.id.indicator);
                         for (int i = 0; i < temp.length; i++) {
 
-                            temp[i] = (getString(R.string.image) + temp[i] + ".jpg");
-                            banners.add(getString(R.string.image) + temp[i] + ".jpg");
-                            CardSliderViewPager cardSliderViewPager = findViewById(R.id.pager);
+                            temp[i] = BuildConfig.BaseUrl + (getString(R.string.image) + temp[i] + ".jpg");
+                            banners.add(BuildConfig.BaseUrl + getString(R.string.image) + temp[i] + ".jpg");
+                            //CardSliderViewPager cardSliderViewPager = rootView.findViewById(R.id.pager);
                             //cardSliderViewPager.setAdapter(new BannerAdapter(banners, imageLoader));
                         }
 
-                        BannerAdapter bannerAdapter = new BannerAdapter(Arrays.asList(temp), MyEventDetailsActivity.this);
+                        BannerAdapter bannerAdapter = new BannerAdapter(Arrays.asList(temp), getActivity());
                         recyclerView.setAdapter(bannerAdapter);
 
                         RecyclerSnapHelper snapHelper = new RecyclerSnapHelper();
@@ -330,31 +405,15 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                     } catch (Exception e) {
                     }
                     ///////////////////////////////////////////////////////////////////////////
-                    if (!fFeed.getTitle().contains("لغو")) {
-                        try {
-                            Cursor cr = Application.database.rawQuery("SELECT Id from RecentVisit WHERE Id='" + fFeed.getPostId() + "'", null);
-                            if (cr.getCount() == 0) {
-                                String query;
-                                if (isPush == false)
-                                    query = "INSERT INTO RecentVisit(Id,IsFavorite,IsWanted) VALUES " +
-                                            "('" + fFeed.getPostId() + "','false','false') ";
-                                else
-                                    query = "INSERT INTO RecentVisit(Id,IsFavorite,IsWanted) VALUES " +
-                                            "('" + fFeed.getPostId() + "','false','true') ";
-
-                                Application.database.execSQL(query);
-                                cr.close();
-                            }
-                        } catch (Exception e) {
-                        }
-                    } else {
-                        DeletePost();
-                    }
+                    String query;
+                    query = "replace INTO RecentVisit ";
+                    query += "(Id) VALUES('" + fFeed.getPostId() + "')";
+                    Application.database.execSQL(query);
 
                 } catch (Exception e) {
                     DeletePost();
-                    HSH.showtoast(MyEventDetailsActivity.this, "این آگهی حذف شده است.");
-                    finish();
+                    HSH.showtoast(getActivity(), "این آگهی حذف شده است.");
+                    getFragmentManager().popBackStack();
                 }
             }
 
@@ -363,18 +422,22 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
 
             }
         };
-       // new AsynctaskEventDetails(this, fFeed.getPostId(), del).getData();
+
+        InputPostDetailsParamsModel input = new InputPostDetailsParamsModel();
+        input.setCurrentUserId(Application.preferences.getString(getString(R.string.UserId), ""));
+        input.setEventId(fFeed.getPostId());
+        new AsynctaskEventDetails(getActivity(), input, del).getData();
     }
 
     private void registerDialog() {
-        final SweetAlertDialog dialog = new SweetAlertDialog(MyEventDetailsActivity.this, SweetAlertDialog.WARNING_TYPE)
+        final SweetAlertDialog dialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("عضویت")
                 .setContentText("برای نمایش اطلاعات لازم است ابتدا عضو شوید")
                 .setConfirmText("بله")
                 .setCancelText("فعلا نه")
                 .setConfirmClickListener(sDialog -> {
-                    HSH.onOpenPage(MyEventDetailsActivity.this, IntroLoginActivity.class);
-                    finish();
+                    HSH.onOpenPage(getActivity(), IntroLoginActivity.class);
+                    getFragmentManager().popBackStack();
                 });
         dialog.setCancelClickListener(sweetAlertDialog -> dialog.dismissWithAnimation());
         dialog.setCancelable(true);
@@ -393,21 +456,20 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
     private void SendingReportService(final int checkid, final Dialog dialog_wait) {
 
         Map<String, String> params = new HashMap<>();
-        params.put(getString(R.string.ComplainantId), Application.preferences.getString(getString(R.string.UserId), "0"));
         params.put(getString(R.string.PostId), fFeed.getPostId());
         params.put("Type", String.valueOf(checkid));
         Call<ResponseBody> call =
-                ApiClient.getClient().create(ApiInterface.class).SendingReportService(params);
+                retrofit.create(ApiInterface.class).SendingReportService(params);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 dialog_wait.dismiss();
-                HSH.showtoast(MyEventDetailsActivity.this, "گزارش شما با موفقیت ثبت گردید");
+                HSH.showtoast(getActivity(), "گزارش شما با موفقیت ثبت گردید");
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                HSH.showtoast(MyEventDetailsActivity.this, "مجدد تلاش کنید /مشکل در دریافت اطلاعات");
+                HSH.showtoast(getActivity(), "مجدد تلاش کنید /مشکل در دریافت اطلاعات");
             }
         });
     }
@@ -418,7 +480,7 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
         params.put(getString(R.string.PostId), fFeed.getPostId());
         params.put(getString(R.string.Status), String.valueOf(checkid));
         Call<ResponseBody> call =
-                ApiClient.getClient().create(ApiInterface.class).RemovePost(params);
+                retrofit.create(ApiInterface.class).RemovePost(params);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse
@@ -432,44 +494,27 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                                 .setConfirmClickListener(sweetAlertDialog -> {
                                     Intent resultData = new Intent();
                                     resultData.putExtra("data", "data");
-                                    setResult(Activity.RESULT_OK, resultData);
-                                    finish();
+                                    getActivity().setResult(Activity.RESULT_OK, resultData);
+                                    getFragmentManager().popBackStack();
                                 })
                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                     } catch (Exception e) {
                     }
-                } else
-                    DeletePostAsynkTask(loading);
+                } /*else
+                    DeletePostAsynkTask(loading);*/
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                DeletePostAsynkTask(loading);
+                //DeletePostAsynkTask(loading);
             }
         });
     }
 
-
-    private NotifyData notifyData() {
-        final PersianCalendar now = new PersianCalendar();
-        NotifyData notifydata = new NotifyData(
-                fFeed.getPostId(),
-                String.format(getString(R.string.join), "\"" + fFeed.getTitle() + "\""),
-                String.valueOf(now.getPersianLongDate()),
-                result.getSubject() + "",
-                fFeed.getCity(),
-                fFeed.getCost(),
-                //result.getTag(),
-                fFeed.getImages().split(",")[0],
-                "");
-        return notifydata;
-    }
-
-
     private void CancelPostAsynkTask(final SweetAlertDialog loading) {
         loading.show();
         Call<ResponseBody> call =
-                ApiClient.getClient().create(ApiInterface.class).CancelPost(fFeed.getPostId());
+                retrofit.create(ApiInterface.class).CancelPost(fFeed.getPostId());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse
@@ -501,8 +546,8 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                                 .setConfirmClickListener(sweetAlertDialog -> {
                                     Intent resultData = new Intent();
                                     resultData.putExtra("data", "data");
-                                    setResult(Activity.RESULT_OK, resultData);
-                                    finish();
+                                    getActivity().setResult(Activity.RESULT_OK, resultData);
+                                    getFragmentManager().popBackStack();
                                 })
                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                     } catch (Exception e) {
@@ -519,7 +564,7 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
     }
 
     private void pay(String s) {
-        Payment payment = null;
+       /* Payment payment = null;
         try {
             payment = new PaymentBuilder()
                     .setMerchantID(getString(R.string.Mrchnt))
@@ -528,7 +573,7 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                     .create();
         } catch (Exception e) {
         }
-        ir.moslem_deris.apps.zarinpal.ZarinPal.pay(MyEventDetailsActivity.this, payment, new OnPaymentListener() {
+        ir.moslem_deris.apps.zarinpal.ZarinPal.pay(getActivity(), payment, new OnPaymentListener() {
             @Override
             public void onSuccess(String refID) {
                 String query = "Update RecentVisit set IsPaid = 'true' , refID = '" + refID + "' " +
@@ -555,25 +600,25 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                         break;
                 }
                 Log.wtf("TAG", "::ZarinPal::  ERROR: " + errorMessage);
-                HSH.showtoast(MyEventDetailsActivity.this, "خطا!!!" + "\n" + errorMessage);
+                HSH.showtoast(getActivity(), "خطا!!!" + "\n" + errorMessage);
             }
-        });
+        });*/
     }
 
     private void InsertPaymentAsynkTask(final String refID) {
-        final SweetAlertDialog dialog = HSH.onProgress_Dialog(MyEventDetailsActivity.this, "لطفا منتظر بمانید ...");
+        final SweetAlertDialog dialog = HSH.onProgress_Dialog(getActivity(), "لطفا منتظر بمانید ...");
         dialog.show();
         Map<String, String> params = new HashMap<>();
-        if ((result.getState()).contains("فوری"))
+        if ((result.getState().split("-")[0]).contains("فوری"))
             params.put(getString(R.string.TypeOfPay), getString(R.string.IsImmediate));
-        else if ((result.getState()).contains("دسته بندی"))
+        else if ((result.getState().split("-")[0]).contains("دسته بندی"))
             params.put(getString(R.string.TypeOfPay), getString(R.string.Category));
         params.put(getString(R.string.UserId), Application.preferences.getString(getString(R.string.UserId), "0"));
         params.put(getString(R.string.PostId), fFeed.getPostId());
         params.put(getString(R.string.Amount), Application.preferences.getString("Feepayable", "1000"));
         params.put(getString(R.string.refID), refID);
         Call<ResponseBody> call =
-                ApiClient.getClient().create(ApiInterface.class).InsertPayment(params);
+                retrofit.create(ApiInterface.class).InsertPayment(params);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse
@@ -589,8 +634,8 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                                 .setConfirmClickListener(sweetAlertDialog -> {
                                     Intent resultData = new Intent();
                                     resultData.putExtra("data", "data");
-                                    setResult(Activity.RESULT_OK, resultData);
-                                    finish();
+                                    getActivity().setResult(Activity.RESULT_OK, resultData);
+                                    getFragmentManager().popBackStack();
                                 })
                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                     } catch (Exception e) {
@@ -613,26 +658,34 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
         });
     }
 
+    private NotifyData notifyData() {
+        final PersianCalendar now = new PersianCalendar();
+        NotifyData notifydata = new NotifyData(
+                fFeed.getPostId(),
+                String.format(getString(R.string.join), "\"" + fFeed.getTitle() + "\""),
+                String.valueOf(now.getPersianLongDate()),
+                result.getSubject(),
+                fFeed.getCity(),
+                fFeed.getCost(),
+                /*fFeed.getTag(),*/
+                fFeed.getImages().split(",")[0],
+                "");
+        return notifydata;
+    }
 
     @Override
     public void onClick(View v) {
-        final Dialog dialog2 = new Dialog(MyEventDetailsActivity.this);
+        final SweetAlertDialog dialog;
+        final Dialog dialog2 = new Dialog(getActivity());
         switch (v.getId()) {
-            case R.id.btn_mobile:
-                Intent in = new Intent(MyEventDetailsActivity.this, LoginActivity.class);
-                in.putExtra("Type", "Update");
-                startActivityForResult(in, 123);
-                break;
-
             case R.id.btn_pay:
                 pay(String.format(getString(R.string.payNote), result.getState().split("-")[0]));
                 break;
 
             case R.id.btn_edit:
-                Intent intent;
-                intent = new Intent(MyEventDetailsActivity.this, UpdatePostActivity.class);
-                intent.putExtra("feedItem", getIntent().getExtras().getSerializable("feedItem"));
-                startActivityForResult(intent, 321);
+                FragmentStack fragmentStack = new FragmentStack(getActivity(), getActivity().getSupportFragmentManager(),
+                        R.id.main_frame);
+                fragmentStack.replace(UpdateEventActivity.newInstance(result));
                 break;
             case R.id.btn_delete:
                 dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -641,26 +694,26 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                 TextView txt_reject = dialog2.findViewById(R.id.txt_reject);
                 final RadioGroup radioGroup01 = dialog2.findViewById(R.id.radioGroup);
 
-                if (result.getState().contains(getString(R.string.release1)) ||
-                        result.getState().contains(getString(R.string.release2))) {
+                if (result.getState().split("-")[0].contains(getString(R.string.release1)) ||
+                        result.getState().split("-")[0].contains(getString(R.string.release2))) {
                     dialog2.findViewById(R.id.radioButton4).setVisibility(View.VISIBLE);
                 }
                 radioGroup01.setOnCheckedChangeListener((group, checkedId) -> checkid = Integer.parseInt(dialog2.findViewById(checkedId).getTag().toString()));
 
                 txt_delete.setOnClickListener(v1 -> {
                     if (radioGroup01.getCheckedRadioButtonId() != -1) {
-                        if (NetworkUtils.getConnectivity(MyEventDetailsActivity.this) != false) {
-                            SweetAlertDialog dialog_wait = HSH.onProgress_Dialog(MyEventDetailsActivity.this, "شکیبا باشید ...");
+                        if (NetworkUtils.getConnectivity(getActivity()) != false) {
+                            SweetAlertDialog dialog_wait = HSH.onProgress_Dialog(getActivity(), "شکیبا باشید ...");
                             if (checkid == 1 || checkid == 2 || checkid == 3)
                                 DeletePostAsynkTask(dialog_wait);
                             else
                                 CancelPostAsynkTask(dialog_wait);
                             dialog2.dismiss();
                         } else
-                            HSH.showtoast(MyEventDetailsActivity.this, "خطا در اتصال به اینترنت");
+                            HSH.showtoast(getActivity(), "خطا در اتصال به اینترنت");
 
                     } else
-                        HSH.showtoast(MyEventDetailsActivity.this, "یک گزینه را انتخاب کنید.");
+                        HSH.showtoast(getActivity(), "یک گزینه را انتخاب کنید.");
                 });
 
                 txt_reject.setOnClickListener(v13 -> dialog2.dismiss());
@@ -669,16 +722,17 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                 break;
 
             /*case R.id.btn_sendComment:
-                *//*if (!etComment.getText().toString().trim().equals(""))
-                    if (NetworkUtils.getConnectivity(PostDetailsActivity.this) != false)
+             *//*if (!etComment.getText().toString().trim().equals(""))
+                    if (NetworkUtils.getConnectivity(getActivity()) != false)
                         SendCommentAsynkTask(etComment.getText().toString().trim());
                     else
-                        HSH.showtoast(PostDetailsActivity.this, "خطا در اتصال به اینترنت");*//*
+                        HSH.showtoast(getActivity(), "خطا در اتصال به اینترنت");*//*
                 break;*/
+
 
             case R.id.btn_share:
                 try {
-                    String shareBody = BuildConfig.BaseUrl + "getwebpostdetails/index/" + fFeed.getPostId();
+                    String shareBody = BuildConfig.BaseUrl + "/getwebpostdetails/index/" + fFeed.getPostId();
                     Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                     sharingIntent.setType("text/plain");
                     sharingIntent.putExtra(Intent.EXTRA_SUBJECT, fFeed.getTitle() + "\n" + "را در پایه باش ببین");
@@ -689,13 +743,13 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                 break;
 
             case R.id.img_back:
-                finish();
+                getFragmentManager().popBackStack();
                 break;
 
             case R.id.cl_event_organizer:
                 if (Application.preferences.getString(getString(R.string.IsAuthenticate), "").equals("true"))
                     try {
-                        Intent i = new Intent(MyEventDetailsActivity.this, UserProfileActivity.class);
+                        Intent i = new Intent(getActivity(), UserProfileActivity.class);
                         i.putExtra("PostId", fFeed.getPostId());
                         i.putExtra("AdvertiserId", result.getEventOwner().getId());
                         i.putExtra("profileimage", result.getEventOwner().getProfileImage());
@@ -706,10 +760,11 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                     registerDialog();
                 break;
 
+            //case R.id.btn_contactWays:
             case R.id.img_profile:
                 try {
                     final Bundle bundle = new Bundle();
-                    Intent i = new Intent(MyEventDetailsActivity.this, ViewPagerActivity.class);
+                    Intent i = new Intent(getActivity(), ViewPagerActivity.class);
                     PayeItem item = new PayeItem();
                     item.setImages(result.getEventOwner().getProfileImage());
                     bundle.putSerializable("feed", item);
@@ -718,6 +773,10 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
                 } catch (Exception e) {
                 }
                 break;
+
+            case R.id.group_friends:
+                showBottomsheetFollwoers();
+                break;
             case R.id.txt_upgrade_event:
                 showBottomsheetNavigation();
                 break;
@@ -725,11 +784,10 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
         }
     }
 
-
     private void showBottomsheetNavigation() {
 
         View view = getLayoutInflater().inflate(R.layout.dialog_upgrade_event, null);
-        BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
+        BottomSheetDialog dialog = new BottomSheetDialog(getActivity(), R.style.BottomSheetDialog);
         dialog.setContentView(view);
         BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -762,8 +820,45 @@ public class MyEventDetailsActivity extends AppCompatActivity implements View.On
         });
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         dialog.show();
-        //ConstraintLayout c1 = view.findViewById(R.id.constraintLayout1);
+        //ConstraintLayout c1 = view.rootView.findViewById(R.id.constraintLayout1);
 
+    }
+
+    private void showBottomsheetFollwoers() {
+
+        if (followerView == null) {
+            followerView = getLayoutInflater().inflate(R.layout.dialog_friend_in_event, null);
+            dialogFollower = new BottomSheetDialog(getActivity(), R.style.BottomSheetDialog);
+            dialogFollower.setContentView(followerView);
+
+            ConstraintLayout csFollowers = followerView.findViewById(R.id.cs_followers);
+
+            if (result.getFollowers().size() > 0) {
+                csFollowers.setVisibility(View.VISIBLE);
+                RecyclerView rv = followerView.findViewById(R.id.rv_followers);
+                rv.setHasFixedSize(true);
+                rv.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
+                rv.addItemDecoration(new ItemDecorationAlbumColumns(getActivity(), ItemDecorationAlbumColumns.VERTICAL_LIST));
+                FollowersAdapter adapter = new FollowersAdapter(getActivity());
+                rv.setAdapter(adapter);
+
+                adapter.addItems(result.getFollowers());
+
+            } else
+                followerView.findViewById(R.id.img_no_followers).setVisibility(View.VISIBLE);
+
+            BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) followerView.getParent());
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            dialogFollower.show();
+        } else
+            dialogFollower.show();
+        //ConstraintLayout c1 = view.rootView.findViewById(R.id.constraintLayout1);
+
+    }
+
+    @BindingAdapter("android:src")
+    public static void setImageUrl(ImageView view, String url) {
+        ImageLoader.getInstance().displayImage(url, view);
     }
 }
 

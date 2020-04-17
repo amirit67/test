@@ -347,7 +347,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 RequestBody.create(
                         okhttp3.MultipartBody.FORM, Application.preferences.getString(getString(R.string.UserId), "0"));
         Call<ResponseBody> call =
-                ApiClient.getClient().create(ApiInterface.class).saveProfileAccount(UserId, filePart);
+                ApiClient.getClient().create(ApiInterface.class).saveProfileAccount(/*UserId,*/ filePart);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {

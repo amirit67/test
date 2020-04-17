@@ -9,6 +9,7 @@ import ir.payebash.activities.PostRegister2Activity;
 import ir.payebash.activities.PostRegisterActivity;
 import ir.payebash.activities.SplashActivity;
 import ir.payebash.activities.StoriesActivity;
+import ir.payebash.activities.UpdateEventActivity;
 import ir.payebash.activities.UpdatePostActivity;
 import ir.payebash.activities.UserProfileActivity;
 import ir.payebash.adapters.BannerAdapter;
@@ -140,6 +141,8 @@ public interface MainComponent {
 
     //Fragments
     void Inject(ActivitiesFragment activitiesFragment);
+
+    void Inject(UpdateEventActivity updateEventActivity);
 }
 
 /*

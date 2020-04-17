@@ -52,10 +52,10 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import ir.moslem_deris.apps.zarinpal.PaymentBuilder;
+/*import ir.moslem_deris.apps.zarinpal.PaymentBuilder;
 import ir.moslem_deris.apps.zarinpal.enums.ZarinPalError;
 import ir.moslem_deris.apps.zarinpal.listeners.OnPaymentListener;
-import ir.moslem_deris.apps.zarinpal.models.Payment;
+import ir.moslem_deris.apps.zarinpal.models.Payment;*/
 import ir.payebash.Application;
 import ir.payebash.BuildConfig;
 import ir.payebash.Constants;
@@ -422,26 +422,10 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                     } catch (Exception e) {
                     }
                     ///////////////////////////////////////////////////////////////////////////
-                    if (result.getRequestState().getState().equals(Constants.ACCEPT_STATE)) {
-                        try {
-                            Cursor cr = Application.database.rawQuery("SELECT Id from RecentVisit WHERE Id='" + fFeed.getPostId() + "'", null);
-                            if (cr.getCount() == 0) {
-                                String query;
-                                if (isPush == false)
-                                    query = "INSERT INTO RecentVisit(Id,IsFavorite,IsWanted) VALUES " +
-                                            "('" + fFeed.getPostId() + "','false','false') ";
-                                else
-                                    query = "INSERT INTO RecentVisit(Id,IsFavorite,IsWanted) VALUES " +
-                                            "('" + fFeed.getPostId() + "','false','true') ";
-
-                                Application.database.execSQL(query);
-                                cr.close();
-                            }
-                        } catch (Exception e) {
-                        }
-                    } else {
-                        DeletePost();
-                    }
+                    String query;
+                    query = "replace INTO RecentVisit ";
+                    query += "(Id) VALUES('" + fFeed.getPostId() + "')";
+                    Application.database.execSQL(query);
 
                 } catch (Exception e) {
                     DeletePost();
@@ -645,7 +629,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void pay(String s) {
-        Payment payment = null;
+        /*Payment payment = null;
         try {
             payment = new PaymentBuilder()
                     .setMerchantID(getString(R.string.Mrchnt))
@@ -683,7 +667,7 @@ public class PostDetailsActivity extends AppCompatActivity implements View.OnCli
                 Log.wtf("TAG", "::ZarinPal::  ERROR: " + errorMessage);
                 HSH.showtoast(PostDetailsActivity.this, "خطا!!!" + "\n" + errorMessage);
             }
-        });
+        });*/
     }
 
     private void InsertPaymentAsynkTask(final String refID) {

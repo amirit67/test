@@ -11,12 +11,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import ir.payebash.Application;
+import ir.payebash.BuildConfig;
+import ir.payebash.Interfaces.ApiClient;
 import ir.payebash.Interfaces.ApiInterface;
+import ir.payebash.R;
+import ir.payebash.classes.HSH;
 import ir.payebash.models.event.EventModel;
 import ir.payebash.models.event.RegisterEventResponseModel;
+import ir.payebash.models.event.detail.EventOwnerItem;
+import ir.payebash.models.user.UserInfoModel;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 
 public class RemoteRepository implements Repository {
@@ -78,6 +86,18 @@ public class RemoteRepository implements Repository {
                             }
                         })
                 );
+    }
+
+    @Override
+    public Call<ResponseBody> saveProfileAccount(MultipartBody.Part filePart) {
+        Call<ResponseBody> call = retrofit.create(ApiInterface.class).saveProfileAccount(filePart);
+        return call;
+    }
+
+    @Override
+    public Call<ResponseBody> UpdateProfile(EventOwnerItem data) {
+        Call<ResponseBody> call = retrofit.create(ApiInterface.class).UpdateProfile(data);
+        return call;
     }
 
 

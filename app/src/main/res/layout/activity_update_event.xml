@@ -8,7 +8,7 @@
         <import type="ir.payebash.classes.HSH"/>-->
 
         <variable
-            name="itemEventRegister"
+            name="itemEvent"
             type="ir.payebash.models.event.detail.EventDetailsModel" />
     </data>
 
@@ -68,12 +68,144 @@
                     app:layout_constraintTop_toTopOf="@+id/textView47"
                     app:srcCompat="@drawable/ic_chevron_left_black" />
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cs1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="bottom"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView48">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:background="@drawable/rounded_corners_top"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/cs_subject"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:background="@drawable/press_button_stroke_gray"
+                            android:padding="4dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/textView38"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:fontFamily="@font/yekanlight"
+                                android:text="چطور رویدادیه ؟"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp14"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvSelectSubject"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginEnd="8dp"
+                                android:ems="10"
+                                android:focusable="false"
+                                android:gravity="left|center_vertical"
+                                android:hint="انتخاب کنید"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp14"
+                                app:layout_constraintBottom_toBottomOf="@+id/textView38"
+                                app:layout_constraintEnd_toStartOf="@+id/textView38"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/textView38" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:id="@+id/tvStartDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/press_button_stroke_gray"
+                            android:drawableLeft="@drawable/ic_date_event"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:hint="زمان شروع"
+                            android:padding="@dimen/dp16"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp14"
+                            android:text="@={itemEvent.startDate}"
+                            app:layout_constraintEnd_toEndOf="@+id/cs_subject"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/tvEndDate"
+                            app:layout_constraintTop_toBottomOf="@+id/cs_subject" />
+
+                        <TextView
+                            android:id="@+id/tvEndDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/press_button_stroke_gray"
+                            android:drawableLeft="@drawable/ic_date_event"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:hint="زمان پایان"
+                            android:padding="@dimen/dp16"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp14"
+                            android:text="@={itemEvent.endDate}"
+                            app:layout_constraintEnd_toStartOf="@+id/tvStartDate"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="@+id/cs_subject"
+                            app:layout_constraintTop_toBottomOf="@+id/cs_subject" />
+
+                        <TextView
+                            android:id="@+id/tvSelectCity"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="24dp"
+                            android:background="@drawable/press_button_stroke_gray"
+                            android:focusable="false"
+                            android:hint="کجاست ؟"
+                            android:padding="@dimen/dp20"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp14"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvStartDate" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <EditText
                     android:id="@+id/et_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/white"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/press_button_stroke_gray"
                     android:fontFamily="@font/yekanblack"
                     android:gravity="center"
                     android:hint="نام رویداد"
@@ -83,13 +215,13 @@
                     android:paddingTop="@dimen/dp20"
                     android:paddingRight="24dp"
                     android:paddingBottom="@dimen/dp48"
-                    android:text="@={itemEventRegister.title}"
+                    android:text="@={itemEvent.title}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView48" />
+                    app:layout_constraintTop_toBottomOf="@+id/cs1" />
 
                 <TextView
                     android:id="@+id/textView40"
@@ -104,27 +236,18 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/et_title" />
 
-                <View
-                    android:id="@+id/view3"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:background="#ececec"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_title" />
-
                 <TextView
                     android:id="@+id/textView42"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="24dp"
                     android:text="توضیحات"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp14"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view3" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_title" />
 
                 <EditText
                     android:id="@+id/et_description"
@@ -141,7 +264,7 @@
                     android:maxLines="8"
                     android:minHeight="120dp"
                     android:background="@drawable/press_button_stroke_gray"
-                    android:text="@={itemEventRegister.description}"
+                    android:text="@={itemEvent.description}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp14"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -260,7 +383,7 @@
                     android:hint="حداکثر 100 نفر"
                     android:maxLength="10"
                     android:maxLines="1"
-                    android:text="@={itemEventRegister.numberFollowers}"
+                    android:text="@={itemEvent.numberFollowers}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp16"
                     app:layout_constraintEnd_toEndOf="@+id/ts_number_followers"
@@ -304,7 +427,7 @@
                     android:hint="مبلغ را وارد نمایید"
                     android:padding="@dimen/dp16"
                     android:gravity="center"
-                    android:text="@={itemEventRegister.cost}"
+                    android:text="@={itemEvent.cost}"
                     android:textSize="14sp"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -324,7 +447,7 @@
                     android:gravity="center"
                     android:hint="تا کی وقت داریم ؟"
                     android:padding="@dimen/dp16"
-                    android:text="@={itemEventRegister.timeToJoin}"
+                    android:text="@={itemEvent.timeToJoin}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp14"
                     app:layout_constraintEnd_toEndOf="parent"

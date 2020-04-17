@@ -22,9 +22,6 @@ public class GuestActivity extends AppCompatActivity implements IWebservice.Titl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         findViewById(R.id.btn_new_event).setBackgroundResource(R.mipmap.ic_signup);
         findViewById(R.id.btn_new_event).setOnClickListener(view -> HSH.onOpenPage(GuestActivity.this, RegisterActivity.class));
 

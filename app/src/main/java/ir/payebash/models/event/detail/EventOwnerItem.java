@@ -14,11 +14,20 @@ public class EventOwnerItem extends BaseObservable implements Serializable {
 	@SerializedName("id")
 	private String id;
 
-	@SerializedName("profileImage")
-	private String profileImage;
+	@SerializedName("Name")
+	private String name;
+
+	@SerializedName("AboutMe")
+	private String aboutMe;
+
+	@SerializedName("webSite")
+	private String webSite;
 
 	@SerializedName("userName")
 	private String userName;
+
+	@SerializedName("profileImage")
+	private String profileImage;
 
 	@SerializedName("token")
 	private String token;
@@ -31,12 +40,6 @@ public class EventOwnerItem extends BaseObservable implements Serializable {
 
 	@SerializedName("trustPercentage")
 	private double trustPercentage;
-
-	@SerializedName("Name")
-	private String name;
-
-	@SerializedName("AboutMe")
-	private String aboutMe;
 
 	@SerializedName("VerifiedAccount")
 	private boolean verifiedAccount;
@@ -85,4 +88,23 @@ public class EventOwnerItem extends BaseObservable implements Serializable {
 		return verifiedAccount;
 	}
 
+	public String getWebSite() {
+		return webSite;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setAboutMe(String aboutMe) {
+		this.aboutMe = aboutMe;
+	}
+
+	public void setWebSite(String webSite) {
+		this.webSite = webSite;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 }

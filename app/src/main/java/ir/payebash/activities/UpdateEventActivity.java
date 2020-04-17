@@ -49,7 +49,7 @@ import ir.payebash.classes.BaseFragment;
 import ir.payebash.classes.HSH;
 import ir.payebash.classes.ItemDecorationAlbumColumns;
 import ir.payebash.classes.NetworkUtils;
-import ir.payebash.databinding.ActivityPostRegisterBinding;
+import ir.payebash.databinding.ActivityUpdateEventBinding;
 import ir.payebash.fragments.registerEvents.MobileConfirmStep1Fragment;
 import ir.payebash.models.CustomGallery;
 import ir.payebash.models.event.RegisterEventResponseModel;
@@ -64,7 +64,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 
-public class PostRegister2Activity extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener {
+public class UpdateEventActivity extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener {
 
     private static final String ARG_PARAM1 = "param1";
     private EventDetailsModel eventDetailsModel;
@@ -78,13 +78,13 @@ public class PostRegister2Activity extends BaseFragment implements View.OnClickL
     private RecyclerView rv;
     private EditText etCost, etTitle, etDescription, etNumberOfFollowers;
     private TextView tvTimeToJoin;
-    public static PostRegister2Activity fragment = null;
+    public static UpdateEventActivity fragment = null;
     String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private View rootView = null;
 
-    public static PostRegister2Activity newInstance(EventDetailsModel eventDetailsModel) {
+    public static UpdateEventActivity newInstance(EventDetailsModel eventDetailsModel) {
         if (fragment == null)
-            fragment = new PostRegister2Activity();
+            fragment = new UpdateEventActivity();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, eventDetailsModel);
         fragment.setArguments(args);
@@ -153,10 +153,10 @@ public class PostRegister2Activity extends BaseFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (rootView == null) {
-            ActivityPostRegisterBinding binding = DataBindingUtil.inflate(
-                    inflater, R.layout.activity_post_register, container, false);
+            ActivityUpdateEventBinding binding = DataBindingUtil.inflate(
+                    inflater, R.layout.activity_update_event, container, false);
             rootView = binding.getRoot();
-            binding.setItemEventRegister(eventDetailsModel);
+            binding.setItemEvent(eventDetailsModel);
 
             initViews();
             adapter = new ImagesAdapter(getActivity(), position -> requestPermissions(permissions, 123));

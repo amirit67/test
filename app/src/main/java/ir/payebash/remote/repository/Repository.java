@@ -6,11 +6,14 @@ import java.util.Map;
 import io.reactivex.Observable;
 import ir.payebash.models.event.EventModel;
 import ir.payebash.models.event.RegisterEventResponseModel;
+import ir.payebash.models.event.detail.EventOwnerItem;
+import ir.payebash.models.user.UserInfoModel;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 
@@ -26,6 +29,8 @@ public interface Repository {
     /*
      * User Login & Register
      */
+    Call<ResponseBody> saveProfileAccount(@Part MultipartBody.Part filePart);
 
+    Call<ResponseBody>  UpdateProfile(@Body EventOwnerItem data);
 
 }
